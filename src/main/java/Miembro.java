@@ -1,7 +1,8 @@
 import java.util.List;
+import static java.util.Objects.requireNonNull;
 
 enum TIPO_DOCUMENTO{
-  DNI, PASAPORTE;
+  DNI, PASAPORTE; //falta especificación de tipos de documentos
 }
 
 public class Miembro {
@@ -9,18 +10,78 @@ public class Miembro {
   String apellido;
   TIPO_DOCUMENTO tipoDocumento;
   int numeroDocumento;
-  List<Organizacion> Organizaciones;
+  List<Organizacion> organizaciones;
   List<Trayecto> trayectos;
-  //Los trayectos existen y se añaden o el miembro tiene la facultad de crear a voluntad?
-  void registrarTrayecto(Trayecto unTrayecto){
-  unTrayecto.add(trayectos);
+  public Miembro(
+      String unNombre,
+      String unApellido,
+      TIPO_DOCUMENTO unTipoDocumento,
+      int unNumeroDocumento,
+      List<Organizacion> unasOrganizaciones,
+      List<Trayecto> unosTrayectos){
+    nombre = unNombre;
+    apellido = unApellido;
+    tipoDocumento = unTipoDocumento;
+    numeroDocumento= unNumeroDocumento;
+    organizaciones= unasOrganizaciones;
+    trayectos= unosTrayectos;
   }
-  void vincularseCon(Sector unSector){
 
+
+  void registrarTrayecto(Trayecto unTrayecto){
+    requireNonNull(unTrayecto);
+    unTrayecto.add(trayectos);
+  }
+  void solicitarVinculacion(Organizacion unaOrganizacion, Sector unSector){
+    unaOrganizacion.procesarPedidoVinculacion(unSector, this);
+  }
+  Sector sectorAlQuePerteneceEn(Organizacion unaOrganizacion){
+    return unaOrganizacion.miembroPerteneceASector(this);
   }
 
 }
 class MiembroBuilder{
+  String nombre;
+  String apellido;
+  TIPO_DOCUMENTO tipoDocumento;
+  int numeroDocumento;
+  List<Organizacion> organizaciones;
+  List<Trayecto> trayectos;
+
+  Miembro construir(){
+    this.validar();
+    Miembro unMiembro = new Miembro(nombre,apellido,tipoDocumento,numeroDocumento,organizaciones,trayectos);
+    return unMiembro;
+  }
+  void especificarNombre(String unNombre){
+    requireNonNull(unNombre);
+    nombre = unNombre;
+  }
+  void especificarApellido(String unApellido){
+    requireNonNull(unApellido);
+    apellido = unApellido;
+  }
+  void especificarTipoDocumento(TIPO_DOCUMENTO unTipoDocumento){
+    requireNonNull(unTipoDocumento);
+    tipoDocumento = unTipoDocumento;
+  }
+  void especificarNumeroDocumento(int unNumeroDocumento){
+    numeroDocumento = unNumeroDocumento;
+  }
+  void especificarOrganizaciones(List<Organizacion> unasOrganizaciones){
+    requireNonNull(unasOrganizaciones);
+    organizaciones = unasOrganizaciones;
+  }
+  void especificarTrayectos(List<Trayecto> unosTrayectos){
+    //podría ser que no se desplace porque es virtual
+    trayectos = unosTrayectos;
+  }
+  void validar(){
+    requireNonNull(nombre);
+    requireNonNull(apellido);
+    requireNonNull(tipoDocumento);
+    requireNonNull(organizaciones);
+  }
 
 }
 

@@ -35,9 +35,6 @@ public class Miembro {
   void solicitarVinculacion(Organizacion unaOrganizacion, Sector unSector){
     unaOrganizacion.procesarPedidoVinculacion(unSector, this);
   }
-  Sector sectorAlQuePerteneceEn(Organizacion unaOrganizacion){
-    return unaOrganizacion.miembroPerteneceASector(this);
-  }
 
 }
 class MiembroBuilder{

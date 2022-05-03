@@ -2,7 +2,6 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 public class Sector {
-  Organizacion organizacionAlaQuePertenece;
   List<Miembro> miembros;
   public Sector(Organizacion unaOrganizacion, List<Miembro> unosMiembros){
     requireNonNull(unaOrganizacion);

@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 public class Sector {
   List<Miembro> miembros;
   public Sector(List<Miembro> unosMiembros){
-    requireNonNull(unaOrganizacion);
     //un sector podría estar vacio? si todavía no se asignaron supongo que si
     miembros = unosMiembros;
   }

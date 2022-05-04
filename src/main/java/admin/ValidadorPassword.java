@@ -1,40 +1,27 @@
 package admin;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import admin.validations.*;
 
-public class ValidadorPassword {
+class ValidadorPassword {
 
-  public boolean validarPassword(String password) throws IOException {
+  private List<Validacion> validaciones = new ArrayList<>();
 
-    if (isInFile(password)) {
-      // throw isInFileException("Contraseña vulnerable.");
-      return false;
-    } else if (password.length() < 8) {
-      // throw isTooShort("Contraseña con menos de 8 caracteres.");
-      return false;
-    }
-    return true;
+  // Hay que modificar los parámetro e ir agregando las validaciones al constructor a medida que van
+  // surgiendo.
+
+  public ValidadorPassword() {
+    validaciones.add(new ValidacionPeoresPasswords());
+    validaciones.add(new ValidacionMinCaracteres());
   }
 
-  static boolean isInFile(String password) throws IOException {
-    String path = "../2022-tpa-ju-ma-grupo-06/src/main/java/admin/top_10k_worst_passwords.txt";
-    return Files.lines(Paths.get(path)).anyMatch(line -> line.contains(password));
+  /**
+   * Valida la contraseña según las validaciones vigentes.
+   * 
+   * @param password
+   */
+  public void validarPassword(String password) {
+    validaciones.forEach(validacion -> validacion.validar(password));
   }
 }
-
-
-// public static class isInFileException extends RuntimeException {
-// public isInFileException() {
-// super
-// }
-// }
-
-
-// public static class isTooShortException extends RuntimeException {
-// public isInFileException() {
-// super
-// }
-// }

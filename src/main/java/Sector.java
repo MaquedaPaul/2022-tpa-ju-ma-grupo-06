@@ -10,5 +10,6 @@ public class Sector {
   void admitirMiembro (Miembro unMiembro){
     miembros.add(unMiembro);
   }
+  List<Miembro> getMiembros = miembros;
 
 }

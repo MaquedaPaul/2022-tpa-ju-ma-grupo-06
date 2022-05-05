@@ -1,15 +1,32 @@
 package admin;
 
-class RegistroAdministrador {
+import static java.util.Objects.requireNonNull;
 
-  public static void main(String[] args) {
-    RegistroAdministrador nuevoRegistro = new RegistroAdministrador();
-    nuevoRegistro.crearAdministrador("lucas", "EstoESUnEjemplo");
+public class RegistroAdministrador {
+  String usuario;
+  String password;
+
+  Administrador construir(){
+    this.validar();
+    Administrador unAdministrador = new Administrador(usuario,password);
+    return unAdministrador;
   }
 
-  public Administrador crearAdministrador(String usuario, String password) {
+  private void especificarpassword(String password) {
     ValidadorPassword unValidador = new ValidadorPassword();
     String passwordVerificada = unValidador.validarPassword(password);
-    return new Administrador(usuario,passwordVerificada);
+    requireNonNull(password);
+    this.password = passwordVerificada;
+  }
+
+  private void especificarUsuario(String usuario) {
+    requireNonNull(usuario);
+    this.usuario = usuario;
+  }
+
+  private void validar() {
+    requireNonNull(password);
+    requireNonNull(usuario);
   }
 }
+

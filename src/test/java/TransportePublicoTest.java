@@ -30,11 +30,19 @@ public class TransportePublicoTest {
 
   @Test
   public void elInicioDelRecorridoDelColectivoEsSuPrimerUbicacion() {
+    ubicacionesDel138.add(ubicacionInicio);
+    ubicacionesDel138.add(ubicacionIntermedia);
+    ubicacionesDel138.add(ubicacionFinal);
+
     assertEquals(unColectivo.getUbicacionInicio(), ubicacionInicio);
   }
 
   @Test
   public void elFinalDelRecorridoDelColectivoEsSuUltimaUbicacion() {
+    ubicacionesDel138.add(ubicacionInicio);
+    ubicacionesDel138.add(ubicacionIntermedia);
+    ubicacionesDel138.add(ubicacionFinal);
+
     assertEquals(unColectivo.getUltimaUbicacion(), ubicacionFinal);
   }
 
@@ -43,7 +51,6 @@ public class TransportePublicoTest {
     ubicacionesDel138.add(ubicacionInicio);
     ubicacionesDel138.add(ubicacionIntermedia);
     ubicacionesDel138.add(ubicacionFinal);
-
 
     assertEquals(linea138.getParadas().size(), 3);
     linea138.agregarParadaAlRecorrido(otraUbicacion, 3);

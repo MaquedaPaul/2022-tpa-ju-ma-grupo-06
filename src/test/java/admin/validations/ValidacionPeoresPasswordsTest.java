@@ -1,8 +1,10 @@
 package admin.validations;
 
+
 import exceptions.PasswordInseguraException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import admin.validations.ValidacionPeoresPasswords;
 
 public class ValidacionPeoresPasswordsTest {
 
@@ -14,12 +16,17 @@ public class ValidacionPeoresPasswordsTest {
 
     @Test
     void unaPasswordQueSeEncuentraEnLaListaPeoresPassDebeFallar() {
-        Assertions.assertThrows(PasswordInseguraException.class,() -> {validadorPeoresPasswords.validar(passwordPeor);});
+        Assertions.assertThrows(PasswordInseguraException.class, () -> {
+            validadorPeoresPasswords.validar(passwordPeor);
+        });
 
     }
+
     @Test
     void unaPasswordQueNoSeEncuentraEnLaListaPeoresPassDebeSerValida() {
-        Assertions.assertDoesNotThrow(() -> {validadorPeoresPasswords.validar(passwordNoSeEncuentraEnLista);});
+        Assertions.assertDoesNotThrow(() -> {
+            validadorPeoresPasswords.validar(passwordNoSeEncuentraEnLista);
+        });
 
     }
 

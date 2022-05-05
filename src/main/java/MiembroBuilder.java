@@ -1,6 +1,6 @@
-import java.util.List;
-
 import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 
 class MiembroBuilder {
   String nombre;
@@ -43,7 +43,7 @@ class MiembroBuilder {
   }
 
   public void especificarTrayectos(List<Trayecto> unosTrayectos) {
-    //podría ser que no se desplace porque es virtual
+    // podría ser que no se desplace porque es virtual
     trayectos = unosTrayectos;
   }
 
@@ -55,6 +55,5 @@ class MiembroBuilder {
   }
 
 }
-
 
 

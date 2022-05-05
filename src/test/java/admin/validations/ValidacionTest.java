@@ -1,8 +1,11 @@
 package admin.validations;
 
+
 import exceptions.PasswordInseguraException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import admin.validations.ValidacionMinCaracteres;
+import admin.validations.ValidacionPeoresPasswords;
 
 public class ValidacionTest {
 
@@ -21,7 +24,8 @@ public class ValidacionTest {
     @Test
     void unaContraseniaLargaQueEstaEnLaListaNoEsValida() {
         Assertions.assertDoesNotThrow(() -> validarCaracteres.validar(contraseniaLargaDelArchivo));
-        Assertions.assertThrows(PasswordInseguraException.class,() -> validarSiEsBuena.validar(contraseniaLargaDelArchivo));
+        Assertions.assertThrows(PasswordInseguraException.class,
+                () -> validarSiEsBuena.validar(contraseniaLargaDelArchivo));
     }
 
 }

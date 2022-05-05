@@ -39,4 +39,8 @@ public class LineaTransporte {
   public Ubicacion finalDelRecorrido() {
     return ubicaciones.get(ubicaciones.size() - 1);
   }
+
+  public String getNombre() {
+    return nombre;
+  }
 }

@@ -1,7 +1,6 @@
 package admin;
 
 public class Administrador {
-
   String usuario;
   String password;
 

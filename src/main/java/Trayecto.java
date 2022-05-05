@@ -18,11 +18,11 @@ public class Trayecto{
     this.origen = origen;
   }*/
 
-  public Parada getOrigen() {
+  public Ubicacion getOrigen() {
     return tramos.get(0).getPuntoOrigen();
   }
 
-  public Parada getDestino() {
+  public Ubicacion getDestino() {
     return tramos.get(tramos.size()-1).getPuntoDestino();
   }
 

@@ -1,8 +1,10 @@
 package admin.validations;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
 import exceptions.PasswordInseguraException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidacionMinCaracteresTest {
 
@@ -11,7 +13,7 @@ public class ValidacionMinCaracteresTest {
     String passwordJusta = "cocacola";
     String passwordCorta = "123";
 
-    ValidacionMinCaracteres validacion = new ValidacionMinCaracteres();
+    ValidacionMinCaracteres minimosCaracteres = new ValidacionMinCaracteres();
 
     /*
      * RegistroAdministrador registro = new RegistroAdministrador(); Administrador administrador =
@@ -28,9 +30,18 @@ public class ValidacionMinCaracteresTest {
      */
 
     @Test
-    public void validarPasswordCorta() {
+    public void unaPasswordCortaDeberiaNoValidarse() {
         assertThrows(PasswordInseguraException.class, () -> {
-            validacion.validar(passwordCorta);
+            minimosCaracteres.validar(passwordCorta);
         });
+    }
+    @Test
+    public void unaPasswordDe8CaracteresDeberiaValidarse() {
+        Assertions.assertDoesNotThrow(() -> {minimosCaracteres.validar(passwordJusta);});
+
+    }
+    @Test
+    public void  unaPasswordDeMasDe8DeberiaValidarse(){
+        Assertions.assertDoesNotThrow(() -> {minimosCaracteres.validar(passwordJusta);});
     }
 }

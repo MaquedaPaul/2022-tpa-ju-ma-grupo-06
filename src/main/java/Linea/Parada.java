@@ -1,10 +1,10 @@
 package Linea;
 
-public class Parada {
+public class Ubicacion {
   private String nombre;
   private int posicion;
 
-  public Parada(String nombre, int posicion) {
+  public Ubicacion(String nombre, int posicion) {
     this.nombre = nombre;
     this.posicion = posicion;
   }

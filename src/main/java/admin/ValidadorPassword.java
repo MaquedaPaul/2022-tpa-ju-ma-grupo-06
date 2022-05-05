@@ -24,4 +24,5 @@ class ValidadorPassword {
   public void validarPassword(String password) {
     validaciones.forEach(validacion -> validacion.validar(password));
   }
+
 }

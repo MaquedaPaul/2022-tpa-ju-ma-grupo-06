@@ -16,11 +16,11 @@ public class TransportePublico implements Transporte{
     return lineaUtilizada.transporte();
   }
 
-  public Parada getParadaInicio() {
+  public Ubicacion getParadaInicio() {
     return lineaUtilizada.inicioDelRecorrido();
   }
 
-  public Parada getUltimaParada() {
+  public  getUltimaParada() {
     return lineaUtilizada.finalDelRecorrido();
   }
 }

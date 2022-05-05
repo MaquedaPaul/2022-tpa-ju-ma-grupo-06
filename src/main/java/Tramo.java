@@ -1,21 +1,21 @@
-import Linea.Parada;
+import Linea.Ubicacion;
 
 public class Tramo {
-  private final Parada puntoOrigen;
-  private final Parada puntoDestino;
+  private final Ubicacion puntoOrigen;
+  private final Ubicacion puntoDestino;
   private final Transporte transporteUtilizado;
 
-  Tramo(Parada puntoOrigen, Parada puntoDestino, Transporte transporteUtilizado) {
+  Tramo(Ubicacion puntoOrigen, Ubicacion puntoDestino, Transporte transporteUtilizado) {
     this.puntoOrigen = puntoOrigen;
     this.puntoDestino = puntoDestino;
     this.transporteUtilizado = transporteUtilizado;
   }
 
-  public Parada getPuntoOrigen() {
+  public Ubicacion getPuntoOrigen() {
     return puntoOrigen;
   }
 
-  public Parada getPuntoDestino() {
+  public Ubicacion getPuntoDestino() {
     return puntoDestino;
   }
 

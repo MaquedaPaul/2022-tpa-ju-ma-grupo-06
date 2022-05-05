@@ -5,30 +5,31 @@ public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
 
-  private final List<Parada> paradas;
-  public LineaTransporte(TipoTransporte tipoTransporte, String nombre, List<Parada> paradas) {
+  private final List<Ubicacion> ubicaciones;
+
+  public LineaTransporte(TipoTransporte tipoTransporte, String nombre, List<Ubicacion> ubicaciones) {
     this.tipoTransporte = tipoTransporte;
     this.nombre = nombre;
-    this.paradas = paradas;
+    this.ubicaciones = ubicaciones;
   }
 
-  public List<Parada> getParadas() {
-    return paradas;
+  public List<Ubicacion> getParadas() {
+    return ubicaciones;
   }
 
-  public void agregarParadaAlRecorrido(Parada unaParada, int posicionEnElRecorrido) {
-    paradas.add(posicionEnElRecorrido-1,unaParada);
+  public void agregarParadaAlRecorrido(Ubicacion unaParada, int posicionEnElRecorrido) {
+    ubicaciones.add(posicionEnElRecorrido-1,unaParada);
   }
 
   public TipoTransporte transporte() {
     return tipoTransporte;
   }
 
-  public Parada inicioDelRecorrido() {
-    return paradas.get(0);
+  public Ubicacion inicioDelRecorrido() {
+    return ubicaciones.get(0);
   }
 
-  public Parada finalDelRecorrido() {
-    return paradas.get(paradas.size()-1);
+  public Ubicacion finalDelRecorrido() {
+    return ubicaciones.get(ubicaciones.size()-1);
   }
 }

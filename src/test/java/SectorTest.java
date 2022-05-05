@@ -7,7 +7,7 @@ class SectorTest {
   @Test
   public void unMiembroSeVinculaConUnSector() {
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
-    Sector nuevoSector = new Sector("Sector",generarListaVaciaDeMiembros());
+    onu.crearSector("Sector",generarListaVaciaDeMiembros());
     generarPersona().solicitarVinculacion(onu, nuevoSector);
     assertEquals(nuevoSector.getMiembros().size(), 1);
   }

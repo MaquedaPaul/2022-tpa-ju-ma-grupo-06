@@ -34,6 +34,22 @@ public class Organizacion {
     }
   }
 
+  String getRazonSocial() {
+    return razonSocial;
+  }
+
+  String getUbicacionGeografica() {
+    return ubicacionGeografica;
+  }
+
+  String getClasificacion() {
+    return clasificacion;
+  }
+
+  public TipoOrganizacion getTipo() {
+    return tipo;
+  }
+
   void crearSector(List<Miembro> unosMiembros) {
     sectores.add(new Sector(unosMiembros));
   }

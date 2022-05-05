@@ -8,4 +8,12 @@ public class Ubicacion {
     this.nombre = nombre;
     this.posicion = posicion;
   }
+
+  public int getPosicion() {
+    return posicion;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
 }

@@ -34,13 +34,13 @@ public class Organizacion {
     }
   }
 
-  void crearSector(List<Miembro> unosMiembros) {
-    sectores.add(new Sector(unosMiembros));
+  void crearSector(String nombre, List<Miembro> unosMiembros) {
+    sectores.add(new Sector(nombre,unosMiembros));
   }
 
   // No sabemos bien Como seria la condicion de Vinculacion
   boolean puedeVincularse(Sector unSector, Miembro unMiembro) {
-    return true;
+    return sectores.contains(unSector);
   }
 
   public List<Sector> getSectores() {

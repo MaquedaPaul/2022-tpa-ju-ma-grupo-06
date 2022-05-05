@@ -1,6 +1,6 @@
-import static java.util.Objects.requireNonNull;
-
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 class MiembroBuilder {
   String nombre;
@@ -10,41 +10,44 @@ class MiembroBuilder {
   List<Organizacion> organizaciones;
   List<Trayecto> trayectos;
 
-  Miembro construir() {
+  public MiembroBuilder() {
+
+  }
+
+  public Miembro construir() {
     this.validar();
     return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, organizaciones, trayectos);
   }
 
-  void especificarNombre(String unNombre) {
-    requireNonNull(unNombre);
-    nombre = unNombre;
+  public void especificarNombre(String unNombre) {
+    this.nombre = requireNonNull(unNombre);
   }
 
-  void especificarApellido(String unApellido) {
+  public void especificarApellido(String unApellido) {
     requireNonNull(unApellido);
     apellido = unApellido;
   }
 
-  void especificarTipoDocumento(TIpoDocumento unTipoDocumento) {
+  public void especificarTipoDocumento(TIpoDocumento unTipoDocumento) {
     requireNonNull(unTipoDocumento);
     tipoDocumento = unTipoDocumento;
   }
 
-  void especificarNumeroDocumento(int unNumeroDocumento) {
+  public void especificarNumeroDocumento(int unNumeroDocumento) {
     numeroDocumento = unNumeroDocumento;
   }
 
-  void especificarOrganizaciones(List<Organizacion> unasOrganizaciones) {
+  public void especificarOrganizaciones(List<Organizacion> unasOrganizaciones) {
     requireNonNull(unasOrganizaciones);
     organizaciones = unasOrganizaciones;
   }
 
-  void especificarTrayectos(List<Trayecto> unosTrayectos) {
+  public void especificarTrayectos(List<Trayecto> unosTrayectos) {
     //podría ser que no se desplace porque es virtual
     trayectos = unosTrayectos;
   }
 
-  void validar() {
+  public void validar() {
     requireNonNull(nombre);
     requireNonNull(apellido);
     requireNonNull(tipoDocumento);
@@ -52,4 +55,6 @@ class MiembroBuilder {
   }
 
 }
+
+
 

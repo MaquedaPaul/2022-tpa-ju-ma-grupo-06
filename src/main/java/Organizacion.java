@@ -2,6 +2,8 @@ import exceptions.NoSeAceptaVinculacion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import exceptions.NoSeAceptaVinculacion;
 
 
@@ -26,9 +28,9 @@ public class Organizacion {
     this.clasificacion = Objects.requireNonNull(clasificacion);
   }
 
-  void procesarPedidoVinculacion(Sector unSector, Miembro unMiembro) {
-    if (puedeVincularse(unSector, unMiembro)) {
-      unSector.admitirMiembro(unMiembro);
+  void procesarPedidoVinculacion(String nombreSector, Miembro unMiembro) {
+    if (puedeVincularse(nombreSector, unMiembro)) {
+      sectores.stream().filter(sector -> sector.getNombre().equals(nombreSector)).collect(Collectors.toList()).get(0).admitirMiembro(unMiembro);
     } else {
       throw new NoSeAceptaVinculacion();
     }
@@ -39,8 +41,8 @@ public class Organizacion {
   }
 
   // No sabemos bien Como seria la condicion de Vinculacion
-  boolean puedeVincularse(Sector unSector, Miembro unMiembro) {
-    return sectores.contains(unSector);
+  boolean puedeVincularse(String nombreSector, Miembro unMiembro) {
+    return sectores.stream().anyMatch(sector -> sector.getNombre().equals(nombreSector));
   }
 
   public List<Sector> getSectores() {

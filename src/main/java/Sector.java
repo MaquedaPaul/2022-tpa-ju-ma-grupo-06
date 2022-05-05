@@ -6,8 +6,8 @@ public class Sector {
 
   public Sector(String nombre,List<Miembro> unosMiembros) {
     //un sector podría estar vacio? si todavía no se asignaron supongo que si
-    nombre = nombre;
-    miembros = unosMiembros;
+    this.nombre = nombre;
+    this.miembros = unosMiembros;
   }
 
   void admitirMiembro(Miembro unMiembro) {
@@ -18,6 +18,9 @@ public class Sector {
     return miembros;
   }
 
-  ;
+  String getNombre() {
+    return nombre;
+  }
+
 
 }

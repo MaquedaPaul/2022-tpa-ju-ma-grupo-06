@@ -3,8 +3,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MiembroTest {
 
@@ -13,7 +15,6 @@ public class MiembroTest {
     List<Organizacion> organizaciones = new ArrayList<>();
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
     organizaciones.add(onu);
-    Sector compras = new Sector("Compras",new ArrayList<>());
 
     MiembroBuilder nuevoMiembro = new MiembroBuilder();
     nuevoMiembro.especificarNombre("Jorge");
@@ -24,7 +25,7 @@ public class MiembroTest {
     nuevoMiembro.especificarTrayectos(new ArrayList<>());
     Miembro jorgito = nuevoMiembro.construir();
 
-    assertThrows(NoSeAceptaVinculacion.class,() -> jorgito.solicitarVinculacion(onu,compras));
+    assertThrows(NoSeAceptaVinculacion.class,() -> jorgito.solicitarVinculacion(onu,"Compras"));
   }
 
   @Test
@@ -33,7 +34,6 @@ public class MiembroTest {
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
     organizaciones.add(onu);
     onu.crearSector("Compras",new ArrayList<>());
-    Sector compras = new Sector("Compras",new ArrayList<>());
 
     MiembroBuilder nuevoMiembro = new MiembroBuilder();
     nuevoMiembro.especificarNombre("Jorge");
@@ -44,6 +44,7 @@ public class MiembroTest {
     nuevoMiembro.especificarTrayectos(new ArrayList<>());
     Miembro jorgito = nuevoMiembro.construir();
 
-    assertThrows(NoSeAceptaVinculacion.class,() -> jorgito.solicitarVinculacion(onu,compras));
+    jorgito.solicitarVinculacion(onu,"Compras");
+    assertTrue(onu.sectores.stream().filter(sector -> sector.getNombre().equals("Compras")).collect(Collectors.toList()).get(0).getMiembros().contains(jorgito));
   }
 }

@@ -48,6 +48,13 @@ public class TransportePublicoTest {
 
   @Test
   public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
+    Ubicacion ubicacionInicio = new Ubicacion("Libertador", 200);
+    Ubicacion ubicacionIntermedia = new Ubicacion("Callao", 1222);
+    Ubicacion ubicacionFinal = new Ubicacion("SanJuan", 122);
+    Ubicacion otraUbicacion = new Ubicacion("Tucuman", 222);
+
+    LineaTransporte linea138 =
+        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", ubicacionesDel138);
     ubicacionesDel138.add(ubicacionInicio);
     ubicacionesDel138.add(ubicacionIntermedia);
     ubicacionesDel138.add(ubicacionFinal);

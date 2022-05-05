@@ -32,8 +32,8 @@ public class Miembro {
     trayectos.add(unTrayecto);
   }
 
-  void solicitarVinculacion(Organizacion unaOrganizacion, Sector unSector) {
-    unaOrganizacion.procesarPedidoVinculacion(unSector, this);
+  void solicitarVinculacion(Organizacion unaOrganizacion, String nombreSector) {
+    unaOrganizacion.procesarPedidoVinculacion(nombreSector, this);
   }
 
   public String getApellido() {

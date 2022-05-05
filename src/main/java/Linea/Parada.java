@@ -1,8 +1,10 @@
+package Linea;
+
 public class Parada {
   private String nombre;
-  private String posicion;
+  private int posicion;
 
-  Parada(String nombre, String posicion) {
+  public Parada(String nombre, int posicion) {
     this.nombre = nombre;
     this.posicion = posicion;
   }

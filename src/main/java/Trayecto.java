@@ -1,10 +1,10 @@
+import Linea.Parada;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Trayecto{
   private List<Tramo> tramos = new ArrayList<>();
-  private String origen;
-  private String destino;
 
   public void setTramos(List<Tramo> tramos) {
     this.tramos = tramos;
@@ -14,20 +14,20 @@ public class Trayecto{
     this.tramos.add(unTramo);
   }
 
-  public void setOrigen(String origen) {
+  /*public void setOrigen(String origen) {
     this.origen = origen;
+  }*/
+
+  public Parada getOrigen() {
+    return tramos.get(0).getPuntoOrigen();
   }
 
-  public String getOrigen() {
-    return origen;
+  public Parada getDestino() {
+    return tramos.get(tramos.size()-1).getPuntoDestino();
   }
 
-  public String getDestino() {
-    return destino;
-  }
-
-  public void setDestino(String destino) {
+  /*public void setDestino(String destino) {
     this.destino = destino;
-  }
+  }*/
 
 }

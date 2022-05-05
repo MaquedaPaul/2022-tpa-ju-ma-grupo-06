@@ -1,28 +1,38 @@
+import Linea.*;
 import org.junit.jupiter.api.Test;
 import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransportePublicoTest {
 
+  // PARADAS
+  Parada paradaInicio = new Parada("libertador",200);
+  Parada paradaIntermedia = new Parada("Callao",1222);
+  Parada paradaFinal = new Parada("sanJuan",122);
+
+  // LISTA DE PARADAS
+  List<Parada> paradasDel138 = Arrays.asList(paradaInicio,paradaIntermedia,paradaFinal);
+
+  // LINEA TRANSPORTE
+  LineaTransporte linea138 = new LineaTransporte(TipoTransporte.COLECTIVO,"linea138",paradasDel138);
+  // COLECTIVO DE EJEMPLO
+  TransportePublico unColectivo = new TransportePublico(linea138);
 
   @Test
   public void elTipoDeTransporteDeUnColectivoEsCOLECTIVO() {
+    assertEquals(unColectivo.getTransporteInvolucrado(),TipoTransporte.COLECTIVO);
+  }
 
-    // LINEA TRANSPORTE
-    LineaTransporte linea138 = new LineaTransporte(paradasDel138,138,TipoVehiculoPublico.COLECTIVO);
+  @Test
+  public void elInicioDelRecorridoDelColectivoEsSuPrimerParada() {
+    assertEquals(unColectivo.getParadaInicio(),paradaInicio);
+  }
 
-    // PARADAS
-    Parada parada1 = new Parada(libertador,1);
-    Parada parada2 = new Parada(sanJuan,2);
-
-    // LISTA DE PARADAS
-    List<Parada> paradasDel138 = Arrays.asList(parada1,parada2);
-
-    // COLECTIVO DE EJEMPLO
-    TransportePublico unColectivo = new TransportePublico(TipoVehiculoPublico.COLECTIVO,linea138,parada1,parada2);
-
-    // TEST
-    assertEquals(unColectivo.getTransporteInvolucrado(),TipoVehiculoPublico.COLECTIVO);
+  @Test
+  public void elFinalDelRecorridoDelColectivoEsSuUltimaParada() {
+    assertEquals(unColectivo.getUltimaParada(),paradaFinal);
   }
 
 

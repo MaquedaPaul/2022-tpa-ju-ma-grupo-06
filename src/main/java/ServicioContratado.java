@@ -1,11 +1,11 @@
 public class ServicioContratado implements Transporte {
-  private String vehiculoContratado;
+  private TipoVehiculo vehiculoContratado;
 
-  public ServicioContratado(String vehiculoContratado) {
+  public ServicioContratado(TipoVehiculo vehiculoContratado) {
     this.vehiculoContratado = vehiculoContratado;
   }
 
-  public String getVehiculoContratado() {
+  public TipoVehiculo getVehiculoContratado() {
     return vehiculoContratado;
   }
 }

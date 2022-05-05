@@ -1,30 +1,26 @@
+import Linea.*;
 
 public class TransportePublico implements Transporte{
-  private TipoVehiculoPublico transporteInvolucrado;
-  private LineaTransporte lineaUtilizada;
-  private Parada paradaInicio;
-  private Parada paradaDeFin;
 
-  public TransportePublico(TipoVehiculoPublico transporteInvolucrado, LineaTransporte lineaUtilizada, Parada paradaInicio, Parada paradaDeFin) {
-    this.transporteInvolucrado = transporteInvolucrado;
+  private LineaTransporte lineaUtilizada;
+
+  public TransportePublico(LineaTransporte lineaUtilizada) {
     this.lineaUtilizada = lineaUtilizada;
-    this.paradaInicio = paradaInicio;
-    this.paradaDeFin = paradaDeFin;
   }
 
   public LineaTransporte getLineaUtilizada() {
     return lineaUtilizada;
   }
 
-  public TipoVehiculoPublico getTransporteInvolucrado() {
-    return transporteInvolucrado;
+  public TipoTransporte getTransporteInvolucrado() {
+    return lineaUtilizada.transporte();
   }
 
   public Parada getParadaInicio() {
-    return paradaInicio;
+    return lineaUtilizada.inicioDelRecorrido();
   }
 
-  public Parada getParadaDeFin() {
-    return paradaDeFin;
+  public Parada getUltimaParada() {
+    return lineaUtilizada.finalDelRecorrido();
   }
 }

@@ -1,4 +1,4 @@
-package lineas;
+package linea;
 
 public class Ubicacion {
   private String nombre;
@@ -7,5 +7,13 @@ public class Ubicacion {
   public Ubicacion(String nombre, int posicion) {
     this.nombre = nombre;
     this.posicion = posicion;
+  }
+
+  public int getPosicion() {
+    return posicion;
+  }
+
+  public String getNombre() {
+    return nombre;
   }
 }

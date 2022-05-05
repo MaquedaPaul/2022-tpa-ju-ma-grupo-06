@@ -27,7 +27,6 @@ public class Miembro {
     trayectos = unosTrayectos;
   }
 
-
   void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
@@ -37,4 +36,23 @@ public class Miembro {
     unaOrganizacion.procesarPedidoVinculacion(unSector, this);
   }
 
+  public String getApellido() {
+    return apellido;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public int getNumeroDocumento() {
+    return numeroDocumento;
+  }
+
+  public List<Organizacion> getOrganizaciones() {
+    return organizaciones;
+  }
+
+  public TIpoDocumento getTipoDocumento() {
+    return tipoDocumento;
+  }
 }

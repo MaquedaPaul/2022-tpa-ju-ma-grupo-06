@@ -8,6 +8,14 @@ public class Administrador {
     this.usuario = unUsuario;
     this.password = unPassword;
   }
+
+  public String getUsuario() {
+    return usuario;
+  }
+
+  public String getPassword() {
+    return password;
+  }
 }
 
 

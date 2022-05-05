@@ -1,4 +1,4 @@
-import lineas.Ubicacion;
+import linea.Ubicacion;
 
 public class Tramo {
   private final Ubicacion puntoOrigen;

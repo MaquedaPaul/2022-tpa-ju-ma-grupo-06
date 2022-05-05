@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import lineas.Ubicacion;
+import linea.Ubicacion;
 
 
 public class Trayecto {
@@ -14,9 +14,9 @@ public class Trayecto {
     this.tramos.add(unTramo);
   }
 
-  /*public void setOrigen(String origen) {
-    this.origen = origen;
-  }*/
+  /*
+   * public void setOrigen(String origen) { this.origen = origen; }
+   */
 
   public Ubicacion getOrigen() {
     return tramos.get(0).getPuntoOrigen();
@@ -26,8 +26,8 @@ public class Trayecto {
     return tramos.get(tramos.size() - 1).getPuntoDestino();
   }
 
-  /*public void setDestino(String destino) {
-    this.destino = destino;
-  }*/
+  /*
+   * public void setDestino(String destino) { this.destino = destino; }
+   */
 
 }

@@ -7,8 +7,7 @@ public class OrganizacionTest {
 
   @Test
   public void seCreaUnaOrganizacionYLuegoLaOrganizacionCreaUnSector() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2",
-                                        generarListaSectorVacia(), "texto3");
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
     onu.crearSector(generarListaVaciaDeMiembros());
     assertEquals(onu.getSectores().size(), 1);
   }

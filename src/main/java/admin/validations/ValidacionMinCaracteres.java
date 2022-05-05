@@ -1,5 +1,6 @@
 package admin.validations;
-import exceptions.*;
+
+import exceptions.PasswordInseguraException;
 import java.io.IOException;
 
 

@@ -1,4 +1,4 @@
-package Linea;
+package lineas;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ public class LineaTransporte {
   private final String nombre;
   private final List<Ubicacion> ubicaciones;
 
-  public LineaTransporte(TipoTransporte tipoTransporte, String nombre, List<Ubicacion> ubicaciones) {
+  public LineaTransporte(TipoTransporte tipoTransporte,
+                         String nombre, List<Ubicacion> ubicaciones) {
     this.tipoTransporte = tipoTransporte;
     this.nombre = nombre;
     this.ubicaciones = ubicaciones;

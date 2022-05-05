@@ -20,8 +20,7 @@ public class ValidacionPeoresPasswords implements Validacion {
                 throw new PasswordInseguraException("La contraseña está entre las peores 10 mil.");
             }
         } catch (IOException e) {
-            throw new PasswordInseguraException(
-                    "No se pudo comprobar que la contraseña sea segura.");
+            throw new FileProblemException("No se pudo comprobar que la contraseña sea segura.");
         }
     }
 }

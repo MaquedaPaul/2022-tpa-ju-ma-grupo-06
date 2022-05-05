@@ -15,20 +15,6 @@ public class ValidacionMinCaracteresTest {
 
   ValidacionMinCaracteres minimosCaracteres = new ValidacionMinCaracteres();
 
-  /*
-   * RegistroAdministrador registro = new RegistroAdministrador(); Administrador administrador =
-   * registro.crearAdministrador(user, password);
-   *
-   * @Test public void validarPasswordLarga() {
-   *
-   * }
-   *
-   * @Test public void validarPasswordJusta() {
-   *
-   * }
-   *
-   */
-
   @Test
   public void unaPasswordCortaDeberiaNoValidarse() {
     assertThrows(PasswordInseguraException.class, () -> {

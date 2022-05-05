@@ -18,7 +18,7 @@ public class ValidacionPeoresPasswordsTest {
 
     }
     @Test
-    void unaPasswordQueNOSeEncuentraEnLaListaPeoresPassDebeSerValida() {
+    void unaPasswordQueNoSeEncuentraEnLaListaPeoresPassDebeSerValida() {
         Assertions.assertDoesNotThrow(() -> {validadorPeoresPasswords.validar(passwordNoSeEncuentraEnLista);});
 
     }

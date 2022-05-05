@@ -10,6 +10,7 @@ public class TransportePublicoTest {
   // PARADAS
   Ubicacion UbicacionInicio = new Ubicacion("libertador",200);
   Ubicacion UbicacionIntermedia = new Ubicacion("Callao",1222);
+  Ubicacion otraUbicacion = new Ubicacion("Tucuman",222);
   Ubicacion UbicacionFinal = new Ubicacion("sanJuan",122);
 
   // LISTA DE UbicacionS
@@ -35,5 +36,12 @@ public class TransportePublicoTest {
     assertEquals(unColectivo.getUltimaUbicacion(),UbicacionFinal);
   }
 
+  @Test
+  public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
+
+    assertEquals(linea138.getParadas().size(), 3);
+    linea138.agregarParadaAlRecorrido(otraUbicacion,3);
+    assertEquals(linea138.getParadas().size(), 4);
+  }
 
 }

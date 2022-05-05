@@ -15,6 +15,7 @@ public class ValidacionMinCaracteres implements Validacion {
   public void validar(String password) {
     int minCharacters = 8;
 
+    // este if es logica repetida en todas las validaciones
     if (password.length() < minCharacters) {
       throw new PasswordInseguraException(
           "La contraseña tiene menos de " + minCharacters + "caracteres.");

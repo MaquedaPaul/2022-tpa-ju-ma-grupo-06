@@ -14,9 +14,9 @@ public class RegistroAdministrador {
 
   private void especificarpassword(String password) {
     ValidadorPassword unValidador = new ValidadorPassword();
-    String passwordVerificada = unValidador.validarPassword(password);
+    unValidador.validarPassword(password);
     requireNonNull(password);
-    this.password = passwordVerificada;
+    this.password = password;
   }
 
   private void especificarUsuario(String usuario) {

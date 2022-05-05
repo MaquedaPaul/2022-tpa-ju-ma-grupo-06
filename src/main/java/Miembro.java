@@ -2,7 +2,7 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 enum TIPO_DOCUMENTO{
-  DNI, PASAPORTE; //falta especificación de tipos de documentos
+  DNI, PASAPORTE //falta especificación de tipos de documentos
 }
 
 public class Miembro {
@@ -30,7 +30,7 @@ public class Miembro {
 
   void registrarTrayecto(Trayecto unTrayecto){
     requireNonNull(unTrayecto);
-    unTrayecto.add(trayectos);
+    trayectos.add(unTrayecto);
   }
   void solicitarVinculacion(Organizacion unaOrganizacion, Sector unSector){
     unaOrganizacion.procesarPedidoVinculacion(unSector, this);

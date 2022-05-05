@@ -1,14 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Exception;
 import java.util.Objects;
 
-enum TipoOrganizacion {
-  GUBERNAMENTAL,
-  ONG,
-  EMPRESA,
-  INSTITUCION
-}
 
 public class Organizacion {
   String razonSocial;
@@ -17,22 +10,27 @@ public class Organizacion {
   List<Sector> sectores;
   String clasificacion;
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica, String clasificacion) {
-
+  public Organizacion(
+      String razonSocial,
+      TipoOrganizacion tipo,
+      String ubicacionGeografica,
+      String clasificacion) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
-    List<Sector> sectoresVacios = new ArrayList<>();
-    this.sectores = sectoresVacios;
+    //List<Sector> sectoresVacios = new ArrayList<>();
+    this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
   }
 
   void procesarPedidoVinculacion(Sector unSector, Miembro unMiembro) {
-    if(puedeVincularse(unSector, unMiembro))
+    if (puedeVincularse(unSector, unMiembro)) {
       unSector.admitirMiembro(unMiembro);
-    else
+    } else {
       throw new NoSeAceptaVinculacion();
+    }
   }
+
   void crearSector(List<Miembro> unosMiembros) {
     sectores.add(new Sector(unosMiembros));
   }
@@ -47,6 +45,3 @@ public class Organizacion {
   }
 }
 
-class NoSeAceptaVinculacion extends RuntimeException {
-
-}

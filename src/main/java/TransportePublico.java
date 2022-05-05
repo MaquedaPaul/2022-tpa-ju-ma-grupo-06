@@ -1,6 +1,6 @@
 import Linea.*;
 
-public class TransportePublico implements Transporte{
+public class TransportePublico implements Transporte {
 
   private LineaTransporte lineaUtilizada;
 
@@ -16,11 +16,11 @@ public class TransportePublico implements Transporte{
     return lineaUtilizada.transporte();
   }
 
-  public Ubicacion getParadaInicio() {
+  public Ubicacion getUbicacionInicio() {
     return lineaUtilizada.inicioDelRecorrido();
   }
 
-  public  getUltimaParada() {
+  public Ubicacion getUltimaUbicacion() {
     return lineaUtilizada.finalDelRecorrido();
   }
 }

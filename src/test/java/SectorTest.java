@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SectorTest {
   @Test
@@ -21,6 +20,6 @@ class SectorTest {
   private Miembro generarPersona() {
     List<Organizacion> listaOrganizacionVacia = new ArrayList<>();
     List<Trayecto> listaTrayectoVacia = new ArrayList<>();
-    return new Miembro("texto1", "texto2", TIPO_DOCUMENTO.DNI, 123, listaOrganizacionVacia, listaTrayectoVacia);
+    return new Miembro("texto1", "texto2", TIpoDocumento.DNI, 123, listaOrganizacionVacia, listaTrayectoVacia);
   }
 }

@@ -6,9 +6,9 @@ public class RegistroAdministrador {
   String usuario;
   String password;
 
-  Administrador construir(){
+  Administrador construir() {
     this.validar();
-    Administrador unAdministrador = new Administrador(usuario,password);
+    Administrador unAdministrador = new Administrador(usuario, password);
     return unAdministrador;
   }
 

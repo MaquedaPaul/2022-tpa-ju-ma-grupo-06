@@ -1,8 +1,8 @@
 package admin;
-
+import admin.validations.*;
 import java.util.ArrayList;
 import java.util.List;
-import admin.validations.*;
+
 
 class ValidadorPassword {
 
@@ -18,7 +18,7 @@ class ValidadorPassword {
 
   /**
    * Valida la contraseña según las validaciones vigentes.
-   * 
+   *
    * @param password
    */
   public void validarPassword(String password) {

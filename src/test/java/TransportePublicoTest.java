@@ -8,15 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransportePublicoTest {
 
   // PARADAS
-  Parada paradaInicio = new Parada("libertador",200);
-  Parada paradaIntermedia = new Parada("Callao",1222);
-  Parada paradaFinal = new Parada("sanJuan",122);
+  Ubicacion UbicacionInicio = new Ubicacion("libertador",200);
+  Ubicacion UbicacionIntermedia = new Ubicacion("Callao",1222);
+  Ubicacion UbicacionFinal = new Ubicacion("sanJuan",122);
 
-  // LISTA DE PARADAS
-  List<Parada> paradasDel138 = Arrays.asList(paradaInicio,paradaIntermedia,paradaFinal);
+  // LISTA DE UbicacionS
+  List<Ubicacion> UbicacionesDel138 = Arrays.asList(UbicacionInicio,UbicacionIntermedia,UbicacionFinal);
 
   // LINEA TRANSPORTE
-  LineaTransporte linea138 = new LineaTransporte(TipoTransporte.COLECTIVO,"linea138",paradasDel138);
+  LineaTransporte linea138 = new LineaTransporte(TipoTransporte.COLECTIVO,"linea138",UbicacionesDel138);
   // COLECTIVO DE EJEMPLO
   TransportePublico unColectivo = new TransportePublico(linea138);
 
@@ -26,13 +26,13 @@ public class TransportePublicoTest {
   }
 
   @Test
-  public void elInicioDelRecorridoDelColectivoEsSuPrimerParada() {
-    assertEquals(unColectivo.getParadaInicio(),paradaInicio);
+  public void elInicioDelRecorridoDelColectivoEsSuPrimerUbicacion() {
+    assertEquals(unColectivo.getUbicacionInicio(),UbicacionInicio);
   }
 
   @Test
-  public void elFinalDelRecorridoDelColectivoEsSuUltimaParada() {
-    assertEquals(unColectivo.getUltimaParada(),paradaFinal);
+  public void elFinalDelRecorridoDelColectivoEsSuUltimaUbicacion() {
+    assertEquals(unColectivo.getUltimaUbicacion(),UbicacionFinal);
   }
 
 

@@ -1,16 +1,15 @@
-import Linea.Parada;
-
+import Linea.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trayecto{
+public class Trayecto {
   private List<Tramo> tramos = new ArrayList<>();
 
   public void setTramos(List<Tramo> tramos) {
     this.tramos = tramos;
   }
 
-  public void agregarTramo(Tramo unTramo){
+  public void agregarTramo(Tramo unTramo) {
     this.tramos.add(unTramo);
   }
 
@@ -23,7 +22,7 @@ public class Trayecto{
   }
 
   public Ubicacion getDestino() {
-    return tramos.get(tramos.size()-1).getPuntoDestino();
+    return tramos.get(tramos.size() - 1).getPuntoDestino();
   }
 
   /*public void setDestino(String destino) {

@@ -1,5 +1,5 @@
 package admin.validations;
 
 public interface Validacion {
-    public void validar(String password);
+  public void validar(String password);
 }

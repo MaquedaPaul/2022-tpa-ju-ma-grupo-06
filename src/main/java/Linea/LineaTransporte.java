@@ -1,10 +1,10 @@
 package Linea;
+
 import java.util.List;
 
 public class LineaTransporte {
-  private TipoTransporte tipoTransporte;
-  private String nombre;
-
+  private final TipoTransporte tipoTransporte;
+  private final String nombre;
   private final List<Ubicacion> ubicaciones;
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre, List<Ubicacion> ubicaciones) {
@@ -18,7 +18,7 @@ public class LineaTransporte {
   }
 
   public void agregarParadaAlRecorrido(Ubicacion unaParada, int posicionEnElRecorrido) {
-    ubicaciones.add(posicionEnElRecorrido-1,unaParada);
+    ubicaciones.add(posicionEnElRecorrido - 1, unaParada);
   }
 
   public TipoTransporte transporte() {
@@ -30,6 +30,6 @@ public class LineaTransporte {
   }
 
   public Ubicacion finalDelRecorrido() {
-    return ubicaciones.get(ubicaciones.size()-1);
+    return ubicaciones.get(ubicaciones.size() - 1);
   }
 }

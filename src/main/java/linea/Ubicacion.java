@@ -1,4 +1,4 @@
-package lineas;
+package linea;
 
 public class Ubicacion {
   private String nombre;

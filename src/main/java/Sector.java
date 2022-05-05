@@ -1,7 +1,5 @@
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-
 public class Sector {
   List<Miembro> miembros;
 

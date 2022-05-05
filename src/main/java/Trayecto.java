@@ -1,6 +1,7 @@
-import Linea.Ubicacion;
 import java.util.ArrayList;
 import java.util.List;
+import lineas.Ubicacion;
+
 
 public class Trayecto {
   private List<Tramo> tramos = new ArrayList<>();

@@ -1,4 +1,6 @@
-import Linea.*;
+import lineas.LineaTransporte;
+import lineas.TipoTransporte;
+import lineas.Ubicacion;
 
 public class TransportePublico implements Transporte {
 

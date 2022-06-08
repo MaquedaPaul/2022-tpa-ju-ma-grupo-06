@@ -1,21 +1,21 @@
 import org.junit.jupiter.api.Test;
 import linea.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransportePublicoTest {
 
+
   // PARADAS
-  Ubicacion ubicacionInicio = new Ubicacion("Libertador", 200);
-  Ubicacion ubicacionIntermedia = new Ubicacion("Callao", 1222);
-  Ubicacion ubicacionFinal = new Ubicacion("SanJuan", 122);
-  Ubicacion otraUbicacion = new Ubicacion("Tucuman", 222);
+  PuntoUbicacion ubicacionInicio = new PuntoUbicacion("Libertador", 200);
+  PuntoUbicacion ubicacionIntermedia = new PuntoUbicacion("Callao", 1222);
+  PuntoUbicacion ubicacionFinal = new PuntoUbicacion("SanJuan", 122);
+  PuntoUbicacion otraUbicacion = new PuntoUbicacion("Tucuman", 222);
 
   // LISTA DE UbicacionS
-  List<Ubicacion> ubicacionesDel138 = new ArrayList<>();
+  List<PuntoUbicacion> ubicacionesDel138 = new ArrayList<>();
 
   // LINEA TRANSPORTE
   LineaTransporte linea138 =
@@ -48,10 +48,10 @@ public class TransportePublicoTest {
 
   @Test
   public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
-    Ubicacion ubicacionInicio = new Ubicacion("Libertador", 200);
-    Ubicacion ubicacionIntermedia = new Ubicacion("Callao", 1222);
-    Ubicacion ubicacionFinal = new Ubicacion("SanJuan", 122);
-    Ubicacion otraUbicacion = new Ubicacion("Tucuman", 222);
+    PuntoUbicacion ubicacionInicio = new PuntoUbicacion("Libertador", 200);
+    PuntoUbicacion ubicacionIntermedia = new PuntoUbicacion("Callao", 1222);
+    PuntoUbicacion ubicacionFinal = new PuntoUbicacion("SanJuan", 122);
+    PuntoUbicacion otraUbicacion = new PuntoUbicacion("Tucuman", 222);
 
     LineaTransporte linea138 =
         new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", ubicacionesDel138);

@@ -20,8 +20,8 @@ public class ServicioGeodds {
         .build();
   }
 
-  public static ServicioGeodds getInstance(){
-    if(instancia == null){
+  public static ServicioGeodds getInstancia() {
+    if(instancia == null) {
       instancia = new ServicioGeodds();
     }
     return instancia;

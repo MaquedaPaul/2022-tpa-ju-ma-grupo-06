@@ -1,6 +1,9 @@
 import linea.LineaTransporte;
+import linea.PuntoUbicacionTransportePublico;
 import linea.TipoTransporte;
-import linea.Ubicacion;
+import linea.PuntoUbicacion;
+
+import java.io.IOException;
 
 public class TransportePublico implements Transporte {
 
@@ -18,11 +21,17 @@ public class TransportePublico implements Transporte {
     return lineaUtilizada.transporte();
   }
 
-  public Ubicacion getUbicacionInicio() {
+  public PuntoUbicacion getUbicacionInicio() {
     return lineaUtilizada.inicioDelRecorrido();
   }
 
-  public Ubicacion getUltimaUbicacion() {
+  public PuntoUbicacion getUltimaUbicacion() {
     return lineaUtilizada.finalDelRecorrido();
   }
+
+  public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
+    return origen.getKmRecorrido();
+  }
 }
+
+

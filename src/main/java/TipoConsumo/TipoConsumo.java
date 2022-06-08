@@ -1,10 +1,12 @@
-import exceptions.UnidadFENoCorrespondienteConUnidadTIpoConsumo;
+package TipoConsumo;
 
+import exceptions.UnidadFENoCorrespondienteConUnidadTipoConsumo;
+import admin.FactorEmision;
 public abstract class TipoConsumo {
   String unidad;
   TipoActividad actividad;
   TipoAlcance alcance;
-  //FactorEmision factorEmision;
+  FactorEmision factorEmision;
   public String unidadDeFactorEmisionPosible(){
     return unidad;
   }
@@ -16,7 +18,7 @@ public abstract class TipoConsumo {
   }
   private void comprobarUnidadValida(String unidadDivisible){
     if(!unidadDivisible.equals(unidadDeFactorEmisionPosible())){
-      throw new UnidadFENoCorrespondienteConUnidadTIpoConsumo("La unidad del FE no se corresponde con la unidad del TipoConsumo");
+      throw new UnidadFENoCorrespondienteConUnidadTipoConsumo("La unidad del FE no se corresponde con la unidad del TipoConsumo.TipoConsumo");
     }
   }
 }

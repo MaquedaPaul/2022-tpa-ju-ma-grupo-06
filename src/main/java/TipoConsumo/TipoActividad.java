@@ -1,3 +1,5 @@
+package TipoConsumo;
+
 public enum TipoActividad {
   COMBUSTION_FIJA,
   COMBUSTION_MOVIL,

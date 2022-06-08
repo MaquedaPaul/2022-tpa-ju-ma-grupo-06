@@ -1,3 +1,5 @@
+package TipoConsumo;
+
 public class GasNatural extends TipoConsumo{
   public GasNatural(){
     unidad = "m3";

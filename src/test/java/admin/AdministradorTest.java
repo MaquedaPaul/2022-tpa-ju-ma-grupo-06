@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AdministradorTest {
 
+
   @Test
   void agregarUnFactorDeEmision() {
     Administrador unAdministrador = new Administrador("ejemplo","esteEsUnEjemplo");

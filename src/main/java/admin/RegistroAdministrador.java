@@ -8,18 +8,17 @@ public class RegistroAdministrador {
 
   Administrador construir() {
     this.validar();
-    Administrador unAdministrador = new Administrador(usuario, password);
-    return unAdministrador;
+    return new Administrador(usuario, password);
   }
 
-  private void especificarpassword(String password) {
+  public void especificarpassword(String password) {
     ValidadorPassword unValidador = new ValidadorPassword();
     unValidador.validarPassword(password);
     requireNonNull(password);
     this.password = password;
   }
 
-  private void especificarUsuario(String usuario) {
+  public void especificarUsuario(String usuario) {
     requireNonNull(usuario);
     this.usuario = usuario;
   }

@@ -7,11 +7,8 @@ import org.junit.jupiter.api.Test;
 import admin.validations.ValidacionPeoresPasswords;
 
 public class ValidacionPeoresPasswordsTest {
-
     String passwordPeor = "password";
     String passwordNoSeEncuentraEnLista = "lucasBk";
-
-
     ValidacionPeoresPasswords validadorPeoresPasswords = new ValidacionPeoresPasswords();
 
     @Test
@@ -19,7 +16,6 @@ public class ValidacionPeoresPasswordsTest {
         Assertions.assertThrows(PasswordInseguraException.class, () -> {
             validadorPeoresPasswords.validar(passwordPeor);
         });
-
     }
 
     @Test
@@ -27,7 +23,5 @@ public class ValidacionPeoresPasswordsTest {
         Assertions.assertDoesNotThrow(() -> {
             validadorPeoresPasswords.validar(passwordNoSeEncuentraEnLista);
         });
-
     }
-
 }

@@ -8,12 +8,10 @@ import admin.validations.ValidacionMinCaracteres;
 import admin.validations.ValidacionPeoresPasswords;
 
 public class ValidacionTest {
-
     ValidacionMinCaracteres validarCaracteres = new ValidacionMinCaracteres();
     ValidacionPeoresPasswords validarSiEsBuena = new ValidacionPeoresPasswords();
     String contraseniaCool = "15R25O40J25O15";
     String contraseniaLargaDelArchivo = "pufunga7782";
-
 
     @Test
     void unaContraseniaLargaYQueNoEstaEnLaListaEsValida() {
@@ -27,5 +25,4 @@ public class ValidacionTest {
         Assertions.assertThrows(PasswordInseguraException.class,
                 () -> validarSiEsBuena.validar(contraseniaLargaDelArchivo));
     }
-
 }

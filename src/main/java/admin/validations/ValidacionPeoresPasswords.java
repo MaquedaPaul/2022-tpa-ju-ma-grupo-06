@@ -18,6 +18,7 @@ public class ValidacionPeoresPasswords implements Validacion {
   public void validar(String password) {
     String path = "../2022-tpa-ju-ma-grupo-06/src/main/java/admin/top_10k_worst_passwords.txt";
     try {
+      // este if es logica repetida en todas las validaciones
       if (Files.lines(Paths.get(path)).anyMatch(line -> line.contains(password))) {
         throw new PasswordInseguraException("La contraseña está entre las peores 10 mil.");
       }

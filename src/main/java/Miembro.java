@@ -2,14 +2,11 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-
-
 public class Miembro {
   String nombre;
   String apellido;
   TIpoDocumento tipoDocumento;
   int numeroDocumento;
-  List<Organizacion> organizaciones;
   List<Trayecto> trayectos;
 
   public Miembro(
@@ -17,13 +14,11 @@ public class Miembro {
       String unApellido,
       TIpoDocumento unTipoDocumento,
       int unNumeroDocumento,
-      List<Organizacion> unasOrganizaciones,
       List<Trayecto> unosTrayectos) {
     nombre = unNombre;
     apellido = unApellido;
     tipoDocumento = unTipoDocumento;
     numeroDocumento = unNumeroDocumento;
-    organizaciones = unasOrganizaciones;
     trayectos = unosTrayectos;
   }
 
@@ -32,8 +27,8 @@ public class Miembro {
     trayectos.add(unTrayecto);
   }
 
-  void solicitarVinculacion(Organizacion unaOrganizacion, String nombreSector) {
-    unaOrganizacion.procesarPedidoVinculacion(nombreSector, this);
+  void solicitarVinculacion(Organizacion unaOrganizacion, Solicitud unaSolicitud) {
+    unaOrganizacion.recibirSolicitud(unaSolicitud);
   }
 
   public String getApellido() {
@@ -46,10 +41,6 @@ public class Miembro {
 
   public int getNumeroDocumento() {
     return numeroDocumento;
-  }
-
-  public List<Organizacion> getOrganizaciones() {
-    return organizaciones;
   }
 
   public TIpoDocumento getTipoDocumento() {

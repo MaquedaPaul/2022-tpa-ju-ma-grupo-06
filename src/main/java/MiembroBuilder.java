@@ -7,7 +7,6 @@ class MiembroBuilder {
   String apellido;
   TIpoDocumento tipoDocumento;
   int numeroDocumento;
-  List<Organizacion> organizaciones;
   List<Trayecto> trayectos;
 
   public MiembroBuilder() {
@@ -16,7 +15,7 @@ class MiembroBuilder {
 
   public Miembro construir() {
     this.validar();
-    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, organizaciones, trayectos);
+    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos);
   }
 
   public void especificarNombre(String unNombre) {
@@ -37,11 +36,6 @@ class MiembroBuilder {
     numeroDocumento = unNumeroDocumento;
   }
 
-  public void especificarOrganizaciones(List<Organizacion> unasOrganizaciones) {
-    requireNonNull(unasOrganizaciones);
-    organizaciones = unasOrganizaciones;
-  }
-
   public void especificarTrayectos(List<Trayecto> unosTrayectos) {
     // podría ser que no se desplace porque es virtual
     trayectos = unosTrayectos;
@@ -51,9 +45,7 @@ class MiembroBuilder {
     requireNonNull(nombre);
     requireNonNull(apellido);
     requireNonNull(tipoDocumento);
-    requireNonNull(organizaciones);
   }
-
 }
 
 

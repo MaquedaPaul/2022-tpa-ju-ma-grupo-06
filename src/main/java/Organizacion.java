@@ -1,10 +1,9 @@
+import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-
 
 public class Organizacion {
   String razonSocial;
@@ -12,6 +11,7 @@ public class Organizacion {
   String ubicacionGeografica;
   List<Sector> sectores;
   String clasificacion;
+  List<Solicitud> solicitudes;
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
       String clasificacion) {
@@ -21,24 +21,40 @@ public class Organizacion {
     // List<Sector> sectoresVacios = new ArrayList<>();
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
+    this.solicitudes = new ArrayList<>();
   }
 
-  void procesarPedidoVinculacion(String nombreSector, Miembro unMiembro) {
-    if (puedeVincularse(nombreSector, unMiembro)) {
-      sectores.stream().filter(sector -> sector.getNombre().equals(nombreSector))
-          .collect(Collectors.toList()).get(0).admitirMiembro(unMiembro);
-    } else {
-      throw new NoSeAceptaVinculacion();
+  void procesarVinculacion(boolean decicion) {
+    Solicitud nuevaSolicitud = solicitudes.get(0);
+    solicitudes.remove(0);
+    if (decicion) {
+      aceptarvinculacion(nuevaSolicitud);
+      return;
+    }
+    rechazarVinculacion();
+  }
+
+  void incorporarSector(Sector unSector) {
+    sectores.add(unSector);
+  }
+
+  void recibirSolicitud(Solicitud unaSolicitud) {
+    validarQueExistaSector(unaSolicitud.nombreDelSectorSolicitado());
+    solicitudes.add(unaSolicitud);
+  }
+
+  void rechazarVinculacion() {
+    throw new NoSeAceptaVinculacion("Su pedido de Vinculacion Fue Rechazado");
+  }
+
+  void validarQueExistaSector(String nombreSector) {
+    if (sectores.stream().noneMatch(sector -> sector.getNombre().equals(nombreSector))) {
+      throw new NoExisteElSectorVinculante("El Sector Ingresado es Invalido");
     }
   }
 
-  void crearSector(String nombre, List<Miembro> unosMiembros) {
-    sectores.add(new Sector(nombre, unosMiembros));
-  }
-
-  // No sabemos bien Como seria la condicion de Vinculacion
-  boolean puedeVincularse(String nombreSector, Miembro unMiembro) {
-    return sectores.stream().anyMatch(sector -> sector.getNombre().equals(nombreSector));
+  void aceptarvinculacion(Solicitud unaSolicitud) {
+    unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
   public List<Sector> getSectores() {
@@ -59,6 +75,10 @@ public class Organizacion {
 
   public String getUbicacionGeografica() {
     return ubicacionGeografica;
+  }
+
+  public List<Solicitud> getSolicitudes() {
+    return solicitudes;
   }
 }
 

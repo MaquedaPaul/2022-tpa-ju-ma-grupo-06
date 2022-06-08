@@ -4,7 +4,7 @@ public class Sector {
   String nombre;
   List<Miembro> miembros;
 
-  public Sector(String nombre,List<Miembro> unosMiembros) {
+  public Sector(String nombre, List<Miembro> unosMiembros) {
     //un sector podría estar vacio? si todavía no se asignaron supongo que si
     this.nombre = nombre;
     this.miembros = unosMiembros;
@@ -21,6 +21,4 @@ public class Sector {
   String getNombre() {
     return nombre;
   }
-
-
 }

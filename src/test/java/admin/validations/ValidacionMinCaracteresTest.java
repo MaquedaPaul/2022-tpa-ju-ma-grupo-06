@@ -8,8 +8,6 @@ import admin.validations.ValidacionMinCaracteres;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidacionMinCaracteresTest {
-
-
   String passwordLarga = "bansdhilasbdlhasbda";
   String passwordJusta = "cocacola";
   String passwordCorta = "123";
@@ -28,7 +26,6 @@ public class ValidacionMinCaracteresTest {
     Assertions.assertDoesNotThrow(() -> {
       minimosCaracteres.validar(passwordJusta);
     });
-
   }
 
   @Test

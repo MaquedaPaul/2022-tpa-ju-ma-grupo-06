@@ -1,7 +1,7 @@
-import TipoConsumo.GasNatural;
+import tipo.consumo.GasNatural;
 import admin.FactorEmision;
 
-import exceptions.UnidadFENoCorrespondienteConUnidadTipoConsumo;
+import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 import org.junit.jupiter.api.Test;
 
 
@@ -15,7 +15,7 @@ class TipoConsumoTest {
     GasNatural unGasNatural = new GasNatural();
 
     FactorEmision unFactorIncorrecto = new FactorEmision(5,"lts");
-    assertThrows(UnidadFENoCorrespondienteConUnidadTipoConsumo.class,() -> unGasNatural.setFactorEmision(unFactorIncorrecto));
+    assertThrows(UnidadFeNoCorrespondienteConUnidadTipoConsumo.class,() -> unGasNatural.setFactorEmision(unFactorIncorrecto));
 
   }
   @Test

@@ -7,6 +7,7 @@ import services.geodds.entities.Distancia;
 import java.io.IOException;
 
 public class VehiculoParticular implements Transporte {
+  public ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
   private TipoVehiculo tipoVehiculo;
   private TipoCombustible tipoCombustible;
 

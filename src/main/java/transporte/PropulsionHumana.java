@@ -7,6 +7,7 @@ import services.geodds.entities.Distancia;
 import java.io.IOException;
 
 public class PropulsionHumana implements Transporte {
+  ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
   private String herramientaUtilizada;
 
   public PropulsionHumana(String herramientaUtilizada) {

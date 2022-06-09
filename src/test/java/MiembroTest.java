@@ -12,24 +12,24 @@ public class MiembroTest {
   @Test
   public void unMiembroNoPuedeVincularseAUnSectorQueNoPerteneceALaOrganizacion() {
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
-    Miembro jorgito = generarMiembro("jorge","Nitales",42222222, TIpoDocumento.DNI);
+    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TIpoDocumento.DNI);
     Sector ventas = new Sector("Ventas", new ArrayList<>());
     onu.incorporarSector(ventas);
     Sector compras = new Sector("Compras", new ArrayList<>());
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
-    assertThrows(NoExisteElSectorVinculante.class,() -> jorgito.solicitarVinculacion(onu, nuevaSolicitud));
+    assertThrows(NoExisteElSectorVinculante.class, () -> jorgito.solicitarVinculacion(onu, nuevaSolicitud));
   }
 
   public static Miembro generarMiembro(String nombre,
-                                String apellido,
-                                int documento,
-                                TIpoDocumento unTipo) {
+                                       String apellido,
+                                       int documento,
+                                       TIpoDocumento unTipo) {
     MiembroBuilder nuevoMiembro = new MiembroBuilder();
     nuevoMiembro.especificarNombre(nombre);
     nuevoMiembro.especificarApellido(apellido);
     nuevoMiembro.especificarNumeroDocumento(documento);
     nuevoMiembro.especificarTipoDocumento(unTipo);
     nuevoMiembro.especificarTrayectos(new ArrayList<>());
-    return  nuevoMiembro.construir();
+    return nuevoMiembro.construir();
   }
 }

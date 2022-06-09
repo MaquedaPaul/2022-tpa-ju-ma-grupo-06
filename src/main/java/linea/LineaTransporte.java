@@ -1,5 +1,6 @@
 package linea;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LineaTransporte {
@@ -21,25 +22,37 @@ public class LineaTransporte {
 
   /**
    * Toma unaParada y la agrega en la posicionEnElRecorrido indicada.
-   * 
+   *
    * @param unaParada
-   * @param posicionEnElRecorrido
+   * @param sentido
    */
   // ARREGLAR
-  public void agregarParadaAlRecorrido(Parada unaParada, int posicionEnElRecorrido) {
-    RecorridoDeIda.add(posicionEnElRecorrido - 1, unaParada);
+  public void agregarParadaAlRecorrido(Parada unaParada) {
+    if (unaParada.esDeIda()) {
+      recorridoDeIda.add(unaParada);
+    } else {
+      recorridoVuelta.add(unaParada);
+    }
   }
 
   public TipoTransporte transporte() {
     return tipoTransporte;
   }
 
-  public Parada inicioDelRecorrido() {
-    return RecorridoDeIda.get(0);
+  public Parada inicioDelRecorridoDeIda() {
+    return recorridoDeIda.get(0);
   }
 
-  public Parada finalDelRecorrido() {
-    return RecorridoDeIda.get(RecorridoDeIda.size() - 1);
+  public Parada finalDelRecorridoDeIda() {
+    return recorridoDeIda.get(recorridoDeIda.size() - 1);
+  }
+
+  public Parada inicioDelRecorridoDeRegreso() {
+    return recorridoDeIda.get(0);
+  }
+
+  public Parada finalDelRecorridoDeRegreso() {
+    return recorridoDeIda.get(recorridoDeIda.size() - 1);
   }
 
   public String getNombre() {

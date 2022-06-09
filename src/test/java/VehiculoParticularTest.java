@@ -11,12 +11,13 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 public class VehiculoParticularTest {
   Factory unFactory = new Factory();
   TipoVehiculo esUnAuto = TipoVehiculo.AUTO;
   TipoCombustible andaANafta = TipoCombustible.NAFTA;
   VehiculoParticular autoANafta = new VehiculoParticular(TipoCombustible.NAFTA, TipoVehiculo.AUTO);
-////
+  ////
   TipoVehiculo esUnaMoto = TipoVehiculo.MOTO;
   TipoCombustible andaAGasoil = TipoCombustible.GASOIL;
   VehiculoParticular motoAGasoil = new VehiculoParticular(TipoCombustible.GASOIL, TipoVehiculo.MOTO);
@@ -27,6 +28,7 @@ public class VehiculoParticularTest {
     GeoddsService geoddsService;
     geoddsService = mock(GeoddsService.class);
   }
+
   @Test
   public void darDeAltaUnAutoANafta() {
     assertEquals(autoANafta.getTipoVehiculo(), esUnAuto);

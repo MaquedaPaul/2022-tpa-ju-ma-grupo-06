@@ -1,18 +1,24 @@
 package mediciones;
 
-import exceptions.*;
-import tipo.consumo.RepoTipoDeConsumo;
-import tipo.consumo.TipoConsumo;
-
-import java.io.*;
+import exceptions.ElPeriodoDeImputacionIngresadoNoExiste;
+import exceptions.ElPeriodoDeImputacionNoEsValido;
+import exceptions.ElTipoLeidoNoEsValido;
+import exceptions.LaMedicionEsNegativa;
+import exceptions.NoSePudoAbrirElArchivo;
+import exceptions.NoSePudoLeerLaLinea;
+import exceptions.NoSeReconoceLaPeriodicidad;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.BufferedReader;
-import java.util.ArrayList;
-
 import java.util.Objects;
-import java.util.regex.*;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import tipo.consumo.RepoTipoDeConsumo;
+import tipo.consumo.TipoConsumo;
 
 public class MedicionBuilder {
 
@@ -36,14 +42,19 @@ public class MedicionBuilder {
     while (linea != null) {
       lineasLeidas++;
       linea = this.lineaLeida();
-        this.validarFormatoDeCarga(linea);
-        this.asignarParametros(linea);
-        this.crearMedicion();
+      this.validarFormatoDeCarga(linea);
+      this.asignarParametros(linea);
+      this.crearMedicion();
     }
   }
 
   private void crearMedicion() {
-    RepoMediciones.getInstance().cargarMedicion(new Medicion(this.tipoConsumo, this.perioricidad, this.valor, this.periodoDeImputacion));
+    RepoMediciones.getInstance()
+        .cargarMedicion(new Medicion(
+            this.tipoConsumo,
+            this.perioricidad,
+            this.valor,
+            this.periodoDeImputacion));
   }
 
   private void asignarParametros(String linea) {
@@ -62,11 +73,12 @@ public class MedicionBuilder {
       throw new ElTipoLeidoNoEsValido(lineasLeidas);
     }
 
-    if (0 < Integer.parseInt(lineaPartida.get(1))) {
+    if (0 > Integer.parseInt(lineaPartida.get(1))) {
       throw new LaMedicionEsNegativa(lineasLeidas);
     }
 
-    if (Arrays.stream(Periodo.values()).anyMatch(elem -> Objects.equals(elem.toString(), lineaPartida.get(2)))) {
+    if (Arrays.stream(Periodo.values())
+        .anyMatch(elem -> Objects.equals(elem.toString(), lineaPartida.get(2)))) {
       throw new NoSeReconoceLaPeriodicidad(lineasLeidas);
     }
 
@@ -94,7 +106,6 @@ public class MedicionBuilder {
         throw new ElPeriodoDeImputacionIngresadoNoExiste(lineasLeidas);
     }
   }
-
 
   String lineaLeida() {
     try {

@@ -9,8 +9,9 @@ public class RepoMediciones {
 
   private RepoMediciones() {
   }
+
   public static RepoMediciones getInstance() {
-    if(repoMediciones == null) {
+    if (repoMediciones == null) {
       repoMediciones = new RepoMediciones();
     }
     return repoMediciones;

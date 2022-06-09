@@ -1,9 +1,9 @@
 package organizacion;
 
 public enum TipoOrganizacion {
-    GUBERNAMENTAL,
-    ONG,
-    EMPRESA,
-    INSTITUCION
+  GUBERNAMENTAL,
+  ONG,
+  EMPRESA,
+  INSTITUCION
 
 }

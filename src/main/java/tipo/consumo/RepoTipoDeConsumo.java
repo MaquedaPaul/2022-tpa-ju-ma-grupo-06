@@ -13,7 +13,7 @@ public class RepoTipoDeConsumo {
   }
 
   public static RepoTipoDeConsumo getInstance() {
-    if(repoTipoConsumo == null) {
+    if (repoTipoConsumo == null) {
       repoTipoConsumo = new RepoTipoDeConsumo();
     }
     return repoTipoConsumo;
@@ -24,10 +24,14 @@ public class RepoTipoDeConsumo {
   }
 
   public boolean existeElTipoDeConsumo(String tipoConsumo) {
-    return this.getTipoDeConsumo(tipoConsumo) != null ;
+    return this.getTipoDeConsumo(tipoConsumo) != null;
   }
 
   public TipoConsumo getTipoDeConsumo(String nombre) {
-    return this.tiposDeConsumos.stream().filter(tipo -> Objects.equals(tipo.getNombre(), nombre)).collect(Collectors.toList()).get(0);
+    return this.tiposDeConsumos
+        .stream()
+        .filter(tipo -> Objects.equals(tipo.getNombre(), nombre))
+        .collect(Collectors.toList())
+        .get(0);
   }
 }

@@ -6,14 +6,16 @@ import java.util.List;
 public class RepoFactoresEmision {
   public static List<FactorEmision> factoresEmision = new ArrayList<>();
 
-  public RepoFactoresEmision(){
-  };
+  public RepoFactoresEmision() {
+  }
+
+  ;
 
   void incorporarFactor(FactorEmision nuevoFactor) {
     factoresEmision.add(nuevoFactor);
   }
 
-  void modificarFactorEmicion(Double nuevoValor, int posicion){
+  void modificarFactorEmicion(Double nuevoValor, int posicion) {
     factoresEmision.get(posicion).setValor(nuevoValor);
   }
 

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LineaTransporte {
-  private TipoTransporte tipoTransporte;
-  private String nombre;
-  private List<Parada> recorridoDeIda;
-  private List<Parada> recorridoVuelta;
+  private final TipoTransporte tipoTransporte;
+  private final String nombre;
+  private final List<Parada> recorridoDeIda;
+  private final List<Parada> recorridoVuelta;
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre,
                          List<Parada> recorridoDeIda, List<Parada> recorridoVuelta) {
@@ -32,13 +32,6 @@ public class LineaTransporte {
     return paradas;
   }
 
-  /**
-   * Toma unaParada y la agrega en la posicionEnElRecorrido indicada.
-   *
-   * @param unaParada
-   * @param sentido
-   */
-  // ARREGLAR
   public void agregarParadaAlRecorrido(Parada unaParada) {
     if (unaParada.esDeIda()) {
       recorridoDeIda.add(unaParada);

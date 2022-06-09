@@ -1,10 +1,9 @@
 package organizacion;
 
-import transporte.Trayecto;
-
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import transporte.Trayecto;
 
 public class Miembro {
   String nombre;

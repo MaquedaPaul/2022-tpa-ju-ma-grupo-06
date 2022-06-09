@@ -11,7 +11,7 @@ import services.geodds.entities.Distancia;
 public class ServicioGeodds {
   private static ServicioGeodds instancia = null;
   private static final String urlAPI = "https://ddstpa.com.ar/api/";
-  private Retrofit retrofit;
+  private final Retrofit retrofit;
 
   private ServicioGeodds() {
     this.retrofit = new Retrofit.Builder()

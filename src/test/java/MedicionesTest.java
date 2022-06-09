@@ -12,25 +12,25 @@ public class MedicionesTest {
 
   @Test
   public void SeCreaUnaMedicionPeroNoSeEncuentraElArchivo() {
-    assertThrows(NoSePudoAbrirElArchivo.class, () ->  new MedicionBuilder("estaRutaNoExiste.txt"));
+    assertThrows(NoSePudoAbrirElArchivo.class, () -> new MedicionBuilder("estaRutaNoExiste.txt"));
   }
 
   @Test
   public void elValorLeidoEsNegativo() {
-    TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural","text",TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural", "text", TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
     RepoTipoDeConsumo repo = RepoTipoDeConsumo.getInstance();
     repo.agregarNuevoTipoDeConsumo(nuevoConsumo);
     MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/medicionNegativa.csv");
-    assertThrows(LaMedicionEsNegativa.class, () ->  nueva.cargarMediciones());
+    assertThrows(LaMedicionEsNegativa.class, () -> nueva.cargarMediciones());
   }
 
   @Test
   public void laPerioricidadNoEsCorrecta() {
-    TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural","text",TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural", "text", TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
     RepoTipoDeConsumo repo = RepoTipoDeConsumo.getInstance();
     repo.agregarNuevoTipoDeConsumo(nuevoConsumo);
     MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/noSeReconocePerioricidad.csv");
-    assertThrows(NoSeReconoceLaPeriodicidad.class, () ->  nueva.cargarMediciones());
+    assertThrows(NoSeReconoceLaPeriodicidad.class, () -> nueva.cargarMediciones());
   }
 
 

@@ -8,7 +8,10 @@ public class Medicion {
   double valor;
   String periodoDeImputacion;
 
-  public Medicion(TipoConsumo unTipoConsumo, Periodo unaPerioricidad, double unValor, String periodoDeImputacion) {
+  public Medicion(TipoConsumo unTipoConsumo,
+                  Periodo unaPerioricidad,
+                  double unValor,
+                  String periodoDeImputacion) {
     this.tipoConsumo = unTipoConsumo;
     this.periodicidad = unaPerioricidad;
     this.valor = unValor;

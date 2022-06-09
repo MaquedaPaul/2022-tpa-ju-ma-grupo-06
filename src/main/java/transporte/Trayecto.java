@@ -34,13 +34,6 @@ public class Trayecto {
    */
 
   public double distanciaTotal() {
-    tramos.stream().mapToInt( tramo -> {
-      try {
-        return tramo.distanciaTramo();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }).sum();
+    return tramos.stream().mapToInt(tramo -> tramo.distanciaTramo()).sum();
+   }
   }
-
-}

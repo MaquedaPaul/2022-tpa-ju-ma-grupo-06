@@ -6,18 +6,30 @@ import java.util.List;
 public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
-  private List<Parada> RecorridoDeIda;
+  private List<Parada> recorridoDeIda;
   private List<Parada> recorridoVuelta;
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre,
-      List<Parada> RecorridoDeIda) {
+                         List<Parada> recorridoDeIda, List<Parada> recorridoVuelta) {
     this.tipoTransporte = tipoTransporte;
     this.nombre = nombre;
-    this.RecorridoDeIda = RecorridoDeIda;
+    this.recorridoDeIda = recorridoDeIda;
+    this.recorridoVuelta = recorridoVuelta;
   }
 
-  public List<Parada> getParadas() {
-    return RecorridoDeIda;
+  public List<Parada> getRecorridoDeIda() {
+    return recorridoDeIda;
+  }
+
+  public List<Parada> getRecorridoVuelta() {
+    return recorridoVuelta;
+  }
+
+  public List<Parada> getRecorridoTotal() {
+    List<Parada> paradas = new ArrayList<>();
+    paradas.addAll(this.getRecorridoDeIda());
+    paradas.addAll(this.getRecorridoVuelta());
+    return paradas;
   }
 
   /**

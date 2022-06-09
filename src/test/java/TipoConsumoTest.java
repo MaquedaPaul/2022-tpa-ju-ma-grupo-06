@@ -1,8 +1,10 @@
-import tipo.consumo.GasNatural;
 import admin.FactorEmision;
 
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 import org.junit.jupiter.api.Test;
+import tipo.consumo.TipoActividad;
+import tipo.consumo.TipoAlcance;
+import tipo.consumo.TipoConsumo;
 
 
 import static org.mockito.Mockito.*;
@@ -10,21 +12,23 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TipoConsumoTest {
-  @Test
-  public void unGasNaturalNoDeberiaPermitirTenerUnFEConUnidadDistinta(){
-    GasNatural unGasNatural = new GasNatural();
+  TipoConsumo unGasNatural = new TipoConsumo("Gas Natural", "m3", TipoActividad.COMBUSTION_FIJA, TipoAlcance.EMISION_DIRECTA);
 
-    FactorEmision unFactorIncorrecto = new FactorEmision(5,"lts");
-    assertThrows(UnidadFeNoCorrespondienteConUnidadTipoConsumo.class,() -> unGasNatural.setFactorEmision(unFactorIncorrecto));
+  @Test
+  public void unGasNaturalNoDeberiaPermitirTenerUnFEConUnidadDistinta() {
+
+
+    FactorEmision unFactorIncorrecto = new FactorEmision(5, "lts");
+    assertThrows(UnidadFeNoCorrespondienteConUnidadTipoConsumo.class, () -> unGasNatural.setFactorEmision(unFactorIncorrecto));
 
   }
+
   @Test
-  public void unGasNaturalDeberiaPermitirTenerUnFEConUnidadIdentica(){
-    GasNatural unGasNatural;
-    unGasNatural = mock(GasNatural.class);
-    FactorEmision unFactorCorrecto = new FactorEmision(5,"m3");
+  public void unGasNaturalDeberiaPermitirTenerUnFEConUnidadIdentica() {
+    unGasNatural = mock(TipoConsumo.class);
+    FactorEmision unFactorCorrecto = new FactorEmision(5, "m3");
     //assertThrows(UnidadFENoCorrespondienteConUnidadTipoConsumo.class,() -> unGasNatural.setFactorEmision(unFactorCorrecto));
-    verify(unGasNatural,atMostOnce()).setFactorEmision(unFactorCorrecto);
+    verify(unGasNatural, atMostOnce()).setFactorEmision(unFactorCorrecto);
   }
 
 }

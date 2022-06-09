@@ -3,11 +3,19 @@ package tipo.consumo;
 import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 
-public abstract class TipoConsumo {
+public class TipoConsumo {
+  String nombre;
   String unidad;
   TipoActividad actividad;
   TipoAlcance alcance;
   FactorEmision factorEmision;
+
+  public TipoConsumo(String nombre, String unidad, TipoActividad actividad, TipoAlcance alcance) {
+    this.nombre = nombre;
+    this.unidad = unidad;
+    this.actividad = actividad;
+    this.alcance = alcance;
+  }
 
   public String unidadDeFactorEmisionPosible() {
     return unidad;
@@ -24,6 +32,10 @@ public abstract class TipoConsumo {
       throw new UnidadFeNoCorrespondienteConUnidadTipoConsumo(
           "La unidad del FE no se corresponde con la unidad del tipo.consumo.TipoConsumo");
     }
+  }
+
+  public String getNombre() {
+    return nombre;
   }
 
   public TipoActividad getActividad() {

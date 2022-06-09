@@ -4,11 +4,12 @@ import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 
 public class TipoConsumo {
-  String nombre;
-  String unidad;
-  TipoActividad actividad;
-  TipoAlcance alcance;
-  FactorEmision factorEmision;
+
+  private final String nombre;
+  private final String unidad;
+  private final TipoActividad actividad;
+  private final TipoAlcance alcance;
+  private FactorEmision factorEmision;
 
   public TipoConsumo(String nombre, String unidad, TipoActividad actividad, TipoAlcance alcance) {
     this.nombre = nombre;

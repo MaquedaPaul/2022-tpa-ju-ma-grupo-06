@@ -1,5 +1,6 @@
 package mediciones;
 
+import exceptions.*;
 import tipo.consumo.RepoTipoDeConsumo;
 import tipo.consumo.TipoConsumo;
 
@@ -9,17 +10,17 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.regex.*;
 
 
 public class MedicionBuilder {
 
-  private BufferedReader buffer;
+  private final BufferedReader buffer;
   private TipoConsumo tipoConsumo;
-  private String perioricidad;
+  private Periodo perioricidad;
   private double valor;
-  private String fechaMedicion;
-  private String periodo;
+  private String periodoDeImputacion;
   private int lineasLeidas = 1;
 
   public MedicionBuilder(String path) {
@@ -30,49 +31,70 @@ public class MedicionBuilder {
     }
   }
 
-  void cargarMediciones() {
+  public void cargarMediciones() {
     String linea = this.lineaLeida();
-    while(!linea.equals(null)) {
+    while (linea != null) {
       lineasLeidas++;
       linea = this.lineaLeida();
-      if(this.sigueElFormatoDeCarga(linea)) {
-        this.leerParametros(linea);
+        this.validarFormatoDeCarga(linea);
+        this.asignarParametros(linea);
         this.crearMedicion();
-      } else {
-        throw new ElFormatoDelArchivoNoEsValido(lineasLeidas);
-      }
     }
   }
 
-boolean sigueElFormatoDeCarga(String unaLinea) {
-  List<String> lineaPartida = new ArrayList<>();
-  for (String campo : unaLinea.split(",")) {
-    lineaPartida.add(campo);
-  }
-  // tipoConsumo, valor, periodicidad (ANUAL, MENSUAL), Periodo de imputación
-  if(!RepoTipoDeConsumo.tieneElTipo(lineaPartida.get(0))) {
-    throw new RuntimeException("no anda");
+  private void crearMedicion() {
+    RepoMediciones.getInstance().cargarMedicion(new Medicion(this.tipoConsumo, this.perioricidad, this.valor, this.periodoDeImputacion));
   }
 
-  if(!RepoTipoDeConsumo.tieneElTipo(lineaPartida.get(0))) {
-    throw new RuntimeException("no anda");
+  private void asignarParametros(String linea) {
+    List<String> lineaPartida = new ArrayList<>(Arrays.asList(linea.split(",")));
+    this.tipoConsumo = RepoTipoDeConsumo.getInstance().getTipoDeConsumo(lineaPartida.get(0));
+    this.valor = Integer.parseInt(lineaPartida.get(1));
+    this.perioricidad = Periodo.valueOf(lineaPartida.get(2));
+    this.periodoDeImputacion = lineaPartida.get(3);
   }
 
-  if(0 > Integer.parseInt(lineaPartida.get(1))) {
-    throw new RuntimeException("no anda");
+  void validarFormatoDeCarga(String unaLinea) {
+    List<String> lineaPartida = new ArrayList<>(Arrays.asList(unaLinea.split(",")));
+
+    // tipoConsumo, valor, periodicidad (ANUAL, MENSUAL), Periodo de imputación
+    if (!RepoTipoDeConsumo.getInstance().existeElTipoDeConsumo(lineaPartida.get(0))) {
+      throw new ElTipoLeidoNoEsValido(lineasLeidas);
+    }
+
+    if (0 < Integer.parseInt(lineaPartida.get(1))) {
+      throw new LaMedicionEsNegativa(lineasLeidas);
+    }
+
+    if (Arrays.stream(Periodo.values()).anyMatch(elem -> Objects.equals(elem.toString(), lineaPartida.get(2)))) {
+      throw new NoSeReconoceLaPeriodicidad(lineasLeidas);
+    }
+
+    if (!this.elPeriodoDeImputacionEsValido(lineaPartida.get(3))) {
+      throw new ElPeriodoDeImputacionNoEsValido(lineasLeidas);
+    }
   }
 
-  try {
-    perioricidad = (Perioricidad) lineaPartida.get(3));
+  boolean elPeriodoDeImputacionEsValido(String periodo) {
+    String formatoAnual = "[1-9][0-9]{3}";
+    String formatoMensual = "([0][1-9])|1[0-2]/".concat(formatoAnual);
+    Pattern formato;
+    Matcher matcher;
+
+    switch (this.perioricidad.toString()) {
+      case "ANUAL":
+        formato = Pattern.compile(formatoAnual);
+        matcher = formato.matcher(periodo);
+        return matcher.matches();
+      case "MENSUAL":
+        formato = Pattern.compile(formatoMensual);
+        matcher = formato.matcher(periodo);
+        return matcher.matches();
+      default:
+        throw new ElPeriodoDeImputacionIngresadoNoExiste(lineasLeidas);
+    }
   }
 
-  if() {
-    throw new RuntimeException("no anda");
-  }
-
-
-  return true;
-}
 
   String lineaLeida() {
     try {
@@ -81,46 +103,4 @@ boolean sigueElFormatoDeCarga(String unaLinea) {
       throw new NoSePudoLeerLaLinea(this.lineasLeidas);
     }
   }
-
-
-  /*
-
-
-  private final BufferedReader buffer;
-
-  public void leerMediciones() {
-
-
-
-  while(sePuedeLeer()) {
-      leerLinea()
-      if(camposCorrectos()) {
-        crearMedicion()
-      } else {
-        romper()
-      }
-    }
-  }
-
-  void leerTipoConsumo() {
-
-  }
-   */
 }
-
-  /*
-  public static void main(String[] args) {
-    List<String> records = new ArrayList<>();
-    try (BufferedReader br = new BufferedReader(new FileReader("test.csv"))) {
-      String line;
-      int i = 0;
-      String[] values = br.lines().toList();
-      while ((line = br.) != null) {
-
-        System.out.println(values[i]);
-      }
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-  */

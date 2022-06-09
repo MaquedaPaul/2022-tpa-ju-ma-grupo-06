@@ -35,5 +35,5 @@ public class Trayecto {
 
   public double distanciaTotal() {
     return tramos.stream().mapToDouble(Tramo::distanciaTramo).sum();
-   }
   }
+}

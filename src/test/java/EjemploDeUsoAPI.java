@@ -12,5 +12,6 @@ public class EjemploDeUsoAPI {
       Distancia distancia = servicioGeodds.distancia(156,"dante",200,384,"san lorenzo",600);
 
       System.out.println(distancia.valor);
+      System.out.println(distancia.unidad);
     }
   }

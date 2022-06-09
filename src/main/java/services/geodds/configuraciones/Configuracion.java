@@ -7,7 +7,8 @@ public class Configuracion {
   public static String getToken() {
     return token;
   }
-  public static String getUrlAPI() {
+
+  public static String getUrlApi() {
     return urlAPI;
   }
 }

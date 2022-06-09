@@ -1,13 +1,12 @@
 package transporte;
 
+import java.io.IOException;
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
-import java.io.IOException;
-
 public class VehiculoParticular extends TransportePrivado {
-  public ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
+
   private TipoVehiculo tipoVehiculo;
   private TipoCombustible tipoCombustible;
 
@@ -24,5 +23,7 @@ public class VehiculoParticular extends TransportePrivado {
     return tipoCombustible;
   }
 
-
+  public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
+    this.tipoVehiculo = tipoVehiculo;
+  }
 }

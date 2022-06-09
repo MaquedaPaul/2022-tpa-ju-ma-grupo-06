@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepoOrganizacion {
-  List<Organizacion> organizaciones = new ArrayList<>();
+  public static List<Organizacion> organizaciones = new ArrayList<>();
 
   private RepoOrganizacion() {
   }

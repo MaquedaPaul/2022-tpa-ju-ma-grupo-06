@@ -49,7 +49,7 @@ boolean sigueElFormatoDeCarga(String unaLinea) {
   for (String campo : unaLinea.split(",")) {
     lineaPartida.add(campo);
   }
-  // tipoConsumo, valor, periodicidad, Periodo de imputación
+  // tipoConsumo, valor, periodicidad (ANUAL, MENSUAL), Periodo de imputación
   if(!RepoTipoDeConsumo.tieneElTipo(lineaPartida.get(0))) {
     throw new RuntimeException("no anda");
   }
@@ -58,11 +58,15 @@ boolean sigueElFormatoDeCarga(String unaLinea) {
     throw new RuntimeException("no anda");
   }
 
-  if(lineaPartida.get(1) > 0) {
+  if(0 > Integer.parseInt(lineaPartida.get(1))) {
     throw new RuntimeException("no anda");
   }
 
-  if(!RepoTipoDeConsumo.tieneElTipo(lineaPartida.get(0))) {
+  try {
+    perioricidad = (Perioricidad) lineaPartida.get(3));
+  }
+
+  if() {
     throw new RuntimeException("no anda");
   }
 

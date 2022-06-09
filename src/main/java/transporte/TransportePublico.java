@@ -37,6 +37,10 @@ public class TransportePublico implements Transporte {
     return lineaUtilizada.finalDelRecorridoDeRegreso();
   }
 
+  public Parada getPrimeraUbicacionRecorridoVuelta() {
+    return lineaUtilizada.inicioDelRecorridoDeRegreso();
+  }
+
   public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
     Parada Parada1 = this.encontrarParada(origen);
     Parada Parada2 = this.encontrarParada(destino);

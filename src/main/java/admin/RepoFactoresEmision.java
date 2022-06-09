@@ -6,7 +6,7 @@ import java.util.List;
 public class RepoFactoresEmision {
   static List<FactorEmision> factoresEmision = new ArrayList<>();
 
-  private RepoFactoresEmision(){
+  public RepoFactoresEmision(){
   };
 
   void incorporarFactor(FactorEmision nuevoFactor) {

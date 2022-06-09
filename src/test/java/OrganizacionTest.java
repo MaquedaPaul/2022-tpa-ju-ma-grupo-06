@@ -1,8 +1,10 @@
 import exceptions.NoSeAceptaVinculacion;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrganizacionTest {
@@ -24,7 +26,7 @@ public class OrganizacionTest {
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     assertEquals(onu.getSolicitudes().size(), 1);
-    assertThrows(NoSeAceptaVinculacion.class,() -> onu.procesarVinculacion(false));
+    assertThrows(NoSeAceptaVinculacion.class, () -> onu.procesarVinculacion(false));
     assertEquals(onu.getSolicitudes().size(), 0);
     assertFalse(onu.getSectores().stream().
         filter(sector -> sector.getNombre().equals("Compras")).

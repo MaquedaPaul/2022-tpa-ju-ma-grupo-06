@@ -1,5 +1,6 @@
 package transporte;
 
+import exceptions.NoSePudoCalcularElTramo;
 import linea.PuntoUbicacion;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ public class Tramo {
   private final PuntoUbicacion puntoDestino;
   private final Transporte transporteUtilizado;
 
-  Tramo(PuntoUbicacion puntoOrigen, PuntoUbicacion puntoDestino, Transporte transporteUtilizado) {
+  public Tramo(PuntoUbicacion puntoOrigen, PuntoUbicacion puntoDestino, Transporte transporteUtilizado) {
     this.puntoOrigen = puntoOrigen;
     this.puntoDestino = puntoDestino;
     this.transporteUtilizado = transporteUtilizado;
@@ -27,7 +28,12 @@ public class Tramo {
     return transporteUtilizado;
   }
 
-  public int distanciaTramo() throws IOException {
-    return this.transporteUtilizado.distanciaEntre(puntoOrigen,puntoDestino);
+  public int distanciaTramo() {
+    try {
+      return this.transporteUtilizado.distanciaEntre(puntoOrigen, puntoDestino);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    throw new NoSePudoCalcularElTramo("API sin conexion");
   }
-}
+  }

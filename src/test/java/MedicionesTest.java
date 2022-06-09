@@ -1,11 +1,12 @@
 import exceptions.*;
 import mediciones.MedicionBuilder;
 import org.junit.jupiter.api.Test;
+/*
 import tipo.consumo.RepoTipoDeConsumo;
 import tipo.consumo.TipoActividad;
 import tipo.consumo.TipoAlcance;
 import tipo.consumo.TipoConsumo;
-
+*/
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MedicionesTest {
@@ -14,7 +15,7 @@ public class MedicionesTest {
   public void SeCreaUnaMedicionPeroNoSeEncuentraElArchivo() {
     assertThrows(NoSePudoAbrirElArchivo.class, () -> new MedicionBuilder("estaRutaNoExiste.txt"));
   }
-
+  /*
   @Test
   public void elValorLeidoEsNegativo() {
     TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural", "text", TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
@@ -33,8 +34,6 @@ public class MedicionesTest {
     assertThrows(NoSeReconoceLaPeriodicidad.class, () -> nueva.cargarMediciones());
   }
 
-
-  /*
   @Test
   public void elPeriodoEsIncorrecto() {
     TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural","text",TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
@@ -43,9 +42,9 @@ public class MedicionesTest {
     MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/periodoIncorrecto.csv");
     assertThrows(ElPeriodoDeImputacionIngresadoNoExiste.class, () ->  nueva.cargarMediciones());
   }
-  */
 
-  /*
+
+
   @Test
   public void elValorLeidoEsInconrrecto() {
     TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural","text",TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
@@ -54,5 +53,5 @@ public class MedicionesTest {
     MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/tipoLeidoNoValido.csv");
     assertThrows(ElTipoLeidoNoEsValido.class, () ->  nueva.cargarMediciones());
   }
-   */
+  */
 }

@@ -19,7 +19,7 @@ public class ServicioContratado implements Transporte {
   }
 
   @Override
-  public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
+  public double distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
     Distancia distancia = servicioGeodds
         .distancia(
             origen.getLocalidadId(),

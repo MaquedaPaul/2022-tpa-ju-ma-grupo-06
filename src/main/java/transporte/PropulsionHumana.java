@@ -15,7 +15,7 @@ public class PropulsionHumana implements Transporte {
 
 
   @Override
-  public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
+  public double distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
 
     ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
     Distancia distancia = servicioGeodds

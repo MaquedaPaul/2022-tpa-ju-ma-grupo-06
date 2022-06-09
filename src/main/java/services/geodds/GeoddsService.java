@@ -13,6 +13,8 @@ public interface GeoddsService {
 
   @GET("distancia")
   Call<Distancia> distancia(
+      @Header("Authorization") String token,
+
       @Query("localidadOrigenId") int localidadOId,
 
       @Query("calleOrigen") String calleO,

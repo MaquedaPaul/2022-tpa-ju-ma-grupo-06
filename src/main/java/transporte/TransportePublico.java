@@ -42,7 +42,7 @@ public class TransportePublico implements Transporte {
     return lineaUtilizada.inicioDelRecorridoDeRegreso();
   }
 
-  public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
+  public double distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
     Parada parada1 = this.encontrarParada(origen);
     Parada parada2 = this.encontrarParada(destino);
     return Math.abs(parada1.getKmActual() - parada2.getKmActual());

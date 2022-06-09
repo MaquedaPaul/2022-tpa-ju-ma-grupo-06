@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.geodds.GeoddsService;
 import services.geodds.ServicioGeodds;
+import services.geodds.entities.Distancia;
 import transporte.*;
 import transporte.VehiculoParticular;
 
@@ -41,18 +42,18 @@ public class VehiculoParticularTest {
     assertEquals(motoAGasoil.getTipoCombustible(), andaAGasoil);
   }
   //////PREGUNTAR
-  /*
+
   @Test
   public void huboInteraccionConLaAPIAlCalcularDistancia() throws IOException {
     Tramo unTramo = unFactory.crearTramoSimple(motoAGasoil);
     ServicioGeodds geoddsMock = mock(ServicioGeodds.class);
     motoAGasoil.servicioGeodds = geoddsMock;
-    //when(geoddsMock.distancia(any(),any(),any(),any(),any(),any())).thenReturn(any());
+    when(geoddsMock.distancia(anyInt(),any(),anyInt(),anyInt(),any(),anyInt())).thenReturn(new Distancia(2.5,"km"));
     //geoddsMock.distancia(any(),any(),any(),any(),any(),any());
-    //unTramo.distanciaTramo();
+    unTramo.distanciaTramo();
     verify(geoddsMock,times(0)).distancia(anyInt(),anyString(),anyInt(),anyInt(),anyString(),anyInt());
   }
-  */
+
 
         /*
     int unaAlturaO = unTramo.getPuntoOrigen().getAltura();

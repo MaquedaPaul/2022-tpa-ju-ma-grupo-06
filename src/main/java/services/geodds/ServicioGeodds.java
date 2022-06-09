@@ -26,7 +26,7 @@ public class ServicioGeodds {
     }
     return instancia;
   }
-
+// HACER UN TRY CATCH Y LANZAR UNA EXCEPCION PROPIA
   public Distancia distancia(int locOrig,
                              String calleO,
                              int alturaO,
@@ -35,7 +35,9 @@ public class ServicioGeodds {
                              int alturaD)
       throws IOException {
     GeoddsService geoddsService = this.retrofit.create(GeoddsService.class);
+    String token = "Bearer EwiISomWLyg7BW3gnFM0T8Ldj1T7ZMLtaZiaXCnHkJ0=";
     Call<Distancia> requestDistancia = geoddsService.distancia(
+        token,
         locOrig,
         calleO,
         alturaO,
@@ -43,6 +45,7 @@ public class ServicioGeodds {
         calleD,
         alturaD);
     Response<Distancia> responseDistancia = requestDistancia.execute();
+    System.out.println(responseDistancia.code());
     return responseDistancia.body();
   }
 

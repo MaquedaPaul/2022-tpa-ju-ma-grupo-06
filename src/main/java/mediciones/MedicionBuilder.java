@@ -62,7 +62,7 @@ public class MedicionBuilder {
       throw new ElTipoLeidoNoEsValido(lineasLeidas);
     }
 
-    if (0 < Integer.parseInt(lineaPartida.get(1))) {
+    if (0 > Integer.parseInt(lineaPartida.get(1))) {
       throw new LaMedicionEsNegativa(lineasLeidas);
     }
 

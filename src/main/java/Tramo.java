@@ -27,6 +27,6 @@ public class Tramo {
   }
 
   public int distanciaTramo() throws IOException {
-    this.transporteUtilizado.distanciaEntre(puntoOrigen,puntoDestino);
+    return this.transporteUtilizado.distanciaEntre(puntoOrigen,puntoDestino);
   }
 }

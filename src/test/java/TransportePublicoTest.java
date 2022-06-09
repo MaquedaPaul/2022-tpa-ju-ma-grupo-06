@@ -9,10 +9,12 @@ public class TransportePublicoTest {
 
 
   // PARADAS
-  PuntoUbicacion ubicacionInicio = new PuntoUbicacion("Libertador", 200);
-  PuntoUbicacion ubicacionIntermedia = new PuntoUbicacion("Callao", 1222);
-  PuntoUbicacion ubicacionFinal = new PuntoUbicacion("SanJuan", 122);
-  PuntoUbicacion otraUbicacion = new PuntoUbicacion("Tucuman", 222);
+
+
+  PuntoUbicacion ubicacionInicio = new PuntoUbicacionTransportePublico(0,"Libertador" ,200);
+  PuntoUbicacion ubicacionIntermedia = new PuntoUbicacionTransportePublico(1,"Callao", 1222);
+  PuntoUbicacion ubicacionFinal = new PuntoUbicacionTransportePublico(2,"SanJuan", 122);
+  //PuntoUbicacion otraUbicacion = new PuntoUbicacionTransportePublico(3,"Tucuman", 222);
 
   // LISTA DE UbicacionS
   List<PuntoUbicacion> ubicacionesDel138 = new ArrayList<>();
@@ -48,10 +50,11 @@ public class TransportePublicoTest {
 
   @Test
   public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
-    PuntoUbicacion ubicacionInicio = new PuntoUbicacion("Libertador", 200);
-    PuntoUbicacion ubicacionIntermedia = new PuntoUbicacion("Callao", 1222);
-    PuntoUbicacion ubicacionFinal = new PuntoUbicacion("SanJuan", 122);
-    PuntoUbicacion otraUbicacion = new PuntoUbicacion("Tucuman", 222);
+    PuntoUbicacion ubicacionInicio = new PuntoUbicacionTransportePublico(0,"Libertador" ,200);
+    PuntoUbicacion ubicacionIntermedia = new PuntoUbicacionTransportePublico(1,"Callao", 1222);
+    PuntoUbicacion ubicacionFinal = new PuntoUbicacionTransportePublico(2,"SanJuan", 122);
+    PuntoUbicacion otraUbicacion = new PuntoUbicacionTransportePublico(3,"Tucuman", 222);
+
 
     LineaTransporte linea138 =
         new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", ubicacionesDel138);

@@ -1,18 +1,26 @@
+package transporte;
+
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
-public class PropulsionHumana implements Transporte {
-  private String herramientaUtilizada;
+public class VehiculoParticular implements Transporte {
+  private TipoVehiculo tipoVehiculo;
+  private TipoCombustible tipoCombustible;
 
-  public PropulsionHumana(String herramientaUtilizada) {
-    this.herramientaUtilizada = herramientaUtilizada;
+  public VehiculoParticular(TipoCombustible tipoCombustible, TipoVehiculo tipoVehiculo) {
+    this.tipoCombustible = tipoCombustible;
+    this.tipoVehiculo = tipoVehiculo;
   }
 
-  public String getHerramientaUtilizada() {
-    return herramientaUtilizada;
+  public TipoVehiculo getTipoVehiculo() {
+    return tipoVehiculo;
+  }
+
+  public TipoCombustible getTipoCombustible() {
+    return tipoCombustible;
   }
 
   @Override

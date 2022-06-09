@@ -1,3 +1,5 @@
+package transporte;
+
 import linea.PuntoUbicacion;
 
 import java.io.IOException;

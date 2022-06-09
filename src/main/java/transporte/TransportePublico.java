@@ -1,5 +1,6 @@
+package transporte;
+
 import linea.LineaTransporte;
-import linea.PuntoUbicacionTransportePublico;
 import linea.TipoTransporte;
 import linea.PuntoUbicacion;
 

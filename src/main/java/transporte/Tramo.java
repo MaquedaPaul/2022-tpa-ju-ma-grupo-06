@@ -1,5 +1,6 @@
+package transporte;
+
 import linea.PuntoUbicacion;
-import linea.PuntoUbicacionTransportePublico;
 
 import java.io.IOException;
 

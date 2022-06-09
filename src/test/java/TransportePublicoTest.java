@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 import linea.*;
+import transporte.TransportePublico;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,12 +11,16 @@ public class TransportePublicoTest {
 
 
   // PARADAS
+  Coordenada prueba1 = new Coordenada(2,2);
+  Coordenada prueba2 = new Coordenada(1,12);
+  Coordenada prueba3 = new Coordenada(22,24);
+  Coordenada prueba4 = new Coordenada(21,52);
 
 
-  PuntoUbicacion ubicacionInicio = new PuntoUbicacionTransportePublico(0,"Libertador" ,200);
-  PuntoUbicacion ubicacionIntermedia = new PuntoUbicacionTransportePublico(1,"Callao", 1222);
-  PuntoUbicacion ubicacionFinal = new PuntoUbicacionTransportePublico(2,"SanJuan", 122);
-  //PuntoUbicacion otraUbicacion = new PuntoUbicacionTransportePublico(3,"Tucuman", 222);
+  PuntoUbicacion ubicacionInicio = new PuntoUbicacion(0,"Libertador" ,200,prueba1);
+  PuntoUbicacion ubicacionIntermedia = new PuntoUbicacion(1,"Callao", 1222, prueba2);
+  PuntoUbicacion ubicacionFinal = new PuntoUbicacion(2,"SanJuan", 122,prueba3);
+  PuntoUbicacion otraUbicacion = new PuntoUbicacion(3,"Tucuman", 222, prueba4);
 
   // LISTA DE UbicacionS
   List<PuntoUbicacion> ubicacionesDel138 = new ArrayList<>();

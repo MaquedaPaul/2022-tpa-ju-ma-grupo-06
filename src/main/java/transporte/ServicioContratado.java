@@ -1,24 +1,20 @@
+package transporte;
+
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
-public class VehiculoParticular implements Transporte {
-  private TipoVehiculo tipoVehiculo;
-  private TipoCombustible tipoCombustible;
+public class ServicioContratado implements Transporte {
+  private TipoVehiculo vehiculoContratado;
 
-  public VehiculoParticular(TipoCombustible tipoCombustible, TipoVehiculo tipoVehiculo) {
-    this.tipoCombustible = tipoCombustible;
-    this.tipoVehiculo = tipoVehiculo;
+  public ServicioContratado(TipoVehiculo vehiculoContratado) {
+    this.vehiculoContratado = vehiculoContratado;
   }
 
-  public TipoVehiculo getTipoVehiculo() {
-    return tipoVehiculo;
-  }
-
-  public TipoCombustible getTipoCombustible() {
-    return tipoCombustible;
+  public TipoVehiculo getVehiculoContratado() {
+    return vehiculoContratado;
   }
 
   @Override

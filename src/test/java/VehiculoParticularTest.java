@@ -1,4 +1,8 @@
 import org.junit.jupiter.api.Test;
+import transporte.TipoCombustible;
+import transporte.TipoVehiculo;
+import transporte.VehiculoParticular;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VehiculoParticularTest {

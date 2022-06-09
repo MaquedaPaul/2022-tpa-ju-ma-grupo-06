@@ -1,10 +1,12 @@
+package organizacion;
+
 import java.util.List;
 
 public class Sector {
   String nombre;
   List<Miembro> miembros;
 
-  public Sector(String nombre,List<Miembro> unosMiembros) {
+  public Sector(String nombre, List<Miembro> unosMiembros) {
     //un sector podría estar vacio? si todavía no se asignaron supongo que si
     this.nombre = nombre;
     this.miembros = unosMiembros;
@@ -14,13 +16,11 @@ public class Sector {
     miembros.add(unMiembro);
   }
 
-  List<Miembro> getMiembros() {
+  public List<Miembro> getMiembros() {
     return miembros;
   }
 
-  String getNombre() {
+  public String getNombre() {
     return nombre;
   }
-
-
 }

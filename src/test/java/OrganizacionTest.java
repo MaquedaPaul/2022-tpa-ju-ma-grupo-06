@@ -1,25 +1,45 @@
+import exceptions.NoSeAceptaVinculacion;
 import org.junit.jupiter.api.Test;
+import organizacion.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrganizacionTest {
 
   @Test
-  public void seCreaUnaOrganizacionYLuegoLaOrganizacionCreaUnSector() {
+  public void laOrganizacionIncorporaUnSector() {
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
-    onu.crearSector("Sector",generarListaVaciaDeMiembros());
+    Sector compras = new Sector("Compras", new ArrayList<>());
+    onu.incorporarSector(compras);
     assertEquals(onu.getSectores().size(), 1);
   }
 
-  private List<Miembro> generarListaVaciaDeMiembros() {
-    List<Miembro> listaMiembro = new ArrayList<>();
-    return listaMiembro;
+  @Test
+  public void laOrganizacionNoAceptaVinculacion() {
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
+    Sector compras = new Sector("Compras", new ArrayList<>());
+    onu.incorporarSector(compras);
+    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TIpoDocumento.DNI);
+    Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
+    jorgito.solicitarVinculacion(onu, nuevaSolicitud);
+    assertEquals(onu.getSolicitudes().size(), 1);
+    assertThrows(NoSeAceptaVinculacion.class,() -> onu.procesarVinculacion(false));
+    assertEquals(onu.getSolicitudes().size(), 0);
+    assertFalse(onu.getSectores().stream().
+        filter(sector -> sector.getNombre().equals("Compras")).
+        collect(Collectors.toList()).
+        get(0).
+        getMiembros().
+        contains(jorgito));
   }
 
-  private List<Sector> generarListaSectorVacia() {
-    List<Sector> sectores = new ArrayList<>();
-    return sectores;
+  public Miembro generarMiembro(String nombre,
+                                String apellido,
+                                int documento,
+                                TIpoDocumento unTipo) {
+    MiembroTest testMiembro = new MiembroTest();
+    return testMiembro.generarMiembro(nombre, apellido, documento, unTipo);
   }
 }
 

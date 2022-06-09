@@ -1,18 +1,20 @@
+package transporte;
+
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
-public class ServicioContratado implements Transporte {
-  private TipoVehiculo vehiculoContratado;
+public class PropulsionHumana implements Transporte {
+  private String herramientaUtilizada;
 
-  public ServicioContratado(TipoVehiculo vehiculoContratado) {
-    this.vehiculoContratado = vehiculoContratado;
+  public PropulsionHumana(String herramientaUtilizada) {
+    this.herramientaUtilizada = herramientaUtilizada;
   }
 
-  public TipoVehiculo getVehiculoContratado() {
-    return vehiculoContratado;
+  public String getHerramientaUtilizada() {
+    return herramientaUtilizada;
   }
 
   @Override

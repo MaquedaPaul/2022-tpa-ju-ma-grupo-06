@@ -5,17 +5,18 @@ import java.util.List;
 public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
-  private List<PuntoUbicacion> ubicaciones;
+  private List<Parada> RecorridoDeIda;
+  private List<Parada> recorridoVuelta;
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre,
-      List<PuntoUbicacion> ubicaciones) {
+      List<Parada> RecorridoDeIda) {
     this.tipoTransporte = tipoTransporte;
     this.nombre = nombre;
-    this.ubicaciones = ubicaciones;
+    this.RecorridoDeIda = RecorridoDeIda;
   }
 
-  public List<PuntoUbicacion> getParadas() {
-    return ubicaciones;
+  public List<Parada> getParadas() {
+    return RecorridoDeIda;
   }
 
   /**
@@ -24,20 +25,21 @@ public class LineaTransporte {
    * @param unaParada
    * @param posicionEnElRecorrido
    */
-  public void agregarParadaAlRecorrido(PuntoUbicacion unaParada, int posicionEnElRecorrido) {
-    ubicaciones.add(posicionEnElRecorrido - 1, unaParada);
+  // ARREGLAR
+  public void agregarParadaAlRecorrido(Parada unaParada, int posicionEnElRecorrido) {
+    RecorridoDeIda.add(posicionEnElRecorrido - 1, unaParada);
   }
 
   public TipoTransporte transporte() {
     return tipoTransporte;
   }
 
-  public PuntoUbicacion inicioDelRecorrido() {
-    return ubicaciones.get(0);
+  public Parada inicioDelRecorrido() {
+    return RecorridoDeIda.get(0);
   }
 
-  public PuntoUbicacion finalDelRecorrido() {
-    return ubicaciones.get(ubicaciones.size() - 1);
+  public Parada finalDelRecorrido() {
+    return RecorridoDeIda.get(RecorridoDeIda.size() - 1);
   }
 
   public String getNombre() {

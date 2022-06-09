@@ -1,7 +1,7 @@
 package linea;
 
 
-public abstract class PuntoUbicacion {
+public class PuntoUbicacion {
   private int localidadId;
   private String calle;
   private int altura;

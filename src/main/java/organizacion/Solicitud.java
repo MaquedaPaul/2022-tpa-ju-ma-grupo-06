@@ -1,3 +1,5 @@
+package organizacion;
+
 public class Solicitud {
   Miembro miembroSolicitante;
   Sector sectorSolicitado;

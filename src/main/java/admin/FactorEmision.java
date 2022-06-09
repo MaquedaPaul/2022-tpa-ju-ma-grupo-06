@@ -16,4 +16,8 @@ public class FactorEmision {
   public String getUnidadDivisible() {
     return unidadDivisible;
   }
+
+  public void setValor(double valor) {
+    this.valor = valor;
+  }
 }

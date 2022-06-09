@@ -6,10 +6,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ar.edu.utn.frba.dds</groupId>
-    <artifactId>tpa</artifactId>
+    <artifactId>ejercicio</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>tpa</name>
+    <name>ejercicio</name>
     <url>https://github.com/dds-utn</url>
 
     <properties>
@@ -24,6 +24,16 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.7.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>converter-gson</artifactId>
+            <version>2.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>

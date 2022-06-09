@@ -1,6 +1,9 @@
+package transporte;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import linea.Ubicacion;
+import linea.PuntoUbicacion;
 
 
 public class Trayecto {
@@ -18,11 +21,11 @@ public class Trayecto {
    * public void setOrigen(String origen) { this.origen = origen; }
    */
 
-  public Ubicacion getOrigen() {
+  public PuntoUbicacion getOrigen() {
     return tramos.get(0).getPuntoOrigen();
   }
 
-  public Ubicacion getDestino() {
+  public PuntoUbicacion getDestino() {
     return tramos.get(tramos.size() - 1).getPuntoDestino();
   }
 
@@ -30,4 +33,7 @@ public class Trayecto {
    * public void setDestino(String destino) { this.destino = destino; }
    */
 
+  public double distanciaTotal() {
+    return tramos.stream().mapToInt(tramo -> tramo.distanciaTramo()).sum();
+  }
 }

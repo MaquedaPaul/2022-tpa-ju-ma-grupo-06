@@ -1,6 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import organizacion.*;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -15,7 +17,7 @@ class SectorTest {
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     onu.procesarVinculacion(true);
-    assertEquals(onu.sectores.stream().
+    assertEquals(onu.getSectores().stream().
         filter(sector -> sector.getNombre().equals("Compras")).
         collect(Collectors.toList()).
         get(0).
@@ -24,9 +26,9 @@ class SectorTest {
   }
 
   public Miembro generarMiembro(String nombre,
-                        String apellido,
-                        int documento,
-                        TIpoDocumento unTipo) {
+                                String apellido,
+                                int documento,
+                                TIpoDocumento unTipo) {
     MiembroTest testMiembro = new MiembroTest();
     return testMiembro.generarMiembro(nombre, apellido, documento, unTipo);
   }

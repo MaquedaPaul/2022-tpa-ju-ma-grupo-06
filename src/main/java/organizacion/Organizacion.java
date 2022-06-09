@@ -1,9 +1,10 @@
+package organizacion;
+
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Organizacion {
   String razonSocial;
@@ -14,17 +15,17 @@ public class Organizacion {
   List<Solicitud> solicitudes;
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
-      String clasificacion) {
+                      String clasificacion) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
-    // List<Sector> sectoresVacios = new ArrayList<>();
+    // List<organizacion.Sector> sectoresVacios = new ArrayList<>();
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
     this.solicitudes = new ArrayList<>();
   }
 
-  void procesarVinculacion(boolean decicion) {
+  public void procesarVinculacion(boolean decicion) {
     Solicitud nuevaSolicitud = solicitudes.get(0);
     solicitudes.remove(0);
     if (decicion) {
@@ -34,26 +35,26 @@ public class Organizacion {
     rechazarVinculacion();
   }
 
-  void incorporarSector(Sector unSector) {
+  public void incorporarSector(Sector unSector) {
     sectores.add(unSector);
   }
 
-  void recibirSolicitud(Solicitud unaSolicitud) {
+  public void recibirSolicitud(Solicitud unaSolicitud) {
     validarQueExistaSector(unaSolicitud.nombreDelSectorSolicitado());
     solicitudes.add(unaSolicitud);
   }
 
-  void rechazarVinculacion() {
+  private void rechazarVinculacion() {
     throw new NoSeAceptaVinculacion("Su pedido de Vinculacion Fue Rechazado");
   }
 
-  void validarQueExistaSector(String nombreSector) {
+  private void validarQueExistaSector(String nombreSector) {
     if (sectores.stream().noneMatch(sector -> sector.getNombre().equals(nombreSector))) {
-      throw new NoExisteElSectorVinculante("El Sector Ingresado es Invalido");
+      throw new NoExisteElSectorVinculante("El organizacion.Sector Ingresado es Invalido");
     }
   }
 
-  void aceptarvinculacion(Solicitud unaSolicitud) {
+  private void aceptarvinculacion(Solicitud unaSolicitud) {
     unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 

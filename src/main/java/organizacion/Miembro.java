@@ -1,6 +1,9 @@
+package organizacion;
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import transporte.Trayecto;
 
 public class Miembro {
   String nombre;
@@ -27,7 +30,7 @@ public class Miembro {
     trayectos.add(unTrayecto);
   }
 
-  void solicitarVinculacion(Organizacion unaOrganizacion, Solicitud unaSolicitud) {
+  public void solicitarVinculacion(Organizacion unaOrganizacion, Solicitud unaSolicitud) {
     unaOrganizacion.recibirSolicitud(unaSolicitud);
   }
 

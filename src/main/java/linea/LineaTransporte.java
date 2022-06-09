@@ -1,43 +1,63 @@
 package linea;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LineaTransporte {
-  private TipoTransporte tipoTransporte;
-  private String nombre;
-  private List<Ubicacion> ubicaciones;
+  private final TipoTransporte tipoTransporte;
+  private final String nombre;
+  private final List<Parada> recorridoDeIda;
+  private final List<Parada> recorridoVuelta;
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre,
-      List<Ubicacion> ubicaciones) {
+                         List<Parada> recorridoDeIda, List<Parada> recorridoVuelta) {
     this.tipoTransporte = tipoTransporte;
     this.nombre = nombre;
-    this.ubicaciones = ubicaciones;
+    this.recorridoDeIda = recorridoDeIda;
+    this.recorridoVuelta = recorridoVuelta;
   }
 
-  public List<Ubicacion> getParadas() {
-    return ubicaciones;
+  public List<Parada> getRecorridoDeIda() {
+    return recorridoDeIda;
   }
 
-  /**
-   * Toma unaParada y la agrega en la posicionEnElRecorrido indicada.
-   * 
-   * @param unaParada
-   * @param posicionEnElRecorrido
-   */
-  public void agregarParadaAlRecorrido(Ubicacion unaParada, int posicionEnElRecorrido) {
-    ubicaciones.add(posicionEnElRecorrido - 1, unaParada);
+  public List<Parada> getRecorridoVuelta() {
+    return recorridoVuelta;
+  }
+
+  public List<Parada> getRecorridoTotal() {
+    List<Parada> paradas = new ArrayList<>();
+    paradas.addAll(this.getRecorridoDeIda());
+    paradas.addAll(this.getRecorridoVuelta());
+    return paradas;
+  }
+
+  public void agregarParadaAlRecorrido(Parada unaParada) {
+    if (unaParada.esDeIda()) {
+      recorridoDeIda.add(unaParada);
+    } else {
+      recorridoVuelta.add(unaParada);
+    }
   }
 
   public TipoTransporte transporte() {
     return tipoTransporte;
   }
 
-  public Ubicacion inicioDelRecorrido() {
-    return ubicaciones.get(0);
+  public Parada inicioDelRecorridoDeIda() {
+    return recorridoDeIda.get(0);
   }
 
-  public Ubicacion finalDelRecorrido() {
-    return ubicaciones.get(ubicaciones.size() - 1);
+  public Parada finalDelRecorridoDeIda() {
+    return recorridoDeIda.get(recorridoDeIda.size() - 1);
+  }
+
+  public Parada inicioDelRecorridoDeRegreso() {
+    return recorridoDeIda.get(0);
+  }
+
+  public Parada finalDelRecorridoDeRegreso() {
+    return recorridoDeIda.get(recorridoDeIda.size() - 1);
   }
 
   public String getNombre() {

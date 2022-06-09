@@ -1,3 +1,5 @@
+package organizacion;
+
 import java.util.List;
 
 public class Sector {
@@ -14,11 +16,11 @@ public class Sector {
     miembros.add(unMiembro);
   }
 
-  List<Miembro> getMiembros() {
+  public List<Miembro> getMiembros() {
     return miembros;
   }
 
-  String getNombre() {
+  public String getNombre() {
     return nombre;
   }
 }

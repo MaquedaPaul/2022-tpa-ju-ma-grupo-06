@@ -1,8 +1,12 @@
+package organizacion;
+
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import transporte.Trayecto;
 
-class MiembroBuilder {
+public class MiembroBuilder {
   String nombre;
   String apellido;
   TIpoDocumento tipoDocumento;

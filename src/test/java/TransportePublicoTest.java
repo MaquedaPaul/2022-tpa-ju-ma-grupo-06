@@ -40,20 +40,20 @@ public class TransportePublicoTest {
 
   @Test
   public void elInicioDelRecorridoDelColectivoEsSuPrimerUbicacion() {
-    ubicacionesDel138.add(ubicacionInicio);
-    ubicacionesDel138.add(ubicacionIntermedia);
-    ubicacionesDel138.add(ubicacionFinal);
+    paradasDeIdaDel138.add(ubicacionInicio);
+    paradasDeIdaDel138.add(ubicacionIntermedia);
+    paradasDeIdaDel138.add(ubicacionFinal);
 
-    assertEquals(unColectivo.getUbicacionInicio(), ubicacionInicio);
+    assertEquals(unColectivo.getUbicacionInicioPrimerRecorrido(), ubicacionInicio);
   }
 
   @Test
   public void elFinalDelRecorridoDelColectivoEsSuUltimaUbicacion() {
-    ubicacionesDel138.add(ubicacionInicio);
-    ubicacionesDel138.add(ubicacionIntermedia);
-    ubicacionesDel138.add(ubicacionFinal);
+    paradasDeIdaDel138.add(ubicacionInicio);
+    paradasDeIdaDel138.add(ubicacionIntermedia);
+    paradasDeIdaDel138.add(ubicacionFinal);
 
-    assertEquals(unColectivo.getUltimaUbicacion(), ubicacionFinal);
+    assertEquals(unColectivo.getUltimaUbicacionPrimerRecorrido(), ubicacionFinal);
   }
 
   //REVISAR
@@ -61,14 +61,31 @@ public class TransportePublicoTest {
   public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
 
     LineaTransporte linea138 =
-        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", ubicacionesDel138);
-    ubicacionesDel138.add(ubicacionInicio);
-    ubicacionesDel138.add(ubicacionIntermedia);
-    ubicacionesDel138.add(ubicacionFinal);
+        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138",paradasDeIdaDel138,paradasDeVueltaDel138);
+    paradasDeIdaDel138.add(ubicacionInicio);
+    paradasDeIdaDel138.add(ubicacionIntermedia);
+    paradasDeIdaDel138.add(ubicacionFinal);
 
-    assertEquals(linea138.getParadas().size(), 3);
-    linea138.agregarParadaAlRecorrido(otraUbicacion, 3);
-    assertEquals(linea138.getParadas().size(), 4);
+    assertEquals(linea138.getRecorridoDeIda().size(), 3);
+    linea138.agregarParadaAlRecorrido(otraUbicacion);
+    assertEquals(linea138.getRecorridoDeIda().size(), 4);
   }
 
+  @Test
+  public void sePuedeCalcularLaDistanciaEntre2Paradas() throws IOException {
+    LineaTransporte linea138 =
+        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138",paradasDeIdaDel138,paradasDeVueltaDel138);
+
+    paradasDeIdaDel138.add(ubicacionInicio);
+    paradasDeIdaDel138.add(ubicacionIntermedia);
+    paradasDeIdaDel138.add(ubicacionFinal);
+    
+    PuntoUbicacion paradaInicio = new PuntoUbicacion(32,"aa",32,prueba1);
+    PuntoUbicacion paradaFinal = new PuntoUbicacion(33,"bb",33,prueba3);
+
+    TransportePublico bondi138 = new TransportePublico(linea138);
+
+    assertEquals(bondi138.distanciaEntre(paradaInicio, paradaFinal),2);
+
+  }
 }

@@ -11,6 +11,7 @@ import java.lang.Math;
 import java.util.stream.Collectors;
 
 public class TransportePublico implements Transporte {
+  public ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
 
   private LineaTransporte lineaUtilizada;
 
@@ -26,16 +27,29 @@ public class TransportePublico implements Transporte {
     return lineaUtilizada.transporte();
   }
 
-  public PuntoUbicacion getUbicacionInicio() {
-    return lineaUtilizada.inicioDelRecorrido();
+  public Parada getUbicacionInicioPrimerRecorrido() { return lineaUtilizada.inicioDelRecorridoDeIda(); } // ARREGLAR
+
+  public Parada getUltimaUbicacionPrimerRecorrido() {
+    return lineaUtilizada.finalDelRecorridoDeIda();
   }
 
-  public PuntoUbicacion getUltimaUbicacion() {
-    return lineaUtilizada.finalDelRecorrido();
+  public Parada getUltimaUbicacionRecorridoVuelta() {
+    return lineaUtilizada.finalDelRecorridoDeRegreso();
   }
 
   public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
-    return origen.getKmRecorrido();
+    Parada Parada1 = this.encontrarParada(origen);
+    Parada Parada2 = this.encontrarParada(destino);
+    return Math.abs(Parada1.getKmActual() - Parada2.getKmActual());
+  }
+
+  public Parada encontrarParada(PuntoUbicacion ubicacion) {
+    return this.lineaUtilizada
+        .getRecorridoTotal()
+        .stream()
+        .filter(unaParada -> ubicacion.getCoordenada() == unaParada.getCoordenada())
+        .collect(Collectors.toList())
+        .get(0);
   }
 }
 

@@ -17,7 +17,7 @@ class SectorTest {
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     onu.procesarVinculacion(true);
-    assertEquals(onu.sectores.stream().
+    assertEquals(onu.getSectores().stream().
         filter(sector -> sector.getNombre().equals("Compras")).
         collect(Collectors.toList()).
         get(0).

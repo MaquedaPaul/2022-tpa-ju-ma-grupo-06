@@ -28,7 +28,7 @@ public class Tramo {
     return transporteUtilizado;
   }
 
-  public int distanciaTramo() {
+  public double distanciaTramo() {
     try {
       return this.transporteUtilizado.distanciaEntre(puntoOrigen, puntoDestino);
     } catch (IOException e) {

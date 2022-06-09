@@ -4,14 +4,16 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import services.geodds.configuraciones.Configuracion;
 import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
 public class ServicioGeodds {
   private static ServicioGeodds instancia = null;
-  private static final String urlAPI = "https://ddstpa.com.ar/api/";
   private Retrofit retrofit;
+  private static final String urlAPI = Configuracion.getUrlAPI();
+  private static final String token = Configuracion.getToken();
 
   private ServicioGeodds(){
     this.retrofit = new Retrofit.Builder()
@@ -29,8 +31,9 @@ public class ServicioGeodds {
 
   public Distancia distancia(int locOrig, String calleO, int alturaO, int locDest, String calleD, int alturaD) throws IOException {
     GeoddsService geoddsService = this.retrofit.create(GeoddsService.class);
-    Call<Distancia> requestDistancia = geoddsService.distancia(locOrig, calleO, alturaO, locDest, calleD, alturaD);
+    Call<Distancia> requestDistancia = geoddsService.distancia(token,locOrig, calleO, alturaO, locDest, calleD, alturaD);
     Response<Distancia> responseDistancia = requestDistancia.execute();
+    System.out.println("Codigo de Respuesta: " + responseDistancia.code());
     return responseDistancia.body();
   }
 

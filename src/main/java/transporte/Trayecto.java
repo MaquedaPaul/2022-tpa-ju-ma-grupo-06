@@ -34,6 +34,6 @@ public class Trayecto {
    */
 
   public double distanciaTotal() {
-    return tramos.stream().mapToInt(tramo -> tramo.distanciaTramo()).sum();
+    return tramos.stream().mapToDouble(Tramo::distanciaTramo).sum();
    }
   }

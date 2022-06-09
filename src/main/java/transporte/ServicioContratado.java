@@ -6,7 +6,7 @@ import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
-public class ServicioContratado implements Transporte {
+public class ServicioContratado extends TransportePrivado {
   ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
   private TipoVehiculo vehiculoContratado;
 
@@ -18,16 +18,4 @@ public class ServicioContratado implements Transporte {
     return vehiculoContratado;
   }
 
-  @Override
-  public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
-    Distancia distancia = servicioGeodds
-        .distancia(
-            origen.getLocalidadId(),
-            origen.getCalle(),
-            origen.getAltura(),
-            destino.getLocalidadId(),
-            destino.getCalle(),
-            destino.getAltura());
-    return distancia.valor;
-  }
 }

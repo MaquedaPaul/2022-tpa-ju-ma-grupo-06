@@ -1,6 +1,6 @@
 package services.geodds.entities;
 
 public class Distancia {
-  public int valor;
+  public double valor;
   public String unidad;
 }

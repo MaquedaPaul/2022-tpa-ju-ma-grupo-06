@@ -1,7 +1,4 @@
-import exceptions.ElTipoLeidoNoEsValido;
-import exceptions.LaMedicionEsNegativa;
-import exceptions.NoSePudoAbrirElArchivo;
-import exceptions.NoSeReconoceLaPeriodicidad;
+import exceptions.*;
 import mediciones.MedicionBuilder;
 import org.junit.jupiter.api.Test;
 import tipo.consumo.RepoTipoDeConsumo;
@@ -36,6 +33,18 @@ public class MedicionesTest {
     assertThrows(NoSeReconoceLaPeriodicidad.class, () ->  nueva.cargarMediciones());
   }
 
+
+  /*
+  @Test
+  public void elPeriodoEsIncorrecto() {
+    TipoConsumo nuevoConsumo = new TipoConsumo("GasNatural","text",TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    RepoTipoDeConsumo repo = RepoTipoDeConsumo.getInstance();
+    repo.agregarNuevoTipoDeConsumo(nuevoConsumo);
+    MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/periodoIncorrecto.csv");
+    assertThrows(ElPeriodoDeImputacionIngresadoNoExiste.class, () ->  nueva.cargarMediciones());
+  }
+  */
+
   /*
   @Test
   public void elValorLeidoEsInconrrecto() {
@@ -45,6 +54,5 @@ public class MedicionesTest {
     MedicionBuilder nueva = new MedicionBuilder("src/main/java/mediciones/tipoLeidoNoValido.csv");
     assertThrows(ElTipoLeidoNoEsValido.class, () ->  nueva.cargarMediciones());
   }
-
    */
 }

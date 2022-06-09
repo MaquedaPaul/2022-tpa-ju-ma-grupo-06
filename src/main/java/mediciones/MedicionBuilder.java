@@ -36,9 +36,9 @@ public class MedicionBuilder {
     while (linea != null) {
       lineasLeidas++;
       linea = this.lineaLeida();
-        this.validarFormatoDeCarga(linea);
-        this.asignarParametros(linea);
-        this.crearMedicion();
+      this.validarFormatoDeCarga(linea);
+      this.asignarParametros(linea);
+      this.crearMedicion();
     }
   }
 

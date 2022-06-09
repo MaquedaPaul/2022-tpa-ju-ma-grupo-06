@@ -5,7 +5,7 @@ public class Parada {
   private Coordenada coordenada;
   private boolean esDeIda;
 
-  public Parada(int kmActual, Coordenada coordenada, boolean esDeIda){
+  public Parada(int kmActual, Coordenada coordenada, boolean esDeIda) {
     this.kmActual = kmActual;
     this.coordenada = coordenada;
     this.esDeIda = esDeIda;

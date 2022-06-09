@@ -1,10 +1,10 @@
 package transporte;
 
+
+import java.io.IOException;
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
-
-import java.io.IOException;
 
 public class ServicioContratado implements Transporte {
   ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();

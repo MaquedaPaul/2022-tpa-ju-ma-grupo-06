@@ -1,14 +1,13 @@
 package transporte;
 
-import linea.LineaTransporte;
-import linea.TipoTransporte;
-import linea.PuntoUbicacion;
-import linea.Parada;
-import services.geodds.ServicioGeodds;
-
 import java.io.IOException;
 import java.lang.Math;
 import java.util.stream.Collectors;
+import linea.LineaTransporte;
+import linea.Parada;
+import linea.PuntoUbicacion;
+import linea.TipoTransporte;
+import services.geodds.ServicioGeodds;
 
 public class TransportePublico implements Transporte {
   public ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
@@ -27,7 +26,9 @@ public class TransportePublico implements Transporte {
     return lineaUtilizada.transporte();
   }
 
-  public Parada getUbicacionInicioPrimerRecorrido() { return lineaUtilizada.inicioDelRecorridoDeIda(); } // ARREGLAR
+  public Parada getUbicacionInicioPrimerRecorrido() {
+    return lineaUtilizada.inicioDelRecorridoDeIda();
+  } // ARREGLAR
 
   public Parada getUltimaUbicacionPrimerRecorrido() {
     return lineaUtilizada.finalDelRecorridoDeIda();
@@ -42,9 +43,9 @@ public class TransportePublico implements Transporte {
   }
 
   public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
-    Parada Parada1 = this.encontrarParada(origen);
-    Parada Parada2 = this.encontrarParada(destino);
-    return Math.abs(Parada1.getKmActual() - Parada2.getKmActual());
+    Parada parada1 = this.encontrarParada(origen);
+    Parada parada2 = this.encontrarParada(destino);
+    return Math.abs(parada1.getKmActual() - parada2.getKmActual());
   }
 
   public Parada encontrarParada(PuntoUbicacion ubicacion) {

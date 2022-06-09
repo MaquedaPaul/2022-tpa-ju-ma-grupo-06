@@ -13,7 +13,7 @@ public class RepoOrganizacion {
     return organizaciones;
   }
 
-  void agregarOrganizacion(Organizacion nuevaOrganizacion) {
+  private void agregarOrganizacion(Organizacion nuevaOrganizacion) {
     organizaciones.add(nuevaOrganizacion);
   }
 }

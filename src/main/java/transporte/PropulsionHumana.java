@@ -1,10 +1,9 @@
 package transporte;
 
+import java.io.IOException;
 import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
-
-import java.io.IOException;
 
 public class PropulsionHumana implements Transporte {
   ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
@@ -14,16 +13,27 @@ public class PropulsionHumana implements Transporte {
     this.herramientaUtilizada = herramientaUtilizada;
   }
 
-  public String getHerramientaUtilizada() {
-    return herramientaUtilizada;
-  }
 
   @Override
   public int distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {
 
     ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
-    Distancia distancia = servicioGeodds.distancia(origen.getLocalidadId(), origen.getCalle(), origen.getAltura(), destino.getLocalidadId(), destino.getCalle(), destino.getAltura());
-
+    Distancia distancia = servicioGeodds
+        .distancia(origen.getLocalidadId(),
+            origen.getCalle(),
+            origen.getAltura(),
+            destino.getLocalidadId(),
+            destino.getCalle(),
+            destino.getAltura());
     return distancia.valor;
   }
+
+  public String getHerramientaUtilizada() {
+    return herramientaUtilizada;
+  }
+
+  public ServicioGeodds getApiGeodds() {
+    return servicioGeodds;
+  }
+
 }

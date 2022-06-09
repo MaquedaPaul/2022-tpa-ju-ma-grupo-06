@@ -7,14 +7,21 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 import services.geodds.entities.Distancia;
 
-// EN ESTA INTERFAZ MODELAMOS LA PARTE DE LA RUTA RELATIVA DE LA URL, ES DECIR LOS RECURSOS VARIABLES
-public interface GeoddsService{
+// EN ESTA INTERFAZ MODELAMOS LA
+// PARTE DE LA RUTA RELATIVA DE LA URL, ES DECIR LOS RECURSOS VARIABLES
+public interface GeoddsService {
 
   @GET("distancia")
-  Call<Distancia> distancia(@Query("localidadOrigenId") int localidadOrigenId,
-                            @Query("calleOrigen") String calleOrigen,
-                            @Query("alturaOrigen") int altOrigen,
-                            @Query("localidadDestinoId") int localidadDestinoId,
-                            @Query("calleDestino") String calleDestino,
-                            @Query("alturaDestino") int altDestino);
+  Call<Distancia> distancia(
+      @Query("localidadOrigenId") int localidadOId,
+
+      @Query("calleOrigen") String calleO,
+
+      @Query("alturaOrigen") int altO,
+
+      @Query("localidadDestinoId") int localidadDId,
+
+      @Query("calleDestino") String calleD,
+
+      @Query("alturaDestino") int altD);
 }

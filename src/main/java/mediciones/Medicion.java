@@ -1,15 +1,15 @@
 package mediciones;
 
-import tipo.consumo.TipoConsumo;
+import tipoConsumo.TipoConsumo;
 
 public class Medicion {
   TipoConsumo tipoConsumo;
-  Periodo periodicidad;
+  Perioricidad periodicidad;
   double valor;
   String periodoDeImputacion;
 
   public Medicion(TipoConsumo unTipoConsumo,
-                  Periodo unaPerioricidad,
+                  Perioricidad unaPerioricidad,
                   double unValor,
                   String periodoDeImputacion) {
     this.tipoConsumo = unTipoConsumo;
@@ -22,7 +22,7 @@ public class Medicion {
     return tipoConsumo;
   }
 
-  public Periodo getPeriodicidad() {
+  public Perioricidad getPeriodicidad() {
     return periodicidad;
   }
 

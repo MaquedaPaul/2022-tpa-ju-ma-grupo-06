@@ -2,9 +2,14 @@ package mediciones;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import exceptions.*;
-import tipo.consumo.RepoTipoDeConsumo;
-import tipo.consumo.TipoConsumo;
+import exceptions.ElPeriodoNoConcuerdaConLaPerioricidad;
+import exceptions.ElTipoDeConsumoLeidoNoEsValido;
+import exceptions.LaMedicionEsNegativa;
+import exceptions.LaPerioricidadLeidaNoEsValida;
+import exceptions.NoSeLeyeronLosCamposEsperados;
+import exceptions.NoSePudoLeerLaLinea;
+import tipoConsumo.RepoTipoDeConsumo;
+import tipoConsumo.TipoConsumo;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,7 +24,7 @@ public class LectorDeCSV {
 
   private final CSVReader reader;
   private TipoConsumo tipoConsumo;
-  private Periodo perioricidad;
+  private Perioricidad perioricidad;
   private double valor;
   private String periodoDeImputacion;
   private final List<Medicion> mediciones = new ArrayList<>();
@@ -28,11 +33,15 @@ public class LectorDeCSV {
     this.reader = new CSVReader(new FileReader(path));
   }
 
+  public List<Medicion> getMediciones() {
+    return mediciones;
+  }
   public int getCantidadDeMediciones() {
     return mediciones.size();
   }
 
   public void leerMediciones() {
+    String[] cabecera = this.lineaLeida();
     String[] linea = this.lineaLeida();
     while (linea != null) {
       this.validarFormatoLeido(linea);
@@ -55,15 +64,17 @@ public class LectorDeCSV {
     return reader.getLinesRead();
   }
   private void validarFormatoLeido(String[] campos){
-
+    if(campos.length != 4) {
+      throw new NoSeLeyeronLosCamposEsperados(4,campos.length,this.lineaActual());
+    }
     // tipoConsumo, valor, perioricidad, periodo de imputacion
     if (!RepoTipoDeConsumo.getInstance().existeElTipoDeConsumo(campos[0])) {
       throw new ElTipoDeConsumoLeidoNoEsValido(this.lineaActual());
     }
-    if (parseInt(campos[1]) < 0) {
+    if (Integer.parseInt(campos[1]) < 0) {
       throw new LaMedicionEsNegativa(this.lineaActual());
     }
-    if (!Periodo.esUnPeriodoValido(campos[2])) {
+    if (!Perioricidad.esUnPeriodoValido(campos[2])) {
       throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }
     if (!this.tieneElFormatoValido(campos[3],campos[2])){
@@ -73,21 +84,21 @@ public class LectorDeCSV {
 
   private boolean tieneElFormatoValido(String periodoDeImputacion, String perioricidad) {
     String formatoAnual = "[0-9]{4}";
-    String formatoMensual = "[0][1-9]|[1][0-2]" + formatoAnual;
+    String formatoMensual = "([0][1-9]|[1][0-2])/" + formatoAnual;
     switch (perioricidad) {
       case "ANUAL":
         return periodoDeImputacion.matches(formatoAnual);
       case "MENSUAL":
         return periodoDeImputacion.matches(formatoMensual);
       default:
-        throw new ElPeriodoDeImputacionNoEsValido(this.lineaActual());
+        throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }
   }
 
   private void asignarParametros(String[] atributos) {
     this.tipoConsumo = RepoTipoDeConsumo.getInstance().getTipoDeConsumo(atributos[0]);
-    this.valor = parseInt(atributos[1]);
-    this.perioricidad = Periodo.valueOf(atributos[2]);
+    this.valor = Integer.parseInt(atributos[1]);
+    this.perioricidad = Perioricidad.valueOf(atributos[2]);
     this.periodoDeImputacion = atributos[3];
   }
 

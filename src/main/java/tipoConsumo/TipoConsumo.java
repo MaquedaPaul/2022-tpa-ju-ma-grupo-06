@@ -1,4 +1,4 @@
-package tipo.consumo;
+package tipoConsumo;
 
 import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
@@ -29,7 +29,7 @@ public class TipoConsumo {
   }
 
   private void comprobarUnidadValida(String unidadDivisible) {
-    if (!unidadDivisible.equals(unidadDeFactorEmisionPosible())) {
+    if (!unidadDivisible.equals(this.unidadDeFactorEmisionPosible())) {
       throw new UnidadFeNoCorrespondienteConUnidadTipoConsumo(
           "La unidad del FE no se corresponde con la unidad del tipo.consumo.TipoConsumo");
     }

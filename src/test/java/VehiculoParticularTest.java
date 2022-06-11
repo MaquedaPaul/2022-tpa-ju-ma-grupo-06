@@ -1,13 +1,8 @@
-import linea.Coordenada;
-import linea.PuntoUbicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.geodds.GeoddsService;
-import services.geodds.ServicioGeodds;
 import transporte.*;
 import transporte.VehiculoParticular;
-
-import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;

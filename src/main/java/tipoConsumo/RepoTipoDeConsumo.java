@@ -1,4 +1,4 @@
-package tipo.consumo;
+package tipoConsumo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,13 @@ public class RepoTipoDeConsumo {
   }
 
   public TipoConsumo getTipoDeConsumo(String nombre) {
-    return this.tiposDeConsumos
+    List<TipoConsumo> tipos = this.tiposDeConsumos
         .stream()
         .filter(tipo -> Objects.equals(tipo.getNombre(), nombre))
-        .collect(Collectors.toList())
-        .get(0);
+        .collect(Collectors.toList());
+    if(tipos.isEmpty()) {
+      return null;
+    }
+    return tipos.get(0);
   }
 }

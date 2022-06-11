@@ -1,4 +1,4 @@
-package tipo.consumo;
+package tipoConsumo;
 
 public enum TipoActividad {
   COMBUSTION_FIJA,

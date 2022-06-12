@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class RepoTipoDeConsumo {
   private final List<TipoConsumo> tiposDeConsumos = new ArrayList<>();
-  public static RepoTipoDeConsumo repoTipoConsumo = null;
+  private static RepoTipoDeConsumo repoTipoConsumo = null;
 
   private RepoTipoDeConsumo() {
   }

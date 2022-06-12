@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepoFactoresEmision {
-  public static List<FactorEmision> factoresEmision = new ArrayList<>();
+  private static List<FactorEmision> factoresEmision = new ArrayList<>();
 
   public RepoFactoresEmision() {
   }

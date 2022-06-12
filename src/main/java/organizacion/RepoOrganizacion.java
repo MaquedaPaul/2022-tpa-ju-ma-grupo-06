@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepoOrganizacion {
-  public static List<Organizacion> organizaciones = new ArrayList<>();
+  private final List<Organizacion> organizaciones = new ArrayList<>();
+  private static RepoOrganizacion repoOrganizacion = null;
 
   private RepoOrganizacion() {
   }
 
-  public List<Organizacion> getOrganizaciones() {
-    return organizaciones;
+  public static RepoOrganizacion getInstance() {
+    if (repoOrganizacion == null) {
+      repoOrganizacion = new RepoOrganizacion();
+    }
+    return repoOrganizacion;
   }
 
   private void agregarOrganizacion(Organizacion nuevaOrganizacion) {

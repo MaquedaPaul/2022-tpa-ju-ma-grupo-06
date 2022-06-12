@@ -38,7 +38,7 @@ public class ServicioGeodds {
     Call<Distancia> requestDistancia = geoddsService
         .distancia(token,locOr, calleO, altO, locDes, calleD, altDes);
     Response<Distancia> responseDistancia = requestDistancia.execute();
-    System.out.println("Codigo de Respuesta: " + responseDistancia.code());
+    //System.out.println("Codigo de Respuesta: " + responseDistancia.code());
     return responseDistancia.body();
   }
 

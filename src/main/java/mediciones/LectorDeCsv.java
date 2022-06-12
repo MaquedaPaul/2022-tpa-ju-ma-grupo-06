@@ -8,19 +8,15 @@ import exceptions.LaMedicionEsNegativa;
 import exceptions.LaPerioricidadLeidaNoEsValida;
 import exceptions.NoSeLeyeronLosCamposEsperados;
 import exceptions.NoSePudoLeerLaLinea;
-import tipoConsumo.RepoTipoDeConsumo;
-import tipoConsumo.TipoConsumo;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import tipoconsumo.RepoTipoDeConsumo;
+import tipoconsumo.TipoConsumo;
 
-import static java.lang.Integer.parseInt;
-
-
-public class LectorDeCSV {
+public class LectorDeCsv {
 
   private final CSVReader reader;
   private TipoConsumo tipoConsumo;
@@ -29,13 +25,14 @@ public class LectorDeCSV {
   private String periodoDeImputacion;
   private final List<Medicion> mediciones = new ArrayList<>();
 
-  public LectorDeCSV(String path) throws FileNotFoundException {
+  public LectorDeCsv(String path) throws FileNotFoundException {
     this.reader = new CSVReader(new FileReader(path));
   }
 
   public List<Medicion> getMediciones() {
     return mediciones;
   }
+
   public int getCantidadDeMediciones() {
     return mediciones.size();
   }
@@ -63,8 +60,9 @@ public class LectorDeCSV {
   private long lineaActual() {
     return reader.getLinesRead();
   }
-  private void validarFormatoLeido(String[] campos){
-    if(campos.length != 4) {
+
+  private void validarFormatoLeido(String[] campos) {
+    if (campos.length != 4) {
       throw new NoSeLeyeronLosCamposEsperados(4,campos.length,this.lineaActual());
     }
     // tipoConsumo, valor, perioricidad, periodo de imputacion
@@ -77,7 +75,7 @@ public class LectorDeCSV {
     if (!Perioricidad.esUnPeriodoValido(campos[2])) {
       throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }
-    if (!this.tieneElFormatoValido(campos[3],campos[2])){
+    if (!this.tieneElFormatoValido(campos[3],campos[2])) {
       throw new ElPeriodoNoConcuerdaConLaPerioricidad(this.lineaActual());
     }
   }

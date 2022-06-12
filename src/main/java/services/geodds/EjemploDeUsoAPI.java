@@ -1,3 +1,5 @@
+package services.geodds;
+
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
@@ -10,8 +12,9 @@ public class EjemploDeUsoAPI {
 
       ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
       Distancia distancia = servicioGeodds.distancia(156,"dante",200,384,"san lorenzo",600);
-
+      /*
       System.out.println(distancia.valor);
       System.out.println(distancia.unidad);
+      */
     }
   }

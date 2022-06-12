@@ -1,12 +1,15 @@
-
-import exceptions.*;
-import mediciones.LectorDeCSV;
+import exceptions.ElPeriodoNoConcuerdaConLaPerioricidad;
+import exceptions.ElTipoDeConsumoLeidoNoEsValido;
+import exceptions.LaMedicionEsNegativa;
+import exceptions.LaPerioricidadLeidaNoEsValida;
+import exceptions.NoSeLeyeronLosCamposEsperados;
+import mediciones.LectorDeCsv;
 import mediciones.RepoMediciones;
 import org.junit.jupiter.api.Test;
-import tipoConsumo.RepoTipoDeConsumo;
-import tipoConsumo.TipoActividad;
-import tipoConsumo.TipoAlcance;
-import tipoConsumo.TipoConsumo;
+import tipoconsumo.RepoTipoDeConsumo;
+import tipoconsumo.TipoActividad;
+import tipoconsumo.TipoAlcance;
+import tipoconsumo.TipoConsumo;
 
 import java.io.FileNotFoundException;
 
@@ -16,22 +19,23 @@ public class MedicionesTest {
   // El lector falla si la ruta no es valida
   @Test
   public void elLectorFallaSiLaRutaDelArchivoNoExiste() {
-    assertThrows(FileNotFoundException.class, () -> new LectorDeCSV("hola no funciono"));
+    assertThrows(FileNotFoundException.class, () -> new LectorDeCsv("hola no funciono"));
   }
 
   // si hay mas de 4 columnas en una fila tiene que romper
   @Test
   public void siLeiMasDeCuatroColumnasEnUnaFilaTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionConMuchosCampos.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionConMuchosCampos.csv");
     assertThrows(NoSeLeyeronLosCamposEsperados.class, lector::leerMediciones);
+
   }
 
   // un tipo de consumo invalido debe detener el lector
   @Test
   public void SiLeoUnTipoDeConsumoDesconocidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionTipoConsumoDesconocido.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionTipoConsumoDesconocido.csv");
     assertThrows(ElTipoDeConsumoLeidoNoEsValido.class, lector::leerMediciones);
   }
 
@@ -39,7 +43,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnValorNegativoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionValorNegativo.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionValorNegativo.csv");
     assertThrows(LaMedicionEsNegativa.class, lector::leerMediciones);
   }
 
@@ -47,7 +51,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnaPerioricidadInvalidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionPerioricidadInvalida.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPerioricidadInvalida.csv");
     assertThrows(LaPerioricidadLeidaNoEsValida.class, lector::leerMediciones);
   }
 
@@ -55,7 +59,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnPeriodoDeImputacionInvalidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionPeriodoImputInvalido.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPeriodoImputInvalido.csv");
     assertThrows(ElPeriodoNoConcuerdaConLaPerioricidad.class, lector::leerMediciones);
   }
 
@@ -63,14 +67,14 @@ public class MedicionesTest {
   @Test
   public void siElPeriodoNoConcuerdaConLaPerioricidadTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionNoConcuerda.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionNoConcuerda.csv");
     assertThrows(ElPeriodoNoConcuerdaConLaPerioricidad.class, lector::leerMediciones);
   }
   // en un archivo correcto debe agregar todas las mediciones
   @Test
   public void puedoGuardarLasMedicionesQueEstenCorrectas() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionesCorrectas.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesCorrectas.csv");
     assertEquals(lector.getCantidadDeMediciones(), 0);
     assertDoesNotThrow(lector::leerMediciones);
     assertEquals(5,lector.getCantidadDeMediciones());
@@ -81,7 +85,7 @@ public class MedicionesTest {
   public void puedoCargarLasMedicionesQueEstenCorrectas() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
     assertEquals(RepoMediciones.getInstance().medicionesTotales(), 0);
-    LectorDeCSV lector = new LectorDeCSV("src/main/java/mediciones/medicionParcialmenteCorrecta.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionParcialmenteCorrecta.csv");
     assertThrows(NoSeLeyeronLosCamposEsperados.class,lector::leerMediciones);
     assertEquals(lector.getCantidadDeMediciones(),2);
     lector.cargarMediciones();

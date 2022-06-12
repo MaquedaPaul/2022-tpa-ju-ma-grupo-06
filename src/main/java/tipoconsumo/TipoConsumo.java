@@ -1,4 +1,4 @@
-package tipoConsumo;
+package tipoconsumo;
 
 import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;

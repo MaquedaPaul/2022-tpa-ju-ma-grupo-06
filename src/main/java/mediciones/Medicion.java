@@ -1,6 +1,6 @@
 package mediciones;
 
-import tipoConsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 public class Medicion {
   TipoConsumo tipoConsumo;

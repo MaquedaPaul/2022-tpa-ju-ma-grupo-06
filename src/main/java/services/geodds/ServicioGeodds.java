@@ -33,7 +33,8 @@ public class ServicioGeodds {
                              int altO,
                              int locDes,
                              String calleD,
-                             int altDes) throws IOException {
+                             int altDes)
+      throws IOException {
     GeoddsService geoddsService = this.retrofit.create(GeoddsService.class);
     Call<Distancia> requestDistancia = geoddsService
         .distancia(token,locOr, calleO, altO, locDes, calleD, altDes);

@@ -1,5 +1,6 @@
 package admin;
 
+import global.Unidad;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +14,7 @@ public class AdministradorTest {
     Administrador unAdministrador = new Administrador("ejemplo","esteEsUnEjemplo");
     RepoFactoresEmision unRepo = new RepoFactoresEmision();
     unAdministrador.setRepoDeFactores(unRepo);
-    unAdministrador.crearFactorEmision(300,"lts");
+    unAdministrador.crearFactorEmision(300, Unidad.LTS);
     assertEquals(unRepo.getFactoresEmision().size(), 1);
   }
 }

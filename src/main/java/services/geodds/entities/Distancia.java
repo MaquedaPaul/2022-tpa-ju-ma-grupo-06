@@ -1,14 +1,16 @@
 package services.geodds.entities;
 
+import global.Unidad;
+
 public class Distancia {
   public double valor;
-  public String unidad;
+  public Unidad unidad;
 
   public Distancia(double valor) {
     this.valor = valor;
   }
 
-  public String getUnidad() {
+  public Unidad getUnidad() {
     return unidad;
   }
   
@@ -16,11 +18,13 @@ public class Distancia {
     return valor;
   }
 
-  public void setUnidad(String unidad) {
+  public void setUnidad(Unidad unidad) {
     this.unidad = unidad;
   }
 
   public void setValor(double valor) {
     this.valor = valor;
   }
+
+
 }

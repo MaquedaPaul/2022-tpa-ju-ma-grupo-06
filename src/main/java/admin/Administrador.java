@@ -1,5 +1,7 @@
 package admin;
 
+import global.Unidad;
+
 public class Administrador {
   String usuario;
   String password;
@@ -18,7 +20,7 @@ public class Administrador {
     return password;
   }
 
-  void crearFactorEmision(double valor, String unidadDivisible) {
+  void crearFactorEmision(double valor, Unidad unidadDivisible) {
     repoDeFactores.incorporarFactor(new FactorEmision(valor, unidadDivisible));
   }
 

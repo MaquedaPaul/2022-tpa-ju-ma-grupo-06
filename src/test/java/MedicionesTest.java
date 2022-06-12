@@ -3,6 +3,7 @@ import exceptions.ElTipoDeConsumoLeidoNoEsValido;
 import exceptions.LaMedicionEsNegativa;
 import exceptions.LaPerioricidadLeidaNoEsValida;
 import exceptions.NoSeLeyeronLosCamposEsperados;
+import global.Unidad;
 import mediciones.LectorDeCsv;
 import mediciones.RepoMediciones;
 import org.junit.jupiter.api.Test;
@@ -93,8 +94,8 @@ public class MedicionesTest {
   }
 
   private void agregarTiposDeConsumoDePrueba() {
-    TipoConsumo gas = new TipoConsumo("Gas Natural", "cm3", TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
-    TipoConsumo nafta = new TipoConsumo("Nafta", "lts", TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo gas = new TipoConsumo("Gas Natural", Unidad.CM3, TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo nafta = new TipoConsumo("Nafta", Unidad.LTS, TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
     RepoTipoDeConsumo.getInstance().agregarNuevoTipoDeConsumo(gas);
     RepoTipoDeConsumo.getInstance().agregarNuevoTipoDeConsumo(nafta);
   }

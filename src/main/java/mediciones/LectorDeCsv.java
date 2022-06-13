@@ -2,15 +2,19 @@ package mediciones;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import exceptions.*;
-
+import exceptions.ElPeriodoNoConcuerdaConLaPerioricidad;
+import exceptions.ElTipoDeConsumoLeidoNoEsValido;
+import exceptions.LaCabeceraNoTieneUnFormatoValido;
+import exceptions.LaMedicionEsNegativa;
+import exceptions.LaPerioricidadLeidaNoEsValida;
+import exceptions.NoSeLeyeronLosCamposEsperados;
+import exceptions.NoSePudoLeerLaLinea;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
 
@@ -38,14 +42,14 @@ public class LectorDeCsv {
   public void leerMediciones() {
     String[] linea = this.lineaLeida();
     if (this.esUnaCabeceraValida(linea)) {
+      linea = this.lineaLeida();
+      while (linea != null) {
+        this.validarFormatoLeido(linea);
+        this.asignarParametros(linea);
+        this.guardarMedicion();
         linea = this.lineaLeida();
-        while (linea != null) {
-          this.validarFormatoLeido(linea);
-          this.asignarParametros(linea);
-          this.guardarMedicion();
-          linea = this.lineaLeida();
-        }
-      } else {
+      }
+    } else {
       throw new LaCabeceraNoTieneUnFormatoValido();
     }
   }
@@ -56,7 +60,9 @@ public class LectorDeCsv {
     cabeceraValida.add("VALOR");
     cabeceraValida.add("PERIORICIDAD");
     cabeceraValida.add("PERIODO DE IMPUTACION");
-    return Arrays.equals(Arrays.stream(cabecera).map(String::toUpperCase).toArray(), cabeceraValida.toArray());
+    return Arrays.equals(Arrays.stream(cabecera)
+        .map(String::toUpperCase)
+        .toArray(), cabeceraValida.toArray());
   }
 
   private String[] lineaLeida() {

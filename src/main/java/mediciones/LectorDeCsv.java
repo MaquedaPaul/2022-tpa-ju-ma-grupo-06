@@ -35,6 +35,7 @@ public class LectorDeCsv {
     return mediciones;
   }
 
+
   public int getCantidadDeMediciones() {
     return mediciones.size();
   }

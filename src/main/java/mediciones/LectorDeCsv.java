@@ -38,7 +38,7 @@ public class LectorDeCsv {
   }
 
   public void leerMediciones() {
-    String[] cabecera = this.lineaLeida();
+    //String[] cabecera = this.lineaLeida();
     String[] linea = this.lineaLeida();
     while (linea != null) {
       this.validarFormatoLeido(linea);

@@ -1,8 +1,4 @@
-import exceptions.ElPeriodoNoConcuerdaConLaPerioricidad;
-import exceptions.ElTipoDeConsumoLeidoNoEsValido;
-import exceptions.LaMedicionEsNegativa;
-import exceptions.LaPerioricidadLeidaNoEsValida;
-import exceptions.NoSeLeyeronLosCamposEsperados;
+import exceptions.*;
 import global.Unidad;
 import mediciones.LectorDeCsv;
 import mediciones.RepoMediciones;
@@ -34,10 +30,18 @@ public class MedicionesTest {
 
   // un tipo de consumo invalido debe detener el lector
   @Test
-  public void SiLeoUnTipoDeConsumoDesconocidoTengoQueDetenerme() throws FileNotFoundException {
+  public void siLeoUnTipoDeConsumoDesconocidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
     LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionTipoConsumoDesconocido.csv");
     assertThrows(ElTipoDeConsumoLeidoNoEsValido.class, lector::leerMediciones);
+  }
+
+  // si los nombres de los campos no son los que se esperan debo detenerme
+
+  @Test
+  public void siLosCamposTienenNombreDistintosALosEsperadosDeboDetenerme() throws FileNotFoundException {
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesConColumnasRandom.csv");
+    assertThrows(LaCabeceraNoTieneUnFormatoValido.class, lector::leerMediciones);
   }
 
   // un valor negativo debe detener el lector

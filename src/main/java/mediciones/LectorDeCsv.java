@@ -9,9 +9,11 @@ import exceptions.LaMedicionEsNegativa;
 import exceptions.LaPerioricidadLeidaNoEsValida;
 import exceptions.NoSeLeyeronLosCamposEsperados;
 import exceptions.NoSePudoLeerLaLinea;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,8 @@ public class LectorDeCsv {
   private final List<Medicion> mediciones = new ArrayList<>();
 
   public LectorDeCsv(String path) throws FileNotFoundException {
-    this.reader = new CSVReader(new FileReader(path));
+    this.reader = new CSVReader(new InputStreamReader(new FileInputStream(path),
+        Charset.defaultCharset()));
   }
 
   public List<Medicion> getMediciones() {

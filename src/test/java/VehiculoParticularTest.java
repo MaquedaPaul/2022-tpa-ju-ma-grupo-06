@@ -24,7 +24,7 @@ public class VehiculoParticularTest {
   public void darDeAltaUnAutoANafta() {
     TipoVehiculo esUnAuto = TipoVehiculo.AUTO;
     TipoCombustible andaANafta = TipoCombustible.NAFTA;
-    VehiculoParticular autoANafta = new VehiculoParticular(TipoCombustible.NAFTA,TipoVehiculo.AUTO);
+    VehiculoParticular autoANafta = new VehiculoParticular(TipoCombustible.NAFTA, TipoVehiculo.AUTO);
     autoANafta.getTipoVehiculo().equals(esUnAuto);
     assertEquals(autoANafta.getTipoVehiculo(), esUnAuto);
     assertEquals(autoANafta.getTipoCombustible(), andaANafta);
@@ -34,7 +34,7 @@ public class VehiculoParticularTest {
   public void darDeAltaUnaMotoAGasoil() {
     TipoVehiculo esUnaMoto = TipoVehiculo.MOTO;
     TipoCombustible andaAGasoil = TipoCombustible.GASOIL;
-    VehiculoParticular motoAGasoil = new VehiculoParticular(andaAGasoil,esUnaMoto);
+    VehiculoParticular motoAGasoil = new VehiculoParticular(andaAGasoil, esUnaMoto);
     assertEquals(motoAGasoil.getTipoVehiculo(), esUnaMoto);
     assertEquals(motoAGasoil.getTipoCombustible(), andaAGasoil);
   }
@@ -47,8 +47,8 @@ public class VehiculoParticularTest {
     Tramo unTramo = unFactory.crearTramoSimple(motoAGasoil);
     ServicioGeodds geoddsMock = mock(ServicioGeodds.class);
     motoAGasoil.setServiocioGeo(geoddsMock);
-    when(geoddsMock.distancia(anyInt(),any(),anyInt(),anyInt(),any(),anyInt())).thenReturn(new Distancia(5));
+    when(geoddsMock.distancia(anyInt(), any(), anyInt(), anyInt(), any(), anyInt())).thenReturn(new Distancia(5));
     unTramo.distanciaTramo();
-    verify(geoddsMock,times(1)).distancia(anyInt(),anyString(),anyInt(),anyInt(),anyString(),anyInt());
+    verify(geoddsMock, times(1)).distancia(anyInt(), anyString(), anyInt(), anyInt(), anyString(), anyInt());
   }
 }

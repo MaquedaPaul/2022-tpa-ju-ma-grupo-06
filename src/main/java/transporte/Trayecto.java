@@ -7,7 +7,12 @@ import linea.PuntoUbicacion;
 
 
 public class Trayecto {
+
   private List<Tramo> tramos = new ArrayList<>();
+
+  public Trayecto(List<Tramo> tramos) {
+    this.tramos = tramos;
+  }
 
   public void setTramos(List<Tramo> tramos) {
     this.tramos = tramos;

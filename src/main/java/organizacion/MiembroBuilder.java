@@ -12,14 +12,14 @@ public class MiembroBuilder {
   TIpoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
-
+  int cantidadDeDiasQueTrabaja = 20;
   public MiembroBuilder() {
 
   }
 
   public Miembro construir() {
     this.validar();
-    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos);
+    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos, cantidadDeDiasQueTrabaja);
   }
 
   public void especificarNombre(String unNombre) {
@@ -41,8 +41,10 @@ public class MiembroBuilder {
   }
 
   public void especificarTrayectos(List<Trayecto> unosTrayectos) {
-    // podría ser que no se desplace porque es virtual
     trayectos = unosTrayectos;
+  }
+  public void especificarCantidadDiasQueTrabaja(int cantidadDeDiasQueTrabaja) {
+    this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }
 
   public void validar() {

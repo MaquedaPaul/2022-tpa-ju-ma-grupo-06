@@ -6,8 +6,11 @@ import exceptions.NoSeAceptaVinculacion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
+import exceptions.NoSeEncuentraException;
 import lombok.Getter;
 
 @Getter
@@ -69,9 +72,29 @@ public class Organizacion {
   double calcularHC() {
     return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
   }
-  public double impactoDeMiembro(Miembro miembro){
+
+  public double impactoDeMiembro(Miembro miembro) {
     return (100 * miembro.calcularHCTotal()) / calcularHC();
   }
+  public List<Miembro> getMiembros(){
+    return getSectores().stream().flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros()).collect(Collectors.toList());
+  }
+  public List<Miembro> getMiembrosEnSector(Sector sector){
+    if(!getSectores().contains(sector)){
+      throw new NoSeEncuentraException("Sector no pertenece a la organizacion");
+    }
+    Sector sectorEncontrado = getSectores().stream().filter(unSector -> unSector == sector).collect(Collectors.toList()).get(0);
+    return sectorEncontrado.getMiembros();
+  }
+
+  public double indicadorHC_Miembros() {
+  return calcularHC() / getMiembros().size();
+  }
+
+  public double indicadorHC_MiembrosEnSector(Sector sector) {
+  return calcularHC() / this.getMiembrosEnSector(sector).size();
+  }
+
 
 }
 

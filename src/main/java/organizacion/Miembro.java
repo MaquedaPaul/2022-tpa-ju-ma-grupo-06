@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Miembro {
   String nombre;
   String apellido;
-  TIpoDocumento tipoDocumento;
+  TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
   int cantidadDeDiasQueTrabaja;
@@ -19,7 +19,7 @@ public class Miembro {
   public Miembro(
       String unNombre,
       String unApellido,
-      TIpoDocumento unTipoDocumento,
+      TipoDocumento unTipoDocumento,
       int unNumeroDocumento,
       List<Trayecto> unosTrayectos,
       int cantidadDeDiasQueTrabaja) {
@@ -31,7 +31,7 @@ public class Miembro {
     this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }
 
-  void registrarTrayecto(Trayecto unTrayecto) {
+  public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
   }
@@ -47,7 +47,7 @@ public class Miembro {
 
 
   public double calcularHCTrayectos() {
-    return 0;
+    return 1;
     //return getTrayectos().stream().mapToDouble(unTrayecto -> unTrayecto.calcularHC()).sum();
   }
 }

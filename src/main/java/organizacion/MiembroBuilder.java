@@ -9,7 +9,7 @@ import transporte.Trayecto;
 public class MiembroBuilder {
   String nombre;
   String apellido;
-  TIpoDocumento tipoDocumento;
+  TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
   int cantidadDeDiasQueTrabaja = 20;
@@ -31,7 +31,7 @@ public class MiembroBuilder {
     apellido = unApellido;
   }
 
-  public void especificarTipoDocumento(TIpoDocumento unTipoDocumento) {
+  public void especificarTipoDocumento(TipoDocumento unTipoDocumento) {
     requireNonNull(unTipoDocumento);
     tipoDocumento = unTipoDocumento;
   }

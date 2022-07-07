@@ -23,4 +23,8 @@ public class Sector {
   public String getNombre() {
     return nombre;
   }
+
+  public double calcularHCMiembros() {
+    return miembros.stream().mapToDouble(unMiembro -> unMiembro.calcularHCTotal()).sum();
+  }
 }

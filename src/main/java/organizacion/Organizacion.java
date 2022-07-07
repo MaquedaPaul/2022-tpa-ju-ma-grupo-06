@@ -83,8 +83,7 @@ public class Organizacion {
     if(!getSectores().contains(sector)){
       throw new NoSeEncuentraException("Sector no pertenece a la organizacion");
     }
-    Sector sectorEncontrado = getSectores().stream().filter(unSector -> unSector == sector).collect(Collectors.toList()).get(0);
-    return sectorEncontrado.getMiembros();
+    return sector.getMiembros();
   }
 
   public double indicadorHC_Miembros() {

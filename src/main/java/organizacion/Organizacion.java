@@ -69,31 +69,34 @@ public class Organizacion {
     unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
-  double calcularHC() {
+  public double calcularHC() {
     return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
   }
 
   public double impactoDeMiembro(Miembro miembro) {
     return (100 * miembro.calcularHCTotal()) / calcularHC();
   }
-  public List<Miembro> getMiembros(){
+
+  public List<Miembro> getMiembros() {
     return getSectores().stream().flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros()).collect(Collectors.toList());
   }
-  public List<Miembro> getMiembrosEnSector(Sector sector){
-    if(!getSectores().contains(sector)){
-      throw new NoSeEncuentraException("Sector no pertenece a la organizacion");
+
+  public List<Miembro> getMiembrosEnSector(Sector sector) {
+    if (!getSectores().contains(sector)) {
+      throw new NoSeEncuentraException(sector + " no pertenece a la organizacion");
     }
     return sector.getMiembros();
   }
 
   public double indicadorHC_Miembros() {
-  return calcularHC() / getMiembros().size();
+    return calcularHC() / getMiembros().size();
   }
 
   public double indicadorHC_MiembrosEnSector(Sector sector) {
-  return calcularHC() / this.getMiembrosEnSector(sector).size();
+    return calcularHC() / this.getMiembrosEnSector(sector).size();
   }
-  public void cargarContacto(Contacto unContacto){
+
+  public void cargarContacto(Contacto unContacto) {
     contactos.add(unContacto);
   }
 

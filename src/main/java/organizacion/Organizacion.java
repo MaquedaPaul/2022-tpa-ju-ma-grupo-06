@@ -94,7 +94,9 @@ public class Organizacion {
   public double indicadorHC_MiembrosEnSector(Sector sector) {
   return calcularHC() / this.getMiembrosEnSector(sector).size();
   }
-
+  public void cargarContacto(Contacto unContacto){
+    contactos.add(unContacto);
+  }
 
 }
 

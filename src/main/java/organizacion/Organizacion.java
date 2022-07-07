@@ -2,10 +2,15 @@ package organizacion;
 
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
+import lombok.Getter;
+
+@Getter
 public class Organizacion {
   String razonSocial;
   TipoOrganizacion tipo;
@@ -13,9 +18,11 @@ public class Organizacion {
   List<Sector> sectores;
   String clasificacion;
   List<Solicitud> solicitudes;
+  List<Contacto> contactos;
+
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
-                      String clasificacion) {
+                      String clasificacion, List<Contacto> contactos) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
@@ -23,12 +30,13 @@ public class Organizacion {
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
     this.solicitudes = new ArrayList<>();
+    this.contactos = contactos;
   }
 
-  public void procesarVinculacion(boolean decicion) {
+  public void procesarVinculacion(boolean decision) {
     Solicitud nuevaSolicitud = solicitudes.get(0);
     solicitudes.remove(0);
-    if (decicion) {
+    if (decision) {
       aceptarvinculacion(nuevaSolicitud);
       return;
     }
@@ -58,28 +66,10 @@ public class Organizacion {
     unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
-  public List<Sector> getSectores() {
-    return sectores;
+  double calcularHC() {
+    return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
   }
 
-  public String getClasificacion() {
-    return clasificacion;
-  }
 
-  public String getRazonSocial() {
-    return razonSocial;
-  }
-
-  public TipoOrganizacion getTipo() {
-    return tipo;
-  }
-
-  public String getUbicacionGeografica() {
-    return ubicacionGeografica;
-  }
-
-  public List<Solicitud> getSolicitudes() {
-    return solicitudes;
-  }
 }
 

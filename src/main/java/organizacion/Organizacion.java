@@ -69,7 +69,9 @@ public class Organizacion {
   double calcularHC() {
     return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
   }
-
+  public double impactoDeMiembro(Miembro miembro){
+    return (100 * miembro.calcularHCTotal()) / calcularHC();
+  }
 
 }
 

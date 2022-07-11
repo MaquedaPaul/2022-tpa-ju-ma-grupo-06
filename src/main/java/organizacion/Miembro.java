@@ -3,6 +3,8 @@ package organizacion;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+
+import transporte.Tramo;
 import transporte.Trayecto;
 
 public class Miembro {
@@ -11,6 +13,7 @@ public class Miembro {
   TIpoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
+  int cantidadDiasQueTrabaja;
 
   public Miembro(
       String unNombre,
@@ -48,5 +51,9 @@ public class Miembro {
 
   public TIpoDocumento getTipoDocumento() {
     return tipoDocumento;
+  }
+
+  public double calcularHcTotal(){
+    return trayectos.stream().mapToDouble(Trayecto::calcularHc).sum() * cantidadDiasQueTrabaja;
   }
 }

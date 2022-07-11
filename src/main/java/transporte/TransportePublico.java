@@ -9,7 +9,7 @@ import linea.PuntoUbicacion;
 import linea.TipoTransporte;
 import services.geodds.ServicioGeodds;
 
-public class TransportePublico implements Transporte {
+public class TransportePublico extends Transporte {
 
   private LineaTransporte lineaUtilizada;
 

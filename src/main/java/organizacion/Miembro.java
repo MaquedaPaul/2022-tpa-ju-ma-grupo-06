@@ -13,7 +13,6 @@ public class Miembro {
   TIpoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
-  int cantidadDiasQueTrabaja;
 
   public Miembro(
       String unNombre,
@@ -51,9 +50,5 @@ public class Miembro {
 
   public TIpoDocumento getTipoDocumento() {
     return tipoDocumento;
-  }
-
-  public double calcularHcTotal(){
-    return trayectos.stream().mapToDouble(Trayecto::calcularHc).sum() * cantidadDiasQueTrabaja;
   }
 }

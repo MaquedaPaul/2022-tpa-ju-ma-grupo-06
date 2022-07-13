@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepoFactoresEmision {
-  private static List<FactorEmision> factoresEmision = new ArrayList<>();
+  private final List<FactorEmision> factoresEmision = new ArrayList<>();
+  private static RepoFactoresEmision repoFactoresEmision = null;
 
-  public RepoFactoresEmision() {
+  private RepoFactoresEmision() {
   }
 
-  ;
+  public static RepoFactoresEmision getInstance() {
+    if (repoFactoresEmision == null) {
+      repoFactoresEmision = new RepoFactoresEmision();
+    }
+    return repoFactoresEmision;
+  }
 
   void incorporarFactor(FactorEmision nuevoFactor) {
     factoresEmision.add(nuevoFactor);
@@ -21,5 +27,9 @@ public class RepoFactoresEmision {
 
   public List<FactorEmision> getFactoresEmision() {
     return factoresEmision;
+  }
+
+  public int factoresTotales() {
+    return factoresEmision.size();
   }
 }

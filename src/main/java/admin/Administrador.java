@@ -22,5 +22,10 @@ public class Administrador {
   void crearFactorEmision(double valor, Unidad unidadDivisible) {
     RepoFactoresEmision.getInstance().incorporarFactor(new FactorEmision(valor, unidadDivisible));
   }
+  void modificarFactorDeEmision(FactorEmision unFactor, double valor) {
+    RepoFactoresEmision.getInstance().modificarFactorEmicion(unFactor, valor);
+  }
 }
+
+
 

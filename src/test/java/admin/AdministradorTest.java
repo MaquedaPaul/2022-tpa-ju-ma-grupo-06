@@ -11,4 +11,14 @@ public class AdministradorTest {
     unAdministrador.crearFactorEmision(300, Unidad.LTS);
     assertEquals(RepoFactoresEmision.getInstance().factoresTotales(), 1);
   }
+
+  @Test
+  void modificarFactorDeEmision() {
+    Administrador unAdministrador = new Administrador("ejemplo","esteEsUnEjemplo");
+    FactorEmision unFactor = new FactorEmision(300, Unidad.LTS);
+    RepoFactoresEmision repo = RepoFactoresEmision.getInstance();
+    repo.incorporarFactor(unFactor);
+    unAdministrador.modificarFactorDeEmision(unFactor,450);
+    assertEquals(RepoFactoresEmision.getInstance().getFactoresEmision().get(0).getValor(), 450);
+  }
 }

@@ -21,8 +21,8 @@ public class RepoFactoresEmision {
     factoresEmision.add(nuevoFactor);
   }
 
-  void modificarFactorEmicion(Double nuevoValor, int posicion) {
-    factoresEmision.get(posicion).setValor(nuevoValor);
+  void modificarFactorEmicion(FactorEmision unFactor, double nuevoValor) {
+    unFactor.setValor(nuevoValor);
   }
 
   public List<FactorEmision> getFactoresEmision() {

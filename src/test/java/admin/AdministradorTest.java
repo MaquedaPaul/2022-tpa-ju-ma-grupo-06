@@ -14,11 +14,13 @@ public class AdministradorTest {
 
   @Test
   void modificarFactorDeEmision() {
+    //El singleton esta manteniendo los objetos incluso entre test por eso el get(1) mas abajo
+    assertEquals(RepoFactoresEmision.getInstance().factoresTotales(), 1);
     Administrador unAdministrador = new Administrador("ejemplo","esteEsUnEjemplo");
     FactorEmision unFactor = new FactorEmision(300, Unidad.LTS);
     RepoFactoresEmision repo = RepoFactoresEmision.getInstance();
     repo.incorporarFactor(unFactor);
     unAdministrador.modificarFactorDeEmision(unFactor,450);
-    assertEquals(RepoFactoresEmision.getInstance().getFactoresEmision().get(0).getValor(), 450);
+    assertEquals(RepoFactoresEmision.getInstance().getFactoresEmision().get(1).getValor(), 450);
   }
 }

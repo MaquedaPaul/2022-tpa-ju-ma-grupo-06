@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AdapterWhatsapp implements MedioNotificador {
 
-  private String mensaje;
+  private String mensajePlantilla;
   private String url;
   //private ApiWhatsapp apiWhatsapp;
 
@@ -22,8 +22,8 @@ public class AdapterWhatsapp implements MedioNotificador {
   }
 
   @Override
-  public void setMensajeEnvioStandar(String mensaje) {
-    this.mensaje = mensaje;
+  public void setMensajePlantilla(String mensaje) {
+    this.mensajePlantilla = mensaje;
   }
 
   public void setUrl(String url) {
@@ -31,8 +31,8 @@ public class AdapterWhatsapp implements MedioNotificador {
   }
 
   @Override
-  public String getMensajeEnvioPara(Contacto contacto) {
-    String mensajePersonalizado = this.mensaje.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
+  public String getMensajePlantilla(Contacto contacto) {
+    String mensajePersonalizado = this.mensajePlantilla.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
     mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
     mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);

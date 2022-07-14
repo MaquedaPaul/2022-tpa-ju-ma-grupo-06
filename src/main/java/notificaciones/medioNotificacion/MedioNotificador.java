@@ -5,14 +5,14 @@ import notificaciones.Contacto;
 import java.util.List;
 
 public interface MedioNotificador {
+<<<<<<<HEAD
 
   public void enviarATodos(List<Contacto> contactos);
 
   public void enviarA(Contacto contacto);
 
-  public void setMensajeEnvioStandar(String mensaje);
+  void setMensajePlantilla(String mensaje);
 
-  public String getMensajeEnvioPara(Contacto contacto);
-
-
+  String getMensajePlantilla(Contacto contacto);
+  
 }

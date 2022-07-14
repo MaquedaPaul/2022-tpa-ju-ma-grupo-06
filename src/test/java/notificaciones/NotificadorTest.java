@@ -66,28 +66,31 @@ public class NotificadorTest {
     }
     assertEquals(15, contactos.size());
     doReturn(contactos).when(noti).contactosDeLasOrganizaciones();
+    noti.enviarGuias();
     verify(noti,times(1)).contactosDeLasOrganizaciones();
     verify(medio1,times(15)).enviarA(any());
   }
 
   @Test
-  public void elMensajeDeEnvioPorMailEsPersonalizadoParaCadaContacto() {
-
-  }
-
-  @Test
   public void cuandoEnvioNotificacionesPorWhatsappA15ContactosEnvioMail15Veces() {
-
-  }
-
-  @Test
-  public void elMensajeDeEnvioPorWhatsappEsPersonalizadoParaCadaContacto() {
-
+    Notificador noti = spy(new Notificador());
+    MedioNotificador medio1 = spy(new AdapterWhatsapp());
+    noti.agregarMedios(medio1);
+    Contacto contactoMock = mock(Contacto.class);
+    ArrayList<Contacto> contactos = new ArrayList<>();
+    for(int i = 0; i < 15; i++) {
+      contactos.add(contactoMock);
+    }
+    assertEquals(15, contactos.size());
+    doReturn(contactos).when(noti).contactosDeLasOrganizaciones();
+    noti.enviarGuias();
+    verify(noti,times(1)).contactosDeLasOrganizaciones();
+    verify(medio1,times(15)).enviarA(any());
   }
 
   @Test
   public void aJuacitoLeLlegaUnMensajeDeWhatsappConSuNombre(){
-
+    String mensajeNotificacion = "Hola *NOMBRE_CONTACTO*";
   }
 
   @Test

@@ -26,12 +26,12 @@ public class AdapterEmail implements MedioNotificador {
   }
 
   @Override
-  public void setMensajeEnvioStandar(String mensaje) {
+  public void setMensajePlantilla(String mensaje) {
     this.cuerpo = mensaje;
   }
 
   @Override
-  public String getMensajeEnvioPara(Contacto contacto) {
+  public String getMensajePlantilla(Contacto contacto) {
     String mensajePersonalizado = this.cuerpo.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
     mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());

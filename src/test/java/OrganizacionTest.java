@@ -44,9 +44,11 @@ public class OrganizacionTest {
 
   //HCO = HC total de la organización
   //HCM = HC total del miembro
+  /*
   @Test
   public void elImpactoDeUnMiembroDeberiaSer100MultiplicadoPorElHCMDivididoPorElHCO() {
     Organizacion organizacionMock = mock(Organizacion.class);
+    //Miembro juancito = generarMiembro("juan", "Nitales", 42222222, TipoDocumento.DNI);
     Miembro miembroMock = mock(Miembro.class);
     when(miembroMock.calcularHCTotal()).thenReturn(100.0);
     when(organizacionMock.calcularHC()).thenReturn(2000.0);
@@ -58,7 +60,7 @@ public class OrganizacionTest {
     
   Miembro juan = new MiembroBuilder();
   } // doAnswer(invocation -> 12).when(mock).doSomething()
-
+*/
     // doAnswer(invocation -> ((String)invocation.getArgument(1)).length())
     //     .when(mock).doSomething(anyString(), anyString(), anyString());
 
@@ -109,12 +111,17 @@ public class OrganizacionTest {
     assertEquals(onu.getContactos().size(),1);
   }
 
-  public Miembro generarMiembro(String nombre,
-                                String apellido,
-                                int documento,
-                                TipoDocumento unTipo) {
-    MiembroTest testMiembro = new MiembroTest();
-    return testMiembro.generarMiembro(nombre, apellido, documento, unTipo);
+  public static Miembro generarMiembro(String nombre,
+                                       String apellido,
+                                       int documento,
+                                       TipoDocumento unTipo) {
+    MiembroBuilder nuevoMiembro = new MiembroBuilder();
+    nuevoMiembro.especificarNombre(nombre);
+    nuevoMiembro.especificarApellido(apellido);
+    nuevoMiembro.especificarNumeroDocumento(documento);
+    nuevoMiembro.especificarTipoDocumento(unTipo);
+    nuevoMiembro.especificarTrayectos(new ArrayList<>());
+    return nuevoMiembro.construir();
   }
 }
 

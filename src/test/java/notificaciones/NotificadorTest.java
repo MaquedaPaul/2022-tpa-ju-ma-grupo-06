@@ -4,6 +4,7 @@ import notificaciones.medioNotificacion.MedioNotificador;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterEmail;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import organizacion.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class NotificadorTest {
 
   @Test
   public void cuandoSeEjecuteElMainSeEnvianLasGuiasALosContactos(){
+    Notificador noti = new Notificador();
 
   }
 
@@ -38,7 +40,6 @@ public class NotificadorTest {
     MedioNotificador medioWsp = new AdapterWhatsapp();
     notificador.agregarMedios(medioMail);
     notificador.agregarMedios(medioWsp);
-
     assertTrue(notificador.medios().contains(medioMail) && notificador.medios().contains(medioWsp));
   }
 

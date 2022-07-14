@@ -32,4 +32,5 @@ public class AdapterWhatsapp implements MedioNotificador {
     mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);
     return mensajePersonalizado;
   }
+  //HOLA *NOMBRE CONTACTO* DE *ORGANIZACION*
 }

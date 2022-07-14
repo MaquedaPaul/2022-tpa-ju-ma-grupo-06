@@ -4,12 +4,17 @@ import notificaciones.medioNotificacion.MedioNotificador;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterEmail;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.Spy;
+import org.mockito.internal.matchers.Not;
+import org.mockito.internal.matchers.Or;
 import organizacion.*;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 public class NotificadorTest {
 
@@ -27,8 +32,9 @@ public class NotificadorTest {
 
   @Test
   public void cuandoSeEjecuteElMainSeEnvianLasGuiasALosContactos(){
-    Notificador noti = new Notificador();
-
+    Notificador noti = spy(new Notificador());
+    noti.main();
+    verify(noti,times(1)).enviarGuias();
   }
 
   @Test
@@ -38,14 +44,30 @@ public class NotificadorTest {
 
     MedioNotificador medioMail = new AdapterEmail("DEUDA BANCARIA PAGUE O VA PRESO");
     MedioNotificador medioWsp = new AdapterWhatsapp();
+    MedioNotificador medioNotificadorMock = mock(MedioNotificador.class);
+
     notificador.agregarMedios(medioMail);
     notificador.agregarMedios(medioWsp);
-    assertTrue(notificador.medios().contains(medioMail) && notificador.medios().contains(medioWsp));
+    notificador.agregarMedios(medioNotificadorMock);
+    assertTrue(notificador.medios().contains(medioMail));
+    assertTrue(notificador.medios().contains(medioWsp));
+    assertTrue(notificador.medios().contains(medioNotificadorMock));
   }
 
   @Test
   public void cuandoEnvioNotificacionesPorMailA15ContactosEnvioMail15Veces() {
-
+    Notificador noti = spy(new Notificador());
+    MedioNotificador medio1 = spy(new AdapterEmail("holis"));
+    noti.agregarMedios(medio1);
+    Contacto contactoMock = mock(Contacto.class);
+    ArrayList<Contacto> contactos = new ArrayList<>();
+    for(int i = 0; i < 15; i++) {
+      contactos.add(contactoMock);
+    }
+    assertEquals(15, contactos.size());
+    doReturn(contactos).when(noti).contactosDeLasOrganizaciones();
+    verify(noti,times(1)).contactosDeLasOrganizaciones();
+    verify(medio1,times(15)).enviarA(any());
   }
 
   @Test
@@ -60,6 +82,16 @@ public class NotificadorTest {
 
   @Test
   public void elMensajeDeEnvioPorWhatsappEsPersonalizadoParaCadaContacto() {
+
+  }
+
+  @Test
+  public void aJuacitoLeLlegaUnMensajeDeWhatsappConSuNombre(){
+
+  }
+
+  @Test
+  public void aJoseLeLlegaUnMailConSuNombre(){
 
   }
 }

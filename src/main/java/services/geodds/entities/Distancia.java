@@ -13,7 +13,7 @@ public class Distancia {
   public Unidad getUnidad() {
     return unidad;
   }
-  
+
   public double getValor() {
     return valor;
   }

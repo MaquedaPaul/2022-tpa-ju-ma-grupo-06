@@ -1,5 +1,5 @@
 package territorio;
 
 public enum TipoSectorTerritorial {
-  DEPARTAMENTO,PROVINCIA
+  DEPARTAMENTO, PROVINCIA
 }

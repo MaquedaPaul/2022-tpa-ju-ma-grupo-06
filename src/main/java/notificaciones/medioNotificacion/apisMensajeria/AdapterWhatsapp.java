@@ -20,12 +20,15 @@ public class AdapterWhatsapp implements MedioNotificador {
   private void enviarA(Contacto contacto, String mensaje) {
     ////apiWhatsapp.enviarA(contacto, mensaje);
   }
+
   @Override
   public void setMensajeEnvioStandar(String mensaje) {
     this.mensaje = mensaje;
   }
 
-  public void setUrl(String url){this.url = url;}
+  public void setUrl(String url) {
+    this.url = url;
+  }
 
   @Override
   public String getMensajeEnvioPara(Contacto contacto) {

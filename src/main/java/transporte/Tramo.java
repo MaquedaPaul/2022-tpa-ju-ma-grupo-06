@@ -1,8 +1,9 @@
 package transporte;
 
 import exceptions.NoSePudoCalcularElTramo;
-import java.io.IOException;
 import linea.PuntoUbicacion;
+
+import java.io.IOException;
 
 public class Tramo {
   private final PuntoUbicacion puntoOrigen;
@@ -37,7 +38,8 @@ public class Tramo {
     }
     throw new NoSePudoCalcularElTramo("API sin conexion");
   }
-  public double calcularHc(){
+
+  public double calcularHc() {
     return transporteUtilizado.calcularHc() * distanciaTramo();
   }
 }

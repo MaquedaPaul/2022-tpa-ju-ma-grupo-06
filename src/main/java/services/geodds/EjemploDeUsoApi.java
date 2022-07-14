@@ -1,7 +1,6 @@
 package services.geodds;
 
 import java.io.IOException;
-import services.geodds.entities.Distancia;
 
 public class EjemploDeUsoApi {
 

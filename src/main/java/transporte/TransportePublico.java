@@ -1,13 +1,12 @@
 package transporte;
 
-import java.io.IOException;
-import java.lang.Math;
-import java.util.stream.Collectors;
 import linea.LineaTransporte;
 import linea.Parada;
 import linea.PuntoUbicacion;
 import linea.TipoTransporte;
-import services.geodds.ServicioGeodds;
+
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 public class TransportePublico extends Transporte {
 

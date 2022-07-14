@@ -8,30 +8,22 @@ import java.util.List;
 
 public class AdapterEmail implements MedioNotificador {
 
-  private final String asunto;
+  private String asunto;
   private String cuerpo;
   private String url;
-
-  public AdapterEmail(String asunto) {
-    this.asunto = asunto;
-  }
 
   @Override
   public void enviarATodos(List<Contacto> contactos) {
     contactos.forEach(this::enviarA);
   }
 
+  @Override
   public void enviarA(Contacto contacto) {
     //APIMail.mailTo(...);
   }
 
   @Override
-  public void setMensajePlantilla(String mensaje) {
-    this.cuerpo = mensaje;
-  }
-
-  @Override
-  public String getMensajePlantilla(Contacto contacto) {
+  public String mensajePersonalizadoPara(Contacto contacto) {
     String mensajePersonalizado = this.cuerpo.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
     mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
@@ -39,23 +31,33 @@ public class AdapterEmail implements MedioNotificador {
     return mensajePersonalizado;
   }
 
+  @Override
+  public void setAsunto(String asunto) {
+    this.asunto = asunto;
+  }
+
+  @Override
   public String getUrl() {
     return url;
   }
 
+  @Override
   public void setUrl(String url) {
     this.url = url;
   }
 
-  public String getCuerpo() {
+  @Override
+  public String getMensaje() {
     return cuerpo;
   }
 
-  public void setCuerpo(String cuerpo) {
+  @Override
+  public void setMensaje(String cuerpo) {
     this.cuerpo = cuerpo;
   }
 
+  @Override
   public String getAsunto() {
-    return asunto.replace("*MES/AÑO*", LocalDate.now().getYear() + "/" + LocalDate.now().getMonth());
+    return asunto.replace("*MES/AÑO*", LocalDate.now().getMonth() + " " + LocalDate.now().getYear()).toUpperCase();
   }
 }

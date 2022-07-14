@@ -10,6 +10,7 @@ public class AdapterWhatsapp implements MedioNotificador {
 
   private String mensajePlantilla;
   private String url;
+  private String asunto;
   //private ApiWhatsapp apiWhatsapp;
 
   @Override
@@ -17,26 +18,47 @@ public class AdapterWhatsapp implements MedioNotificador {
     contactos.forEach(this::enviarA);
   }
 
+  @Override
   public void enviarA(Contacto contacto) {
     ////apiWhatsapp.enviarA(contacto, mensaje);
   }
 
   @Override
-  public void setMensajePlantilla(String mensaje) {
+  public String getUrl() {
+    return url;
+  }
+
+  @Override
+  public void setMensaje(String mensaje) {
     this.mensajePlantilla = mensaje;
   }
 
+  @Override
+  public String getMensaje() {
+    return mensajePlantilla;
+  }
+
+  @Override
   public void setUrl(String url) {
     this.url = url;
   }
 
   @Override
-  public String getMensajePlantilla(Contacto contacto) {
+  public String mensajePersonalizadoPara(Contacto contacto) {
     String mensajePersonalizado = this.mensajePlantilla.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
     mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
     mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);
-    return mensajePersonalizado;
+    return this.getAsunto() + "\n" + mensajePersonalizado;
   }
-  //HOLA *NOMBRE CONTACTO* DE *ORGANIZACION*
+
+  @Override
+  public void setAsunto(String asunto) {
+    this.asunto = asunto;
+  }
+
+  @Override
+  public String getAsunto() {
+    return asunto.replace("*MES/AÑO*", LocalDate.now().getMonth() + " " + LocalDate.now().getYear()).toUpperCase();
+  }
 }

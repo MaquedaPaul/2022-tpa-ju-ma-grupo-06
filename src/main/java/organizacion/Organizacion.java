@@ -104,7 +104,7 @@ public class Organizacion {
   }
 
 
-  public ArrayList<Contacto> getContactos() {
+  public List<Contacto> getContactos() {
     return contactos;
   }
 

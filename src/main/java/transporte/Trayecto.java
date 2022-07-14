@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import linea.PuntoUbicacion;
 
-
 public class Trayecto {
 
   private List<Tramo> tramos = new ArrayList<>();

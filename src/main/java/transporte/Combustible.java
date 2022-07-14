@@ -1,5 +1,6 @@
 package transporte;
 
+import admin.FactorEmision;
 import global.Unidad;
 import tipoconsumo.TipoActividad;
 import tipoconsumo.TipoAlcance;

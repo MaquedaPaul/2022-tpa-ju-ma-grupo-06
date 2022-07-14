@@ -6,11 +6,13 @@ import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NotificadorTest {
 
-  Organizacion compraGamer = new Organizacion("Compra Gamer", TipoOrganizacion.EMPRESA, "Calle falsa 123","PG13");
+  Organizacion compraGamer = new Organizacion("Compra Gamer", TipoOrganizacion.EMPRESA, "Calle falsa 123","PG13", new ArrayList<>());
   Contacto juan = new Contacto(compraGamer, "Juan Carlos","juanca@gmail.com","1552207303");
   Contacto jorge = new Contacto(compraGamer, "Jorge Carlos","jorgeca@gmail.com","1552207343");
 

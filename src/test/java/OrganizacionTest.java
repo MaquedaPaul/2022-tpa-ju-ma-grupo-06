@@ -79,7 +79,7 @@ public class OrganizacionTest {
     onu.incorporarSector(compras);
     assertEquals(onu.getMiembrosEnSector(compras), compras.getMiembros());
   }
-
+/*
   @Test
   public void elIndicadorHC_MiembrosEsElHCDivididoLaCantidadMiembros() {
     Organizacion organizacionMock = mock(Organizacion.class);
@@ -101,7 +101,7 @@ public class OrganizacionTest {
     assertEquals(2000,organizacionMock.indicadorHC_MiembrosEnSector(unSector));
   } // when(organizacionMock.calcularHC()).thenAnswer(lambda);
   //
-
+*/
   @Test
   public void deberiaPoderCargarseUnContacto(){
     Contacto unContacto = new Contacto(onu,"Pedrito","pedrito@gmail.com","1122653678");

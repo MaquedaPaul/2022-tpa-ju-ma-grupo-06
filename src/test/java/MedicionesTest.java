@@ -6,27 +6,32 @@ import mediciones.Medicion;
 import mediciones.Perioricidad;
 import mediciones.RepoMediciones;
 import org.junit.jupiter.api.Test;
+import organizacion.Organizacion;
+import organizacion.TipoOrganizacion;
 import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoActividad;
 import tipoconsumo.TipoAlcance;
 import tipoconsumo.TipoConsumo;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class MedicionesTest {
   // El lector falla si la ruta no es valida
+  Organizacion mockOrg = mock(Organizacion.class);
   @Test
   public void elLectorFallaSiLaRutaDelArchivoNoExiste() {
-    assertThrows(FileNotFoundException.class, () -> new LectorDeCsv("hola no funciono"));
+    assertThrows(FileNotFoundException.class, () -> new LectorDeCsv("hola no funciono",mockOrg));
   }
 
   // si hay mas de 4 columnas en una fila tiene que romper
   @Test
   public void siLeiMasDeCuatroColumnasEnUnaFilaTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionConMuchosCampos.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionConMuchosCampos.csv",mockOrg);
     assertThrows(NoSeLeyeronLosCamposEsperados.class, lector::leerMediciones);
 
   }
@@ -35,7 +40,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnTipoDeConsumoDesconocidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionTipoConsumoDesconocido.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionTipoConsumoDesconocido.csv",mockOrg);
     assertThrows(ElTipoDeConsumoLeidoNoEsValido.class, lector::leerMediciones);
   }
 
@@ -43,7 +48,7 @@ public class MedicionesTest {
 
   @Test
   public void siLosCamposTienenNombreDistintosALosEsperadosDeboDetenerme() throws FileNotFoundException {
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesConColumnasRandom.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesConColumnasRandom.csv",mockOrg);
     assertThrows(LaCabeceraNoTieneUnFormatoValido.class, lector::leerMediciones);
   }
 
@@ -51,7 +56,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnValorNegativoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionValorNegativo.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionValorNegativo.csv", mockOrg);
     assertThrows(LaMedicionEsNegativa.class, lector::leerMediciones);
   }
 
@@ -59,7 +64,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnaPerioricidadInvalidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPerioricidadInvalida.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPerioricidadInvalida.csv", mockOrg);
     assertThrows(LaPerioricidadLeidaNoEsValida.class, lector::leerMediciones);
   }
 
@@ -67,7 +72,7 @@ public class MedicionesTest {
   @Test
   public void siLeoUnPeriodoDeImputacionInvalidoTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPeriodoImputInvalido.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionPeriodoImputInvalido.csv", mockOrg);
     assertThrows(ElPeriodoNoConcuerdaConLaPerioricidad.class, lector::leerMediciones);
   }
 
@@ -75,14 +80,14 @@ public class MedicionesTest {
   @Test
   public void siElPeriodoNoConcuerdaConLaPerioricidadTengoQueDetenerme() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionNoConcuerda.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionNoConcuerda.csv",mockOrg);
     assertThrows(ElPeriodoNoConcuerdaConLaPerioricidad.class, lector::leerMediciones);
   }
   // en un archivo correcto debe agregar todas las mediciones
   @Test
   public void puedoGuardarLasMedicionesQueEstenCorrectas() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesCorrectas.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionesCorrectas.csv",mockOrg);
     assertEquals(lector.getCantidadDeMediciones(), 0);
     assertDoesNotThrow(lector::leerMediciones);
     assertEquals(5,lector.getCantidadDeMediciones());
@@ -92,8 +97,9 @@ public class MedicionesTest {
   @Test
   public void puedoCargarLasMedicionesQueEstenCorrectas() throws FileNotFoundException {
     agregarTiposDeConsumoDePrueba();
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
     assertEquals(RepoMediciones.getInstance().medicionesTotales(), 0);
-    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionParcialmenteCorrecta.csv");
+    LectorDeCsv lector = new LectorDeCsv("src/main/java/mediciones/medicionParcialmenteCorrecta.csv", onu);
     assertThrows(NoSeLeyeronLosCamposEsperados.class,lector::leerMediciones);
     assertEquals(lector.getCantidadDeMediciones(),2);
     lector.cargarMediciones();
@@ -102,10 +108,11 @@ public class MedicionesTest {
 
   @Test
   public void calcularHc() {
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
     FactorEmision nuevoFActor = new FactorEmision(300, Unidad.LTS);
     TipoConsumo nuevoConsumo = new TipoConsumo("text", Unidad.LTS,TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
     nuevoConsumo.setFactorEmision(nuevoFActor);
-    Medicion nuevaMedicion = new Medicion(nuevoConsumo, Perioricidad.ANUAL,150,"anual");
+    Medicion nuevaMedicion = new Medicion(nuevoConsumo, Perioricidad.ANUAL,150,"anual", onu);
     assertEquals(nuevaMedicion.calcularHc(), 450);
   }
 

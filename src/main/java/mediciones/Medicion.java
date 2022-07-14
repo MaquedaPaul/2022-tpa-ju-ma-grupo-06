@@ -1,5 +1,6 @@
 package mediciones;
 
+import organizacion.Organizacion;
 import tipoconsumo.TipoConsumo;
 
 public class Medicion {
@@ -7,15 +8,17 @@ public class Medicion {
   Perioricidad periodicidad;
   double valor;
   String periodoDeImputacion;
+  final Organizacion organizacion;
 
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,
                   double unValor,
-                  String periodoDeImputacion) {
+                  String periodoDeImputacion,Organizacion organizacion) {
     this.tipoConsumo = unTipoConsumo;
     this.periodicidad = unaPerioricidad;
     this.valor = unValor;
     this.periodoDeImputacion = periodoDeImputacion;
+    this.organizacion =  organizacion;
   }
 
   public TipoConsumo getTipoConsumo() {
@@ -38,6 +41,8 @@ public class Medicion {
     return getValor() + tipoConsumo.getFactorEmision().getValor();
   }
 
-
+  public boolean perteneceA(Organizacion organizacion) {
+    return this.organizacion == organizacion;
+  }
 }
 

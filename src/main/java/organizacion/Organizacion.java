@@ -4,6 +4,8 @@ import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import lombok.Getter;
+import mediciones.Medicion;
+import mediciones.RepoMediciones;
 import notificaciones.Contacto;
 
 import java.util.ArrayList;
@@ -14,13 +16,13 @@ import java.util.stream.Stream;
 
 @Getter
 public class Organizacion {
+
   String razonSocial;
   TipoOrganizacion tipo;
   String ubicacionGeografica;
   List<Sector> sectores;
   String clasificacion;
   List<Solicitud> solicitudes;
-
   List<Contacto> contactos;
 
 
@@ -70,7 +72,11 @@ public class Organizacion {
   }
 
   public double calcularHC() {
-    return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
+    return getSectores().stream().mapToDouble(Sector::calcularHCMiembros).sum() + calcularHcMediciones();
+  }
+
+  public double calcularHcMediciones(){
+    return RepoMediciones.getInstance().medicionesDe(this).stream().mapToDouble(Medicion::calcularHc).sum();
   }
 
   public double impactoDeMiembro(Miembro miembro) {

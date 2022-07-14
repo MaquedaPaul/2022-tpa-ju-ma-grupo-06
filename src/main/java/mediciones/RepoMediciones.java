@@ -1,7 +1,10 @@
 package mediciones;
 
+import organizacion.Organizacion;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepoMediciones {
   private final List<Medicion> mediciones = new ArrayList<>();
@@ -23,5 +26,9 @@ public class RepoMediciones {
 
   public int medicionesTotales() {
     return mediciones.size();
+  }
+
+  public List<Medicion> medicionesDe(Organizacion organizacion) {
+    return this.mediciones.stream().filter(medicion -> medicion.perteneceA(organizacion)).collect(Collectors.toList());
   }
 }

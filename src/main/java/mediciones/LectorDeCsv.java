@@ -3,6 +3,7 @@ package mediciones;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.*;
+import organizacion.Organizacion;
 import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
 
@@ -23,10 +24,12 @@ public class LectorDeCsv {
   private double valor;
   private String periodoDeImputacion;
   private final List<Medicion> mediciones = new ArrayList<>();
+  private final Organizacion organizacion;
 
-  public LectorDeCsv(String path) throws FileNotFoundException {
+  public LectorDeCsv(String path, Organizacion organizacion) throws FileNotFoundException {
     this.reader = new CSVReader(new InputStreamReader(new FileInputStream(path),
         Charset.defaultCharset()));
+    this.organizacion = organizacion;
   }
 
   public List<Medicion> getMediciones() {
@@ -117,7 +120,7 @@ public class LectorDeCsv {
   }
 
   private void guardarMedicion() {
-    Medicion nuevaMedicion = new Medicion(tipoConsumo, perioricidad, valor, periodoDeImputacion);
+    Medicion nuevaMedicion = new Medicion(tipoConsumo, perioricidad, valor, periodoDeImputacion, organizacion);
     mediciones.add(nuevaMedicion);
   }
 

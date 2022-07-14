@@ -25,6 +25,8 @@ public class AdapterWhatsapp implements MedioNotificador {
     this.mensaje = mensaje;
   }
 
+  public void setUrl(String url){this.url = url;}
+
   @Override
   public String getMensajeEnvioPara(Contacto contacto) {
     String mensajePersonalizado = this.mensaje.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());

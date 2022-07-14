@@ -2,6 +2,7 @@ import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+import notificaciones.Contacto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,12 +52,21 @@ public class OrganizacionTest {
     when(organizacionMock.calcularHC()).thenReturn(2000.0);
     assertEquals(organizacionMock.calcularHC(), 2000.0);
     assertEquals(miembroMock.calcularHCTotal(), 100.0);
-    organizacionMock.impactoDeMiembro(miembroMock);
     verify(organizacionMock,times(1)).calcularHC();
-    verify(miembroMock,times(1)).calcularHCTotal();
-    assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
-  }
+    verify(miembroMock,times(1)).calcularHCTota
+    verify(organizacionMock,times(1)) //assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
+    
+  Miembro juan = new MiembroBuilder();
+  } // doAnswer(invocation -> 12).when(mock).doSomething()
 
+    // doAnswer(invocation -> ((String)invocation.getArgument(1)).length())
+    //     .when(mock).doSomething(anyString(), anyString(), anyString());
+
+    // when(sistemaEnvio.envioSeguro(any(), any())).thenAnswer(invocation -> {
+    //      Direccion direccion = (Direccion) invocation.getArgument(1);
+    //      direccion.marcarComoValida();
+    //      return "CODSEG01";
+    //    });
   @Test
   public void unaOrganizacionNoPuedeAccederALosMiembrosQueNoLePertenecen() {
     List<Miembro> miembros = new ArrayList<>();
@@ -88,11 +98,12 @@ public class OrganizacionTest {
     Sector unSector = new Sector("Ventas", miembros);
     organizacionMock.incorporarSector(unSector);
     assertEquals(2000,organizacionMock.indicadorHC_MiembrosEnSector(unSector));
-  }
+  } // when(organizacionMock.calcularHC()).thenAnswer(lambda);
+  //
 
   @Test
   public void deberiaPoderCargarseUnContacto(){
-    Contacto unContacto = new Contacto();
+    Contacto unContacto = new Contacto(onu,"Pedrito","pedrito@gmail.com","1122653678");
     assertEquals(onu.getContactos().size(),0);
     onu.cargarContacto(unContacto);
     assertEquals(onu.getContactos().size(),1);

@@ -23,27 +23,25 @@ public class VehiculoParticularTest {
   @Test
   public void darDeAltaUnAutoANafta() {
     TipoVehiculo esUnAuto = TipoVehiculo.AUTO;
-    TipoCombustible andaANafta = TipoCombustible.NAFTA;
-    VehiculoParticular autoANafta = new VehiculoParticular(TipoCombustible.NAFTA, TipoVehiculo.AUTO);
+    //TipoCombustible andaANafta = TipoCombustible.NAFTA;
+    VehiculoParticular autoANafta = new VehiculoParticular(TipoVehiculo.AUTO);
     autoANafta.getTipoVehiculo().equals(esUnAuto);
     assertEquals(autoANafta.getTipoVehiculo(), esUnAuto);
-    assertEquals(autoANafta.getTipoCombustible(), andaANafta);
+    //assertEquals(autoANafta.getCombustible(), andaANafta);
   }
 
   @Test
   public void darDeAltaUnaMotoAGasoil() {
     TipoVehiculo esUnaMoto = TipoVehiculo.MOTO;
-    TipoCombustible andaAGasoil = TipoCombustible.GASOIL;
-    VehiculoParticular motoAGasoil = new VehiculoParticular(andaAGasoil, esUnaMoto);
+    VehiculoParticular motoAGasoil = new VehiculoParticular(esUnaMoto);
     assertEquals(motoAGasoil.getTipoVehiculo(), esUnaMoto);
-    assertEquals(motoAGasoil.getTipoCombustible(), andaAGasoil);
+    //assertEquals(motoAGasoil.getCombustible(), );
   }
 
   @Test
   public void huboInteraccionConLaAPIAlCalcularDistancia() throws IOException {
     TipoVehiculo esUnaMoto = TipoVehiculo.MOTO;
-    TipoCombustible andaAGasoil = TipoCombustible.GASOIL;
-    VehiculoParticular motoAGasoil = new VehiculoParticular(andaAGasoil, esUnaMoto);
+    VehiculoParticular motoAGasoil = new VehiculoParticular( esUnaMoto);
     Tramo unTramo = unFactory.crearTramoSimple(motoAGasoil);
     ServicioGeodds geoddsMock = mock(ServicioGeodds.class);
     motoAGasoil.setServiocioGeo(geoddsMock);

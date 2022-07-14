@@ -1,5 +1,5 @@
 package organizacion;
 
-public enum TIpoDocumento {
+public enum TipoDocumento {
   DNI, PASAPORTE //falta especificación de tipos de documentos
 }

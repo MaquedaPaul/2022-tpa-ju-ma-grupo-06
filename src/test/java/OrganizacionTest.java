@@ -1,17 +1,22 @@
 import exceptions.NoSeAceptaVinculacion;
+import exceptions.NoSeEncuentraException;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class OrganizacionTest {
+  Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+  Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
 
   @Test
   public void laOrganizacionIncorporaUnSector() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
+
     Sector compras = new Sector("Compras", new ArrayList<>());
     onu.incorporarSector(compras);
     assertEquals(onu.getSectores().size(), 1);
@@ -19,10 +24,10 @@ public class OrganizacionTest {
 
   @Test
   public void laOrganizacionNoAceptaVinculacion() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
+
     Sector compras = new Sector("Compras", new ArrayList<>());
     onu.incorporarSector(compras);
-    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TIpoDocumento.DNI);
+
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     assertEquals(onu.getSolicitudes().size(), 1);
@@ -36,10 +41,67 @@ public class OrganizacionTest {
         contains(jorgito));
   }
 
+  //HCO = HC total de la organización
+  //HCM = HC total del miembro
+  @Test
+  public void elImpactoDeUnMiembroDeberiaSer100MultiplicadoPorElHCMDivididoPorElHCO() {
+    Organizacion organizacionMock = mock(Organizacion.class);
+    Miembro miembroMock = mock(Miembro.class);
+    when(miembroMock.calcularHCTotal()).thenReturn(100.0);
+    when(organizacionMock.calcularHC()).thenReturn(2000.0);
+    assertEquals(organizacionMock.calcularHC(), 2000.0);
+    assertEquals(miembroMock.calcularHCTotal(), 100.0);
+    organizacionMock.impactoDeMiembro(miembroMock);
+    verify(organizacionMock,times(1)).calcularHC();
+    verify(miembroMock,times(1)).calcularHCTotal();
+    assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
+  }
+
+  @Test
+  public void unaOrganizacionNoPuedeAccederALosMiembrosQueNoLePertenecen() {
+    List<Miembro> miembros = new ArrayList<>();
+    miembros.add(jorgito);
+    Sector compras = new Sector("Compras", miembros);
+
+    assertThrows(NoSeEncuentraException.class, () -> onu.getMiembrosEnSector(compras));
+
+    onu.incorporarSector(compras);
+    assertEquals(onu.getMiembrosEnSector(compras), compras.getMiembros());
+  }
+
+  @Test
+  public void elIndicadorHC_MiembrosEsElHCDivididoLaCantidadMiembros() {
+    Organizacion organizacionMock = mock(Organizacion.class);
+    when(organizacionMock.calcularHC()).thenReturn(2000.0);
+    List<Miembro> miembros = new ArrayList<>();
+    miembros.add(jorgito);
+    when(organizacionMock.getMiembros()).thenReturn(miembros);
+    assertEquals(2000,organizacionMock.indicadorHC_Miembros());
+  }
+
+  @Test
+  public void elIndicadorHC_MiembrosEnSectorEsElHCDivididoLaCantidadMiembrosEnEseSector() {
+    Organizacion organizacionMock = mock(Organizacion.class);
+    when(organizacionMock.calcularHC()).thenReturn(2000.0);
+    List<Miembro> miembros = new ArrayList<>();
+    miembros.add(jorgito);
+    Sector unSector = new Sector("Ventas", miembros);
+    organizacionMock.incorporarSector(unSector);
+    assertEquals(2000,organizacionMock.indicadorHC_MiembrosEnSector(unSector));
+  }
+
+  @Test
+  public void deberiaPoderCargarseUnContacto(){
+    Contacto unContacto = new Contacto();
+    assertEquals(onu.getContactos().size(),0);
+    onu.cargarContacto(unContacto);
+    assertEquals(onu.getContactos().size(),1);
+  }
+
   public Miembro generarMiembro(String nombre,
                                 String apellido,
                                 int documento,
-                                TIpoDocumento unTipo) {
+                                TipoDocumento unTipo) {
     MiembroTest testMiembro = new MiembroTest();
     return testMiembro.generarMiembro(nombre, apellido, documento, unTipo);
   }

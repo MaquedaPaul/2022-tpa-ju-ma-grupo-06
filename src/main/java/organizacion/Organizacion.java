@@ -4,10 +4,18 @@ import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import notificaciones.Contacto;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+
+import exceptions.NoSeEncuentraException;
+import lombok.Getter;
+
+@Getter
 public class Organizacion {
   String razonSocial;
   TipoOrganizacion tipo;
@@ -15,10 +23,12 @@ public class Organizacion {
   List<Sector> sectores;
   String clasificacion;
   List<Solicitud> solicitudes;
-  private final ArrayList<Contacto> contactos = new ArrayList<>();
+
+  List<Contacto> contactos;
+
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
-                      String clasificacion) {
+                      String clasificacion, List<Contacto> contactos) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
@@ -26,12 +36,13 @@ public class Organizacion {
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
     this.solicitudes = new ArrayList<>();
+    this.contactos = contactos;
   }
 
-  public void procesarVinculacion(boolean decicion) {
+  public void procesarVinculacion(boolean decision) {
     Solicitud nuevaSolicitud = solicitudes.get(0);
     solicitudes.remove(0);
-    if (decicion) {
+    if (decision) {
       aceptarvinculacion(nuevaSolicitud);
       return;
     }
@@ -61,32 +72,41 @@ public class Organizacion {
     unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
-  public List<Sector> getSectores() {
-    return sectores;
+  public double calcularHC() {
+    return getSectores().stream().mapToDouble(unSector -> unSector.calcularHCMiembros()).sum();
   }
 
-  public String getClasificacion() {
-    return clasificacion;
+  public double impactoDeMiembro(Miembro miembro) {
+    return (100 * miembro.calcularHCTotal()) / calcularHC();
   }
 
-  public String getRazonSocial() {
-    return razonSocial;
+  public List<Miembro> getMiembros() {
+    return getSectores().stream().flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros()).collect(Collectors.toList());
   }
 
-  public TipoOrganizacion getTipo() {
-    return tipo;
+  public List<Miembro> getMiembrosEnSector(Sector sector) {
+    if (!getSectores().contains(sector)) {
+      throw new NoSeEncuentraException(sector + " no pertenece a la organizacion");
+    }
+    return sector.getMiembros();
   }
 
-  public String getUbicacionGeografica() {
-    return ubicacionGeografica;
+  public double indicadorHC_Miembros() {
+    return calcularHC() / getMiembros().size();
   }
 
-  public List<Solicitud> getSolicitudes() {
-    return solicitudes;
+  public double indicadorHC_MiembrosEnSector(Sector sector) {
+    return calcularHC() / this.getMiembrosEnSector(sector).size();
   }
+
+  public void cargarContacto(Contacto unContacto) {
+    contactos.add(unContacto);
+  }
+
 
   public ArrayList<Contacto> getContactos() {
     return contactos;
   }
+
 }
 

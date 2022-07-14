@@ -11,8 +11,8 @@ public class MiembroTest {
 
   @Test
   public void unMiembroNoPuedeVincularseAUnSectorQueNoPerteneceALaOrganizacion() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
-    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TIpoDocumento.DNI);
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
     Sector ventas = new Sector("Ventas", new ArrayList<>());
     onu.incorporarSector(ventas);
     Sector compras = new Sector("Compras", new ArrayList<>());
@@ -23,7 +23,7 @@ public class MiembroTest {
   public static Miembro generarMiembro(String nombre,
                                        String apellido,
                                        int documento,
-                                       TIpoDocumento unTipo) {
+                                       TipoDocumento unTipo) {
     MiembroBuilder nuevoMiembro = new MiembroBuilder();
     nuevoMiembro.especificarNombre(nombre);
     nuevoMiembro.especificarApellido(apellido);

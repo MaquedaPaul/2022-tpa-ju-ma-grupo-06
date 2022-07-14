@@ -10,6 +10,7 @@ public class AdapterWhatsapp implements MedioNotificador {
 
   private String mensaje;
   private String url;
+  //private ApiWhatsapp apiWhatsapp;
 
   @Override
   public void enviarATodos(List<Contacto> contactos) {
@@ -17,7 +18,7 @@ public class AdapterWhatsapp implements MedioNotificador {
   }
 
   private void enviarA(Contacto contacto, String mensaje) {
-
+    ////apiWhatsapp.enviarA(contacto, mensaje);
   }
   @Override
   public void setMensajeEnvioStandar(String mensaje) {

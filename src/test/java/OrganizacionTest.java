@@ -14,6 +14,8 @@ import static org.mockito.Mockito.*;
 public class OrganizacionTest {
   Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
   Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
+  Organizacion spyOnu = spy(onu);
+  Miembro spyjorgito = spy(jorgito);
 
   @Test
   public void laOrganizacionIncorporaUnSector() {
@@ -44,64 +46,48 @@ public class OrganizacionTest {
 
   //HCO = HC total de la organización
   //HCM = HC total del miembro
-  /*
+
   @Test
   public void elImpactoDeUnMiembroDeberiaSer100MultiplicadoPorElHCMDivididoPorElHCO() {
-    Organizacion organizacionMock = mock(Organizacion.class);
-    //Miembro juancito = generarMiembro("juan", "Nitales", 42222222, TipoDocumento.DNI);
-    Miembro miembroMock = mock(Miembro.class);
-    when(miembroMock.calcularHCTotal()).thenReturn(100.0);
-    when(organizacionMock.calcularHC()).thenReturn(2000.0);
-    assertEquals(organizacionMock.calcularHC(), 2000.0);
-    assertEquals(miembroMock.calcularHCTotal(), 100.0);
-    verify(organizacionMock,times(1)).calcularHC();
-    verify(miembroMock,times(1)).calcularHCTotal();
-    assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
-  // Miembro juan = new MiembroBuilder();
-  } // doAnswer(invocation -> 12).when(mock).doSomething()
-*/
-    // doAnswer(invocation -> ((String)invocation.getArgument(1)).length())
-    //     .when(mock).doSomething(anyString(), anyString(), anyString());
 
-    // when(sistemaEnvio.envioSeguro(any(), any())).thenAnswer(invocation -> {
-    //      Direccion direccion = (Direccion) invocation.getArgument(1);
-    //      direccion.marcarComoValida();
-    //      return "CODSEG01";
-    //    });
+    when(spyjorgito.calcularHCTotal()).thenReturn(100.0);
+    when(spyOnu.calcularHC()).thenReturn(2000.0);
+    verify(spyOnu,times(1)).calcularHC();
+    verify(spyjorgito,times(1)).calcularHCTotal();
+    assertEquals(5.0,spyOnu.impactoDeMiembro(spyjorgito));
+  }
+
   @Test
   public void unaOrganizacionNoPuedeAccederALosMiembrosQueNoLePertenecen() {
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(jorgito);
     Sector compras = new Sector("Compras", miembros);
-
     assertThrows(NoSeEncuentraException.class, () -> onu.getMiembrosEnSector(compras));
-
     onu.incorporarSector(compras);
     assertEquals(onu.getMiembrosEnSector(compras), compras.getMiembros());
   }
-/*
+
   @Test
   public void elIndicadorHC_MiembrosEsElHCDivididoLaCantidadMiembros() {
-    Organizacion organizacionMock = mock(Organizacion.class);
-    when(organizacionMock.calcularHC()).thenReturn(2000.0);
+
+    when(spyOnu.calcularHC()).thenReturn(2000.0);
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(jorgito);
-    when(organizacionMock.getMiembros()).thenReturn(miembros);
-    assertEquals(2000,organizacionMock.indicadorHC_Miembros());
+    when(spyOnu.getMiembros()).thenReturn(miembros);
+    assertEquals(2000,spyOnu.indicadorHC_Miembros());
   }
 
   @Test
   public void elIndicadorHC_MiembrosEnSectorEsElHCDivididoLaCantidadMiembrosEnEseSector() {
-    Organizacion organizacionMock = mock(Organizacion.class);
-    when(organizacionMock.calcularHC()).thenReturn(2000.0);
+    when(spyOnu.calcularHC()).thenReturn(2000.0);
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(jorgito);
     Sector unSector = new Sector("Ventas", miembros);
-    organizacionMock.incorporarSector(unSector);
-    assertEquals(2000,organizacionMock.indicadorHC_MiembrosEnSector(unSector));
-  } // when(organizacionMock.calcularHC()).thenAnswer(lambda);
-  //
-*/
+    spyOnu.incorporarSector(unSector);
+    assertEquals(2000,spyOnu.indicadorHC_MiembrosEnSector(unSector));
+  }
+
+
   @Test
   public void deberiaPoderCargarseUnContacto(){
     Contacto unContacto = new Contacto(onu,"Pedrito","pedrito@gmail.com","1122653678");

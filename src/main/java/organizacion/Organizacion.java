@@ -2,6 +2,8 @@ package organizacion;
 
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
+import notificaciones.Contacto;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ public class Organizacion {
   List<Sector> sectores;
   String clasificacion;
   List<Solicitud> solicitudes;
+
   List<Contacto> contactos;
 
 
@@ -98,6 +101,11 @@ public class Organizacion {
 
   public void cargarContacto(Contacto unContacto) {
     contactos.add(unContacto);
+  }
+
+
+  public ArrayList<Contacto> getContactos() {
+    return contactos;
   }
 
 }

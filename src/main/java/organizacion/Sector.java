@@ -12,7 +12,7 @@ public class Sector {
     this.miembros = unosMiembros;
   }
 
-  void admitirMiembro(Miembro unMiembro) {
+  public void admitirMiembro(Miembro unMiembro) {
     miembros.add(unMiembro);
   }
 

@@ -41,4 +41,8 @@ public class Trayecto {
   public double distanciaTotal() {
     return tramos.stream().mapToDouble(Tramo::distanciaTramo).sum();
   }
+
+  public double calcularHc(){
+    return tramos.stream().mapToDouble(Tramo::calcularHc).sum();
+  }
 }

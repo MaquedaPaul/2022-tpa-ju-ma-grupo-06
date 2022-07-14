@@ -34,6 +34,10 @@ public class Medicion {
     return periodoDeImputacion;
   }
 
+  public double calcularHc() {
+    return getValor() + tipoConsumo.getFactorEmision().getValor();
+  }
+
 
 }
 

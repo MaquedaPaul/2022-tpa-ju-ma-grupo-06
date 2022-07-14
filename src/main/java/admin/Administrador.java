@@ -5,7 +5,6 @@ import global.Unidad;
 public class Administrador {
   String usuario;
   String password;
-  RepoFactoresEmision repoDeFactores;
 
   public Administrador(String unUsuario, String unPassword) {
     this.usuario = unUsuario;
@@ -21,12 +20,13 @@ public class Administrador {
   }
 
   void crearFactorEmision(double valor, Unidad unidadDivisible) {
-    repoDeFactores.incorporarFactor(new FactorEmision(valor, unidadDivisible));
+    RepoFactoresEmision.getInstance().incorporarFactor(new FactorEmision(valor, unidadDivisible));
   }
 
-  public void setRepoDeFactores(RepoFactoresEmision repoDeFactores) {
-    this.repoDeFactores = repoDeFactores;
+  void modificarFactorDeEmision(FactorEmision unFactor, double valor) {
+    RepoFactoresEmision.getInstance().modificarFactorEmicion(unFactor, valor);
   }
 }
+
 
 

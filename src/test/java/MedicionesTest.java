@@ -1,6 +1,9 @@
+import admin.FactorEmision;
 import exceptions.*;
 import global.Unidad;
 import mediciones.LectorDeCsv;
+import mediciones.Medicion;
+import mediciones.Perioricidad;
 import mediciones.RepoMediciones;
 import org.junit.jupiter.api.Test;
 import tipoconsumo.RepoTipoDeConsumo;
@@ -95,6 +98,15 @@ public class MedicionesTest {
     assertEquals(lector.getCantidadDeMediciones(),2);
     lector.cargarMediciones();
     assertEquals(RepoMediciones.getInstance().medicionesTotales(),2);
+  }
+
+  @Test
+  public void calcularHc() {
+    FactorEmision nuevoFActor = new FactorEmision(300, Unidad.LTS);
+    TipoConsumo nuevoConsumo = new TipoConsumo("text", Unidad.LTS,TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    nuevoConsumo.setFactorEmision(nuevoFActor);
+    Medicion nuevaMedicion = new Medicion(nuevoConsumo, Perioricidad.ANUAL,150,"anual");
+    assertEquals(nuevaMedicion.calcularHc(), 450);
   }
 
   private void agregarTiposDeConsumoDePrueba() {

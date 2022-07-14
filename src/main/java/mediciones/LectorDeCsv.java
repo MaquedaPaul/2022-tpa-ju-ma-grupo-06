@@ -2,13 +2,10 @@ package mediciones;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import exceptions.ElPeriodoNoConcuerdaConLaPerioricidad;
-import exceptions.ElTipoDeConsumoLeidoNoEsValido;
-import exceptions.LaCabeceraNoTieneUnFormatoValido;
-import exceptions.LaMedicionEsNegativa;
-import exceptions.LaPerioricidadLeidaNoEsValida;
-import exceptions.NoSeLeyeronLosCamposEsperados;
-import exceptions.NoSePudoLeerLaLinea;
+import exceptions.*;
+import tipoconsumo.RepoTipoDeConsumo;
+import tipoconsumo.TipoConsumo;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,8 +14,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import tipoconsumo.RepoTipoDeConsumo;
-import tipoconsumo.TipoConsumo;
 
 public class LectorDeCsv {
 
@@ -84,7 +79,7 @@ public class LectorDeCsv {
 
   private void validarFormatoLeido(String[] campos) {
     if (campos.length != 4) {
-      throw new NoSeLeyeronLosCamposEsperados(4,campos.length,this.lineaActual());
+      throw new NoSeLeyeronLosCamposEsperados(4, campos.length, this.lineaActual());
     }
     // tipoConsumo, valor, perioricidad, periodo de imputacion
     if (!RepoTipoDeConsumo.getInstance().existeElTipoDeConsumo(campos[0])) {
@@ -96,7 +91,7 @@ public class LectorDeCsv {
     if (!Perioricidad.esUnPeriodoValido(campos[2])) {
       throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }
-    if (!this.tieneElFormatoValido(campos[3],campos[2])) {
+    if (!this.tieneElFormatoValido(campos[3], campos[2])) {
       throw new ElPeriodoNoConcuerdaConLaPerioricidad(this.lineaActual());
     }
   }
@@ -122,7 +117,7 @@ public class LectorDeCsv {
   }
 
   private void guardarMedicion() {
-    Medicion nuevaMedicion = new Medicion(tipoConsumo,perioricidad,valor,periodoDeImputacion);
+    Medicion nuevaMedicion = new Medicion(tipoConsumo, perioricidad, valor, periodoDeImputacion);
     mediciones.add(nuevaMedicion);
   }
 

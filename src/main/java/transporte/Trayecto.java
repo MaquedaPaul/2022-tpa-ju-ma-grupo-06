@@ -1,9 +1,9 @@
 package transporte;
 
-import java.io.IOException;
+import linea.PuntoUbicacion;
+
 import java.util.ArrayList;
 import java.util.List;
-import linea.PuntoUbicacion;
 
 public class Trayecto {
 
@@ -41,7 +41,7 @@ public class Trayecto {
     return tramos.stream().mapToDouble(Tramo::distanciaTramo).sum();
   }
 
-  public double calcularHc(){
+  public double calcularHc() {
     return tramos.stream().mapToDouble(Tramo::calcularHc).sum();
   }
 }

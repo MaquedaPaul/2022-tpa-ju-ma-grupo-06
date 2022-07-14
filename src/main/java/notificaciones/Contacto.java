@@ -1,6 +1,5 @@
 package notificaciones;
 
-import organizacion.Miembro;
 import organizacion.Organizacion;
 
 public class Contacto {

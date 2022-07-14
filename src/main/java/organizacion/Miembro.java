@@ -1,15 +1,11 @@
 package organizacion;
 
-import static java.util.Objects.requireNonNull;
+import lombok.Getter;
+import transporte.Trayecto;
 
 import java.util.List;
 
-
-
-import transporte.Tramo;
-
-import transporte.Trayecto;
-import lombok.Getter;
+import static java.util.Objects.requireNonNull;
 
 @Getter
 public class Miembro {

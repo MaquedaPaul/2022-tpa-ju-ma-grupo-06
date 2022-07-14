@@ -2,18 +2,15 @@ package organizacion;
 
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
+import exceptions.NoSeEncuentraException;
+import lombok.Getter;
 import notificaciones.Contacto;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-
-import exceptions.NoSeEncuentraException;
-import lombok.Getter;
 
 @Getter
 public class Organizacion {

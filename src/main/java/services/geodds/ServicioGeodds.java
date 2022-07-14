@@ -1,12 +1,13 @@
 package services.geodds;
 
-import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import services.geodds.configuraciones.Configuracion;
 import services.geodds.entities.Distancia;
+
+import java.io.IOException;
 
 public class ServicioGeodds {
   private static ServicioGeodds instancia = null;
@@ -37,7 +38,7 @@ public class ServicioGeodds {
       throws IOException {
     GeoddsService geoddsService = this.retrofit.create(GeoddsService.class);
     Call<Distancia> requestDistancia = geoddsService
-        .distancia(token,locOr, calleO, altO, locDes, calleD, altDes);
+        .distancia(token, locOr, calleO, altO, locDes, calleD, altDes);
     Response<Distancia> responseDistancia = requestDistancia.execute();
     //System.out.println("Codigo de Respuesta: " + responseDistancia.code());
     return responseDistancia.body();

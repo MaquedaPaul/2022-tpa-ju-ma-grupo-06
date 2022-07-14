@@ -1,6 +1,5 @@
 package transporte;
 
-import admin.FactorEmision;
 import global.Unidad;
 import tipoconsumo.TipoActividad;
 import tipoconsumo.TipoAlcance;
@@ -16,6 +15,6 @@ public class Combustible extends TipoConsumo {
   }
 
   public long calcularHc() {
-    return (long) (this.consumoCombustiblePorMetro*this.getFactorEmision().getValor());
+    return (long) (this.consumoCombustiblePorMetro * this.getFactorEmision().getValor());
   }
 }

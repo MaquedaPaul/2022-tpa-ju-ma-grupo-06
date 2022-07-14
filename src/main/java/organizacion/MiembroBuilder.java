@@ -1,10 +1,11 @@
 package organizacion;
 
 
-import static java.util.Objects.requireNonNull;
+import transporte.Trayecto;
 
 import java.util.List;
-import transporte.Trayecto;
+
+import static java.util.Objects.requireNonNull;
 
 public class MiembroBuilder {
   String nombre;
@@ -13,6 +14,7 @@ public class MiembroBuilder {
   int numeroDocumento;
   List<Trayecto> trayectos;
   int cantidadDeDiasQueTrabaja = 20;
+
   public MiembroBuilder() {
 
   }
@@ -43,6 +45,7 @@ public class MiembroBuilder {
   public void especificarTrayectos(List<Trayecto> unosTrayectos) {
     trayectos = unosTrayectos;
   }
+
   public void especificarCantidadDiasQueTrabaja(int cantidadDeDiasQueTrabaja) {
     this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }

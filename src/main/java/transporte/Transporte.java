@@ -1,7 +1,8 @@
 package transporte;
 
-import java.io.IOException;
 import linea.PuntoUbicacion;
+
+import java.io.IOException;
 
 public abstract class Transporte {
   Combustible combustible;
@@ -12,9 +13,13 @@ public abstract class Transporte {
     return combustible.calcularHc();
   }
 
-  public Combustible getCombustible(){ return this.combustible;}
+  public Combustible getCombustible() {
+    return this.combustible;
+  }
 
-  public void setCombustible(Combustible combustible){ this.combustible = combustible; }
+  public void setCombustible(Combustible combustible) {
+    this.combustible = combustible;
+  }
 
 }
 

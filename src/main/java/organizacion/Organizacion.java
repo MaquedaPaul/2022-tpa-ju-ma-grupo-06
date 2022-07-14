@@ -78,7 +78,10 @@ public class Organizacion {
   }
 
   public List<Miembro> getMiembros() {
-    return getSectores().stream().flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros()).collect(Collectors.toList());
+    return getSectores()
+        .stream()
+        .flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros())
+        .collect(Collectors.toList());
   }
 
   public List<Miembro> getMiembrosEnSector(Sector sector) {

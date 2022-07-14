@@ -41,7 +41,7 @@ public class Trayecto {
     return tramos.stream().mapToDouble(Tramo::distanciaTramo).sum();
   }
 
-  public double calcularHc() {
+  public double calcularHC() {
     return tramos.stream().mapToDouble(Tramo::calcularHc).sum();
   }
 }

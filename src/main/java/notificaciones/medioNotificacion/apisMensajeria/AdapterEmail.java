@@ -24,10 +24,14 @@ public class AdapterEmail implements MedioNotificador {
 
   @Override
   public String mensajePersonalizadoPara(Contacto contacto) {
-    String mensajePersonalizado = this.cuerpo.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
-    mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
-    mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
-    mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);
+    String mensajePersonalizado = this.cuerpo
+        .replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*ORGANIZACION*", contacto.organizacion());
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*MES*", LocalDate.now().getMonth().toString());
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*URL*", this.url);
     return mensajePersonalizado;
   }
 
@@ -58,6 +62,8 @@ public class AdapterEmail implements MedioNotificador {
 
   @Override
   public String getAsunto() {
-    return asunto.replace("*MES/AÑO*", LocalDate.now().getMonth() + " " + LocalDate.now().getYear()).toUpperCase();
+    return asunto.replace("*MES/AÑO*", LocalDate.now()
+        .getMonth() + " " + LocalDate.now().getYear()).toUpperCase();
   }
+
 }

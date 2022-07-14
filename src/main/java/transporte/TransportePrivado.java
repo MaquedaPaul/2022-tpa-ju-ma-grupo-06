@@ -6,7 +6,7 @@ import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
-public abstract class TransportePrivado implements Transporte {
+public abstract class TransportePrivado extends Transporte {
   ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
 
   @Override
@@ -24,4 +24,5 @@ public abstract class TransportePrivado implements Transporte {
   public void setServiocioGeo(ServicioGeodds unServicio) {
     this.servicioGeodds = unServicio;
   }
+
 }

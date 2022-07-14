@@ -37,4 +37,7 @@ public class Tramo {
     }
     throw new NoSePudoCalcularElTramo("API sin conexion");
   }
+  public double calcularHc(){
+    return transporteUtilizado.calcularHc() * distanciaTramo();
+  }
 }

@@ -9,6 +9,7 @@ import transporte.*;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -20,7 +21,7 @@ public class CalcularHcTest {
   @Test
   public void unTransportePrivadoPuedeCalcularSuHuellaDeCarbono() {
     VehiculoParticular unVehiculo = new VehiculoParticular(TipoVehiculo.AUTO);
-    Combustible unCombustible = new Combustible("text", Unidad.LTS, TipoActividad.COMBUSTION_FIJA,TipoAlcance.EMISION_DIRECTA,10);
+    Combustible unCombustible = new Combustible("text", Unidad.LTS, TipoActividad.COMBUSTION_FIJA, TipoAlcance.EMISION_DIRECTA, 10);
     unVehiculo.setCombustible(unCombustible);
     FactorEmision unFAct
 

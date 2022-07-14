@@ -55,10 +55,9 @@ public class OrganizacionTest {
     assertEquals(organizacionMock.calcularHC(), 2000.0);
     assertEquals(miembroMock.calcularHCTotal(), 100.0);
     verify(organizacionMock,times(1)).calcularHC();
-    verify(miembroMock,times(1)).calcularHCTota
-    verify(organizacionMock,times(1)) //assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
-    
-  Miembro juan = new MiembroBuilder();
+    verify(miembroMock,times(1)).calcularHCTotal();
+    assertEquals(5.0,organizacionMock.impactoDeMiembro(miembroMock));
+  // Miembro juan = new MiembroBuilder();
   } // doAnswer(invocation -> 12).when(mock).doSomething()
 */
     // doAnswer(invocation -> ((String)invocation.getArgument(1)).length())

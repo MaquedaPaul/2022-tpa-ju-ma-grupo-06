@@ -47,7 +47,6 @@ public class Miembro {
 
 
   public double calcularHCTrayectos() {
-    return 1;
-    //return getTrayectos().stream().mapToDouble(unTrayecto -> unTrayecto.calcularHC()).sum();
+    return getTrayectos().stream().mapToDouble(unTrayecto -> unTrayecto.calcularHC()).sum();
   }
 }

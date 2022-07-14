@@ -32,10 +32,18 @@ public class AdapterWhatsapp implements MedioNotificador {
 
   @Override
   public String getMensajePlantilla(Contacto contacto) {
-    String mensajePersonalizado = this.mensajePlantilla.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
-    mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
-    mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
-    mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);
+    String mensajePersonalizado = this.mensajePlantilla
+        .replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*ORGANIZACION*", contacto.organizacion());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*MES*", LocalDate.now().getMonth().toString());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*URL*", this.url);
+
     return mensajePersonalizado;
   }
   //HOLA *NOMBRE CONTACTO* DE *ORGANIZACION*

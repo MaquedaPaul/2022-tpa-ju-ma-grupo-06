@@ -9,7 +9,10 @@ public class Contacto {
   private String mail;
   private String nroCelular;
 
-  public Contacto(Organizacion organizacion, String nombreContacto, String mail, String nroCelular) {
+  public Contacto(Organizacion organizacion,
+                  String nombreContacto,
+                  String mail,
+                  String nroCelular) {
     this.organizacion = organizacion;
     this.mail = mail;
     this.nroCelular = nroCelular;

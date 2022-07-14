@@ -21,7 +21,12 @@ public class MiembroBuilder {
 
   public Miembro construir() {
     this.validar();
-    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos, cantidadDeDiasQueTrabaja);
+    return new Miembro(nombre,
+        apellido,
+        tipoDocumento,
+        numeroDocumento,
+        trayectos,
+        cantidadDeDiasQueTrabaja);
   }
 
   public void especificarNombre(String unNombre) {

@@ -20,7 +20,11 @@ public class Notificador {
 
   public List<Contacto> contactosDeLasOrganizaciones() {
     List<Contacto> contactosTotales = new ArrayList<>();
-    RepoOrganizacion.getInstance().getOrganizaciones().forEach(org -> contactosTotales.addAll(org.getContactos()));
+    RepoOrganizacion
+        .getInstance()
+        .getOrganizaciones()
+        .forEach(org -> contactosTotales.addAll(org.getContactos()));
+
     return contactosTotales;
   }
 

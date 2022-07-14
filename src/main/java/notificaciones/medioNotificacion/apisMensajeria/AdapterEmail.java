@@ -32,10 +32,18 @@ public class AdapterEmail implements MedioNotificador {
 
   @Override
   public String getMensajePlantilla(Contacto contacto) {
-    String mensajePersonalizado = this.cuerpo.replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
-    mensajePersonalizado = mensajePersonalizado.replace("*ORGANIZACION*", contacto.organizacion());
-    mensajePersonalizado = mensajePersonalizado.replace("*MES*", LocalDate.now().getMonth().toString());
-    mensajePersonalizado = mensajePersonalizado.replace("*URL*", this.url);
+    String mensajePersonalizado = this.cuerpo
+        .replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*ORGANIZACION*", contacto.organizacion());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*MES*", LocalDate.now().getMonth().toString());
+
+    mensajePersonalizado = mensajePersonalizado
+        .replace("*URL*", this.url);
+
     return mensajePersonalizado;
   }
 
@@ -56,6 +64,10 @@ public class AdapterEmail implements MedioNotificador {
   }
 
   public String getAsunto() {
-    return asunto.replace("*MES/AÑO*", LocalDate.now().getYear() + "/" + LocalDate.now().getMonth());
+    return asunto
+        .replace("*MES/AÑO*",
+            LocalDate.now()
+                .getYear() + "/" + LocalDate.now()
+                .getMonth());
   }
 }

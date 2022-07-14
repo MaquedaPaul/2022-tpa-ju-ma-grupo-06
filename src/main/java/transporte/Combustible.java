@@ -9,7 +9,12 @@ public class Combustible extends TipoConsumo {
 
   private final long consumoCombustiblePorMetro;
 
-  public Combustible(String nombre, Unidad unidad, TipoActividad actividad, TipoAlcance alcance, long consumoCombustiblePorMetro) {
+  public Combustible(String nombre,
+                     Unidad unidad,
+                     TipoActividad actividad,
+                     TipoAlcance alcance,
+                     long consumoCombustiblePorMetro) {
+
     super(nombre, unidad, actividad, alcance);
     this.consumoCombustiblePorMetro = consumoCombustiblePorMetro;
   }

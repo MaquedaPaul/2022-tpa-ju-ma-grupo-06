@@ -1,10 +1,12 @@
 package admin;
 
+import global.Unidad;
+
 public class FactorEmision {
   double valor;
-  String unidadDivisible;
+  Unidad unidadDivisible;
 
-  public FactorEmision(double unValor, String unidadDivisible) {
+  public FactorEmision(double unValor, Unidad unidadDivisible) {
     valor = unValor;
     this.unidadDivisible = unidadDivisible;
   }
@@ -13,7 +15,7 @@ public class FactorEmision {
     return valor;
   }
 
-  public String getUnidadDivisible() {
+  public Unidad getUnidadDivisible() {
     return unidadDivisible;
   }
 

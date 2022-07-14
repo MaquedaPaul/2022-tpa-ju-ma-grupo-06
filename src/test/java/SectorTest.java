@@ -10,10 +10,10 @@ class SectorTest {
 
   @Test
   public void unMiembroSeVinculaConUnSector() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3");
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
     Sector compras = new Sector("Compras", new ArrayList<>());
     onu.incorporarSector(compras);
-    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TIpoDocumento.DNI);
+    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     onu.procesarVinculacion(true);
@@ -28,7 +28,7 @@ class SectorTest {
   public Miembro generarMiembro(String nombre,
                                 String apellido,
                                 int documento,
-                                TIpoDocumento unTipo) {
+                                TipoDocumento unTipo) {
     MiembroTest testMiembro = new MiembroTest();
     return testMiembro.generarMiembro(nombre, apellido, documento, unTipo);
   }

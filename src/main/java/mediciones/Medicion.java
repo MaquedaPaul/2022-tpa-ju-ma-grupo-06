@@ -1,15 +1,15 @@
 package mediciones;
 
-import tipo.consumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 public class Medicion {
   TipoConsumo tipoConsumo;
-  Periodo periodicidad;
+  Perioricidad periodicidad;
   double valor;
   String periodoDeImputacion;
 
   public Medicion(TipoConsumo unTipoConsumo,
-                  Periodo unaPerioricidad,
+                  Perioricidad unaPerioricidad,
                   double unValor,
                   String periodoDeImputacion) {
     this.tipoConsumo = unTipoConsumo;
@@ -22,7 +22,7 @@ public class Medicion {
     return tipoConsumo;
   }
 
-  public Periodo getPeriodicidad() {
+  public Perioricidad getPeriodicidad() {
     return periodicidad;
   }
 
@@ -32,6 +32,10 @@ public class Medicion {
 
   public String getPeriodoDeImputacion() {
     return periodoDeImputacion;
+  }
+
+  public double calcularHc() {
+    return getValor() + tipoConsumo.getFactorEmision().getValor();
   }
 
 

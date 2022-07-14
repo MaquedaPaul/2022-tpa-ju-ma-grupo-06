@@ -3,29 +3,39 @@ package organizacion;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import transporte.Trayecto;
 
+
+
+import transporte.Tramo;
+
+import transporte.Trayecto;
+import lombok.Getter;
+
+@Getter
 public class Miembro {
   String nombre;
   String apellido;
-  TIpoDocumento tipoDocumento;
+  TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
+  int cantidadDeDiasQueTrabaja;
 
   public Miembro(
       String unNombre,
       String unApellido,
-      TIpoDocumento unTipoDocumento,
+      TipoDocumento unTipoDocumento,
       int unNumeroDocumento,
-      List<Trayecto> unosTrayectos) {
-    nombre = unNombre;
-    apellido = unApellido;
-    tipoDocumento = unTipoDocumento;
-    numeroDocumento = unNumeroDocumento;
-    trayectos = unosTrayectos;
+      List<Trayecto> unosTrayectos,
+      int cantidadDeDiasQueTrabaja) {
+    this.nombre = unNombre;
+    this.apellido = unApellido;
+    this.tipoDocumento = unTipoDocumento;
+    this.numeroDocumento = unNumeroDocumento;
+    this.trayectos = unosTrayectos;
+    this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }
 
-  void registrarTrayecto(Trayecto unTrayecto) {
+  public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
   }
@@ -34,19 +44,14 @@ public class Miembro {
     unaOrganizacion.recibirSolicitud(unaSolicitud);
   }
 
-  public String getApellido() {
-    return apellido;
+
+  public double calcularHCTotal() {
+    return getCantidadDeDiasQueTrabaja() * this.calcularHCTrayectos();
   }
 
-  public String getNombre() {
-    return nombre;
-  }
 
-  public int getNumeroDocumento() {
-    return numeroDocumento;
-  }
-
-  public TIpoDocumento getTipoDocumento() {
-    return tipoDocumento;
+  public double calcularHCTrayectos() {
+    return 1;
+    //return getTrayectos().stream().mapToDouble(unTrayecto -> unTrayecto.calcularHC()).sum();
   }
 }

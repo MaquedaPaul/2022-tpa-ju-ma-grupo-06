@@ -20,4 +20,8 @@ public class RepoMediciones {
   public void cargarMedicion(Medicion medicion) {
     mediciones.add(medicion);
   }
+
+  public int medicionesTotales() {
+    return mediciones.size();
+  }
 }

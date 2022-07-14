@@ -12,7 +12,7 @@ public class Sector {
     this.miembros = unosMiembros;
   }
 
-  void admitirMiembro(Miembro unMiembro) {
+  public void admitirMiembro(Miembro unMiembro) {
     miembros.add(unMiembro);
   }
 
@@ -22,5 +22,13 @@ public class Sector {
 
   public String getNombre() {
     return nombre;
+  }
+
+  public double calcularHCMiembros() {
+    return miembros.stream().mapToDouble(unMiembro -> unMiembro.calcularHCTotal()).sum();
+  }
+
+  public int getCantidadMiembros() {
+    return getMiembros().size();
   }
 }

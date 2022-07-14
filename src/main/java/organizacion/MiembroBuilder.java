@@ -9,17 +9,17 @@ import transporte.Trayecto;
 public class MiembroBuilder {
   String nombre;
   String apellido;
-  TIpoDocumento tipoDocumento;
+  TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
-
+  int cantidadDeDiasQueTrabaja = 20;
   public MiembroBuilder() {
 
   }
 
   public Miembro construir() {
     this.validar();
-    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos);
+    return new Miembro(nombre, apellido, tipoDocumento, numeroDocumento, trayectos, cantidadDeDiasQueTrabaja);
   }
 
   public void especificarNombre(String unNombre) {
@@ -31,7 +31,7 @@ public class MiembroBuilder {
     apellido = unApellido;
   }
 
-  public void especificarTipoDocumento(TIpoDocumento unTipoDocumento) {
+  public void especificarTipoDocumento(TipoDocumento unTipoDocumento) {
     requireNonNull(unTipoDocumento);
     tipoDocumento = unTipoDocumento;
   }
@@ -41,8 +41,10 @@ public class MiembroBuilder {
   }
 
   public void especificarTrayectos(List<Trayecto> unosTrayectos) {
-    // podría ser que no se desplace porque es virtual
     trayectos = unosTrayectos;
+  }
+  public void especificarCantidadDiasQueTrabaja(int cantidadDeDiasQueTrabaja) {
+    this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }
 
   public void validar() {

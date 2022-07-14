@@ -17,7 +17,12 @@ public class RepoOrganizacion {
     return repoOrganizacion;
   }
 
-  private void agregarOrganizacion(Organizacion nuevaOrganizacion) {
+  public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
     organizaciones.add(nuevaOrganizacion);
   }
+
+  public List<Organizacion> getOrganizaciones() {
+    return organizaciones;
+  }
+
 }

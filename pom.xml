@@ -67,7 +67,7 @@
                 <version>3.1.2</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
-                    <violationSeverity>warning</violationSeverity>
+                    <violationSeverity>error</violationSeverity>
                     <violationIgnore>
                         MissingJavadocMethod,
                         MissingJavadocPackage,
@@ -80,7 +80,7 @@
                 <executions>
                     <execution>
                         <id>Validar Formateo</id>
-                        <phase>verify</phase>
+                        <phase>none</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>

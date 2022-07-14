@@ -4,7 +4,8 @@ import organizacion.Organizacion;
 
 import java.util.List;
 
-//import lombok.Getter
+import lombok.Getter;
+@Getter
 public class SectorTerritorial {
   List<Organizacion> organizaciones;
   TipoSectorTerritorial tipoSectorTerritorial;

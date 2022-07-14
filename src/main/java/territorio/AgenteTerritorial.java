@@ -1,5 +1,12 @@
 package territorio;
 
 public class AgenteTerritorial {
-  SectorTerritorial unSector;
+  SectorTerritorial sector;
+  public AgenteTerritorial(SectorTerritorial unSector){
+    this.sector = unSector;
+  }
+
+  public SectorTerritorial getSectorTerritorial(){
+    return sector;
+  }
 }

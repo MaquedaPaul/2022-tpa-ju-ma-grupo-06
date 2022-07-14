@@ -11,7 +11,7 @@ public class Notificador {
   private final ArrayList<MedioNotificador> medios = new ArrayList<>();
 
   public void enviarGuias() {
-    this.medios.forEach(medio -> medio.enviarATodos(this.contactosDeLasOrganizaciones()));
+    this.medios().forEach(medio -> medio.enviarATodos(this.contactosDeLasOrganizaciones()));
   }
 
   public void main() {

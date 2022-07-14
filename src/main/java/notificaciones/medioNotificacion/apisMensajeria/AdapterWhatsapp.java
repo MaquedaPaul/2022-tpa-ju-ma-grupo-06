@@ -14,10 +14,10 @@ public class AdapterWhatsapp implements MedioNotificador {
 
   @Override
   public void enviarATodos(List<Contacto> contactos) {
-    contactos.forEach(contacto -> this.enviarA(contacto, this.getMensajeEnvioPara(contacto)));
+    contactos.forEach(this::enviarA);
   }
 
-  private void enviarA(Contacto contacto, String mensaje) {
+  public void enviarA(Contacto contacto) {
     ////apiWhatsapp.enviarA(contacto, mensaje);
   }
   @Override

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AdapterEmail implements MedioNotificador {
 
-  private String asunto;
+  private final String asunto;
   private String cuerpo;
   private String url;
 
@@ -18,11 +18,11 @@ public class AdapterEmail implements MedioNotificador {
 
   @Override
   public void enviarATodos(List<Contacto> contactos) {
-    contactos.forEach(this::enviarMail);
+    contactos.forEach(this::enviarA);
   }
 
-  private void enviarMail(Contacto contacto) {
-
+  public void enviarA(Contacto contacto) {
+    //APIMail.mailTo(...);
   }
 
   @Override

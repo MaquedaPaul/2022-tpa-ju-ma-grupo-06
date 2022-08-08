@@ -1,25 +1,29 @@
 package transporte;
 
-import global.Unidad;
-import tipoconsumo.TipoActividad;
-import tipoconsumo.TipoAlcance;
+import admin.FactorEmision;
 import tipoconsumo.TipoConsumo;
 
-public class Combustible extends TipoConsumo {
+public class Combustible {
 
   private final long consumoCombustiblePorMetro;
-
-  public Combustible(String nombre,
-                     Unidad unidad,
-                     TipoActividad actividad,
-                     TipoAlcance alcance,
+  private final TipoConsumo tipoConsumo;
+  public Combustible(TipoConsumo tipoConsumo,
                      long consumoCombustiblePorMetro) {
-
-    super(nombre, unidad, actividad, alcance);
+    this.tipoConsumo = tipoConsumo;
     this.consumoCombustiblePorMetro = consumoCombustiblePorMetro;
   }
 
   public long calcularHc() {
     return (long) (this.consumoCombustiblePorMetro * this.getFactorEmision().getValor());
+  }
+  public TipoConsumo getTipoConsumo(){
+    return this.tipoConsumo;
+  }
+
+  public FactorEmision getFactorEmision(){
+    return getTipoConsumo().getFactorEmision();
+  }
+  public void setFactorEmision(FactorEmision unFactor){
+    getTipoConsumo().setFactorEmision(unFactor);
   }
 }

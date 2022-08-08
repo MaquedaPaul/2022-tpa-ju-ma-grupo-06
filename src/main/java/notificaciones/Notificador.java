@@ -14,10 +14,6 @@ public class Notificador {
     this.medios().forEach(medio -> medio.enviarATodos(this.contactosDeLasOrganizaciones()));
   }
 
-  public void main() {
-    this.enviarGuias();
-  }
-
   public List<Contacto> contactosDeLasOrganizaciones() {
     List<Contacto> contactosTotales = new ArrayList<>();
     RepoOrganizacion

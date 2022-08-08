@@ -72,11 +72,13 @@ public class Organizacion {
   }
 
   public double calcularHC() {
-    return getSectores().stream().mapToDouble(Sector::calcularHCMiembros).sum() + calcularHcMediciones();
+    return getSectores().stream().mapToDouble(Sector::calcularHCMiembros).sum()
+        + calcularHcMediciones();
   }
 
-  public double calcularHcMediciones(){
-    return RepoMediciones.getInstance().medicionesDe(this).stream().mapToDouble(Medicion::calcularHc).sum();
+  public double calcularHcMediciones() {
+    return RepoMediciones.getInstance().medicionesDe(this)
+        .stream().mapToDouble(Medicion::calcularHc).sum();
   }
 
   public double impactoDeMiembro(Miembro miembro) {

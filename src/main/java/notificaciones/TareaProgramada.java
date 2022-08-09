@@ -9,8 +9,7 @@ import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 
 public class TareaProgramada {
 
-  public static void main(String[] args)
-  {
+  public static void main(String[] args) {
     //inicializo medios noti y los guardo
     AdapterEmail mail = new AdapterEmail();
     AdapterWhatsapp whatsapp = new AdapterWhatsapp();

@@ -10,7 +10,9 @@ public class GlobalClock {
     reset();
   }
 
-  public static void reset() { use(Clock.systemDefaultZone()); }
+  public static void reset() {
+    use(Clock.systemDefaultZone());
+  }
 
   public static void use(Clock clock) {
     GlobalClock.clock = clock;

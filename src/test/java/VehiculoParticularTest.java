@@ -3,13 +3,14 @@ import org.junit.jupiter.api.Test;
 import services.geodds.GeoddsService;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
-import transporte.*;
+import transporte.TipoVehiculo;
+import transporte.Tramo;
 import transporte.VehiculoParticular;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class VehiculoParticularTest {
   Factory unFactory = new Factory();
@@ -41,7 +42,7 @@ public class VehiculoParticularTest {
   @Test
   public void huboInteraccionConLaAPIAlCalcularDistancia() throws IOException {
     TipoVehiculo esUnaMoto = TipoVehiculo.MOTO;
-    VehiculoParticular motoAGasoil = new VehiculoParticular( esUnaMoto);
+    VehiculoParticular motoAGasoil = new VehiculoParticular(esUnaMoto);
     Tramo unTramo = unFactory.crearTramoSimple(motoAGasoil);
     ServicioGeodds geoddsMock = mock(ServicioGeodds.class);
     motoAGasoil.setServiocioGeo(geoddsMock);

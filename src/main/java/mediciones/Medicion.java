@@ -13,12 +13,12 @@ public class Medicion {
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,
                   double unValor,
-                  String periodoDeImputacion,Organizacion organizacion) {
+                  String periodoDeImputacion, Organizacion organizacion) {
     this.tipoConsumo = unTipoConsumo;
     this.periodicidad = unaPerioricidad;
     this.valor = unValor;
     this.periodoDeImputacion = periodoDeImputacion;
-    this.organizacion =  organizacion;
+    this.organizacion = organizacion;
   }
 
   public TipoConsumo getTipoConsumo() {

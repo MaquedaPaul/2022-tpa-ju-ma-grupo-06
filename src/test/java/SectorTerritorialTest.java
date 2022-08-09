@@ -19,14 +19,14 @@ public class SectorTerritorialTest {
       "texto2",
       "texto3", new ArrayList<>());
   Organizacion organizacionMock = mock(Organizacion.class);
-  List <Organizacion> organizaciones = new ArrayList<>();
+  List<Organizacion> organizaciones = new ArrayList<>();
   SectorTerritorial unSectorTerritorial = new SectorTerritorial(new ArrayList<>(), TipoSectorTerritorial.PROVINCIA);
 
   @Test
   void elTotalHCDeUnSectorTerritorialDeberiaSerLaSumaDeLasOrgsDeEseSector() {
     unSectorTerritorial.incorporarOrganizacion(organizacionMock);
-    assertEquals(unSectorTerritorial.totalHC(),0);
+    assertEquals(unSectorTerritorial.totalHC(), 0);
     when(organizacionMock.calcularHC()).thenReturn(2000.0);
-    assertEquals(unSectorTerritorial.totalHC(),2000.0);
+    assertEquals(unSectorTerritorial.totalHC(), 2000.0);
   }
 }

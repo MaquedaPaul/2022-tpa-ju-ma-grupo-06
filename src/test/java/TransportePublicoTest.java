@@ -1,5 +1,5 @@
-import org.junit.jupiter.api.Test;
 import linea.*;
+import org.junit.jupiter.api.Test;
 import transporte.TransportePublico;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class TransportePublicoTest {
 
 
   Parada ubicacionInicio = new Parada(0, prueba1, true);
-  Parada ubicacionIntermedia = new Parada(1, prueba2,true);
+  Parada ubicacionIntermedia = new Parada(1, prueba2, true);
   Parada ubicacionFinal = new Parada(2, prueba3, true);
   Parada otraUbicacion = new Parada(3, prueba4, true);
 
@@ -29,7 +29,7 @@ public class TransportePublicoTest {
 
   // LINEA TRANSPORTE
   LineaTransporte linea138 =
-      new LineaTransporte(TipoTransporte.COLECTIVO, "linea138",paradasDeIdaDel138,paradasDeVueltaDel138);
+      new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", paradasDeIdaDel138, paradasDeVueltaDel138);
   // COLECTIVO DE EJEMPLO
   TransportePublico unColectivo = new TransportePublico(linea138);
 
@@ -61,7 +61,7 @@ public class TransportePublicoTest {
   public void sePuedeAgregarUnaParadaAUnaLineaExistente() {
 
     LineaTransporte linea138 =
-        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138",paradasDeIdaDel138,paradasDeVueltaDel138);
+        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", paradasDeIdaDel138, paradasDeVueltaDel138);
     paradasDeIdaDel138.add(ubicacionInicio);
     paradasDeIdaDel138.add(ubicacionIntermedia);
     paradasDeIdaDel138.add(ubicacionFinal);
@@ -74,18 +74,18 @@ public class TransportePublicoTest {
   @Test
   public void sePuedeCalcularLaDistanciaEntre2Paradas() throws IOException {
     LineaTransporte linea138 =
-        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138",paradasDeIdaDel138,paradasDeVueltaDel138);
+        new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", paradasDeIdaDel138, paradasDeVueltaDel138);
 
     paradasDeIdaDel138.add(ubicacionInicio);
     paradasDeIdaDel138.add(ubicacionIntermedia);
     paradasDeIdaDel138.add(ubicacionFinal);
-    
-    PuntoUbicacion paradaInicio = new PuntoUbicacion(32,"aa",32,prueba1);
-    PuntoUbicacion paradaFinal = new PuntoUbicacion(33,"bb",33,prueba3);
+
+    PuntoUbicacion paradaInicio = new PuntoUbicacion(32, "aa", 32, prueba1);
+    PuntoUbicacion paradaFinal = new PuntoUbicacion(33, "bb", 33, prueba3);
 
     TransportePublico bondi138 = new TransportePublico(linea138);
 
-    assertEquals(bondi138.distanciaEntre(paradaInicio, paradaFinal),2);
+    assertEquals(bondi138.distanciaEntre(paradaInicio, paradaFinal), 2);
 
   }
 }

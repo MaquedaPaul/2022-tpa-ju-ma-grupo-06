@@ -120,7 +120,11 @@ public class LectorDeCsv {
   }
 
   private void guardarMedicion() {
-    Medicion nuevaMedicion = new Medicion(tipoConsumo, perioricidad, valor, periodoDeImputacion, organizacion);
+    Medicion nuevaMedicion = new Medicion(tipoConsumo,
+        perioricidad,
+        valor,
+        periodoDeImputacion,
+        organizacion);
     mediciones.add(nuevaMedicion);
   }
 

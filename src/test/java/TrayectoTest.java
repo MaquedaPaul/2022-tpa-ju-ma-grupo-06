@@ -1,9 +1,6 @@
-
 import linea.Coordenada;
 import linea.PuntoUbicacion;
 import org.junit.jupiter.api.Test;
-import services.geodds.ServicioGeodds;
-import services.geodds.entities.Distancia;
 import transporte.PropulsionHumana;
 import transporte.Tramo;
 import transporte.Trayecto;
@@ -11,8 +8,9 @@ import transporte.Trayecto;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TrayectoTest {
   Coordenada unaCoordenada = new Coordenada(50, 21);

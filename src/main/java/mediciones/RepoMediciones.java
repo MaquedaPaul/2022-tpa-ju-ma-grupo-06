@@ -29,6 +29,9 @@ public class RepoMediciones {
   }
 
   public List<Medicion> medicionesDe(Organizacion organizacion) {
-    return this.mediciones.stream().filter(medicion -> medicion.perteneceA(organizacion)).collect(Collectors.toList());
+    return this.mediciones
+        .stream()
+        .filter(medicion -> medicion.perteneceA(organizacion))
+        .collect(Collectors.toList());
   }
 }

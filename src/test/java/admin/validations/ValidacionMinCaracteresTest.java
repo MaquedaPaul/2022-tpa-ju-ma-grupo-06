@@ -4,7 +4,7 @@ package admin.validations;
 import exceptions.PasswordInseguraException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import admin.validations.ValidacionMinCaracteres;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ValidacionMinCaracteresTest {

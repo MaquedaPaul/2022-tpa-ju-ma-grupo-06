@@ -7,6 +7,7 @@ public class Combustible {
 
   private final long consumoCombustiblePorMetro;
   private final TipoConsumo tipoConsumo;
+
   public Combustible(TipoConsumo tipoConsumo,
                      long consumoCombustiblePorMetro) {
     this.tipoConsumo = tipoConsumo;
@@ -16,14 +17,16 @@ public class Combustible {
   public long calcularHc() {
     return (long) (this.consumoCombustiblePorMetro * this.getFactorEmision().getValor());
   }
-  public TipoConsumo getTipoConsumo(){
+
+  public TipoConsumo getTipoConsumo() {
     return this.tipoConsumo;
   }
 
-  public FactorEmision getFactorEmision(){
+  public FactorEmision getFactorEmision() {
     return getTipoConsumo().getFactorEmision();
   }
-  public void setFactorEmision(FactorEmision unFactor){
+
+  public void setFactorEmision(FactorEmision unFactor) {
     getTipoConsumo().setFactorEmision(unFactor);
   }
 }

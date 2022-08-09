@@ -1,8 +1,8 @@
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
+import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
-import notificaciones.Contacto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +52,9 @@ public class OrganizacionTest {
 
     when(spyjorgito.calcularHCTotal()).thenReturn(100.0);
     when(spyOnu.calcularHC()).thenReturn(2000.0);
-    verify(spyOnu,times(1)).calcularHC();
-    verify(spyjorgito,times(1)).calcularHCTotal();
-    assertEquals(5.0,spyOnu.impactoDeMiembro(spyjorgito));
+    verify(spyOnu, times(1)).calcularHC();
+    verify(spyjorgito, times(1)).calcularHCTotal();
+    assertEquals(5.0, spyOnu.impactoDeMiembro(spyjorgito));
   }
 
   @Test
@@ -74,7 +74,7 @@ public class OrganizacionTest {
     List<Miembro> miembros = new ArrayList<>();
     miembros.add(jorgito);
     when(spyOnu.getMiembros()).thenReturn(miembros);
-    assertEquals(2000,spyOnu.indicadorHC_Miembros());
+    assertEquals(2000, spyOnu.indicadorHC_Miembros());
   }
 
   @Test
@@ -84,16 +84,16 @@ public class OrganizacionTest {
     miembros.add(jorgito);
     Sector unSector = new Sector("Ventas", miembros);
     spyOnu.incorporarSector(unSector);
-    assertEquals(2000,spyOnu.indicadorHC_MiembrosEnSector(unSector));
+    assertEquals(2000, spyOnu.indicadorHC_MiembrosEnSector(unSector));
   }
 
 
   @Test
-  public void deberiaPoderCargarseUnContacto(){
-    Contacto unContacto = new Contacto(onu,"Pedrito","pedrito@gmail.com","1122653678");
-    assertEquals(onu.getContactos().size(),0);
+  public void deberiaPoderCargarseUnContacto() {
+    Contacto unContacto = new Contacto(onu, "Pedrito", "pedrito@gmail.com", "1122653678");
+    assertEquals(onu.getContactos().size(), 0);
     onu.cargarContacto(unContacto);
-    assertEquals(onu.getContactos().size(),1);
+    assertEquals(onu.getContactos().size(), 1);
   }
 
   public static Miembro generarMiembro(String nombre,

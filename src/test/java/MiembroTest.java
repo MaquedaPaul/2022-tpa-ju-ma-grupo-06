@@ -1,4 +1,3 @@
-
 import exceptions.NoExisteElSectorVinculante;
 import org.junit.jupiter.api.Test;
 import organizacion.*;

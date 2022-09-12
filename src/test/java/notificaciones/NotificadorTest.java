@@ -6,8 +6,9 @@ import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 import org.junit.After;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
+import organizacion.RepoOrganizacion;
 import organizacion.TipoOrganizacion;
-import notificaciones.GlobalClock;
+
 import java.time.*;
 import java.util.ArrayList;
 
@@ -58,23 +59,6 @@ public class NotificadorTest {
   }
 
   @Test
-  public void cuandoEnvioNotificacionesPorMailA15ContactosEnvioMail15Veces() {
-    Notificador noti = spy(new Notificador());
-    MedioNotificador medio1 = spy(new AdapterEmail());
-    noti.agregarMedios(medio1);
-    Contacto contactoMock = mock(Contacto.class);
-    ArrayList<Contacto> contactos = new ArrayList<>();
-    for (int i = 0; i < 15; i++) {
-      contactos.add(contactoMock);
-    }
-    assertEquals(15, contactos.size());
-    doReturn(contactos).when(noti).contactosDeLasOrganizaciones();
-    noti.enviarGuias();
-    verify(noti, times(1)).contactosDeLasOrganizaciones();
-    verify(medio1, times(15)).enviarA(any());
-  }
-
-  @Test
   public void cuandoEnvioNotificacionesPorWhatsappA15ContactosEnvioMail15Veces() {
     Notificador noti = spy(new Notificador());
     MedioNotificador medio1 = spy(new AdapterWhatsapp());
@@ -85,9 +69,26 @@ public class NotificadorTest {
       contactos.add(contactoMock);
     }
     assertEquals(15, contactos.size());
-    doReturn(contactos).when(noti).contactosDeLasOrganizaciones();
-    noti.enviarGuias();
-    verify(noti, times(1)).contactosDeLasOrganizaciones();
+    Organizacion nueva = new Organizacion("text",TipoOrganizacion.INSTITUCION,"text","text",contactos);
+    RepoOrganizacion.getInstance().agregarOrganizacion(nueva);
+    noti.organizacionesNotifiquen();
+    verify(noti, times(1)).organizacionesNotifiquen();
+    verify(medio1, times(15)).enviarA(any());
+  }
+
+  @Test
+  public void cuandoEnvioNotificacionesPorMailA15ContactosEnvioMail15Veces() {
+    Notificador noti = spy(new Notificador());
+    MedioNotificador medio1 = spy(new AdapterEmail());
+    noti.agregarMedios(medio1);
+    Contacto contactoMock = mock(Contacto.class);
+    ArrayList<Contacto> contactos = new ArrayList<>();
+    for (int i = 0; i < 15; i++) {
+      contactos.add(contactoMock);
+    }
+    assertEquals(15, contactos.size());
+    noti.organizacionesNotifiquen();
+    verify(noti, times(1)).organizacionesNotifiquen();
     verify(medio1, times(15)).enviarA(any());
   }
 

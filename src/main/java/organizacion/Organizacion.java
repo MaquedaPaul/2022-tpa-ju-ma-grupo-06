@@ -7,6 +7,7 @@ import lombok.Getter;
 import mediciones.Medicion;
 import mediciones.RepoMediciones;
 import notificaciones.Contacto;
+import notificaciones.medioNotificacion.MedioNotificador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,10 +112,12 @@ public class Organizacion {
     contactos.add(unContacto);
   }
 
-
   public List<Contacto> getContactos() {
     return contactos;
   }
 
+  public void notificarContacto(ArrayList<MedioNotificador> medios) {
+    medios.forEach(medio -> medio.enviarATodos(this.contactos));
+  }
 }
 

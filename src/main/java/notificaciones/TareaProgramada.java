@@ -16,6 +16,6 @@ public class TareaProgramada {
     Notificador notificador = new Notificador();
     notificador.agregarMedios(mail);
     notificador.agregarMedios(whatsapp);
-    notificador.enviarGuias();
+    notificador.organizacionesNotifiquen();
   }
 }

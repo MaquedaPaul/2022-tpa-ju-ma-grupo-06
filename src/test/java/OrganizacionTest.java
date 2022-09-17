@@ -1,8 +1,10 @@
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
+import mediciones.Medicion;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+import transporte.Trayecto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +14,29 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class OrganizacionTest {
+
   Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
   Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
   Organizacion spyOnu = spy(onu);
   Miembro spyjorgito = spy(jorgito);
+
+  Medicion med1 = mock(Medicion.class);
+  Medicion med2 = mock(Medicion.class);
+  Medicion med3 = mock(Medicion.class);
+
+  List<Medicion> mediciones = new ArrayList<>();
+
+  Miembro miembro1 = mock(Miembro.class);
+  Miembro miembro2 = mock(Miembro.class);
+
+  List<Miembro> miembros = new ArrayList<>();
+
+  Trayecto trayecto1 = mock(Trayecto.class);
+  Trayecto trayecto2 = mock(Trayecto.class);
+  Trayecto trayecto3 = mock(Trayecto.class);
+
+  List<Trayecto> trayectos1 = new ArrayList<>();
+  List<Trayecto> trayectos2 = new ArrayList<>();
 
   @Test
   public void laOrganizacionIncorporaUnSector() {
@@ -48,13 +69,113 @@ public class OrganizacionTest {
   //HCM = HC total del miembro
 
   @Test
-  public void elImpactoDeUnMiembroDeberiaSer100MultiplicadoPorElHCMDivididoPorElHCO() {
+  public void elHCMensualDeLosMiembrosEs2000() {
 
-    when(spyjorgito.calcularHCTotal()).thenReturn(100.0);
-    when(spyOnu.calcularHC()).thenReturn(2000.0);
-    verify(spyOnu, times(1)).calcularHC();
-    verify(spyjorgito, times(1)).calcularHCTotal();
-    assertEquals(5.0, spyOnu.impactoDeMiembro(spyjorgito));
+    Organizacion org = spy(onu);
+
+    mediciones.add(med1);
+    mediciones.add(med2);
+    mediciones.add(med3);
+
+    Sector sector1 = mock(Sector.class);
+    Sector sector2 = mock(Sector.class);
+
+    org.incorporarSector(sector1);
+    org.incorporarSector(sector2);
+    List<Sector> sectores = new ArrayList<>();
+    sectores.add(sector1);
+    sectores.add(sector2);
+    miembros.add(miembro1);
+    List<Miembro> otros = new ArrayList<>();
+    otros.add(miembro2);
+    when(sector1.getMiembros()).thenReturn(miembros);
+    when(sector2.getMiembros()).thenReturn(otros);
+    when(org.getSectores()).thenReturn(sectores);
+
+    trayectos1.add(trayecto1);
+    trayectos1.add(trayecto2);
+    trayectos2.add(trayecto2);
+    trayectos2.add(trayecto3);
+
+    when(miembro1.getTrayectos()).thenReturn(trayectos1);
+    when(miembro2.getTrayectos()).thenReturn(trayectos2);
+
+    when(trayecto1.calcularHC()).thenReturn(40D);
+    when(trayecto2.calcularHC()).thenReturn(30D);
+    when(trayecto3.calcularHC()).thenReturn(30D);
+
+    assertEquals(2000D, org.calcularHCTotalMensualDeMiembros());
+
+  }
+
+  @Test
+  public void elHCAnualDeLosMiembrosEs24000() {
+
+    Organizacion org = spy(onu);
+
+    mediciones.add(med1);
+    mediciones.add(med2);
+    mediciones.add(med3);
+
+    Sector sector1 = mock(Sector.class);
+    Sector sector2 = mock(Sector.class);
+
+    org.incorporarSector(sector1);
+    org.incorporarSector(sector2);
+    List<Sector> sectores = new ArrayList<>();
+    sectores.add(sector1);
+    sectores.add(sector2);
+    miembros.add(miembro1);
+    List<Miembro> otros = new ArrayList<>();
+    otros.add(miembro2);
+    when(sector1.getMiembros()).thenReturn(miembros);
+    when(sector2.getMiembros()).thenReturn(otros);
+    when(org.getSectores()).thenReturn(sectores);
+
+    trayectos1.add(trayecto1);
+    trayectos1.add(trayecto2);
+    trayectos2.add(trayecto2);
+    trayectos2.add(trayecto3);
+
+    when(miembro1.getTrayectos()).thenReturn(trayectos1);
+    when(miembro2.getTrayectos()).thenReturn(trayectos2);
+
+    when(trayecto1.calcularHC()).thenReturn(40D);
+    when(trayecto2.calcularHC()).thenReturn(30D);
+    when(trayecto3.calcularHC()).thenReturn(30D);
+
+    assertEquals(24000D, org.calcularHCTotalAnualDeMiembros());
+
+  }
+
+  @Test
+  public void elImpactoDeJorgeEnJulio2021EsDel20Porciento() {
+
+    trayectos1.add(trayecto2);
+    trayectos1.add(trayecto3);
+
+    when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
+    when(trayecto2.calcularHC()).thenReturn(300D);
+    when(trayecto3.calcularHC()).thenReturn(100D);
+
+    when(spyOnu.calcularHCTotal("07/2021")).thenReturn(40000D);
+    // (100 * 20 * 400) / 40000 = 20
+    assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, "07/2021"));
+  }
+
+  @Test
+  public void elImpactoDeJorgeEnTodo2021EsDel16Porciento() {
+
+    trayectos1.add(trayecto2);
+    trayectos1.add(trayecto3);
+
+    when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
+    when(trayecto2.calcularHC()).thenReturn(300D);
+    when(trayecto3.calcularHC()).thenReturn(100D);
+
+    when(spyOnu.calcularHCTotal("2021")).thenReturn(600000D);
+    // (100 * 12 * 20 * 400) / x = 16
+    assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, "2021"));
   }
 
   @Test
@@ -66,27 +187,6 @@ public class OrganizacionTest {
     onu.incorporarSector(compras);
     assertEquals(onu.getMiembrosEnSector(compras), compras.getMiembros());
   }
-
-  @Test
-  public void elIndicadorHC_MiembrosEsElHCDivididoLaCantidadMiembros() {
-
-    when(spyOnu.calcularHC()).thenReturn(2000.0);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(jorgito);
-    when(spyOnu.getMiembros()).thenReturn(miembros);
-    assertEquals(2000, spyOnu.indicadorHC_Miembros());
-  }
-
-  @Test
-  public void elIndicadorHC_MiembrosEnSectorEsElHCDivididoLaCantidadMiembrosEnEseSector() {
-    when(spyOnu.calcularHC()).thenReturn(2000.0);
-    List<Miembro> miembros = new ArrayList<>();
-    miembros.add(jorgito);
-    Sector unSector = new Sector("Ventas", miembros);
-    spyOnu.incorporarSector(unSector);
-    assertEquals(2000, spyOnu.indicadorHC_MiembrosEnSector(unSector));
-  }
-
 
   @Test
   public void deberiaPoderCargarseUnContacto() {

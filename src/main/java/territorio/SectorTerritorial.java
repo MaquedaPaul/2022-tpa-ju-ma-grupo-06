@@ -17,8 +17,8 @@ public class SectorTerritorial {
     this.tipoSectorTerritorial = tipoSectorTerritorial;
   }
 
-  public double totalHC() {
-    return organizaciones.stream().mapToDouble(unaOrg -> unaOrg.calcularHC()).sum();
+  public double totalHC(String periodo) {
+    return organizaciones.stream().mapToDouble(unaOrg -> unaOrg.calcularHCTotal(periodo)).sum();
   }
 
   public void incorporarOrganizacion(Organizacion organizacion) {

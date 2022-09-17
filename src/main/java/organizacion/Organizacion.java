@@ -1,15 +1,20 @@
 package organizacion;
 
+import admin.config.ValoresGlobales;
+import exceptions.ElPeriodoIngresadoNoEsValido;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import lombok.Getter;
 import mediciones.Medicion;
+import mediciones.Perioricidad;
 import mediciones.RepoMediciones;
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
+import transporte.Trayecto;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -72,24 +77,82 @@ public class Organizacion {
     unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
-  public double calcularHC() {
-    return getSectores().stream().mapToDouble(Sector::calcularHCMiembros).sum()
-        + calcularHcMediciones();
+
+  public double calcularHCTotal(String periodo) {
+
+    if (periodo.matches(ValoresGlobales.getInstance().getFormatoMensual())) {
+      return this.calcularHCTotalMensualDeMiembros() + this.calcularHcMedicionesMensual(periodo);
+    }
+
+    if (periodo.matches(ValoresGlobales.getInstance().getFormatoAnual())) {
+      return this.calcularHCTotalAnualDeMiembros() + this.calcularHcMedicionesAnual(periodo);
+    }
+
+    throw new ElPeriodoIngresadoNoEsValido(periodo);
   }
 
-  public double calcularHcMediciones() {
-    return RepoMediciones.getInstance().medicionesDe(this)
-        .stream().mapToDouble(Medicion::calcularHc).sum();
+  public double calcularHCTotalAnualDeMiembros() {
+
+    return 12 * this.calcularHCTotalMensualDeMiembros();
   }
 
-  public double impactoDeMiembro(Miembro miembro) {
-    return (100 * miembro.calcularHCTotal()) / calcularHC();
+  public double calcularHCTotalMensualDeMiembros() {
+    return
+        ValoresGlobales.getInstance().getDiasDeTrabajo()
+            * this.getTrayectosDeLosMiembros()
+            .mapToDouble(Trayecto::calcularHC)
+            .sum();
+  }
+
+  public double calcularHcMedicionesAnual(String year) {
+
+    return this.getMediciones()
+        .stream()
+        .filter(medicion -> medicion.esDelAnio(year))
+        .mapToDouble(medicion -> medicion.getValorSegun(Perioricidad.ANUAL))
+        .sum();
+
+  }
+
+  public double calcularHcMedicionesMensual(String date) {
+
+    return this.getMediciones()
+        .stream()
+        .filter(medicion -> medicion.esDelAnio(date.substring(2, 8)))
+        .filter(medicion -> medicion.esAnual() || medicion.esDelMes(date.substring(0, 2)))
+        .mapToDouble(medicion -> medicion.getValorSegun(Perioricidad.MENSUAL))
+        .sum();
+  }
+
+  public List<Medicion> getMediciones() {
+    return RepoMediciones.getInstance().medicionesDe(this);
+  }
+
+  private Stream<Trayecto> getTrayectosDeLosMiembros() {
+    return this.getMiembros()
+        .stream()
+        .map(Miembro::getTrayectos)
+        .flatMap(Collection::stream)
+        .distinct();
+  }
+
+  public double impactoDeMiembro(Miembro miembro, String periodo) {
+
+    if (periodo.matches(ValoresGlobales.getInstance().getFormatoMensual())) {
+      return (100 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
+    }
+
+    if (periodo.matches(ValoresGlobales.getInstance().getFormatoAnual())) {
+      return (100 * 12 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
+    }
+
+    throw new ElPeriodoIngresadoNoEsValido(periodo);
   }
 
   public List<Miembro> getMiembros() {
-    return getSectores()
-        .stream()
-        .flatMap(unSector -> (Stream<Miembro>) unSector.getMiembros())
+    return this.getSectores()
+        .stream().map(Sector::getMiembros)
+        .flatMap(Collection::stream)
         .collect(Collectors.toList());
   }
 
@@ -100,12 +163,12 @@ public class Organizacion {
     return sector.getMiembros();
   }
 
-  public double indicadorHC_Miembros() {
-    return calcularHC() / getMiembros().size();
+  public double indicadorHC_Miembros(String periodo) {
+    return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
   }
 
-  public double indicadorHC_MiembrosEnSector(Sector sector) {
-    return calcularHC() / this.getMiembrosEnSector(sector).size();
+  public int getCantidadDeMiembros() {
+    return this.getMiembros().size();
   }
 
   public void cargarContacto(Contacto unContacto) {

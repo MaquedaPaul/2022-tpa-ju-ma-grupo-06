@@ -1,10 +1,14 @@
 import exceptions.NoExisteElSectorVinculante;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+import transporte.Trayecto;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class MiembroTest {
 
@@ -17,6 +21,22 @@ public class MiembroTest {
     Sector compras = new Sector("Compras", new ArrayList<>());
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     assertThrows(NoExisteElSectorVinculante.class, () -> jorgito.solicitarVinculacion(onu, nuevaSolicitud));
+  }
+
+  @Test
+  public void juanGenera2000HCPorMes() {
+    Miembro juan = generarMiembro("juan", "juan", 2222, TipoDocumento.DNI);
+
+    Trayecto trayecto1 = mock(Trayecto.class);
+    Trayecto trayecto2 = mock(Trayecto.class);
+
+    when(trayecto1.calcularHC()).thenReturn(40D);
+    when(trayecto2.calcularHC()).thenReturn(60D);
+
+    juan.registrarTrayecto(trayecto1);
+    juan.registrarTrayecto(trayecto2);
+
+    assertEquals(2000D, juan.calcularHCMensual());
   }
 
   public static Miembro generarMiembro(String nombre,

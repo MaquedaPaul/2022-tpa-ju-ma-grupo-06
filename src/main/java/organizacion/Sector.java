@@ -1,6 +1,10 @@
 package organizacion;
 
+import transporte.Trayecto;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Sector {
   String nombre;
@@ -24,11 +28,26 @@ public class Sector {
     return nombre;
   }
 
-  public double calcularHCMiembros() {
-    return miembros.stream().mapToDouble(unMiembro -> unMiembro.calcularHCTotal()).sum();
+  public double calcularPromedioHCPorMiembro() {
+    return this.calcularHCTotalDeMiembros() / this.getCantidadMiembros();
+  }
+
+  public double calcularHCTotalDeMiembros() {
+    return this.getTrayectosDeMiembros()
+        .mapToDouble(Trayecto::calcularHC)
+        .sum();
+  }
+
+  public Stream<Trayecto> getTrayectosDeMiembros() {
+    return this.getMiembros()
+        .stream()
+        .map(Miembro::getTrayectos)
+        .flatMap(Collection::stream)
+        .distinct();
   }
 
   public int getCantidadMiembros() {
     return getMiembros().size();
   }
+
 }

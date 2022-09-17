@@ -1,3 +1,4 @@
+import admin.config.ValoresGlobales;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
@@ -24,6 +25,8 @@ class SectorTest {
   List<Trayecto> trayectos = new ArrayList<>();
 
   Sector sector = new Sector("sector prueba", miembros);
+
+  int diasLaborales = ValoresGlobales.getInstance().getDiasDeTrabajo();
 
   @BeforeEach
   public void init() {
@@ -67,13 +70,13 @@ class SectorTest {
   @Test
   public void elHCTotalDeLosMiembrosEsLaSumaDelHCDeSusTrayectosSinRepetidos() {
 
-    assertEquals(sector.calcularHCTotalDeMiembros(), 500.5);
+    assertEquals(sector.calcularHCTotalDeMiembrosPorMes(), diasLaborales * 500.5);
   }
 
   @Test
   public void elHCPromedioPorMiembroEsElTotalSobreLaCantidadDeMiembros() {
 
-    assertEquals(500.5 / 2, sector.calcularPromedioHCPorMiembro());
+    assertEquals(diasLaborales * 500.5 / 2, sector.calcularPromedioHCPorMiembroPorMes());
 
   }
 

@@ -1,5 +1,6 @@
 package organizacion;
 
+import admin.config.ValoresGlobales;
 import transporte.Trayecto;
 
 import java.util.Collection;
@@ -28,12 +29,12 @@ public class Sector {
     return nombre;
   }
 
-  public double calcularPromedioHCPorMiembro() {
-    return this.calcularHCTotalDeMiembros() / this.getCantidadMiembros();
+  public double calcularPromedioHCPorMiembroPorMes() {
+    return this.calcularHCTotalDeMiembrosPorMes() / this.getCantidadMiembros();
   }
 
-  public double calcularHCTotalDeMiembros() {
-    return this.getTrayectosDeMiembros()
+  public double calcularHCTotalDeMiembrosPorMes() {
+    return ValoresGlobales.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
         .mapToDouble(Trayecto::calcularHC)
         .sum();
   }

@@ -1,5 +1,6 @@
 package organizacion;
 
+import admin.config.ValoresGlobales;
 import lombok.Getter;
 import transporte.Trayecto;
 
@@ -14,21 +15,18 @@ public class Miembro {
   TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
-  int cantidadDeDiasQueTrabaja;
 
   public Miembro(
       String unNombre,
       String unApellido,
       TipoDocumento unTipoDocumento,
       int unNumeroDocumento,
-      List<Trayecto> unosTrayectos,
-      int cantidadDeDiasQueTrabaja) {
+      List<Trayecto> unosTrayectos) {
     this.nombre = unNombre;
     this.apellido = unApellido;
     this.tipoDocumento = unTipoDocumento;
     this.numeroDocumento = unNumeroDocumento;
     this.trayectos = unosTrayectos;
-    this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
   }
 
   public void registrarTrayecto(Trayecto unTrayecto) {
@@ -41,12 +39,12 @@ public class Miembro {
   }
 
 
-  public double calcularHCTotal() {
-    return getCantidadDeDiasQueTrabaja() * this.calcularHCTrayectos();
+  public double calcularHCMensual() {
+    return ValoresGlobales.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
   }
 
 
   public double calcularHCTrayectos() {
-    return getTrayectos().stream().mapToDouble(unTrayecto -> unTrayecto.calcularHC()).sum();
+    return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
   }
 }

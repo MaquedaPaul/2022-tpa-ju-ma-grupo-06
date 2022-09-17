@@ -13,7 +13,6 @@ public class MiembroBuilder {
   TipoDocumento tipoDocumento;
   int numeroDocumento;
   List<Trayecto> trayectos;
-  int cantidadDeDiasQueTrabaja = 20;
 
   public MiembroBuilder() {
 
@@ -25,8 +24,7 @@ public class MiembroBuilder {
         apellido,
         tipoDocumento,
         numeroDocumento,
-        trayectos,
-        cantidadDeDiasQueTrabaja);
+        trayectos);
   }
 
   public void especificarNombre(String unNombre) {
@@ -51,9 +49,6 @@ public class MiembroBuilder {
     trayectos = unosTrayectos;
   }
 
-  public void especificarCantidadDiasQueTrabaja(int cantidadDeDiasQueTrabaja) {
-    this.cantidadDeDiasQueTrabaja = cantidadDeDiasQueTrabaja;
-  }
 
   public void validar() {
     requireNonNull(nombre);

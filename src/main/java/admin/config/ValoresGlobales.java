@@ -8,6 +8,8 @@ public class ValoresGlobales {
   private static ValoresGlobales instance;
 
   private int diasDeTrabajo = 20;
+  private String formatoAnual = "\\d{4}";
+  private String formatoMensual = "(0[1-9]|1[0-2])/\\d{4}";
 
   private ValoresGlobales() {
 
@@ -22,5 +24,21 @@ public class ValoresGlobales {
 
   void setDiasDeTrabajo(int dias) {
     diasDeTrabajo = dias;
+  }
+
+  void setFormatoAnual(String formato) {
+    formatoAnual = formato;
+  }
+
+  void setFormatoMensual(String formato) {
+    formatoMensual = formato;
+  }
+
+  public String getFormatoMensual() {
+    return formatoMensual;
+  }
+
+  public String getFormatoAnual() {
+    return formatoAnual;
   }
 }

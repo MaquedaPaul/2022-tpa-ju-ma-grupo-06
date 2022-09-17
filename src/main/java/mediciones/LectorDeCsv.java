@@ -1,5 +1,6 @@
 package mediciones;
 
+import admin.config.ValoresGlobales;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.*;
@@ -95,13 +96,12 @@ public class LectorDeCsv {
   }
 
   private boolean tieneElFormatoValido(String periodoDeImputacion, String perioricidad) {
-    String formatoAnual = "\\d{4}";
-    String formatoMensual = "(0[1-9]|1[0-2])/" + formatoAnual;
+
     switch (perioricidad) {
       case "ANUAL":
-        return periodoDeImputacion.matches(formatoAnual);
+        return periodoDeImputacion.matches(ValoresGlobales.getInstance().getFormatoAnual());
       case "MENSUAL":
-        return periodoDeImputacion.matches(formatoMensual);
+        return periodoDeImputacion.matches(ValoresGlobales.getInstance().getFormatoMensual());
       default:
         throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }

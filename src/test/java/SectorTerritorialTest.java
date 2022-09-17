@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 
@@ -18,15 +18,20 @@ public class SectorTerritorialTest {
       TipoOrganizacion.INSTITUCION,
       "texto2",
       "texto3", new ArrayList<>());
-  Organizacion organizacionMock = mock(Organizacion.class);
+  Organizacion orgSpy = spy(unaOrganizacion);
+  Organizacion orgSpy2 = spy(unaOrganizacion);
   List<Organizacion> organizaciones = new ArrayList<>();
   SectorTerritorial unSectorTerritorial = new SectorTerritorial(new ArrayList<>(), TipoSectorTerritorial.PROVINCIA);
 
   @Test
-  void elTotalHCDeUnSectorTerritorialDeberiaSerLaSumaDeLasOrgsDeEseSector() {
-    unSectorTerritorial.incorporarOrganizacion(organizacionMock);
-    assertEquals(unSectorTerritorial.totalHC(), 0);
-    when(organizacionMock.calcularHC()).thenReturn(2000.0);
-    assertEquals(unSectorTerritorial.totalHC(), 2000.0);
+  void elTotalHCDelSectorEsLaSumaDeLasOrganizacionesDelMismo() {
+
+    String periodo = "12/2000";
+    unSectorTerritorial.incorporarOrganizacion(orgSpy);
+    unSectorTerritorial.incorporarOrganizacion(orgSpy2);
+
+    when(orgSpy.calcularHCTotal(periodo)).thenReturn(2000D);
+    when(orgSpy2.calcularHCTotal(periodo)).thenReturn(1500D);
+    assertEquals(3500D, unSectorTerritorial.totalHC(periodo));
   }
 }

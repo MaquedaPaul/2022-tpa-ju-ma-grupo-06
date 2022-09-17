@@ -44,5 +44,24 @@ public class Medicion {
   public boolean perteneceA(Organizacion organizacion) {
     return this.organizacion == organizacion;
   }
-}
 
+  public boolean esDelAnio(String year) {
+    int longitudString = getPeriodoDeImputacion().length();
+    return getPeriodoDeImputacion().substring(longitudString - 4, longitudString).equals(year);
+  }
+
+  public double getValorSegun(Perioricidad periodo) {
+    if (periodo == Perioricidad.ANUAL) {
+      return this.getValor();
+    }
+    return this.getPeriodicidad() == Perioricidad.MENSUAL ? this.getValor() : this.getValor() / 12;
+  }
+
+  public boolean esAnual() {
+    return this.getPeriodicidad() == Perioricidad.ANUAL;
+  }
+
+  public boolean esDelMes(String mes) {
+    return this.getPeriodoDeImputacion().startsWith(mes);
+  }
+}

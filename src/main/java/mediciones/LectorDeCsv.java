@@ -7,11 +7,11 @@ import organizacion.Organizacion;
 import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,16 +26,11 @@ public class LectorDeCsv {
   private final List<Medicion> mediciones = new ArrayList<>();
   private final Organizacion organizacion;
 
-  public LectorDeCsv(String path, Organizacion organizacion) throws FileNotFoundException {
-    this.reader = new CSVReader(new InputStreamReader(new FileInputStream(path),
+  public LectorDeCsv(String path, Organizacion organizacion) throws IOException {
+    this.reader = new CSVReader(new InputStreamReader(Files.newInputStream(Paths.get(path)),
         Charset.defaultCharset()));
     this.organizacion = organizacion;
   }
-
-  public List<Medicion> getMediciones() {
-    return mediciones;
-  }
-
 
   public int getCantidadDeMediciones() {
     return mediciones.size();
@@ -100,8 +95,8 @@ public class LectorDeCsv {
   }
 
   private boolean tieneElFormatoValido(String periodoDeImputacion, String perioricidad) {
-    String formatoAnual = "[0-9]{4}";
-    String formatoMensual = "([0][1-9]|[1][0-2])/" + formatoAnual;
+    String formatoAnual = "\\d{4}";
+    String formatoMensual = "(0[1-9]|1[0-2])/" + formatoAnual;
     switch (perioricidad) {
       case "ANUAL":
         return periodoDeImputacion.matches(formatoAnual);

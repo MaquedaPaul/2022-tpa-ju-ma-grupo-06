@@ -10,5 +10,3 @@ public class Administrador {
     this.password = unPassword;
   }
 }
-
-

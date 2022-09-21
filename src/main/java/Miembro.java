@@ -36,6 +36,7 @@ public class Miembro {
     unaOrganizacion.procesarPedidoVinculacion(unSector, this);
   }
 
+
 }
 class MiembroBuilder{
   String nombre;
@@ -50,6 +51,7 @@ class MiembroBuilder{
     Miembro unMiembro = new Miembro(nombre,apellido,tipoDocumento,numeroDocumento,organizaciones,trayectos);
     return unMiembro;
   }
+
   void especificarNombre(String unNombre){
     requireNonNull(unNombre);
     nombre = unNombre;

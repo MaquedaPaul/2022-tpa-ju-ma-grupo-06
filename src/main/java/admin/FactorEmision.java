@@ -13,10 +13,12 @@ public class FactorEmision {
 
   @Column(name = "valor")
   private double valor;
+
   @Enumerated
   private Unidad unidadDivisible;
 
-  public FactorEmision() {}
+  public FactorEmision() {
+  }
 
   public FactorEmision(double unValor, Unidad unidadDivisible) {
     valor = unValor;

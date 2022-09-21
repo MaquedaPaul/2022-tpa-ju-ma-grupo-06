@@ -4,9 +4,14 @@ import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import java.io.IOException;
 
+@MappedSuperclass
 public abstract class TransportePrivado extends Transporte {
+  @Transient
   ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
 
   @Override

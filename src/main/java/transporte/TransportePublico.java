@@ -5,15 +5,23 @@ import linea.Parada;
 import linea.PuntoUbicacion;
 import linea.TipoTransporte;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+@Entity
 public class TransportePublico extends Transporte {
 
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "ID_LINEA")
   private LineaTransporte lineaUtilizada;
 
-  public TransportePublico(LineaTransporte lineaUtilizada) {
+  public TransportePublico() {
+  }
+
+  public TransportePublico(LineaTransporte lineaUtilizada, double consumoPorKilometro) {
     this.lineaUtilizada = lineaUtilizada;
+    this.consumoPorKilometro = consumoPorKilometro;
   }
 
   public LineaTransporte getLineaUtilizada() {

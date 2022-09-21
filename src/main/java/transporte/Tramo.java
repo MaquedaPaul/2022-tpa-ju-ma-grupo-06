@@ -3,12 +3,31 @@ package transporte;
 import exceptions.NoSePudoCalcularElTramo;
 import linea.PuntoUbicacion;
 
+import javax.persistence.*;
 import java.io.IOException;
 
+@Entity
 public class Tramo {
-  private final PuntoUbicacion puntoOrigen;
-  private final PuntoUbicacion puntoDestino;
-  private final Transporte transporteUtilizado;
+
+  @Id
+  @GeneratedValue
+  @Column(name = "ID_TRAMO")
+  Long id;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "ID_PUNTO_ORIGEN")
+  private PuntoUbicacion puntoOrigen;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "ID_PUNTO_DESTINO")
+  private PuntoUbicacion puntoDestino;
+
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "ID_TRANSPORTE")
+  private Transporte transporteUtilizado;
+
+  public Tramo() {
+  }
 
   public Tramo(PuntoUbicacion puntoOrigen,
                PuntoUbicacion puntoDestino,

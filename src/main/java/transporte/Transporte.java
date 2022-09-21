@@ -2,16 +2,32 @@ package transporte;
 
 import linea.PuntoUbicacion;
 
+import javax.persistence.*;
 import java.io.IOException;
 
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TRANSPORTE_UTILIZADO")
 public abstract class Transporte {
+
+  @Id
+  @GeneratedValue
+  @Column(name = "ID_TRANSPORTE")
+  Long id;
+
+  @Column(name = "CONSUMO_POR_KM")
+  double consumoPorKilometro;
+
+  @ManyToOne
+  @JoinColumn(name = "ID_COMBUSTIBLE")
   Combustible combustible;
 
   public abstract double distanciaEntre(PuntoUbicacion origen,
                                         PuntoUbicacion destino) throws IOException;
 
   public double calcularHc() {
-    return combustible.calcularHc();
+    return combustible.obtenerValorEmision() * this.consumoPorKilometro;
   }
 
   public Combustible getCombustible() {

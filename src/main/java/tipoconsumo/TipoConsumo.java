@@ -12,18 +12,24 @@ public class TipoConsumo {
   @Id
   @GeneratedValue
   private Long id;
+
   @Column
   private String nombre;
-  @Column
+
+  @Enumerated(EnumType.STRING)
   private Unidad unidad;
+
   @Enumerated
   private TipoActividad actividad;
+
   @Enumerated
   private TipoAlcance alcance;
+
   @ManyToOne
   private FactorEmision factorEmision;
 
-  public TipoConsumo(){}
+  public TipoConsumo() {
+  }
 
   public TipoConsumo(String nombre, Unidad unidad, TipoActividad actividad, TipoAlcance alcance) {
     this.nombre = nombre;

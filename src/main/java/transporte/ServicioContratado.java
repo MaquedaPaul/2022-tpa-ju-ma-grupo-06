@@ -5,12 +5,24 @@ package transporte;
 //import services.geodds.ServicioGeodds;
 //import services.geodds.entities.Distancia;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
 public class ServicioContratado extends TransportePrivado {
 
+  @Enumerated(EnumType.STRING)
+  @Column(name = "TIPO_TRANSPORTE")
   private TipoVehiculo vehiculoContratado;
 
-  public ServicioContratado(TipoVehiculo vehiculoContratado) {
+  public ServicioContratado() {
+  }
+
+  public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro) {
     this.vehiculoContratado = vehiculoContratado;
+    this.consumoPorKilometro = consumoPorKilometro;
   }
 
   public TipoVehiculo getVehiculoContratado() {

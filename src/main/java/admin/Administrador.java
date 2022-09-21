@@ -43,11 +43,11 @@ public class Administrador {
   }
 
   void crearFactorEmision(double valor, Unidad unidadDivisible) {
-    return ; //TODO
+    RepoFactoresEmision.getInstance().incorporarFactor(new FactorEmision(valor, unidadDivisible));
   }
 
   void modificarFactorDeEmision(FactorEmision unFactor, double valor) {
-    return ; //TODO
+    RepoFactoresEmision.getInstance().modificarFactorEmicion(unFactor, valor);
   }
 }
 

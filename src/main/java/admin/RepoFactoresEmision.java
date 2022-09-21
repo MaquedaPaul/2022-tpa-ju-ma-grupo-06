@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepoFactoresEmision {
-  private final List<FactorEmision> factoresEmision = new ArrayList<>();
+  private List<FactorEmision> factoresEmision = new ArrayList<>();
   private static RepoFactoresEmision repoFactoresEmision = null;
 
   private RepoFactoresEmision() {
@@ -31,5 +31,9 @@ public class RepoFactoresEmision {
 
   public int factoresTotales() {
     return factoresEmision.size();
+  }
+
+  public void matate() {
+    this.factoresEmision = new ArrayList<>();
   }
 }

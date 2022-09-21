@@ -31,7 +31,7 @@ public class TransportePublicoTest {
   LineaTransporte linea138 =
       new LineaTransporte(TipoTransporte.COLECTIVO, "linea138", paradasDeIdaDel138, paradasDeVueltaDel138);
   // COLECTIVO DE EJEMPLO
-  TransportePublico unColectivo = new TransportePublico(linea138);
+  TransportePublico unColectivo = new TransportePublico(linea138, 20);
 
   @Test
   public void elTipoDeTransporteDeUnColectivoEsCOLECTIVO() {
@@ -83,7 +83,7 @@ public class TransportePublicoTest {
     PuntoUbicacion paradaInicio = new PuntoUbicacion(32, "aa", 32, prueba1);
     PuntoUbicacion paradaFinal = new PuntoUbicacion(33, "bb", 33, prueba3);
 
-    TransportePublico bondi138 = new TransportePublico(linea138);
+    TransportePublico bondi138 = new TransportePublico(linea138, 20);
 
     assertEquals(bondi138.distanciaEntre(paradaInicio, paradaFinal), 2);
 

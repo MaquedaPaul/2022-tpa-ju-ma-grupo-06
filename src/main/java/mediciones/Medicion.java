@@ -3,12 +3,26 @@ package mediciones;
 import organizacion.Organizacion;
 import tipoconsumo.TipoConsumo;
 
+import javax.persistence.*;
+
+@Entity
 public class Medicion {
-  TipoConsumo tipoConsumo;
-  Perioricidad periodicidad;
-  double valor;
-  String periodoDeImputacion;
-  final Organizacion organizacion;
+
+  @Id
+  @GeneratedValue
+  private long id;
+  @ManyToOne
+  private TipoConsumo tipoConsumo;
+  @Enumerated
+  private Perioricidad periodicidad;
+  @Column
+  private double valor;
+  @Column
+  private String periodoDeImputacion;
+  @ManyToOne
+  private Organizacion organizacion;
+
+  public Medicion() {}
 
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,

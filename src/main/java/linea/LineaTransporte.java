@@ -17,12 +17,14 @@ public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
 
+
+
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @Column(name = "ID_PARADA")
-  @JoinTable(name = "PARADAS_POR_LINEA")
+  @JoinTable(name="PARADAS_POR_LINEA", joinColumns = @JoinColumn(name="ID_LINEA"), inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
   private List<Parada> recorridoDeIda;
 
-  @Transient
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name="PARADAS_POR_LINEA", joinColumns = @JoinColumn(name="ID_LINEA"), inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
   private List<Parada> recorridoVuelta;
 
   public LineaTransporte() {

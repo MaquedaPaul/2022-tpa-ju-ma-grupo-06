@@ -22,7 +22,7 @@ public class Runner {
     List<Parada> paradasIda = new ArrayList<>();
     List<Parada> paradasVuelta = new ArrayList<>();
     paradasIda.add(new Parada(700, coordenadaIda, true));
-    paradasVuelta.add(new Parada(700, coordenadaIda, true));
+    paradasVuelta.add(new Parada(700, coordenadaVuelta, false));
     LineaTransporte nuevaLinea =
         new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
     TransportePublico transporte = new TransportePublico(nuevaLinea, 20);

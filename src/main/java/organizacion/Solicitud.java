@@ -15,8 +15,12 @@ public class Solicitud {
 
   @ManyToOne(cascade = CascadeType.PERSIST)
   Miembro miembroSolicitante;
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  //@ManyToOne(cascade = CascadeType.PERSIST)
+  @Transient //TODO
   Sector sectorSolicitado;
+
+  public Solicitud(){
+  }
 
   public Solicitud(Miembro unMiembro, Sector unSector) {
     miembroSolicitante = unMiembro;

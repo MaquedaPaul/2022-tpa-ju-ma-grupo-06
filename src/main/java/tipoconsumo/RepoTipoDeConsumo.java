@@ -1,12 +1,11 @@
 package tipoconsumo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
-public class RepoTipoDeConsumo {
-  private final List<TipoConsumo> tiposDeConsumos = new ArrayList<>();
+import java.util.List;
+
+public class RepoTipoDeConsumo implements WithGlobalEntityManager {
+
   private static RepoTipoDeConsumo repoTipoConsumo = null;
 
   private RepoTipoDeConsumo() {
@@ -20,14 +19,24 @@ public class RepoTipoDeConsumo {
   }
 
   public void agregarNuevoTipoDeConsumo(TipoConsumo nuevoTipoConsumo) {
-    tiposDeConsumos.add(nuevoTipoConsumo);
+    entityManager().persist(nuevoTipoConsumo);
+    entityManager().refresh(nuevoTipoConsumo);
   }
 
-  public boolean existeElTipoDeConsumo(String tipoConsumo) {
-    return this.getTipoDeConsumo(tipoConsumo) != null;
+  @SuppressWarnings("unchecked")
+  public List<TipoConsumo> getTipoConsumo() {
+    return entityManager().createQuery("from TipoConsumo").getResultList();
   }
 
-  public TipoConsumo getTipoDeConsumo(String nombre) {
+  public boolean existeElTipoDeConsumo(TipoConsumo tipoConsumo) {
+    List<TipoConsumo> tiposDeConsumoExistentes = this.getTipoConsumo();
+    return tiposDeConsumoExistentes.contains(tipoConsumo);
+  }
+  //TODO
+  //El metodo de arriba recibe un Tipo de Consumo o un String?
+  // ,en el segundo caso habria que hacer lo de abajo
+
+ /* public TipoConsumo getTipoDeConsumo(String nombre) {
     List<TipoConsumo> tipos = this.tiposDeConsumos
         .stream()
         .filter(tipo -> Objects.equals(tipo.getNombre(), nombre))
@@ -36,5 +45,5 @@ public class RepoTipoDeConsumo {
       return null;
     }
     return tipos.get(0);
+    */
   }
-}

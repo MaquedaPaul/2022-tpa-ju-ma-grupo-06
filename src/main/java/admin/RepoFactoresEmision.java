@@ -18,13 +18,15 @@ public class RepoFactoresEmision implements WithGlobalEntityManager {
     return repoFactoresEmision;
   }
 
-  void incorporarFactor(FactorEmision nuevoFactor) {
+  public void incorporarFactor(FactorEmision nuevoFactor) {
     entityManager().persist(nuevoFactor);
     entityManager().refresh(nuevoFactor);
   }
 
-  void modificarFactorEmicion(FactorEmision unFactor, double nuevoValor) {
-    unFactor.setValor(nuevoValor);
+  public void modificarFactorEmision(FactorEmision unFactor, double nuevoValor) {
+    FactorEmision factorAModificar = entityManager().find(FactorEmision.class, unFactor.getId());
+    factorAModificar.setValor(nuevoValor);
+    entityManager().merge(unFactor);
   }
 
   @SuppressWarnings("unchecked")

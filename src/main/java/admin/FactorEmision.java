@@ -16,7 +16,7 @@ public class FactorEmision {
   @Column(name = "valor")
   private double valor;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private Unidad unidadDivisible;
 
   public FactorEmision() {

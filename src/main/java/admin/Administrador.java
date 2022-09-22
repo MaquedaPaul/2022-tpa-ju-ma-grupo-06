@@ -40,12 +40,12 @@ public class Administrador {
     this.password = password;
   }
 
-  void crearFactorEmision(double valor, Unidad unidadDivisible) {
-    RepoFactoresEmision.getInstance().incorporarFactor(new FactorEmision(valor, unidadDivisible));
+  void crearFactorEmision(FactorEmision unFactor) {
+    RepoFactoresEmision.getInstance().incorporarFactor(unFactor);
   }
 
-  void modificarFactorDeEmision(FactorEmision unFactor, double valor) {
-    RepoFactoresEmision.getInstance().modificarFactorEmicion(unFactor, valor);
+  void modificarFactorDeEmision(FactorEmision unFactor, double nuevoValor) {
+    RepoFactoresEmision.getInstance().modificarFactorEmision(unFactor, nuevoValor);
   }
 }
 

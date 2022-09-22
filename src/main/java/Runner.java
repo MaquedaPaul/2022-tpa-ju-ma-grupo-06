@@ -1,3 +1,6 @@
+import admin.FactorEmision;
+import admin.RepoFactoresEmision;
+import global.Unidad;
 import linea.*;
 import notificaciones.Contacto;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
@@ -26,7 +29,7 @@ public class Runner {
     paradasIda.add(new Parada(700, coordenadaIda, true));
     paradasVuelta.add(new Parada(700, coordenadaVuelta, false));
     LineaTransporte nuevaLinea =
-            new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
+        new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
     TransportePublico transporte = new TransportePublico(nuevaLinea, 20);
 
 
@@ -66,8 +69,17 @@ public class Runner {
     RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
 
     List<Organizacion> orgs = RepoOrganizacion.getInstance().getOrganizaciones();
-    RegistroHCOrganizacion registroHCOrganizacion1 = new RegistroHCOrganizacion(orgs.get(0),333L,20L,2020,3);
-    RegistroHCOrganizacion registroHCOrganizacion2 = new RegistroHCOrganizacion(orgs.get(1),213L,330L,2020,8);
+    RegistroHCOrganizacion registroHCOrganizacion1 = new RegistroHCOrganizacion(orgs.get(0), 333L, 20L, 2020, 3);
+    RegistroHCOrganizacion registroHCOrganizacion2 = new RegistroHCOrganizacion(orgs.get(1), 213L, 330L, 2020, 8);
+
+    FactorEmision factorEmisionSinPersistir = new FactorEmision(30, Unidad.LTS);
+    RepoFactoresEmision.getInstance().incorporarFactor(factorEmisionSinPersistir);
+
+    List<FactorEmision> listaFactores = RepoFactoresEmision.getInstance().getFactoresEmision();
+    FactorEmision factorEmision1 = listaFactores.get(0);
+
+    RepoFactoresEmision.getInstance().modificarFactorEmision(factorEmision1, 399);
+
 
     et.commit();
     List<Organizacion> listadoDeLaBase = RepoOrganizacion.getInstance().filtrarPorTipoOrganizacion(TipoOrganizacion.GUBERNAMENTAL);

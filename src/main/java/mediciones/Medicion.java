@@ -10,7 +10,14 @@ public class Medicion {
 
   @Id
   @GeneratedValue
-  private long id;
+  private Long id;
+
+  private double valor;
+  private int anio;
+  private int mes;
+
+  @ManyToOne
+  private Organizacion organizacion;
 
   @ManyToOne
   private TipoConsumo tipoConsumo;
@@ -19,26 +26,24 @@ public class Medicion {
   private Perioricidad periodicidad;
 
   @Column
-  private double valor;
-
-  @Column
   private String periodoDeImputacion;
-
-  @Transient
-  private Organizacion organizacion;
-
-  public Medicion() {
-  }
 
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,
                   double unValor,
-                  String periodoDeImputacion, Organizacion organizacion) {
+                  int anio,
+                  int mes,
+                  Organizacion organizacion) {
     this.tipoConsumo = unTipoConsumo;
     this.periodicidad = unaPerioricidad;
     this.valor = unValor;
-    this.periodoDeImputacion = periodoDeImputacion;
+    this.anio = anio;
+    this.mes = mes;
     this.organizacion = organizacion;
+  }
+
+  public Medicion() {
+
   }
 
   public TipoConsumo getTipoConsumo() {
@@ -53,10 +58,6 @@ public class Medicion {
     return valor;
   }
 
-  public String getPeriodoDeImputacion() {
-    return periodoDeImputacion;
-  }
-
   public double calcularHc() {
     return getValor() + tipoConsumo.getFactorEmision().getValor();
   }
@@ -65,9 +66,8 @@ public class Medicion {
     return this.organizacion == organizacion;
   }
 
-  public boolean esDelAnio(String year) {
-    int longitudString = getPeriodoDeImputacion().length();
-    return getPeriodoDeImputacion().substring(longitudString - 4, longitudString).equals(year);
+  public boolean esDelAnio(int fecha) {
+    return this.anio == fecha;
   }
 
   public double getValorSegun(Perioricidad periodo) {
@@ -81,7 +81,7 @@ public class Medicion {
     return this.getPeriodicidad() == Perioricidad.ANUAL;
   }
 
-  public boolean esDelMes(String mes) {
-    return this.getPeriodoDeImputacion().startsWith(mes);
+  public boolean esDelMes(int mes) {
+    return this.mes == mes;
   }
 }

@@ -20,26 +20,29 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+
 public class MedicionesTest {
   // El lector falla si la ruta no es valida
+
   Organizacion mockOrg = mock(Organizacion.class);
 
   Medicion medicion = new Medicion(mock(TipoConsumo.class),
       Perioricidad.ANUAL,
-      20D,
-      "12/2020",
+      20D, 2020,
+      12
+      ,
       mock(Organizacion.class));
 
   Medicion medicionAnual = new Medicion(mock(TipoConsumo.class),
       Perioricidad.ANUAL,
-      20000D,
-      "2020",
+      20000D, 2020, 0
+      ,
       mock(Organizacion.class));
 
   Medicion medicionMensual = new Medicion(mock(TipoConsumo.class),
       Perioricidad.ANUAL,
-      232D,
-      "12/2020",
+      232D, 2020, 12
+      ,
       mock(Organizacion.class));
 
 
@@ -133,20 +136,20 @@ public class MedicionesTest {
     FactorEmision nuevoFActor = new FactorEmision(300, Unidad.LTS);
     TipoConsumo nuevoConsumo = new TipoConsumo("text", Unidad.LTS, TipoActividad.COMBUSTION_MOVIL, TipoAlcance.EMISION_DIRECTA);
     nuevoConsumo.setFactorEmision(nuevoFActor);
-    Medicion nuevaMedicion = new Medicion(nuevoConsumo, Perioricidad.ANUAL, 150, "anual", onu);
+    Medicion nuevaMedicion = new Medicion(nuevoConsumo, Perioricidad.ANUAL, 150, 2020, 0, onu);
     assertEquals(nuevaMedicion.calcularHc(), 450);
   }
 
   @Test
   public void unaMedicionDeDIC_2020EsDel2020() {
 
-    assertTrue(medicion.esDelAnio("2020"));
+    assertTrue(medicion.esDelAnio(2020));
   }
 
   @Test
   public void unaMedicionDeDIC_2020EsDeDiciembre() {
 
-    assertTrue(medicion.esDelMes("12"));
+    assertTrue(medicion.esDelMes(12));
   }
 
   @Test

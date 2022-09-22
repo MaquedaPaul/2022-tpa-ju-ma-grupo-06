@@ -4,6 +4,7 @@ import organizacion.TipoOrganizacion;
 import territorio.SectorTerritorial;
 import territorio.TipoSectorTerritorial;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class SectorTerritorialTest {
   @Test
   void elTotalHCDelSectorEsLaSumaDeLasOrganizacionesDelMismo() {
 
-    String periodo = "12/2000";
+    YearMonth periodo = YearMonth.of(2000, 12);
     unSectorTerritorial.incorporarOrganizacion(orgSpy);
     unSectorTerritorial.incorporarOrganizacion(orgSpy2);
 

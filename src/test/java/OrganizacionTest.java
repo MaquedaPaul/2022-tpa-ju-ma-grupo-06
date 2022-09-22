@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import organizacion.*;
 import transporte.Trayecto;
 
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +32,7 @@ public class OrganizacionTest {
   Miembro miembro2 = mock(Miembro.class);
 
   List<Miembro> miembros = new ArrayList<>();
+  List<Miembro> otros = new ArrayList<>();
 
   Trayecto trayecto1 = mock(Trayecto.class);
   Trayecto trayecto2 = mock(Trayecto.class);
@@ -71,8 +74,6 @@ public class OrganizacionTest {
   @Test
   public void elHCMensualDeLosMiembrosEs2000() {
 
-    Organizacion org = spy(onu);
-
     mediciones.add(med1);
     mediciones.add(med2);
     mediciones.add(med3);
@@ -80,17 +81,16 @@ public class OrganizacionTest {
     Sector sector1 = mock(Sector.class);
     Sector sector2 = mock(Sector.class);
 
-    org.incorporarSector(sector1);
-    org.incorporarSector(sector2);
+    spyOnu.incorporarSector(sector1);
+    spyOnu.incorporarSector(sector2);
     List<Sector> sectores = new ArrayList<>();
     sectores.add(sector1);
     sectores.add(sector2);
     miembros.add(miembro1);
-    List<Miembro> otros = new ArrayList<>();
     otros.add(miembro2);
     when(sector1.getMiembros()).thenReturn(miembros);
     when(sector2.getMiembros()).thenReturn(otros);
-    when(org.getSectores()).thenReturn(sectores);
+    when(spyOnu.getSectores()).thenReturn(sectores);
 
     trayectos1.add(trayecto1);
     trayectos1.add(trayecto2);
@@ -104,15 +104,12 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(30D);
     when(trayecto3.calcularHC()).thenReturn(30D);
 
-    assertEquals(2000D, org.calcularHCTotalMensualDeMiembros());
+    assertEquals(2000D, spyOnu.calcularHCTotalMensualDeMiembros());
 
   }
 
   @Test
   public void elHCAnualDeLosMiembrosEs24000() {
-
-    Organizacion org = spy(onu);
-
     mediciones.add(med1);
     mediciones.add(med2);
     mediciones.add(med3);
@@ -120,17 +117,16 @@ public class OrganizacionTest {
     Sector sector1 = mock(Sector.class);
     Sector sector2 = mock(Sector.class);
 
-    org.incorporarSector(sector1);
-    org.incorporarSector(sector2);
+    spyOnu.incorporarSector(sector1);
+    spyOnu.incorporarSector(sector2);
     List<Sector> sectores = new ArrayList<>();
     sectores.add(sector1);
     sectores.add(sector2);
     miembros.add(miembro1);
-    List<Miembro> otros = new ArrayList<>();
     otros.add(miembro2);
     when(sector1.getMiembros()).thenReturn(miembros);
     when(sector2.getMiembros()).thenReturn(otros);
-    when(org.getSectores()).thenReturn(sectores);
+    when(spyOnu.getSectores()).thenReturn(sectores);
 
     trayectos1.add(trayecto1);
     trayectos1.add(trayecto2);
@@ -144,7 +140,7 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(30D);
     when(trayecto3.calcularHC()).thenReturn(30D);
 
-    assertEquals(24000D, org.calcularHCTotalAnualDeMiembros());
+    assertEquals(24000D, spyOnu.calcularHCTotalAnualDeMiembros());
 
   }
 
@@ -158,9 +154,9 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
 
-    when(spyOnu.calcularHCTotal("07/2021")).thenReturn(40000D);
+    when(spyOnu.calcularHCTotal(YearMonth.of(2020, 7))).thenReturn(40000D);
     // (100 * 20 * 400) / 40000 = 20
-    assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, "07/2021"));
+    assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, YearMonth.of(2020, 7)));
   }
 
   @Test
@@ -173,9 +169,9 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
 
-    when(spyOnu.calcularHCTotal("2021")).thenReturn(600000D);
+    when(spyOnu.calcularHCTotal(Year.of(2021))).thenReturn(600000D);
     // (100 * 12 * 20 * 400) / x = 16
-    assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, "2021"));
+    assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, Year.of(2021)));
   }
 
   @Test
@@ -190,7 +186,7 @@ public class OrganizacionTest {
 
   @Test
   public void deberiaPoderCargarseUnContacto() {
-    Contacto unContacto = new Contacto(onu, "Pedrito", "pedrito@gmail.com", "1122653678");
+    Contacto unContacto = new Contacto("Pedrito", "pedrito@gmail.com", "1122653678");
     assertEquals(onu.getContactos().size(), 0);
     onu.cargarContacto(unContacto);
     assertEquals(onu.getContactos().size(), 1);

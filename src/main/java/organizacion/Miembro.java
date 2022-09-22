@@ -1,6 +1,6 @@
 package organizacion;
 
-import admin.config.ValoresGlobales;
+import admin.config.GestorDeFechas;
 import lombok.Getter;
 import transporte.Trayecto;
 
@@ -54,6 +54,10 @@ public class Miembro {
     this.trayectos = unosTrayectos;
   }
 
+  public Miembro() {
+
+  }
+
   public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
@@ -65,7 +69,7 @@ public class Miembro {
 
 
   public double calcularHCMensual() {
-    return ValoresGlobales.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
+    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
   }
 
 

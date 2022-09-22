@@ -4,22 +4,23 @@ import notificaciones.medioNotificacion.MedioNotificador;
 import organizacion.RepoOrganizacion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Notificador {
-  private final ArrayList<MedioNotificador> medios = new ArrayList<>();
+  private final List<MedioNotificador> medios = new ArrayList<>();
 
   public void organizacionesNotifiquen() {
     RepoOrganizacion
         .getInstance()
         .getOrganizaciones()
-        .forEach(org -> org.notificarContacto(this.medios()));
+        .forEach(organizacion -> organizacion.notificarContactos(medios));
   }
 
   public void agregarMedios(MedioNotificador medio) {
     medios.add(medio);
   }
 
-  public ArrayList<MedioNotificador> medios() {
+  public List<MedioNotificador> medios() {
     return medios;
   }
 

@@ -2,6 +2,7 @@ package notificaciones.medioNotificacion.apisMensajeria;
 
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
+import organizacion.Organizacion;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,12 +15,12 @@ public class AdapterWhatsapp implements MedioNotificador {
   //private ApiWhatsapp apiWhatsapp;
 
   @Override
-  public void enviarATodos(List<Contacto> contactos) {
-    contactos.forEach(this::enviarA);
+  public void enviarATodos(List<Contacto> contactos, Organizacion org) {
+    contactos.forEach(contacto -> this.enviarA(contacto, org));
   }
 
   @Override
-  public void enviarA(Contacto contacto) {
+  public void enviarA(Contacto contacto, Organizacion org) {
     ////apiWhatsapp.enviarA(contacto, mensaje);
   }
 
@@ -44,11 +45,11 @@ public class AdapterWhatsapp implements MedioNotificador {
   }
 
   @Override
-  public String mensajePersonalizadoPara(Contacto contacto) {
+  public String mensajePersonalizadoPara(Contacto contacto, Organizacion org) {
     String mensajePersonalizado = this.mensajePlantilla
         .replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado
-        .replace("*ORGANIZACION*", contacto.organizacion());
+        .replace("*ORGANIZACION*", org.getRazonSocial());
     mensajePersonalizado = mensajePersonalizado
         .replace("*MES*", LocalDate.now().getMonth().toString());
     mensajePersonalizado = mensajePersonalizado

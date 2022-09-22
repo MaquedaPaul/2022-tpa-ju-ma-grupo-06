@@ -1,4 +1,4 @@
-import admin.config.ValoresGlobales;
+import admin.config.GestorDeFechas;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
@@ -26,7 +26,7 @@ class SectorTest {
 
   Sector sector = new Sector("sector prueba", miembros);
 
-  int diasLaborales = ValoresGlobales.getInstance().getDiasDeTrabajo();
+  int diasLaborales = GestorDeFechas.getInstance().getDiasDeTrabajo();
 
   @BeforeEach
   public void init() {

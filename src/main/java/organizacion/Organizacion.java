@@ -1,7 +1,6 @@
 package organizacion;
 
-import admin.config.ValoresGlobales;
-import exceptions.ElPeriodoIngresadoNoEsValido;
+import admin.config.GestorDeFechas;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
@@ -13,6 +12,9 @@ import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
 import transporte.Trayecto;
 
+import javax.persistence.*;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,14 +23,29 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
+@Entity
 public class Organizacion {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  Long id;
 
   String razonSocial;
   TipoOrganizacion tipo;
   String ubicacionGeografica;
-  List<Sector> sectores;
   String clasificacion;
+
+  @OneToMany
+  @JoinColumn(name = "organizacion_id")
+
+  List<Sector> sectores;
+
+  @OneToMany
+  @JoinColumn(name = "organizacion_id")
   List<Solicitud> solicitudes;
+
+  @OneToMany
+  @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 
 
@@ -37,11 +54,13 @@ public class Organizacion {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
-    // List<organizacion.Sector> sectoresVacios = new ArrayList<>();
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
     this.solicitudes = new ArrayList<>();
     this.contactos = contactos;
+  }
+
+  public Organizacion() {
   }
 
   public void procesarVinculacion(boolean decision) {
@@ -78,17 +97,13 @@ public class Organizacion {
   }
 
 
-  public double calcularHCTotal(String periodo) {
+  public double calcularHCTotal(Year periodo) {
+    return this.calcularHCTotalAnualDeMiembros() + this.calcularHcMedicionesAnual(periodo);
+  }
 
-    if (periodo.matches(ValoresGlobales.getInstance().getFormatoMensual())) {
-      return this.calcularHCTotalMensualDeMiembros() + this.calcularHcMedicionesMensual(periodo);
-    }
+  public double calcularHCTotal(YearMonth periodo) {
 
-    if (periodo.matches(ValoresGlobales.getInstance().getFormatoAnual())) {
-      return this.calcularHCTotalAnualDeMiembros() + this.calcularHcMedicionesAnual(periodo);
-    }
-
-    throw new ElPeriodoIngresadoNoEsValido(periodo);
+    return this.calcularHCTotalMensualDeMiembros() + this.calcularHcMedicionesMensual(periodo);
   }
 
   public double calcularHCTotalAnualDeMiembros() {
@@ -98,28 +113,28 @@ public class Organizacion {
 
   public double calcularHCTotalMensualDeMiembros() {
     return
-        ValoresGlobales.getInstance().getDiasDeTrabajo()
+        GestorDeFechas.getInstance().getDiasDeTrabajo()
             * this.getTrayectosDeLosMiembros()
             .mapToDouble(Trayecto::calcularHC)
             .sum();
   }
 
-  public double calcularHcMedicionesAnual(String year) {
+  public double calcularHcMedicionesAnual(Year year) {
 
     return this.getMediciones()
         .stream()
-        .filter(medicion -> medicion.esDelAnio(year))
+        .filter(medicion -> medicion.esDelAnio(year.getValue()))
         .mapToDouble(medicion -> medicion.getValorSegun(Perioricidad.ANUAL))
         .sum();
 
   }
 
-  public double calcularHcMedicionesMensual(String date) {
+  public double calcularHcMedicionesMensual(YearMonth date) {
 
     return this.getMediciones()
         .stream()
-        .filter(medicion -> medicion.esDelAnio(date.substring(2, 8)))
-        .filter(medicion -> medicion.esAnual() || medicion.esDelMes(date.substring(0, 2)))
+        .filter(medicion -> medicion.esDelAnio(date.getYear()))
+        .filter(medicion -> medicion.esAnual() || medicion.esDelMes(date.getMonthValue()))
         .mapToDouble(medicion -> medicion.getValorSegun(Perioricidad.MENSUAL))
         .sum();
   }
@@ -136,18 +151,16 @@ public class Organizacion {
         .distinct();
   }
 
-  public double impactoDeMiembro(Miembro miembro, String periodo) {
+  public double impactoDeMiembro(Miembro miembro, YearMonth periodo) {
 
-    if (periodo.matches(ValoresGlobales.getInstance().getFormatoMensual())) {
-      return (100 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
-    }
-
-    if (periodo.matches(ValoresGlobales.getInstance().getFormatoAnual())) {
-      return (100 * 12 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
-    }
-
-    throw new ElPeriodoIngresadoNoEsValido(periodo);
+    return (100 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
   }
+
+  public double impactoDeMiembro(Miembro miembro, Year periodo) {
+
+    return (100 * 12 * miembro.calcularHCMensual()) / calcularHCTotal(periodo);
+  }
+
 
   public List<Miembro> getMiembros() {
     return this.getSectores()
@@ -163,7 +176,11 @@ public class Organizacion {
     return sector.getMiembros();
   }
 
-  public double indicadorHC_Miembros(String periodo) {
+  public double indicadorHC_Miembros(Year periodo) {
+    return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
+  }
+
+  public double indicadorHC_Miembros(YearMonth periodo) {
     return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
   }
 
@@ -179,8 +196,8 @@ public class Organizacion {
     return contactos;
   }
 
-  public void notificarContacto(ArrayList<MedioNotificador> medios) {
-    medios.forEach(medio -> medio.enviarATodos(this.contactos));
+  public void notificarContactos(List<MedioNotificador> medios) {
+    medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 }
 

@@ -1,19 +1,31 @@
 package notificaciones;
 
-import organizacion.Organizacion;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class Contacto {
 
-  private final Organizacion organizacion;
+  @Id
+  @GeneratedValue
+  private Long id;
+
   private String nombreContacto;
   private String mail;
   private String nroCelular;
 
-  public Contacto(Organizacion organizacion,
-                  String nombreContacto,
-                  String mail,
-                  String nroCelular) {
-    this.organizacion = organizacion;
+  public Contacto() {
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public Contacto(
+      String nombreContacto,
+      String mail,
+      String nroCelular) {
     this.mail = mail;
     this.nroCelular = nroCelular;
     this.nombreContacto = nombreContacto;
@@ -35,11 +47,8 @@ public class Contacto {
     this.mail = mail;
   }
 
-  public String organizacion() {
-    return organizacion.getRazonSocial();
-  }
-
   public String getNombreContacto() {
     return nombreContacto;
   }
+
 }

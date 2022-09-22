@@ -1,15 +1,16 @@
 package notificaciones.medioNotificacion;
 
 import notificaciones.Contacto;
+import organizacion.Organizacion;
 
 import java.util.List;
 
 public interface MedioNotificador {
 
 
-  void enviarATodos(List<Contacto> contactos);
+  void enviarATodos(List<Contacto> contactos, Organizacion organizacion);
 
-  void enviarA(Contacto contacto);
+  void enviarA(Contacto contacto, Organizacion organizacion);
 
   String getUrl();
 
@@ -19,7 +20,7 @@ public interface MedioNotificador {
 
   String getMensaje();
 
-  String mensajePersonalizadoPara(Contacto contacto);
+  String mensajePersonalizadoPara(Contacto contacto, Organizacion org);
 
   void setAsunto(String asunto);
 

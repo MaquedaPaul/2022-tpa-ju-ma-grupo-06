@@ -27,6 +27,9 @@ public class Solicitud {
     sectorSolicitado = unSector;
   }
 
+  public Solicitud() {
+  }
+
   public String nombreDelSectorSolicitado() {
     return sectorSolicitado.getNombre();
   }

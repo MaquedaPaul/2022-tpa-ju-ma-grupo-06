@@ -108,7 +108,7 @@ public class LectorDeCsv {
   }
 
   private void asignarParametros(String[] atributos) {
-    this.tipoConsumo = RepoTipoDeConsumo.getInstance().getTipoDeConsumo(atributos[0]);
+    this.tipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(atributos[0]);
     this.valor = Integer.parseInt(atributos[1]);
     this.perioricidad = Perioricidad.valueOf(atributos[2]);
     this.periodoDeImputacion = atributos[3];

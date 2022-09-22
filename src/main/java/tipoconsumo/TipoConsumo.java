@@ -4,13 +4,32 @@ import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 import global.Unidad;
 
+import javax.persistence.*;
+
+@Entity
 public class TipoConsumo {
 
-  private final String nombre;
-  private final Unidad unidad;
-  private final TipoActividad actividad;
-  private final TipoAlcance alcance;
+  @Id
+  @GeneratedValue
+  private Long id;
+
+  @Column
+  private String nombre;
+
+  @Enumerated(EnumType.STRING)
+  private Unidad unidad;
+
+  @Enumerated
+  private TipoActividad actividad;
+
+  @Enumerated
+  private TipoAlcance alcance;
+
+  @ManyToOne
   private FactorEmision factorEmision;
+
+  public TipoConsumo() {
+  }
 
   public TipoConsumo(String nombre, Unidad unidad, TipoActividad actividad, TipoAlcance alcance) {
     this.nombre = nombre;

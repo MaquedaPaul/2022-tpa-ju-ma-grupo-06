@@ -1,13 +1,35 @@
 package linea;
 
+import javax.persistence.*;
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class LineaTransporte {
-  private final TipoTransporte tipoTransporte;
-  private final String nombre;
-  private final List<Parada> recorridoDeIda;
-  private final List<Parada> recorridoVuelta;
+
+  @Id
+  @GeneratedValue
+  @Column(name = "ID_LINEA_TRANSPORTE")
+  Long id;
+
+  @Enumerated(EnumType.STRING)
+  private TipoTransporte tipoTransporte;
+  private String nombre;
+
+
+
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name="PARADAS_POR_LINEA", joinColumns = @JoinColumn(name="ID_LINEA"), inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
+  private List<Parada> recorridoDeIda;
+
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name="PARADAS_POR_LINEA", joinColumns = @JoinColumn(name="ID_LINEA"), inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
+  private List<Parada> recorridoVuelta;
+
+  public LineaTransporte() {
+
+  }
 
   public LineaTransporte(TipoTransporte tipoTransporte, String nombre,
                          List<Parada> recorridoDeIda, List<Parada> recorridoVuelta) {

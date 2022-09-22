@@ -2,15 +2,21 @@ package admin;
 
 import global.Unidad;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Administrador")
 public class Administrador {
 
   @Id
-  String usuario;
-  String password;
+  @GeneratedValue
+  private Long id;
+
+  @Column(name = "usuario")
+  private String usuario;
+
+  @Column(name = "password")
+  private String password;
 
   public Administrador() {
   }

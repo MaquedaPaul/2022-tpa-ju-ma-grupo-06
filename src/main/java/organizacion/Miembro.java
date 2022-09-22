@@ -9,23 +9,27 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
-@Entity
 @Getter
+@Entity(name = "MIEMBRO")
 public class Miembro {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "miembro_id")
+  @GeneratedValue
+  @Column(name = "ID_MIEMBRO")
   private Long id;
 
+  @Column(name = "NOMBRE")
   String nombre;
+  @Column(name = "APELLIDO")
   String apellido;
+  @Enumerated
+  @Column(name = "TIPO_DOCUMENTO")
   TipoDocumento tipoDocumento;
+  @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
-
-  @Transient
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "TRAYECTOS_POR_MIEMBRO")
   List<Trayecto> trayectos;
-
 
   public Miembro(
       String unNombre,

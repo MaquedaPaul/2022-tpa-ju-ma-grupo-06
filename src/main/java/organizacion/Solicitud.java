@@ -1,25 +1,22 @@
 package organizacion;
 
-import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-@Entity
+@Entity(name = "SOLICITUD")
 public class Solicitud {
+
   @Id
-  private Long id;
+  @GeneratedValue
+  @Column(name = "ID_SOLICITUD")
+  Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "miembro_id")
+  @ManyToOne(cascade = CascadeType.PERSIST)
   Miembro miembroSolicitante;
-
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   Sector sectorSolicitado;
-
-  public Long getId() {
-    return id;
-  }
 
   public Solicitud(Miembro unMiembro, Sector unSector) {
     miembroSolicitante = unMiembro;

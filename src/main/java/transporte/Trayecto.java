@@ -1,12 +1,19 @@
 package transporte;
 
 import linea.PuntoUbicacion;
-
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "TRAYECTO")
 public class Trayecto {
+  @Id
+  @GeneratedValue
+  @Column(name = "ID_TRAYECTO")
+  Long id;
 
+  @ManyToMany(cascade = CascadeType.PERSIST)
+  @JoinTable(name = "TRAMO_POR_TRAYECTO")
   private List<Tramo> tramos = new ArrayList<>();
 
   public Trayecto(List<Tramo> tramos) {

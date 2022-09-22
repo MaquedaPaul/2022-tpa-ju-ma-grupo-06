@@ -2,9 +2,23 @@ package admin;
 
 import global.Unidad;
 
+import javax.persistence.*;
+
+@Entity
 public class FactorEmision {
-  double valor;
-  Unidad unidadDivisible;
+
+  @Id
+  @GeneratedValue
+  private Long id;
+
+  @Column(name = "valor")
+  private double valor;
+
+  @Enumerated
+  private Unidad unidadDivisible;
+
+  public FactorEmision() {
+  }
 
   public FactorEmision(double unValor, Unidad unidadDivisible) {
     valor = unValor;

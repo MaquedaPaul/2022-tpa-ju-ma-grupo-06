@@ -27,7 +27,7 @@ public class Miembro {
   TipoDocumento tipoDocumento;
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name = "TRAYECTOS_POR_MIEMBRO")
   List<Trayecto> trayectos;
 

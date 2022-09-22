@@ -13,9 +13,9 @@ public class Solicitud {
   @Column(name = "ID_SOLICITUD")
   Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   Miembro miembroSolicitante;
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   Sector sectorSolicitado;
 
   public Solicitud(Miembro unMiembro, Sector unSector) {

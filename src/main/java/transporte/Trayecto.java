@@ -12,7 +12,7 @@ public class Trayecto {
   @Column(name = "ID_TRAYECTO")
   Long id;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name = "TRAMO_POR_TRAYECTO")
   private List<Tramo> tramos = new ArrayList<>();
 

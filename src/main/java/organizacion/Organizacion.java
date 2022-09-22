@@ -35,16 +35,16 @@ public class Organizacion {
   String ubicacionGeografica;
   String clasificacion;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
 
   List<Sector> sectores;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
   List<Solicitud> solicitudes;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 

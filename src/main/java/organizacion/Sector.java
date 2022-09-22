@@ -3,10 +3,7 @@ package organizacion;
 import admin.config.GestorDeFechas;
 import transporte.Trayecto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +17,7 @@ public class Sector {
 
   String nombre;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   List<Miembro> miembros;
 
   public Sector(String nombre, List<Miembro> unosMiembros) {

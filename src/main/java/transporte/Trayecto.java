@@ -5,7 +5,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "TRAYECTO")
+@Entity
+@Table(name = "TRAYECTO")
 public class Trayecto {
   @Id
   @GeneratedValue
@@ -13,9 +14,13 @@ public class Trayecto {
   Long id;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "TRAMO_POR_TRAYECTO")
+  @JoinTable(name="TRAMO_POR_TRAYECTO",
+          joinColumns = @JoinColumn(name="ID_TRAYECTO"),
+          inverseJoinColumns = @JoinColumn(name="ID_TRAMO"))
   private List<Tramo> tramos = new ArrayList<>();
 
+  public Trayecto() {
+  }
   public Trayecto(List<Tramo> tramos) {
     this.tramos = tramos;
   }

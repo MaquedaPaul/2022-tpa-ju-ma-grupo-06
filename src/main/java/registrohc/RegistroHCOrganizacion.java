@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Table(name = "MEDICIONES_HC_MENSUALES_POR_ORGANIZACION")
 public class RegistroHCOrganizacion {
 
   @Id
@@ -14,8 +15,8 @@ public class RegistroHCOrganizacion {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "ID_ORGANIZACION")
   private Organizacion organizacion;
+
   private Long hcMediciones;
   private Long hcMiembros;
   private int anioImputacion;

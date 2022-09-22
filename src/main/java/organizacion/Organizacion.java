@@ -28,16 +28,17 @@ public class Organizacion {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
+  private Long id;
 
-  String razonSocial;
-  TipoOrganizacion tipo;
-  String ubicacionGeografica;
-  String clasificacion;
+  private String razonSocial;
+
+  @Enumerated(EnumType.STRING)
+  private TipoOrganizacion tipo;
+  private String ubicacionGeografica;
+  private String clasificacion;
 
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
-
   List<Sector> sectores;
 
   @OneToMany(cascade = CascadeType.PERSIST)

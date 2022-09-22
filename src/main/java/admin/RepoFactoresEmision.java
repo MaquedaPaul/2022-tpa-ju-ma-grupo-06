@@ -1,13 +1,14 @@
 package admin;
 
-import java.util.ArrayList;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+
 import java.util.List;
 
-public class RepoFactoresEmision {
-  private List<FactorEmision> factoresEmision = new ArrayList<>();
+public class RepoFactoresEmision implements WithGlobalEntityManager {
+
   private static RepoFactoresEmision repoFactoresEmision = null;
 
-  private RepoFactoresEmision() {
+  public RepoFactoresEmision() {
   }
 
   public static RepoFactoresEmision getInstance() {
@@ -18,22 +19,20 @@ public class RepoFactoresEmision {
   }
 
   void incorporarFactor(FactorEmision nuevoFactor) {
-    factoresEmision.add(nuevoFactor);
+    entityManager().persist(nuevoFactor);
   }
 
   void modificarFactorEmicion(FactorEmision unFactor, double nuevoValor) {
     unFactor.setValor(nuevoValor);
   }
 
+  @SuppressWarnings("unchecked")
   public List<FactorEmision> getFactoresEmision() {
-    return factoresEmision;
+    return entityManager().createQuery("from FactorEmision").getResultList();
   }
 
   public int factoresTotales() {
-    return factoresEmision.size();
+    return getFactoresEmision().size();
   }
 
-  public void matate() {
-    this.factoresEmision = new ArrayList<>();
-  }
 }

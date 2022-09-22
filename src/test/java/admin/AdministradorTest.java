@@ -8,11 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AdministradorTest {
 
-  @AfterEach
-  public void resetearRepoFactorDeEmicion() {
-    RepoFactoresEmision.getInstance().matate();
-  }
-
 
   @Test
   void agregarUnFactorDeEmision() {

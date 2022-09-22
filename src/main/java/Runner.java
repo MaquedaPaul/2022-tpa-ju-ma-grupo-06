@@ -2,6 +2,7 @@ import linea.*;
 import notificaciones.Contacto;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import organizacion.*;
+import registrohc.RegistroHCOrganizacion;
 import transporte.*;
 
 import javax.persistence.EntityManager;
@@ -47,6 +48,12 @@ public class Runner {
     Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA,"Argentina","unaClasificacion",contactos);
     Sector unSector = new Sector("Ventas",miembros);
     unaOrganizacion.incorporarSector(unSector);
+
+
+    Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL,"Argentina","unaClasificacion",contactos);
+    Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL,"Argentina","unaClasificacion",contactos);
+    Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA,"Argentina","unaClasificacion",contactos);
+
     ///////////////////////////////
     et.begin();
 
@@ -54,7 +61,23 @@ public class Runner {
     em.persist(new Tramo(punto1, punto2, new ServicioContratado(TipoVehiculo.AUTO, 20)));
     em.persist(transporte);
     em.persist(unaOrganizacion);
+    RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental);
+    RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacion);
+    RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
+
+    List<Organizacion> orgs = RepoOrganizacion.getInstance().getOrganizaciones();
+    RegistroHCOrganizacion registroHCOrganizacion1 = new RegistroHCOrganizacion(orgs.get(0),333L,20L,2020,3);
+    RegistroHCOrganizacion registroHCOrganizacion2 = new RegistroHCOrganizacion(orgs.get(1),213L,330L,2020,8);
+
     et.commit();
+    List<Organizacion> listadoDeLaBase = RepoOrganizacion.getInstance().filtrarPorTipoOrganizacion(TipoOrganizacion.GUBERNAMENTAL);
+    System.out.println("LISTA: " + listadoDeLaBase.get(0).getTipo());
+    em.refresh(OrgGubernamental);
+    em.refresh(OrgGubernamental2);
+    System.out.println("ID: " + OrgGubernamental.getId());
+    System.out.println("ID: " + OrgGubernamental2.getId());
+
+
   }
 
 }

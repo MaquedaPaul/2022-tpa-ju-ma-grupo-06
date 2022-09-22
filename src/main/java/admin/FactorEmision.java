@@ -1,10 +1,12 @@
 package admin;
 
 import global.Unidad;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class FactorEmision {
 
   @Id

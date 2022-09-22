@@ -54,9 +54,7 @@ public class Miembro {
     this.trayectos = unosTrayectos;
   }
 
-  public Miembro() {
 
-  }
 
   public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);

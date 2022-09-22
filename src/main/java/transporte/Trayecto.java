@@ -15,13 +15,10 @@ public class Trayecto {
 
   @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name="TRAMO_POR_TRAYECTO",
-<<<<<<< HEAD
-          joinColumns = @JoinColumn(name="ID_TRAYECTO"),
-          inverseJoinColumns = @JoinColumn(name="ID_TRAMO"))
-=======
+
       joinColumns = @JoinColumn(name="ID_TRAYECTO"),
       inverseJoinColumns = @JoinColumn(name="ID_TRAMO"))
->>>>>>> 720bb703fc3e7c06c0d50d7076727a453edafab8
+
   private List<Tramo> tramos = new ArrayList<>();
 
   public Trayecto() {

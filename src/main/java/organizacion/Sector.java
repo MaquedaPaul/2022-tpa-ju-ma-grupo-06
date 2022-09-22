@@ -1,20 +1,35 @@
 package organizacion;
 
-import admin.config.ValoresGlobales;
+import admin.config.GestorDeFechas;
 import transporte.Trayecto;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Entity
 public class Sector {
+
+  @Id
+  @GeneratedValue
+  Long id;
+
   String nombre;
+
+  @OneToMany
   List<Miembro> miembros;
 
   public Sector(String nombre, List<Miembro> unosMiembros) {
     //un sector podría estar vacio? si todavía no se asignaron supongo que si
     this.nombre = nombre;
     this.miembros = unosMiembros;
+  }
+
+  public Sector() {
   }
 
   public void admitirMiembro(Miembro unMiembro) {
@@ -34,7 +49,7 @@ public class Sector {
   }
 
   public double calcularHCTotalDeMiembrosPorMes() {
-    return ValoresGlobales.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
+    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
         .mapToDouble(Trayecto::calcularHC)
         .sum();
   }

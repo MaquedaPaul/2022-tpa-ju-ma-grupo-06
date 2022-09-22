@@ -8,14 +8,19 @@
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>admin.Administrador</class>
+        <class>organizacion.Sector</class>
+        <class>organizacion.Organizacion</class>
+        <class>organizacion.Solicitud</class>
+        <class>organizacion.Miembro</class>
+        <class>notificaciones.Contacto</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
 
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp-anual" />
-            <property name="hibernate.connection.username" value="root" />
-            <property name="hibernate.connection.password" value="MySQL" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp-anual"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="MySQL"/>
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

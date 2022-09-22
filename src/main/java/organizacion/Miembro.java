@@ -1,20 +1,31 @@
 package organizacion;
 
-import admin.config.ValoresGlobales;
+import admin.config.GestorDeFechas;
 import lombok.Getter;
 import transporte.Trayecto;
 
+import javax.persistence.*;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
+@Entity
 @Getter
 public class Miembro {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "miembro_id")
+  private Long id;
+
   String nombre;
   String apellido;
   TipoDocumento tipoDocumento;
   int numeroDocumento;
+
+  @Transient
   List<Trayecto> trayectos;
+
 
   public Miembro(
       String unNombre,
@@ -29,6 +40,10 @@ public class Miembro {
     this.trayectos = unosTrayectos;
   }
 
+  public Miembro() {
+
+  }
+
   public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
@@ -40,7 +55,7 @@ public class Miembro {
 
 
   public double calcularHCMensual() {
-    return ValoresGlobales.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
+    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
   }
 
 

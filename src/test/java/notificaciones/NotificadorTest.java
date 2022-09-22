@@ -19,8 +19,8 @@ import static org.mockito.Mockito.*;
 public class NotificadorTest {
 
   Organizacion compraGamer = new Organizacion("Compra Gamer", TipoOrganizacion.EMPRESA, "Calle falsa 123", "PG13", new ArrayList<>());
-  Contacto juan = new Contacto(compraGamer, "Juan Carlos", "juanca@gmail.com", "1552207303");
-  Contacto jorge = new Contacto(compraGamer, "Jorge Carlos", "jorgeca@gmail.com", "1552207343");
+  Contacto juan = new Contacto("Juan Carlos", "juanca@gmail.com", "1552207303");
+  Contacto jorge = new Contacto("Jorge Carlos", "jorgeca@gmail.com", "1552207343");
   String mesActual = LocalDate.now().getMonth().toString();
   int anioActual = LocalDate.now().getYear();
 
@@ -73,7 +73,7 @@ public class NotificadorTest {
     RepoOrganizacion.getInstance().agregarOrganizacion(nueva);
     noti.organizacionesNotifiquen();
     verify(noti, times(1)).organizacionesNotifiquen();
-    verify(medio1, times(15)).enviarA(any());
+    verify(medio1, times(15)).enviarA(any(), any());
   }
 
   @Test
@@ -89,7 +89,7 @@ public class NotificadorTest {
     assertEquals(15, contactos.size());
     noti.organizacionesNotifiquen();
     verify(noti, times(1)).organizacionesNotifiquen();
-    verify(medio1, times(15)).enviarA(any());
+    verify(medio1, times(15)).enviarA(any(), any());
   }
 
   @Test
@@ -104,11 +104,11 @@ public class NotificadorTest {
     medioMock.setUrl(url);
     medioMock.setAsunto(asunto);
     Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
-    Contacto jorge = new Contacto(onu, "Jorge Nitales", "jorgeni@gmail.com", "1552207070");
+    Contacto jorge = new Contacto("Jorge Nitales", "jorgeni@gmail.com", "1552207070");
     String asuntoEsperado = "RECOMENDACIONES " + mesActual + " " + anioActual;
     String mensajeEsperado = "Hola Jorge Nitales de ONU, te envio el link a la pagina del mes " + mesActual + ": " + url;
     String mensajeTotal = asuntoEsperado + "\n" + mensajeEsperado;
-    assertEquals(mensajeTotal, medioMock.mensajePersonalizadoPara(jorge));
+    assertEquals(mensajeTotal, medioMock.mensajePersonalizadoPara(jorge, onu));
   }
 
   @Test
@@ -124,7 +124,7 @@ public class NotificadorTest {
     unAdaptarEmail.setUrl("prueba123.com");
     unAdaptarEmail.setAsunto("Asunto urgente *MES/AÑO*");
     assertEquals(unAdaptarEmail.getMensaje(), cuerpo);
-    assertEquals(unAdaptarEmail.mensajePersonalizadoPara(juan),
+    assertEquals(unAdaptarEmail.mensajePersonalizadoPara(juan, compraGamer),
         "Hola Juan Carlos de la organización Compra Gamer te enviamos" +
             " esta notificacion el mes " + LocalDate.now().getMonth().toString() + " con la url prueba123.com");
     assertEquals(unAdaptarEmail.getAsunto(), "ASUNTO URGENTE " + mesActual + " " + anioActual);
@@ -147,7 +147,7 @@ public class NotificadorTest {
     unAdaptarWhatsapp.setUrl("prueba123.com");
     unAdaptarWhatsapp.setAsunto("Asunto urgente *MES/AÑO*");
     assertEquals(unAdaptarWhatsapp.getMensaje(), cuerpo);
-    assertEquals(unAdaptarWhatsapp.mensajePersonalizadoPara(juan),
+    assertEquals(unAdaptarWhatsapp.mensajePersonalizadoPara(juan, compraGamer),
         "ASUNTO URGENTE " + mesActual + " " + anioActual + "\n" +
             "Hola Juan Carlos de la organización Compra Gamer te enviamos" +
             " esta notificacion el mes " + LocalDate.now().getMonth().toString() + " con la url prueba123.com");
@@ -164,9 +164,9 @@ public class NotificadorTest {
     medioMock.setMensaje(mensajeNotificacion);
     medioMock.setUrl(url);
     Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
-    Contacto jose = new Contacto(onu, "Jose Pereira", "jorgeni@gmail.com", "1552207070");
+    Contacto jose = new Contacto("Jose Pereira", "jorgeni@gmail.com", "1552207070");
     String mensajeEsperado = "Hola Jose Pereira de ONU, te envio el link a la pagina del mes " + mesActual + ": " + url;
-    assertEquals(mensajeEsperado, medioMock.mensajePersonalizadoPara(jose));
+    assertEquals(mensajeEsperado, medioMock.mensajePersonalizadoPara(jose, onu));
   }
 
   @Test

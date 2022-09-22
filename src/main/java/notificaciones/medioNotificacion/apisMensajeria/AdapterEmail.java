@@ -2,6 +2,7 @@ package notificaciones.medioNotificacion.apisMensajeria;
 
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
+import organizacion.Organizacion;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,21 +14,21 @@ public class AdapterEmail implements MedioNotificador {
   private String url;
 
   @Override
-  public void enviarATodos(List<Contacto> contactos) {
-    contactos.forEach(this::enviarA);
+  public void enviarATodos(List<Contacto> contactos, Organizacion organizacion) {
+    contactos.forEach(contacto -> this.enviarA(contacto, organizacion));
   }
 
   @Override
-  public void enviarA(Contacto contacto) {
+  public void enviarA(Contacto contacto, Organizacion org) {
     //APIMail.mailTo(...);
   }
 
   @Override
-  public String mensajePersonalizadoPara(Contacto contacto) {
+  public String mensajePersonalizadoPara(Contacto contacto, Organizacion org) {
     String mensajePersonalizado = this.cuerpo
         .replace("*NOMBRE_CONTACTO*", contacto.getNombreContacto());
     mensajePersonalizado = mensajePersonalizado
-        .replace("*ORGANIZACION*", contacto.organizacion());
+        .replace("*ORGANIZACION*", org.getRazonSocial());
     mensajePersonalizado = mensajePersonalizado
         .replace("*MES*", LocalDate.now().getMonth().toString());
     mensajePersonalizado = mensajePersonalizado

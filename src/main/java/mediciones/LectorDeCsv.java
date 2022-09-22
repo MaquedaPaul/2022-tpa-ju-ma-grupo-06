@@ -1,6 +1,6 @@
 package mediciones;
 
-import admin.config.ValoresGlobales;
+import admin.config.GestorDeFechas;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.*;
@@ -99,9 +99,9 @@ public class LectorDeCsv {
 
     switch (perioricidad) {
       case "ANUAL":
-        return periodoDeImputacion.matches(ValoresGlobales.getInstance().getFormatoAnual());
+        return GestorDeFechas.getInstance().cumpleConElFormatoAnual(periodoDeImputacion);
       case "MENSUAL":
-        return periodoDeImputacion.matches(ValoresGlobales.getInstance().getFormatoMensual());
+        return GestorDeFechas.getInstance().cumpleConElFormatoMensual(periodoDeImputacion);
       default:
         throw new LaPerioricidadLeidaNoEsValida(this.lineaActual());
     }
@@ -118,9 +118,24 @@ public class LectorDeCsv {
     Medicion nuevaMedicion = new Medicion(tipoConsumo,
         perioricidad,
         valor,
-        periodoDeImputacion,
+        this.anio(periodoDeImputacion),
+        this.mes(periodoDeImputacion),
         organizacion);
     mediciones.add(nuevaMedicion);
+  }
+
+  public int anio(String fecha) {
+    if (fecha.length() != 4) {
+      return Integer.parseInt(fecha.substring(3));
+    }
+    return Integer.parseInt(fecha);
+  }
+
+  public int mes(String fecha) {
+    if (fecha.length() == 4) {
+      return 0;
+    }
+    return Integer.parseInt(fecha.substring(0, 2));
   }
 
   public void cargarMediciones() {

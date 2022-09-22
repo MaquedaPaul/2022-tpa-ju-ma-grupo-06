@@ -12,21 +12,12 @@ public class Medicion {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
-  TipoConsumo tipoConsumo;
-
-  @Enumerated
-  Perioricidad periodicidad;
   private double valor;
   private int anio;
   private int mes;
 
   @ManyToOne
   private Organizacion organizacion;
-
-  @Id
-  @GeneratedValue
-  private long id;
 
   @ManyToOne
   private TipoConsumo tipoConsumo;
@@ -35,16 +26,7 @@ public class Medicion {
   private Perioricidad periodicidad;
 
   @Column
-  private double valor;
-
-  @Column
   private String periodoDeImputacion;
-
-  @Transient
-  private Organizacion organizacion;
-
-  public Medicion() {
-  }
 
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,

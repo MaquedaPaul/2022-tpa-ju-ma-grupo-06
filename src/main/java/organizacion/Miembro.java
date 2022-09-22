@@ -10,7 +10,8 @@ import java.util.List;
 import static java.util.Objects.requireNonNull;
 
 @Getter
-@Entity(name = "MIEMBRO")
+@Entity
+@Table(name = "MIEMBRO")
 public class Miembro {
 
   @Id
@@ -20,16 +21,25 @@ public class Miembro {
 
   @Column(name = "NOMBRE")
   String nombre;
+
   @Column(name = "APELLIDO")
   String apellido;
+
   @Enumerated
   @Column(name = "TIPO_DOCUMENTO")
   TipoDocumento tipoDocumento;
+
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
+
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "TRAYECTOS_POR_MIEMBRO")
+  @JoinTable(name="MIEMBRO_POR_TRAYECTO",
+      joinColumns = @JoinColumn(name="ID_MIEMBRO"),
+      inverseJoinColumns = @JoinColumn(name="ID_TRAYECTO"))
   List<Trayecto> trayectos;
+
+  public Miembro() {
+  }
 
   public Miembro(
       String unNombre,

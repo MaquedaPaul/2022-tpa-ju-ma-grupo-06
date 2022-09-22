@@ -1,6 +1,3 @@
-import admin.FactorEmision;
-import admin.RepoFactoresEmision;
-import global.Unidad;
 import linea.*;
 import notificaciones.Contacto;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
@@ -10,6 +7,7 @@ import transporte.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +27,10 @@ public class Runner {
     paradasIda.add(new Parada(700, coordenadaIda, true));
     paradasVuelta.add(new Parada(700, coordenadaVuelta, false));
     LineaTransporte nuevaLinea =
-        new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
+            new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
     TransportePublico transporte = new TransportePublico(nuevaLinea, 20);
+            //new VehiculoParticular(TipoVehiculo.AUTO)
+            //
 
 
     List<Trayecto> trayectos = new ArrayList<>();
@@ -69,27 +69,22 @@ public class Runner {
     RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
 
     List<Organizacion> orgs = RepoOrganizacion.getInstance().getOrganizaciones();
-    RegistroHCOrganizacion registroHCOrganizacion1 = new RegistroHCOrganizacion(orgs.get(0), 333L, 20L, 2020, 3);
-    RegistroHCOrganizacion registroHCOrganizacion2 = new RegistroHCOrganizacion(orgs.get(1), 213L, 330L, 2020, 8);
-
-    FactorEmision factorEmisionSinPersistir = new FactorEmision(30, Unidad.LTS);
-    RepoFactoresEmision.getInstance().incorporarFactor(factorEmisionSinPersistir);
-
-    List<FactorEmision> listaFactores = RepoFactoresEmision.getInstance().getFactoresEmision();
-    FactorEmision factorEmision1 = listaFactores.get(0);
-
-    RepoFactoresEmision.getInstance().modificarFactorEmision(factorEmision1, 399);
-
-
+    RegistroHCOrganizacion registroHCOrganizacion1 = new RegistroHCOrganizacion(orgs.get(0),333L,20L,2020,3);
+    RegistroHCOrganizacion registroHCOrganizacion2 = new RegistroHCOrganizacion(orgs.get(1),213L,330L,2020,8);
+    List<HC_Por_Tipo_Organizacion> lista_hc_por_tipo = RepoOrganizacion.getInstance().HCPorTipoOrganizacion(YearMonth.of(2018,1),YearMonth.of(2021,12));
     et.commit();
+    for (HC_Por_Tipo_Organizacion elemento: lista_hc_por_tipo) {
+      System.out.println(elemento.getHc() + elemento.getUnTipo().toString());
+    }
+
+    /*
     List<Organizacion> listadoDeLaBase = RepoOrganizacion.getInstance().filtrarPorTipoOrganizacion(TipoOrganizacion.GUBERNAMENTAL);
     System.out.println("LISTA: " + listadoDeLaBase.get(0).getTipo());
     em.refresh(OrgGubernamental);
     em.refresh(OrgGubernamental2);
     System.out.println("ID: " + OrgGubernamental.getId());
     System.out.println("ID: " + OrgGubernamental2.getId());
-
-
+     */
   }
 
 }

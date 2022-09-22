@@ -8,4 +8,12 @@ public class HC_Por_Tipo_Organizacion {
     this.hc = hc;
     this.unTipo = tipo;
   }
+
+  public double getHc() {
+    return hc;
+  }
+
+  public TipoOrganizacion getUnTipo() {
+    return unTipo;
+  }
 }

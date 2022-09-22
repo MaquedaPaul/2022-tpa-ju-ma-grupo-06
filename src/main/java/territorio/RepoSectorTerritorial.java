@@ -7,7 +7,7 @@ import organizacion.Organizacion;
 import organizacion.RepoOrganizacion;
 import registrohc.RegistroHCOrganizacion;
 import registrohc.RepoMedicionesHCOrganizaciones;
-import tipoconsumo.TipoConsumo;
+
 
 import java.time.YearMonth;
 import java.util.Collection;
@@ -87,7 +87,7 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
             .collect(Collectors.toList());
 
     }
-
+/*
     public List<ComposicionHcSectorTerritorial> composicionHcSectorTerritorial(SectorTerritorial sectorTerritorial,
                                                                                YearMonth inicio,
                                                                                YearMonth fin) {
@@ -101,4 +101,6 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         List<Medicion> mediciones = RepoMediciones.getInstance().getMedicionesEntre(inicio, fin);
 
     }
+
+ */
 }

@@ -61,16 +61,26 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     List<Organizacion> organizaciones = this.getOrganizaciones();
 
     return tipos.stream()
-        .map(tipo -> new HC_Por_Tipo_Organizacion(organizaciones
+          .map(tipo -> new HC_Por_Tipo_Organizacion(organizaciones
             .stream()
             .filter(org -> org.getTipo() == tipo)
-            .mapToLong(org -> RepoMedicionesHCOrganizaciones.getInstance().getRegistros(org, fechaInicio, fechaFin)
-                .stream().mapToLong(RegistroHCOrganizacion::hcTotal).sum())
+            .mapToLong(org -> RepoMedicionesHCOrganizaciones
+                    .getInstance()
+                    .getRegistros(org, fechaInicio, fechaFin)
+            .stream().mapToLong(RegistroHCOrganizacion::hcTotal).sum())
             .sum()
             , tipo))
         .collect(Collectors.toList());
-
   }
+/*
+COMPOSICIÓN HC TOTAL DE UNA ORGANIZACION
+
+En principio agrupar y sumar HC Combustion Fija
+
+
+
+
+*/
 
 
 

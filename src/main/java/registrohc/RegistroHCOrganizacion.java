@@ -42,6 +42,6 @@ public class RegistroHCOrganizacion {
 
 
   public Long hcTotal() {
-    return hcMediciones + hcMiembros;
+    return this.getHcMediciones() + this.getHcMiembros();
   }
 }

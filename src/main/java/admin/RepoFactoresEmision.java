@@ -20,6 +20,7 @@ public class RepoFactoresEmision implements WithGlobalEntityManager {
 
   void incorporarFactor(FactorEmision nuevoFactor) {
     entityManager().persist(nuevoFactor);
+    entityManager().refresh(nuevoFactor);
   }
 
   void modificarFactorEmicion(FactorEmision unFactor, double nuevoValor) {

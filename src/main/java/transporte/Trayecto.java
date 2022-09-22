@@ -1,10 +1,15 @@
 package transporte;
 
 import linea.PuntoUbicacion;
+import lombok.Getter;
+import tipoconsumo.TipoConsumo;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
+@Getter
 @Entity
 @Table(name = "TRAYECTO")
 public class Trayecto {
@@ -23,6 +28,7 @@ public class Trayecto {
 
   public Trayecto() {
   }
+
   public Trayecto(List<Tramo> tramos) {
     this.tramos = tramos;
   }
@@ -57,5 +63,9 @@ public class Trayecto {
 
   public double calcularHC() {
     return tramos.stream().mapToDouble(Tramo::calcularHc).sum();
+  }
+
+  public Stream<TipoConsumo> getTiposDeConsumo() {
+    return getTramos().stream().map(Tramo::getTipoConsumo);
   }
 }

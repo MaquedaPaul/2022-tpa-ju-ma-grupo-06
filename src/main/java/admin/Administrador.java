@@ -1,7 +1,5 @@
 package admin;
 
-import global.Unidad;
-
 import javax.persistence.*;
 
 @Entity

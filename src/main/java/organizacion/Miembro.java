@@ -2,10 +2,12 @@ package organizacion;
 
 import admin.config.GestorDeFechas;
 import lombok.Getter;
+import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
@@ -73,5 +75,11 @@ public class Miembro {
 
   public double calcularHCTrayectos() {
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
+  }
+
+  public Stream<TipoConsumo> getTiposDeConsumoUsados() {
+    return this.getTrayectos().stream()
+        .map(Trayecto::getTiposDeConsumo)
+        .flatMap(Stream::distinct);
   }
 }

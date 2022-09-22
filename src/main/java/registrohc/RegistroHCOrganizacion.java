@@ -41,4 +41,7 @@ public class RegistroHCOrganizacion {
   }
 
 
+  public Long hcTotal() {
+    return hcMediciones + hcMiembros;
+  }
 }

@@ -10,6 +10,7 @@ import mediciones.Perioricidad;
 import mediciones.RepoMediciones;
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
+import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
 
 import javax.persistence.*;
@@ -199,6 +200,12 @@ public class Organizacion {
 
   public void notificarContactos(List<MedioNotificador> medios) {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
+  }
+
+  public Stream<TipoConsumo> getTiposDeConsumoUsados() {
+    return this.getMiembros().stream()
+        .map(Miembro::getTiposDeConsumoUsados)
+        .flatMap(Stream::distinct);
   }
 }
 

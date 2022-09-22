@@ -22,7 +22,7 @@ public class RepoMedicionesHCOrganizaciones implements WithGlobalEntityManager {
   }
 
   public void persistirTodas(List<RegistroHCOrganizacion> registros) {
-    registros.forEach(registro -> this.persistir(registro));
+    registros.forEach(this::persistir);
   }
 
   public void persistir(RegistroHCOrganizacion registro) {
@@ -30,21 +30,17 @@ public class RepoMedicionesHCOrganizaciones implements WithGlobalEntityManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<RegistroHCOrganizacion> evolucionHCOrganizacion(Organizacion organizacion,
-                                                              YearMonth fechaInicio,
-                                                              YearMonth fechaFin) {
-    String consulta = " FROM RegistroHCOrganizacion AS rhc" +
-            " WHERE rhc.organizacion = :id" +
-            " AND rhc.mesImputacion BETWEEN :mesInicio AND :mesFin " +
-            " AND rhc.anioImputacion BETWEEN :anioInicio AND :anioFin " +
-            " ORDER BY rhc.anioImputacion, rhc.mesImputacion DESC ";
+  public List<RegistroHCOrganizacion> getRegistros(Organizacion org, YearMonth inicio, YearMonth fin) {
 
-    return entityManager().createQuery(consulta)
-            .setParameter("id",organizacion.getId())
-            .setParameter("mesInicio",fechaInicio.getMonthValue())
-            .setParameter("mesFin",fechaFin.getMonthValue())
-            .setParameter("anioInicio", fechaInicio.getYear())
-            .setParameter("anioFin",fechaFin.getYear()).getResultList();
+    String consulta = "FROM RegistroHCOrganizacion WHERE id = :id " +
+        "AND mesImputacion BETWEEN :mesInicio AND :mesFin" +
+        " AND anioImputacion BETWEEN :anioInicio AND :anioFin";
+
+    return entityManager().createQuery(consulta).setParameter("id", org.getId())
+        .setParameter("mesInicio", inicio.getMonthValue())
+        .setParameter("mesFin", fin.getMonthValue())
+        .setParameter("anioInicio", inicio.getYear())
+        .setParameter("anioFin", inicio.getYear())
+        .getResultList();
   }
-
 }

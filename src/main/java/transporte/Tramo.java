@@ -2,10 +2,13 @@ package transporte;
 
 import exceptions.NoSePudoCalcularElTramo;
 import linea.PuntoUbicacion;
+import lombok.Getter;
+import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.io.IOException;
 
+@Getter
 @Entity
 public class Tramo {
 
@@ -60,5 +63,9 @@ public class Tramo {
 
   public double calcularHc() {
     return transporteUtilizado.calcularHc() * distanciaTramo();
+  }
+
+  public TipoConsumo getTipoConsumo() {
+    return this.transporteUtilizado.combustible.getTipoConsumo();
   }
 }

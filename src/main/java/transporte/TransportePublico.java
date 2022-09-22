@@ -5,7 +5,10 @@ import linea.Parada;
 import linea.PuntoUbicacion;
 import linea.TipoTransporte;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -63,8 +66,9 @@ public class TransportePublico extends Transporte {
         .get(0);
   }
 
+  //conviene usar equals
   public boolean esLaMisma(PuntoUbicacion ubicacion, Parada unaParada) {
-    return ubicacion.getCoordenada() == unaParada.getCoordenada();
+    return ubicacion.getCoordenada().equals(unaParada.getCoordenada());
   }
 }
 

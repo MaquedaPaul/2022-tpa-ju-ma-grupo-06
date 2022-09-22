@@ -107,7 +107,7 @@ public class Organizacion {
 
     return this.calcularHCTotalMensualDeMiembros() + this.calcularHcMedicionesMensual(periodo);
   }
-
+  //TODO DELEGAR RESPONSABILIDAD A LA CLASE PERIODO
   public double calcularHCTotalAnualDeMiembros() {
 
     return 12 * this.calcularHCTotalMensualDeMiembros();
@@ -131,6 +131,7 @@ public class Organizacion {
 
   }
 
+  //TODO DELEGAR RESPONSABILIDAD DE CONDICION DEL FILTER AL PERIODO
   public double calcularHcMedicionesMensual(YearMonth date) {
 
     return this.getMediciones()
@@ -177,6 +178,8 @@ public class Organizacion {
     }
     return sector.getMiembros();
   }
+
+//TODO CAMBIAR YEAR Y YEARMONTH POR UNA INTERFACE Y DOS CLASES
 
   public double indicadorHC_Miembros(Year periodo) {
     return calcularHCTotal(periodo) / this.getCantidadDeMiembros();

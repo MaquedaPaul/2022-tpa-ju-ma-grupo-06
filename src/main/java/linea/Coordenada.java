@@ -4,7 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
+//TODO EMBEBER
 @Entity
 public class Coordenada {
 
@@ -33,5 +35,20 @@ public class Coordenada {
 
   public double getLongitud() {
     return longitud;
+  }
+
+  // hay que sobreescribir ambos
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Coordenada that = (Coordenada) o;
+    return Double.compare(that.latitud, latitud) == 0 && Double.compare(that.longitud, longitud) == 0;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(latitud, longitud);
   }
 }

@@ -1,7 +1,6 @@
 package linea;
 
 import javax.persistence.*;
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,17 @@ public class LineaTransporte {
   private String nombre;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name="PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name="ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
+  @JoinTable(name = "PARADAS_POR_LINEA",
+      joinColumns = @JoinColumn(name = "ID_LINEA"),
+      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @OrderBy(value = "kmActual")
   private List<Parada> recorridoDeIda;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name="PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name="ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name="ID_PARADA"))
+  @JoinTable(name = "PARADAS_POR_LINEA",
+      joinColumns = @JoinColumn(name = "ID_LINEA"),
+      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @OrderBy(value = "kmActual")
   private List<Parada> recorridoVuelta;
 
   public LineaTransporte() {
@@ -68,6 +69,8 @@ public class LineaTransporte {
     return tipoTransporte;
   }
 
+  //Parada: primera = km 0
+  //PARADA: ultima = km mas alto
   public Parada inicioDelRecorridoDeIda() {
     return recorridoDeIda.get(0);
   }

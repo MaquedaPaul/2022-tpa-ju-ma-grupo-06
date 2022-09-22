@@ -1,13 +1,9 @@
 package territorio;
 
-import mediciones.Medicion;
-import mediciones.RepoMediciones;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import organizacion.Organizacion;
 import organizacion.RepoOrganizacion;
 import registrohc.RegistroHCOrganizacion;
 import registrohc.RepoMedicionesHCOrganizaciones;
-
 
 import java.time.YearMonth;
 import java.util.Collection;
@@ -47,6 +43,8 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
     //-> CADA LONG ES UN SECTOR
     public List<HCPorSectorTerritorial> hcPorSectorTerritorial(YearMonth fechaInicio, YearMonth fechaFin) {
 
+        //QUILMES 2000 07/2000
+        //QUILMES 2020 08/2000
         List<SectorTerritorial> sectoresTerritoriales = this.getSectoresTerritoriales();
         List<Long> resultadosHC = sectoresTerritoriales.stream()
             .map(SectorTerritorial::getOrganizaciones)
@@ -69,6 +67,8 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
             .collect(Collectors.toList());
     }
 
+    //TODO ADD GENERAR REPORTE
+    //Pensar en injectar algun objeto para flexibilizar este metodo
     public List<HCPorSectorTerritorial> evolucionHCTotal(SectorTerritorial sector, YearMonth inicio, YearMonth fin) {
 
         Stream<RegistroHCOrganizacion> registros = sector

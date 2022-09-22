@@ -5,6 +5,7 @@ import registrohc.RegistroHCOrganizacion;
 import registrohc.RepoMedicionesHCOrganizaciones;
 
 import java.time.YearMonth;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,8 +25,10 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
 
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
     entityManager().persist(nuevaOrganizacion);
-    entityManager().refresh(nuevaOrganizacion);
   }
+  //em.persist(org);
+
+  //new medicion(org);
 
   public boolean estaPersistido(Organizacion org) {
     return entityManager().contains(org);
@@ -56,18 +59,26 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   @SuppressWarnings("unchecked")
   public List<HC_Por_Tipo_Organizacion> HCPorTipoOrganizacion(YearMonth fechaInicio, YearMonth fechaFin) {
 
-    List<TipoOrganizacion> tipos = entityManager().createQuery("SELECT DISTINCT tipo FROM Organizacion").getResultList();
+    //TODO NORMALIZARLO
 
+    //HIBERNATE NO USA NOMBRES DE TABLAS, USA NOMBRE DE CLASES
+
+    //ME AHORRO UN SELECT
+    //List<TipoOrganizacion> tipos = entityManager().createQuery("SELECT DISTINCT tipo FROM Organizacion").getResultList();
+    List<TipoOrganizacion> tipos = Arrays.asList(TipoOrganizacion.values());
+
+    //TODO HACER UN SELECT POR CADA TIPO
+    //List tiene que iterar n veces (sequencial)
     List<Organizacion> organizaciones = this.getOrganizaciones();
 
     return tipos.stream()
-          .map(tipo -> new HC_Por_Tipo_Organizacion(organizaciones
+        .map(tipo -> new HC_Por_Tipo_Organizacion(organizaciones
             .stream()
             .filter(org -> org.getTipo() == tipo)
             .mapToLong(org -> RepoMedicionesHCOrganizaciones
-                    .getInstance()
-                    .getRegistros(org, fechaInicio, fechaFin)
-            .stream().mapToLong(RegistroHCOrganizacion::hcTotal).sum())
+                .getInstance()
+                .getRegistros(org, fechaInicio, fechaFin)
+                .stream().mapToLong(RegistroHCOrganizacion::hcTotal).sum())
             .sum()
             , tipo))
         .collect(Collectors.toList());

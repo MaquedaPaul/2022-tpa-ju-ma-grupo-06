@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 @Entity
 public class Sector {
 
+  //TODO puede ser que un miembro pueda estar en mas de un sector de distintas organizaciones
   @Id
   @GeneratedValue
   Long id;

@@ -17,6 +17,7 @@ public class Parada {
   @JoinColumn(name = "ID_COORDENADA")
   private Coordenada coordenada;
 
+  //TODO PROBAR SACARLO
   @Column(name = "ES_DE_IDA")
   private boolean esDeIda;
 

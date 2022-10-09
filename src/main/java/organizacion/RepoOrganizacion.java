@@ -52,7 +52,9 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public List<RegistroHCOrganizacion> evolucionHCTotal(Organizacion organizacion, YearMonth inicio, YearMonth fin) {
-
+    //Consulta con la base de datos los registros de hc de una organizacion de x fecha a y fecha
+    //Ahora, estos registros se crean periodicamente utilizando la clase ControlDeHC
+    //Se crean a partir de los métodos de una organización, para calcular el HC de los miembros, y el HC de las mediciones
     return RepoMedicionesHCOrganizaciones.getInstance().getRegistros(organizacion, inicio, fin);
   }
 

@@ -47,15 +47,15 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         //QUILMES 2020 08/2000
         List<SectorTerritorial> sectoresTerritoriales = this.getSectoresTerritoriales();
         List<Long> resultadosHC = sectoresTerritoriales.stream()
-            .map(SectorTerritorial::getOrganizaciones)
-            .map(lista -> lista.stream()
-                .map(org -> RepoMedicionesHCOrganizaciones
-                    .getInstance().getRegistros(org, fechaInicio, fechaFin)
-                    .stream()
-                    .mapToLong(RegistroHCOrganizacion::hcTotal).sum()))
-            .map(longStream -> longStream.collect(Collectors.toList()))
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList());
+                .map(SectorTerritorial::getOrganizaciones)
+                .map(lista -> lista.stream()
+                        .map(org -> RepoMedicionesHCOrganizaciones
+                                .getInstance().getRegistros(org, fechaInicio, fechaFin)
+                                .stream()
+                                .mapToLong(RegistroHCOrganizacion::hcTotal).sum()))
+                .map(longStream -> longStream.collect(Collectors.toList()))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         return generarReporteHCSector(sectoresTerritoriales, resultadosHC);
     }
@@ -63,29 +63,41 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
     public List<HCPorSectorTerritorial> generarReporteHCSector(List<SectorTerritorial> sectores, List<Long> resultados) {
 
         return sectores.stream()
-            .map(sector -> new HCPorSectorTerritorial(resultados.get(sectores.indexOf(sector)), sector, null))
-            .collect(Collectors.toList());
+                .map(sector -> new HCPorSectorTerritorial(resultados.get(sectores.indexOf(sector)), sector, null))
+                .collect(Collectors.toList());
     }
 
     //TODO ADD GENERAR REPORTE
     //Pensar en injectar algun objeto para flexibilizar este metodo
     public List<HCPorSectorTerritorial> evolucionHCTotal(SectorTerritorial sector, YearMonth inicio, YearMonth fin) {
+        //Que significa evolución de hc total?
+
+        //Registro HC Organizacion es una clase que utilizo para guardar campos utiles
+        //Concretamente estamos almacenando el HC de los miembros y el HC de las mediciones de una Organizacion
 
         Stream<RegistroHCOrganizacion> registros = sector
-            .getOrganizaciones().stream()
-            .map(org -> RepoOrganizacion.getInstance().evolucionHCTotal(org, inicio, fin).stream())
-            .flatMap(Stream::sorted);
+                .getOrganizaciones().stream()
+                .map(org -> RepoOrganizacion.getInstance().evolucionHCTotal(org, inicio, fin).stream())
+                .flatMap(Stream::sorted);
 
+        //Por cada registro voy a armar un periodo con el par MES/AÑO
         Stream<YearMonth> periodo = registros
-            .map(registro -> YearMonth.of(registro.getAnioImputacion(), registro.getMesImputacion()))
-            .distinct();
+                .map(registro -> YearMonth.of(registro.getAnioImputacion(), registro.getMesImputacion()))
+                .distinct();
 
-        return periodo.map(fecha -> new HCPorSectorTerritorial(
-                registros.filter(registro -> YearMonth.of(registro.getAnioImputacion(), registro.getMesImputacion()).equals(fecha))
-                    .mapToLong(RegistroHCOrganizacion::hcTotal)
-                    .sum(), sector, fecha))
-            .collect(Collectors.toList());
 
+        return periodo.map(fecha -> crearHCPorSectorTerritorialEnBaseA(fecha, registros, sector))
+                .collect(Collectors.toList());
+
+    }
+    private boolean equalsRegistroFecha(RegistroHCOrganizacion unRegistro, YearMonth unaFecha){
+        return YearMonth.of(unRegistro.getAnioImputacion(), unRegistro.getMesImputacion()).equals(unaFecha);
+    }
+
+    private HCPorSectorTerritorial crearHCPorSectorTerritorialEnBaseA(YearMonth unaFecha, Stream<RegistroHCOrganizacion> registros, SectorTerritorial sector){
+        Stream<RegistroHCOrganizacion> registrosCoincidenConFecha = registros.filter(registro ->equalsRegistroFecha(registro,unaFecha));
+        long hcTotal = registrosCoincidenConFecha.mapToLong(RegistroHCOrganizacion::hcTotal).sum();
+        return new HCPorSectorTerritorial(hcTotal, sector, unaFecha);
     }
 /*
     public List<ComposicionHcSectorTerritorial> composicionHcSectorTerritorial(SectorTerritorial sectorTerritorial,

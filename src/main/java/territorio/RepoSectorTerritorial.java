@@ -1,6 +1,7 @@
 package territorio;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import organizacion.Organizacion;
 import organizacion.RepoOrganizacion;
 import registrohc.RegistroHCOrganizacion;
 import registrohc.RepoMedicionesHCOrganizaciones;
@@ -46,18 +47,24 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         //QUILMES 2000 07/2000
         //QUILMES 2020 08/2000
         List<SectorTerritorial> sectoresTerritoriales = this.getSectoresTerritoriales();
-        List<Long> resultadosHC = sectoresTerritoriales.stream()
-                .map(SectorTerritorial::getOrganizaciones)
-                .map(lista -> lista.stream()
-                        .map(org -> RepoMedicionesHCOrganizaciones
-                                .getInstance().getRegistros(org, fechaInicio, fechaFin)
-                                .stream()
-                                .mapToLong(RegistroHCOrganizacion::hcTotal).sum()))
+        Stream<List<Organizacion>> organizacionesDeSectorresTerritoriales = sectoresTerritoriales.stream().map(SectorTerritorial::getOrganizaciones);
+        Stream<Stream<Long>> hcTotalPorCadaRegistro = hcTotalPorRegistros(organizacionesDeSectorresTerritoriales,fechaInicio,fechaFin);
+
+
+        List<Long> resultadosHC = hcTotalPorCadaRegistro
                 .map(longStream -> longStream.collect(Collectors.toList()))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-
         return generarReporteHCSector(sectoresTerritoriales, resultadosHC);
+    }
+
+    Stream <Stream<Long>> hcTotalPorRegistros(Stream<List<Organizacion>> organizacionesDeSectores, YearMonth fechaInicio, YearMonth fechaFin){
+        RepoMedicionesHCOrganizaciones repoMediciones = RepoMedicionesHCOrganizaciones.getInstance();
+        return organizacionesDeSectores.map(sectorTerritorial -> sectorTerritorial.stream()
+                .map(org -> repoMediciones.getRegistros(org, fechaInicio, fechaFin)
+                        .stream()
+                        .mapToLong(RegistroHCOrganizacion::hcTotal).sum()));
+
     }
 
     public List<HCPorSectorTerritorial> generarReporteHCSector(List<SectorTerritorial> sectores, List<Long> resultados) {

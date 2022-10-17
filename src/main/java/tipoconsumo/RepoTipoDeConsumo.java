@@ -20,8 +20,9 @@ public class RepoTipoDeConsumo implements WithGlobalEntityManager {
   }
 
   public void agregarNuevoTipoDeConsumo(TipoConsumo nuevoTipoConsumo) {
+    entityManager().getTransaction().begin();
     entityManager().persist(nuevoTipoConsumo);
-    entityManager().refresh(nuevoTipoConsumo);
+    entityManager().getTransaction().commit();
   }
 
   @SuppressWarnings("unchecked")

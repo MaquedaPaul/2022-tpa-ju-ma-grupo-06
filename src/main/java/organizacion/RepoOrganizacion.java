@@ -29,7 +29,9 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
+    entityManager().getTransaction().begin();
     entityManager().persist(nuevaOrganizacion);
+    entityManager().getTransaction().commit();
   }
   //em.persist(org);
 
@@ -53,7 +55,9 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public void eliminarOrganizacion(Organizacion organizacion) {
+    entityManager().getTransaction().begin();
     entityManager().remove(organizacion);
+    entityManager().getTransaction().commit();
   }
 
   public List<RegistroHCOrganizacion> evolucionHCTotal(Organizacion organizacion, YearMonth inicio, YearMonth fin) {

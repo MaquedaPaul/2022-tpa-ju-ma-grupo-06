@@ -20,10 +20,8 @@ public class Trayecto {
 
   @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name = "TRAMO_POR_TRAYECTO",
-
       joinColumns = @JoinColumn(name = "ID_TRAYECTO"),
       inverseJoinColumns = @JoinColumn(name = "ID_TRAMO"))
-
   private Set<Tramo> tramos = new HashSet<>();
 
   public Trayecto() {
@@ -45,6 +43,7 @@ public class Trayecto {
    * public void setOrigen(String origen) { this.origen = origen; }
    */
 
+  /* //TODO No Compila
   public PuntoUbicacion getOrigen() {
     return tramos.get(0).getPuntoOrigen();
   }
@@ -52,7 +51,7 @@ public class Trayecto {
   public PuntoUbicacion getDestino() {
     return tramos.get(tramos.size() - 1).getPuntoDestino();
   }
-
+  */
   /*
    * public void setDestino(String destino) { this.destino = destino; }
    */

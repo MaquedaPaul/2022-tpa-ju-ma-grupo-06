@@ -6,7 +6,8 @@ import transporte.Tramo;
 import transporte.Trayecto;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -23,7 +24,7 @@ public class TrayectoTest {
 
   @Test
   void unTramoAgregadoDeberiaAparecerEnLaListaTramos() {
-    List<Tramo> unosTramos = new ArrayList<>();
+    Set<Tramo> unosTramos = new HashSet<>();
     Trayecto unTrayecto = new Trayecto(unosTramos);
     assertFalse(unosTramos.contains(unTramo));
     unTrayecto.agregarTramo(unTramo);
@@ -38,7 +39,7 @@ public class TrayectoTest {
 
     when(unTramoMock.distanciaTramo()).thenReturn(100.0);
     when(otroTramoMock.distanciaTramo()).thenReturn(50.0);
-    Trayecto unTrayecto = new Trayecto(new ArrayList<>());
+    Trayecto unTrayecto = new Trayecto(new HashSet<>());
     unTrayecto.agregarTramo(unTramoMock);
     unTrayecto.agregarTramo(otroTramoMock);
     unTramoMock.distanciaTramo();

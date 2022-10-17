@@ -13,6 +13,16 @@
         <class>organizacion.Solicitud</class>
         <class>organizacion.Miembro</class>
         <class>notificaciones.Contacto</class>
+        <class>organizacion.Miembro</class>
+        <class>transporte.Trayecto</class>
+        <class>transporte.Transporte</class>
+        <class>transporte.Combustible</class>
+        <class>transporte.Tramo</class>
+        <class>linea.PuntoUbicacion</class>
+        <class>linea.Coordenada</class>
+        <class>mediciones.Medicion</class>
+        <class>tipoconsumo.TipoConsumo</class>
+        <class>admin.FactorEmision</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
@@ -25,7 +35,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="use_sql_comments" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
 
     </persistence-unit>

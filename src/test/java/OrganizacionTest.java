@@ -146,14 +146,14 @@ public class OrganizacionTest {
 
   @Test
   public void elImpactoDeJorgeEnJulio2021EsDel20Porciento() {
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+    Organizacion spyOnu = spy(onu);
 
     trayectos1.add(trayecto2);
     trayectos1.add(trayecto3);
-
     when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
-
     when(spyOnu.calcularHCTotal(YearMonth.of(2020, 7))).thenReturn(40000D);
     // (100 * 20 * 400) / 40000 = 20
     assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, YearMonth.of(2020, 7)));
@@ -161,14 +161,11 @@ public class OrganizacionTest {
 
   @Test
   public void elImpactoDeJorgeEnTodo2021EsDel16Porciento() {
-
     trayectos1.add(trayecto2);
     trayectos1.add(trayecto3);
-
     when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
-
     when(spyOnu.calcularHCTotal(Year.of(2021))).thenReturn(600000D);
     // (100 * 12 * 20 * 400) / x = 16
     assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, Year.of(2021)));

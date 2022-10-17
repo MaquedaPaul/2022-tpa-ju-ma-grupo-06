@@ -12,7 +12,8 @@ public class AdministradorTest {
   @Test
   void agregarUnFactorDeEmision() {
     Administrador unAdministrador = new Administrador("ejemplo", "esteEsUnEjemplo");
-    unAdministrador.crearFactorEmision(300, Unidad.LTS);
+    FactorEmision nuevoFactor = new FactorEmision(300, Unidad.LTS);
+    unAdministrador.crearFactorEmision(nuevoFactor);
     assertEquals(RepoFactoresEmision.getInstance().factoresTotales(), 1);
   }
 

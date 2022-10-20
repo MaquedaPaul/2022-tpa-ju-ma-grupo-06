@@ -179,14 +179,11 @@ public class Organizacion {
     return sector.getMiembros();
   }
 
-//TODO CAMBIAR YEAR Y YEARMONTH POR UNA INTERFACE Y DOS CLASES
-
-  public double indicadorHC_Miembros(Year periodo) {
-    return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
-  }
-
-  public double indicadorHC_Miembros(YearMonth periodo) {
-    return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
+  //TODO CAMBIAR YEAR Y YEARMONTH POR UNA INTERFACE Y DOS CLASES
+  // Se borraron los metodos anteriores que pasaban como parametro year y yearmoth
+  // Quedaria implementar lo que dice el primer comentario con el metodo de abajo (borrando parametro)
+  public double indicadorHC_MiembrosEnSector(Sector sector, YearMonth periodo) {
+    return calcularHCTotal(periodo) / this.getMiembrosEnSector(sector).size();
   }
 
   public int getCantidadDeMiembros() {

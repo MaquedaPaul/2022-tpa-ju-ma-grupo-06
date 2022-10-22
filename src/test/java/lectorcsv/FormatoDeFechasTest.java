@@ -30,7 +30,7 @@ public class FormatoDeFechasTest {
   @Test
   public void unaFechaMensualSoloEncajaConUnFormatoMensual() {
     formato.put(TipoPerioricidad.ANUAL, "([0-9]{4})");
-    formato.put(TipoPerioricidad.MENSUAL, "(([1-9]|10|11|12)/[0-9]{4})");
+    formato.put(TipoPerioricidad.MENSUAL, "(((0[1-9])|10|11|12)/[0-9]{4})");
 
     formatoFechas = new FormatoDeFechas(formato);
     Assertions.assertFalse(formatoFechas.tieneElFormatoValido("12/2009", TipoPerioricidad.ANUAL));

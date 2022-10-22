@@ -4,10 +4,10 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.*;
 import lombok.Getter;
+import lombok.Setter;
 import mediciones.Medicion;
 import mediciones.RepoMediciones;
 import organizacion.Organizacion;
-import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
@@ -26,6 +26,8 @@ public class LectorDeCsv {
   private final Organizacion organizacion;
   private final FormatoDeFechas formatoDeFechas;
   private final ValidadorDeCabeceras cabeceraEsperada;
+  @Setter
+  private RepoTipoConsumo repoConsumos;
 
   private TipoConsumo tipoConsumo;
   private Perioricidad perioricidad;
@@ -34,12 +36,13 @@ public class LectorDeCsv {
   private final List<Medicion> mediciones = new ArrayList<>();
 
 
-  public LectorDeCsv(String path, Organizacion organizacion, FormatoDeFechas formato, ValidadorDeCabeceras cabeceraEsperada) throws IOException {
+  public LectorDeCsv(String path, Organizacion organizacion, FormatoDeFechas formato, ValidadorDeCabeceras cabeceraEsperada, RepoTipoConsumo repo) throws IOException {
     this.reader = new CSVReader(new InputStreamReader(Files.newInputStream(Paths.get(path)),
         Charset.defaultCharset()));
     this.organizacion = organizacion;
     this.formatoDeFechas = formato;
     this.cabeceraEsperada = cabeceraEsperada;
+    this.repoConsumos = repo;
   }
 
   public int getCantidadDeMediciones() {
@@ -52,7 +55,7 @@ public class LectorDeCsv {
       throw new LaCabeceraNoTieneUnFormatoValido();
     }
     linea = this.lineaLeida();
-    while (linea != null) {
+    while (!linea.isEmpty()) {
       this.validarFormatoLeido(linea);
       this.asignarParametros(linea);
       this.guardarMedicion();
@@ -65,19 +68,25 @@ public class LectorDeCsv {
   }
 
   private List<String> lineaLeida() {
+    String[] linea;
     try {
-      return Arrays.asList(reader.readNext());
+      linea = reader.readNext();
     } catch (IOException | CsvValidationException e) {
       e.printStackTrace();
       throw new NoSePudoLeerLaLinea(this.lineaActual());
     }
+    if (linea == null) {
+      return new ArrayList<>();
+    }
+    return Arrays.asList(linea);
+
   }
 
   private long lineaActual() {
     return reader.getLinesRead();
   }
 
-  private void validarFormatoLeido(List<String> campos) {
+  public void validarFormatoLeido(List<String> campos) {
 
     this.tieneLaCantidadCorrectaDeColumnas(campos);
     this.esUnTipoDeConsumoValido(campos.get(0));
@@ -87,25 +96,25 @@ public class LectorDeCsv {
 
   }
 
-  private void tieneLaCantidadCorrectaDeColumnas(List<String> columnas) {
+  public void tieneLaCantidadCorrectaDeColumnas(List<String> columnas) {
     if (columnas.size() != cabeceraEsperada.getCantidadDeColumnas()) {
       throw new NoSeLeyeronLosCamposEsperados(cabeceraEsperada.getCantidadDeColumnas(), columnas.size(), this.lineaActual());
     }
   }
 
-  private void esUnTipoDeConsumoValido(String tipoConsumo) {
-    if (!RepoTipoDeConsumo.getInstance().existeElTipoDeConsumo(tipoConsumo)) {
+  public void esUnTipoDeConsumoValido(String tipoConsumo) {
+    if (!repoConsumos.existeElTipoDeConsumo(tipoConsumo)) {
       throw new ElTipoDeConsumoLeidoNoEsValido(this.lineaActual());
     }
   }
 
-  private void elValorLeidoEsPositivo(int valor) {
+  public void elValorLeidoEsPositivo(int valor) {
     if (valor <= 0) {
       throw new LaMedicionEsNegativa(this.lineaActual());
     }
   }
 
-  private void esUnaPerioricidadValida(String perioricidad) {
+  public void esUnaPerioricidadValida(String perioricidad) {
     try {
       TipoPerioricidad.valueOf(perioricidad);
     } catch (IllegalArgumentException e) {
@@ -113,7 +122,7 @@ public class LectorDeCsv {
     }
   }
 
-  private void tieneElFormatoValido(String periodoDeImputacion, TipoPerioricidad perioricidad) {
+  public void tieneElFormatoValido(String periodoDeImputacion, TipoPerioricidad perioricidad) {
 
     if (!formatoDeFechas.tieneElFormatoValido(periodoDeImputacion, perioricidad)) {
       throw new ElPeriodoNoConcuerdaConLaPerioricidad(this.lineaActual());
@@ -121,8 +130,8 @@ public class LectorDeCsv {
   }
 
   private void asignarParametros(List<String> atributos) {
-    this.tipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(atributos.get(0));
-    this.perioricidad = new Perioricidad(atributos.get(2), TipoPerioricidad.valueOf(atributos.get(3)));
+    this.tipoConsumo = repoConsumos.getTipoConsumo(atributos.get(0));
+    this.perioricidad = new Perioricidad(atributos.get(3), TipoPerioricidad.valueOf(atributos.get(2)));
     this.valor = Integer.parseInt(atributos.get(1));
   }
 

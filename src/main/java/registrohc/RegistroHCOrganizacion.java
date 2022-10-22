@@ -14,7 +14,7 @@ public class RegistroHCOrganizacion {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Organizacion organizacion;
 
   private Long hcMediciones;

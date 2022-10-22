@@ -14,28 +14,27 @@ public class Parada {
   private int kmActual;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "ID_COORDENADA")
-  private Coordenada coordenada;
+  @JoinColumn(name = "ID_PUNTO_UBICACION")
+  private PuntoUbicacion puntoUbicacion;
 
-  //TODO PROBAR SACARLO
   @Column(name = "ES_DE_IDA")
   private boolean esDeIda;
 
   public Parada() {
   }
 
-  public Parada(int kmActual, Coordenada coordenada, boolean esDeIda) {
+  public Parada(int kmActual,PuntoUbicacion puntoUbicacion, boolean esDeIda) {
     this.kmActual = kmActual;
-    this.coordenada = coordenada;
     this.esDeIda = esDeIda;
+    this.puntoUbicacion = puntoUbicacion;
   }
 
   public int getKmActual() {
     return kmActual;
   }
 
-  public Coordenada getCoordenada() {
-    return coordenada;
+  public PuntoUbicacion getPuntoUbicacion(){
+    return this.puntoUbicacion;
   }
 
   public boolean esDeIda() {

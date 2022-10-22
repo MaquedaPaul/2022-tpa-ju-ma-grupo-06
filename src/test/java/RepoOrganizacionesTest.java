@@ -1,17 +1,22 @@
-import linea.*;
+import linea.LineaTransporte;
+import linea.Parada;
+import linea.PuntoUbicacion;
+import linea.TipoTransporte;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
-import transporte.*;
+import transporte.Tramo;
+import transporte.TransportePublico;
+import transporte.Trayecto;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RepoOrganizacionesTest {
 
@@ -47,6 +52,9 @@ public class RepoOrganizacionesTest {
     {
         paradasIda.add(new Parada(700, punto1, true));
         paradasVuelta.add(new Parada(700, punto2, false));
+        //tramos.add(unTramo);
+        paradasIda.add(new Parada(700, punto1, true));
+        paradasVuelta.add(new Parada(700, punto2, false));
         tramos.add(unTramo);
         trayectos.add(unTrayecto);
         miembros.add(unMiembro);
@@ -54,13 +62,20 @@ public class RepoOrganizacionesTest {
         unaOrganizacion.incorporarSector(unSector);
         listadoOrganizacionesGubernamentales.add(OrgGubernamental);
         listadoOrganizacionesGubernamentales.add(OrgGubernamental2);
+
+        RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacion);
+        RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental);
+        RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
     }
     @Test
     public void sePuedeEliminarUnaOrganizacion() {
         RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacionAgregada);
         List<Organizacion> organizaciones = RepoOrganizacion.getInstance().getOrganizaciones();
+        Long idDelAgregado = unaOrganizacionAgregada.getId();
         assertEquals(organizaciones.size(), 1);
         RepoOrganizacion.getInstance().eliminarOrganizacion(unaOrganizacionAgregada);
+        List<Organizacion> match = organizaciones.stream().filter(org -> org.equals(unaOrganizacionAgregada)).collect(Collectors.toList());
+        assertEquals(match.size(), 0);
         organizaciones = RepoOrganizacion.getInstance().getOrganizaciones();
         assertEquals(organizaciones.size(), 0);
     }
@@ -71,20 +86,26 @@ public class RepoOrganizacionesTest {
         RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacionAgregada);
         List<Organizacion> organizaciones = RepoOrganizacion.getInstance().getOrganizaciones();
         int longitud = organizaciones.size();
-        Organizacion match = organizaciones.stream()
-            .filter(unaOrganizacion -> unaOrganizacion.getRazonSocial().equals("AGREGADO")).collect(Collectors.toList()).get(0);
-        //assertEquals(match, unaOrganizacionAgregada);
+        Long idDelAgregado = unaOrganizacionAgregada.getId();
+        assertTrue(RepoOrganizacion.getInstance().estaPersistido(unaOrganizacionAgregada));
         assertTrue(RepoOrganizacion.getInstance().estaPersistido(unaOrganizacion));
     }
 
     @Test
     public void sePuedeFiltrarPorTipoDeOrganizacionGubernamental() {
+
+        Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA, "Argentina", "unaClasificacion", contactos);
+        Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL, "Argentina", "unaClasificacion", contactos);
+        Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL, "Argentina", "unaClasificacion", contactos);
+        Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA, "Argentina", "unaClasificacion", contactos);
         List<Organizacion> listadoOrganizacionesGubernamentales = new ArrayList<>();
         listadoOrganizacionesGubernamentales.add(OrgGubernamental);
         listadoOrganizacionesGubernamentales.add(OrgGubernamental2);
+
         RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental);
         RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacion);
         RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
+
         List<Organizacion> listadoDeLaBase = RepoOrganizacion.getInstance()
             .getOrganizaciones()
             .stream()

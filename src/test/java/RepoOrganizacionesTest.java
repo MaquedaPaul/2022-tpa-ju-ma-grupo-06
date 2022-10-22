@@ -15,10 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RepoOrganizacionesTest {
 
-    Coordenada coordenadaIda = new Coordenada(15,15);
-    Coordenada coordenadaVuelta = new Coordenada(45,75);
-    PuntoUbicacion punto1 = new PuntoUbicacion(12,"salta",157, coordenadaIda);
-    PuntoUbicacion punto2 = new PuntoUbicacion(12,"salta",157, coordenadaVuelta);
+
+    PuntoUbicacion punto1 = new PuntoUbicacion(12,"salta",157);
+    PuntoUbicacion punto2 = new PuntoUbicacion(12,"salta",157);
     List<Parada> paradasIda = new ArrayList<>();
     List<Parada> paradasVuelta = new ArrayList<>();
     LineaTransporte nuevaLinea =
@@ -46,8 +45,8 @@ public class RepoOrganizacionesTest {
     List<Organizacion> listadoOrganizacionesGubernamentales = new ArrayList<>();
 
     {
-        paradasIda.add(new Parada(700, coordenadaIda, true));
-        paradasVuelta.add(new Parada(700, coordenadaVuelta, false));
+        paradasIda.add(new Parada(700, punto1, true));
+        paradasVuelta.add(new Parada(700, punto2, false));
         tramos.add(unTramo);
         trayectos.add(unTrayecto);
         miembros.add(unMiembro);

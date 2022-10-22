@@ -1,11 +1,9 @@
-import linea.Coordenada;
 import linea.PuntoUbicacion;
 import org.junit.jupiter.api.Test;
 import transporte.PropulsionHumana;
 import transporte.Tramo;
 import transporte.Trayecto;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +12,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class TrayectoTest {
-  Coordenada unaCoordenada = new Coordenada(50, 21);
-  Coordenada otraCoordenada = new Coordenada(510, 221);
-  PuntoUbicacion origen = new PuntoUbicacion(0, "mercedes", 23, unaCoordenada);
-  PuntoUbicacion destino = new PuntoUbicacion(35, "libertador", 232, otraCoordenada);
+
+  PuntoUbicacion origen = new PuntoUbicacion(0, "mercedes", 23);
+  PuntoUbicacion destino = new PuntoUbicacion(35, "libertador", 232);
   ;
   PropulsionHumana bicicleta = new PropulsionHumana("Bicicleta");
   Tramo unTramo = new Tramo(origen, destino, bicicleta);

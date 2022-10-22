@@ -11,17 +11,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransportePublicoTest {
 
 
+  // PUNTOS DE UBICACION
+
+  PuntoUbicacion punto1 = new PuntoUbicacion(12,"salta",157);
+  PuntoUbicacion punto2 = new PuntoUbicacion(12,"salta",170);
+  PuntoUbicacion punto3 = new PuntoUbicacion(12,"salta",200);
+
   // PARADAS
-  Coordenada prueba1 = new Coordenada(2, 2);
-  Coordenada prueba2 = new Coordenada(1, 12);
-  Coordenada prueba3 = new Coordenada(22, 24);
-  Coordenada prueba4 = new Coordenada(21, 52);
 
-
-  Parada ubicacionInicio = new Parada(0, prueba1, true);
-  Parada ubicacionIntermedia = new Parada(1, prueba2, true);
-  Parada ubicacionFinal = new Parada(2, prueba3, true);
-  Parada otraUbicacion = new Parada(3, prueba4, true);
+  Parada ubicacionInicio = new Parada(0, punto1, true);
+  Parada ubicacionIntermedia = new Parada(1,punto2, true);
+  Parada ubicacionFinal = new Parada(2, punto3, true);
+  Parada otraUbicacion = new Parada(3, punto1, false);
 
   // LISTA DE UbicacionS
   List<Parada> paradasDeIdaDel138 = new ArrayList<>();
@@ -68,7 +69,7 @@ public class TransportePublicoTest {
 
     assertEquals(linea138.getRecorridoDeIda().size(), 3);
     linea138.agregarParadaAlRecorrido(otraUbicacion);
-    assertEquals(linea138.getRecorridoDeIda().size(), 4);
+    assertEquals(linea138.getRecorridoTotal().size(), 4);
   }
 
   @Test
@@ -80,12 +81,9 @@ public class TransportePublicoTest {
     paradasDeIdaDel138.add(ubicacionIntermedia);
     paradasDeIdaDel138.add(ubicacionFinal);
 
-    PuntoUbicacion paradaInicio = new PuntoUbicacion(32, "aa", 32, prueba1);
-    PuntoUbicacion paradaFinal = new PuntoUbicacion(33, "bb", 33, prueba3);
-
     TransportePublico bondi138 = new TransportePublico(linea138, 20);
 
-    assertEquals(bondi138.distanciaEntre(paradaInicio, paradaFinal), 2);
+    assertEquals(bondi138.distanciaEntre(punto1, punto3), 2);
 
   }
 }

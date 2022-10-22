@@ -19,19 +19,13 @@ public class PuntoUbicacion {
   @Column(name = "ALTURA")
   private int altura;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "ID_COODERNADA")
-  private Coordenada coordenada;
-
-
   public PuntoUbicacion() {
   }
 
-  public PuntoUbicacion(int localidadId, String calle, int altura, Coordenada coordenada) {
+  public PuntoUbicacion(int localidadId, String calle, int altura) {
     this.localidadId = localidadId;
     this.calle = calle;
     this.altura = altura;
-    this.coordenada = coordenada;
   }
 
   public int getLocalidadId() {
@@ -46,7 +40,4 @@ public class PuntoUbicacion {
     return altura;
   }
 
-  public Coordenada getCoordenada() {
-    return coordenada;
-  }
 }

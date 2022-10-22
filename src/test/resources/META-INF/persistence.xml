@@ -19,7 +19,6 @@
         <class>transporte.Combustible</class>
         <class>transporte.Tramo</class>
         <class>linea.PuntoUbicacion</class>
-        <class>linea.Coordenada</class>
         <class>mediciones.Medicion</class>
         <class>tipoconsumo.TipoConsumo</class>
         <class>admin.FactorEmision</class>

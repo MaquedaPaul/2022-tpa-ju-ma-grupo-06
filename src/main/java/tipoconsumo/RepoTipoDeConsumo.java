@@ -1,11 +1,12 @@
 package tipoconsumo;
 
+import lectorcsv.RepoTipoConsumo;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RepoTipoDeConsumo implements WithGlobalEntityManager {
+public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsumo {
 
   private static RepoTipoDeConsumo repoTipoConsumo = null;
 

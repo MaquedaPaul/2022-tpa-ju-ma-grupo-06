@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
 import mediciones.RepoMediciones;
+import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
 import tipoconsumo.TipoConsumo;
 
@@ -15,6 +16,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -130,12 +132,12 @@ public class LectorDeCsv {
   }
 
   private void asignarParametros(List<String> atributos) {
-    this.tipoConsumo = repoConsumos.getTipoConsumo(atributos.get(0));
-    this.perioricidad = new Perioricidad(
-        this.getFormatoDeFechas().parsear(atributos.get(3),
-            TipoPerioricidad.valueOf(atributos.get(2))),
+
+    LocalDate fechaImputacion = this.getFormatoDeFechas().parsear(atributos.get(3),
         TipoPerioricidad.valueOf(atributos.get(2)));
 
+    this.tipoConsumo = repoConsumos.getTipoConsumo(atributos.get(0));
+    this.perioricidad = TipoPerioricidad.valueOf(atributos.get(2)).getPerioricidad(fechaImputacion);
     this.valor = Integer.parseInt(atributos.get(1));
   }
 

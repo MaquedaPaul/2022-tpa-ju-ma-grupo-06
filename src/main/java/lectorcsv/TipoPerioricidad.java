@@ -1,6 +1,26 @@
 package lectorcsv;
 
-public enum TipoPerioricidad {
+import mediciones.perioricidad.Anual;
+import mediciones.perioricidad.Mensual;
+import mediciones.perioricidad.Perioricidad;
 
-  ANUAL, MENSUAL
+import java.time.LocalDate;
+
+public enum TipoPerioricidad {
+  ANUAL() {
+    @Override
+    public Perioricidad getPerioricidad(LocalDate fecha) {
+      return new Anual(fecha);
+    }
+
+  },
+
+  MENSUAL() {
+    @Override
+    public Perioricidad getPerioricidad(LocalDate fecha) {
+      return new Mensual(fecha);
+    }
+  };
+
+  public abstract Perioricidad getPerioricidad(LocalDate fecha);
 }

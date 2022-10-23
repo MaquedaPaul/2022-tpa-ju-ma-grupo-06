@@ -1,10 +1,14 @@
 package mediciones;
 
+import lombok.Getter;
+import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
+import organizacion.periodo.Periodo;
 import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 
+@Getter
 @Entity
 public class Medicion {
 
@@ -13,8 +17,6 @@ public class Medicion {
   private Long id;
 
   private double valor;
-  private int anio;
-  private int mes;
 
   @ManyToOne
   private Organizacion organizacion;
@@ -22,40 +24,30 @@ public class Medicion {
   @ManyToOne
   private TipoConsumo tipoConsumo;
 
-  @Enumerated
+  @Transient
   private Perioricidad periodicidad;
 
-  @Column
-  private String periodoDeImputacion;
 
   public Medicion(TipoConsumo unTipoConsumo,
                   Perioricidad unaPerioricidad,
                   double unValor,
-                  int anio,
-                  int mes,
                   Organizacion organizacion) {
     this.tipoConsumo = unTipoConsumo;
     this.periodicidad = unaPerioricidad;
     this.valor = unValor;
-    this.anio = anio;
-    this.mes = mes;
     this.organizacion = organizacion;
   }
 
   public Medicion() {
-
   }
 
-  public TipoConsumo getTipoConsumo() {
-    return tipoConsumo;
+  public double calcularHC(Periodo periodo) {
+
+    return 1D;
   }
 
-  public Perioricidad getPeriodicidad() {
-    return periodicidad;
-  }
-
-  public double getValor() {
-    return valor;
+  public boolean esDelPeriodo(Periodo periodo) {
+    return this.getPeriodicidad().esDelPeriodo(periodo);
   }
 
   public double calcularHc() {
@@ -67,21 +59,21 @@ public class Medicion {
   }
 
   public boolean esDelAnio(int fecha) {
-    return this.anio == fecha;
+    return 12 == fecha;
   }
 
-  public double getValorSegun(Perioricidad periodo) {
-    if (periodo == Perioricidad.ANUAL) {
+  public double getValorSegun(int da) {
+    if (true) {
       return this.getValor();
     }
-    return this.getPeriodicidad() == Perioricidad.MENSUAL ? this.getValor() : this.getValor() / 12;
+    return this.getPeriodicidad() == null ? this.getValor() : this.getValor() / 12;
   }
 
   public boolean esAnual() {
-    return this.getPeriodicidad() == Perioricidad.ANUAL;
+    return this.getPeriodicidad() == null;
   }
 
   public boolean esDelMes(int mes) {
-    return this.mes == mes;
+    return 12 == mes;
   }
 }

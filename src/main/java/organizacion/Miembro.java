@@ -2,6 +2,7 @@ package organizacion;
 
 import admin.config.GestorDeFechas;
 import lombok.Getter;
+import organizacion.periodo.Periodo;
 import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
 
@@ -57,7 +58,6 @@ public class Miembro {
   }
 
 
-
   public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
@@ -68,10 +68,13 @@ public class Miembro {
   }
 
 
-  public double calcularHCMensual() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.calcularHCTrayectos();
+  public double calcularHCTotal(Periodo periodo) {
+    return this.getDiasDeTrabajo() * this.calcularHCTrayectos() * periodo.perioricidad();
   }
 
+  public int getDiasDeTrabajo() {
+    return GestorDeFechas.getInstance().getDiasDeTrabajo();
+  }
 
   public double calcularHCTrayectos() {
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();

@@ -1,8 +1,11 @@
 import exceptions.NoExisteElSectorVinculante;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+import organizacion.periodo.Anual;
+import organizacion.periodo.Periodo;
 import transporte.Trayecto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +39,9 @@ public class MiembroTest {
     juan.registrarTrayecto(trayecto1);
     juan.registrarTrayecto(trayecto2);
 
-    assertEquals(2000D, juan.calcularHCMensual());
+    Periodo periodo = new Anual(LocalDate.of(2020, 3, 3));
+
+    assertEquals(2000D, juan.calcularHCTotal(periodo));
   }
 
   public static Miembro generarMiembro(String nombre,

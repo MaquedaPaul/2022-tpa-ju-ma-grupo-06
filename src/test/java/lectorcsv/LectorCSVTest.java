@@ -12,6 +12,9 @@ import tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,13 +42,23 @@ public class LectorCSVTest {
       Unidad.LTS, TipoActividad.COMBUSTION_MOVIL,
       TipoAlcance.EMISION_DIRECTA);
 
+  static DateTimeFormatter formatoMensual = new DateTimeFormatterBuilder()
+      .appendPattern("MM/yyyy")
+      .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+      .toFormatter();
+  static DateTimeFormatter formatoAnual = new DateTimeFormatterBuilder()
+      .appendPattern("yyyy")
+      .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+      .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+      .toFormatter();
+
   @BeforeAll
   static void inicializar() {
     mockOrg = mock(Organizacion.class);
 
-    HashMap<TipoPerioricidad, String> formatos = new HashMap<>();
-    formatos.put(TipoPerioricidad.ANUAL, "([0-9]{4})");
-    formatos.put(TipoPerioricidad.MENSUAL, "(((0[1-9])|10|11|12)/[0-9]{4})");
+    HashMap<TipoPerioricidad, DateTimeFormatter> formatos = new HashMap<>();
+    formatos.put(TipoPerioricidad.ANUAL, formatoAnual);
+    formatos.put(TipoPerioricidad.MENSUAL, formatoMensual);
     formato = new FormatoDeFechas(formatos);
 
     List<String> columnasEsperadas = new ArrayList<>();

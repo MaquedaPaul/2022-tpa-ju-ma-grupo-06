@@ -4,10 +4,12 @@ import mediciones.Medicion;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
 import organizacion.*;
+import organizacion.periodo.Anual;
+import organizacion.periodo.Mensual;
+import organizacion.periodo.Periodo;
 import transporte.Trayecto;
 
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +43,9 @@ public class OrganizacionTest {
   List<Trayecto> trayectos1 = new ArrayList<>();
   List<Trayecto> trayectos2 = new ArrayList<>();
 
+  Periodo mensual = new Mensual(LocalDate.of(2022, 10, 3));
+  Periodo anual = new Anual(LocalDate.of(2022, 10, 3));
+
   @Test
   public void laOrganizacionIncorporaUnSector() {
 
@@ -58,6 +63,7 @@ public class OrganizacionTest {
     Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
     jorgito.solicitarVinculacion(onu, nuevaSolicitud);
     assertEquals(onu.getSolicitudes().size(), 1);
+    //CURIOSO
     assertThrows(NoSeAceptaVinculacion.class, () -> onu.procesarVinculacion(false));
     assertEquals(onu.getSolicitudes().size(), 0);
     assertFalse(onu.getSectores().stream().
@@ -104,7 +110,7 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(30D);
     when(trayecto3.calcularHC()).thenReturn(30D);
 
-    assertEquals(2000D, spyOnu.calcularHCTotalMensualDeMiembros());
+    assertEquals(2000D, spyOnu.calcularHCTotalDeMiembros(mensual));
 
   }
 
@@ -140,12 +146,12 @@ public class OrganizacionTest {
     when(trayecto2.calcularHC()).thenReturn(30D);
     when(trayecto3.calcularHC()).thenReturn(30D);
 
-    assertEquals(24000D, spyOnu.calcularHCTotalAnualDeMiembros());
+    assertEquals(24000D, spyOnu.calcularHCTotalDeMiembros(anual));
 
   }
 
   @Test
-  public void elImpactoDeJorgeEnJulio2021EsDel20Porciento() {
+  public void elImpactoDeJorgeEnOctubre2021EsDel20Porciento() {
     Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
     Organizacion spyOnu = spy(onu);
 
@@ -154,9 +160,10 @@ public class OrganizacionTest {
     when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
-    when(spyOnu.calcularHCTotal(YearMonth.of(2020, 7))).thenReturn(40000D);
+    when(spyOnu.calcularHCTotal(mensual)).thenReturn(40000D);
+    when(spyOnu.calcularHCTotalMediciones(any())).thenReturn(0D);
     // (100 * 20 * 400) / 40000 = 20
-    assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, YearMonth.of(2020, 7)));
+    assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, mensual));
   }
 
   @Test
@@ -166,9 +173,9 @@ public class OrganizacionTest {
     when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
-    when(spyOnu.calcularHCTotal(Year.of(2021))).thenReturn(600000D);
+    when(spyOnu.calcularHCTotal(anual)).thenReturn(600000D);
     // (100 * 12 * 20 * 400) / x = 16
-    assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, Year.of(2021)));
+    assertEquals(16D, spyOnu.impactoDeMiembro(spyjorgito, anual));
   }
 
   @Test

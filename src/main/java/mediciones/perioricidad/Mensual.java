@@ -1,21 +1,17 @@
 package mediciones.perioricidad;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
-import lombok.Getter;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
 import java.time.LocalDate;
 
-@Getter
-public class Mensual implements Perioricidad {
+public class Mensual extends Perioricidad {
 
-  private final LocalDate fecha;
-  private final double valor;
 
   public Mensual(LocalDate fecha, double valor) {
-    this.fecha = fecha;
-    this.valor = valor;
+    this.setFecha(fecha);
+    this.setValor(valor);
   }
 
   public boolean esDelPeriodo(Periodo periodo) {
@@ -42,7 +38,7 @@ public class Mensual implements Perioricidad {
   }
 
   public int getMonth() {
-    return fecha.getMonthValue();
+    return this.getFecha().getMonthValue();
   }
 
 }

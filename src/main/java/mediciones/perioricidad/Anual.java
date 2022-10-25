@@ -1,25 +1,21 @@
 package mediciones.perioricidad;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
-import lombok.Getter;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
 import java.time.LocalDate;
 
-@Getter
-public class Anual implements Perioricidad {
+public class Anual extends Perioricidad {
 
-  private final LocalDate fechaImputacion;
-  private final double valor;
 
   public Anual(LocalDate fechaImputacion, double valor) {
-    this.fechaImputacion = fechaImputacion;
-    this.valor = valor;
+    this.setFecha(fechaImputacion);
+    this.setValor(valor);
   }
 
   public boolean esDelPeriodo(Periodo periodo) {
-    return fechaImputacion.getYear() == periodo.getYear();
+    return this.getYear() == periodo.getYear();
   }
 
   public double calcularHC(Periodo periodo) {
@@ -39,7 +35,7 @@ public class Anual implements Perioricidad {
       return this.getValorMensual() * inicio.mesesDeDiferenciaCon(fin);
     }
 
-    if (inicio.esDelAnio(this.fechaImputacion.getYear())) {
+    if (inicio.esDelAnio(this.getYear())) {
       return this.getValorMensual() * Math.abs(inicio.getMonth() - 13);
     }
 
@@ -50,9 +46,15 @@ public class Anual implements Perioricidad {
     return this.getValor() / 12;
   }
 
+  @Override
   public boolean esUnIntervaloValido(PeriodoMensual inicio, PeriodoMensual fin) {
-    return (inicio.esDelAnio(this.fechaImputacion.getYear())
-        || fin.esDelAnio(this.fechaImputacion.getYear()))
+    return (inicio.esDelAnio(this.getYear())
+        || fin.esDelAnio(this.getYear()))
         && fin.esDespuesDe(inicio.getFecha());
   }
+
+  public int getYear() {
+    return this.getFecha().getYear();
+  }
+
 }

@@ -23,7 +23,7 @@ public class Medicion {
   @ManyToOne
   private TipoConsumo tipoConsumo;
 
-  @Transient
+  @Embedded
   private Perioricidad periodicidad;
 
 

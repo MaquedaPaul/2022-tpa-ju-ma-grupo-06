@@ -21,4 +21,8 @@ public class PropulsionHumana extends TransportePrivado {
     return herramientaUtilizada;
   }
 
+  @Override
+  public boolean sePuedeCompartir() {
+    return false;
+  }
 }

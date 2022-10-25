@@ -1,6 +1,7 @@
 package transporte;
 
 import linea.PuntoUbicacion;
+import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -23,6 +24,10 @@ public abstract class Transporte {
   @JoinColumn(name = "ID_COMBUSTIBLE")
   Combustible combustible;
 
+  public boolean sePuedeCompartir() {
+    return false;
+  }
+
   public abstract double distanciaEntre(PuntoUbicacion origen,
                                         PuntoUbicacion destino) throws IOException;
 
@@ -36,6 +41,10 @@ public abstract class Transporte {
 
   public void setCombustible(Combustible combustible) {
     this.combustible = combustible;
+  }
+
+  public TipoConsumo getTipoConsumo() {
+    return combustible.getTipoConsumo();
   }
 
 }

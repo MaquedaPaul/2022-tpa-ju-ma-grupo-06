@@ -1,6 +1,5 @@
 package transporte;
 
-import linea.PuntoUbicacion;
 import lombok.Getter;
 import tipoconsumo.TipoConsumo;
 
@@ -37,6 +36,10 @@ public class Trayecto {
 
   public void agregarTramo(Tramo unTramo) {
     this.tramos.add(unTramo);
+  }
+
+  public boolean sePuedeCompartir() {
+    return tramos.stream().allMatch(Tramo::sePuedeCompartir);
   }
 
   /*

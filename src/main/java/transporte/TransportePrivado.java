@@ -4,7 +4,6 @@ import linea.PuntoUbicacion;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import java.io.IOException;
@@ -24,6 +23,11 @@ public abstract class TransportePrivado extends Transporte {
         destino.getCalle(),
         destino.getAltura());
     return distancia.valor;
+  }
+
+  @Override
+  public boolean sePuedeCompartir() {
+    return true;
   }
 
   public void setServiocioGeo(ServicioGeodds unServicio) {

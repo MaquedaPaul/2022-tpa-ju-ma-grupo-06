@@ -61,11 +61,15 @@ public class Tramo {
     throw new NoSePudoCalcularElTramo("API sin conexion");
   }
 
+  public boolean sePuedeCompartir() {
+    return this.getTransporteUtilizado().sePuedeCompartir();
+  }
+
   public double calcularHc() {
     return transporteUtilizado.calcularHc() * distanciaTramo();
   }
 
   public TipoConsumo getTipoConsumo() {
-    return this.transporteUtilizado.combustible.getTipoConsumo();
+    return this.transporteUtilizado.getTipoConsumo();
   }
 }

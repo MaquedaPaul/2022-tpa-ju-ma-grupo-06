@@ -1,10 +1,10 @@
 package organizacion;
 
-public class HC_Por_Tipo_Organizacion {
+public class HCPorTipoOrganizacion {
   double hc;
   TipoOrganizacion unTipo;
 
-  public HC_Por_Tipo_Organizacion(Long hc, TipoOrganizacion tipo) {
+  public HCPorTipoOrganizacion(double hc, TipoOrganizacion tipo) {
     this.hc = hc;
     this.unTipo = tipo;
   }

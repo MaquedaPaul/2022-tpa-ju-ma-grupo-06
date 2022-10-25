@@ -137,14 +137,13 @@ public class LectorDeCsv {
         TipoPerioricidad.valueOf(atributos.get(2)));
 
     this.tipoConsumo = repoConsumos.getTipoConsumo(atributos.get(0));
-    this.perioricidad = TipoPerioricidad.valueOf(atributos.get(2)).getPerioricidad(fechaImputacion);
     this.valor = Integer.parseInt(atributos.get(1));
+    this.perioricidad = TipoPerioricidad.valueOf(atributos.get(2)).getPerioricidad(fechaImputacion, this.valor);
   }
 
   private void guardarMedicion() {
     Medicion nuevaMedicion = new Medicion(tipoConsumo,
         perioricidad,
-        valor,
         organizacion);
     mediciones.add(nuevaMedicion);
   }

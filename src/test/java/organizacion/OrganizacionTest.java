@@ -1,7 +1,8 @@
 package organizacion;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
-import exceptions.NoSeAceptaVinculacion;
+import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
+import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
 import mediciones.Medicion;
 import miembro.Miembro;
@@ -17,9 +18,9 @@ import transporte.Trayecto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class OrganizacionTest {
@@ -63,23 +64,46 @@ public class OrganizacionTest {
   }
 
   @Test
+  public void siLaSolicitudNoPerteneceALaOrgNoPuedeProcesarla() {
+
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Sector sector = mock(Sector.class);
+    Miembro miembro1 = mock(Miembro.class);
+    Solicitud solicitud = new Solicitud(miembro1, sector);
+    when(sector.getNombre()).thenReturn("ssss");
+
+    org.incorporarSector(sector);
+    assertThrows(LaSolicitudNoPerteneceAEstaOrganizacion.class,
+        () -> org.procesarVinculacion(solicitud, true));
+
+  }
+
+  @Test
+  public void siElSectorDeLaSolicitudNoPerteneceALaOrganizacionNoSePuedeAgregarALasSolicitudes() {
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Sector sector = mock(Sector.class);
+    Miembro miembro1 = mock(Miembro.class);
+    Solicitud solicitud = new Solicitud(miembro1, sector);
+    when(sector.getNombre()).thenReturn("ssss");
+
+    assertThrows(NoExisteElSectorVinculante.class,
+        () -> org.recibirSolicitud(solicitud));
+  }
+
+  @Test
   public void laOrganizacionNoAceptaVinculacion() {
 
-    Sector compras = new Sector("Compras", new ArrayList<>());
-    onu.incorporarSector(compras);
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Sector sector = mock(Sector.class);
+    Miembro miembro1 = mock(Miembro.class);
+    Solicitud solicitud = new Solicitud(miembro1, sector);
+    when(sector.getNombre()).thenReturn("ssss");
 
-    Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
-    jorgito.solicitarVinculacion(onu, nuevaSolicitud);
-    assertEquals(onu.getSolicitudes().size(), 1);
-    //CURIOSO
-    assertThrows(NoSeAceptaVinculacion.class, () -> onu.procesarVinculacion(false));
-    assertEquals(onu.getSolicitudes().size(), 0);
-    assertFalse(onu.getSectores().stream().
-        filter(sector -> sector.getNombre().equals("Compras")).
-        collect(Collectors.toList()).
-        get(0).
-        getMiembros().
-        contains(jorgito));
+    org.incorporarSector(sector);
+    org.recibirSolicitud(solicitud);
+    org.procesarVinculacion(solicitud, false);
+    verify(sector, times(0)).admitirMiembro(miembro1);
+
   }
 
   @Test
@@ -167,7 +191,6 @@ public class OrganizacionTest {
     when(trayecto3.calcularHC()).thenReturn(100D);
     when(spyOnu.calcularHCTotal(mensual)).thenReturn(40000D);
     when(spyOnu.calcularHCTotalMediciones(any())).thenReturn(0D);
-    // (100 * 20 * 400) / 40000 = 20
     assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, mensual));
   }
 

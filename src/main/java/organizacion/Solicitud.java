@@ -1,10 +1,12 @@
 package organizacion;
 
+import lombok.Getter;
 import miembro.Miembro;
 
 import javax.persistence.*;
 
 @Entity(name = "SOLICITUD")
+@Getter
 public class Solicitud {
 
   @Id
@@ -18,7 +20,9 @@ public class Solicitud {
   @ManyToOne(cascade = CascadeType.PERSIST)
   Sector sectorSolicitado;
 
-  public Solicitud(){
+  private boolean procesada;
+
+  public Solicitud() {
   }
 
   public Solicitud(Miembro unMiembro, Sector unSector) {
@@ -26,16 +30,13 @@ public class Solicitud {
     sectorSolicitado = unSector;
   }
 
-
-  public String nombreDelSectorSolicitado() {
-    return sectorSolicitado.getNombre();
+  public void aceptarVinculacion() {
+    this.sectorSolicitado.admitirMiembro(this.miembroSolicitante);
+    procesada = true;
   }
 
-  public Sector getSectorSolicitado() {
-    return sectorSolicitado;
+  public void rechazarSolicitud() {
+    procesada = true;
   }
 
-  public Miembro getMiembroSolicitante() {
-    return miembroSolicitante;
-  }
 }

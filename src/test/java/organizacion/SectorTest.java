@@ -2,13 +2,13 @@ package organizacion;
 
 import admin.config.GestorDeFechas;
 import miembro.Miembro;
+import miembro.MiembroTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import transporte.Trayecto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -47,19 +47,7 @@ class SectorTest {
 
   @Test
   public void unMiembroSeVinculaConUnSector() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
-    Sector compras = new Sector("Compras", new ArrayList<>());
-    onu.incorporarSector(compras);
-    Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
-    Solicitud nuevaSolicitud = new Solicitud(jorgito, compras);
-    jorgito.solicitarVinculacion(onu, nuevaSolicitud);
-    onu.procesarVinculacion(true);
-    assertEquals(onu.getSectores().stream().
-        filter(sector -> sector.getNombre().equals("Compras")).
-        collect(Collectors.toList()).
-        get(0).
-        getMiembros().
-        size(), 1);
+
   }
 
   @Test

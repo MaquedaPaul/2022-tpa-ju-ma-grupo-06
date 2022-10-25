@@ -1,6 +1,8 @@
 package miembro;
 
 import admin.config.GestorDeFechas;
+import exceptions.ElTrayectoSeleccionadoNoPerteneceAEsteMiembro;
+import exceptions.EsteTrayectoNoPuedeSerCompartido;
 import lombok.Getter;
 import organizacion.Organizacion;
 import organizacion.Solicitud;
@@ -83,9 +85,22 @@ public class Miembro {
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
   }
 
+  //TODO ¿DONDE SE USA ESTO?
   public Stream<TipoConsumo> getTiposDeConsumoUsados() {
     return this.getTrayectos().stream()
         .map(Trayecto::getTiposDeConsumo)
         .flatMap(Stream::distinct);
+  }
+
+  public void compartirTrayectoCon(Miembro otro, Trayecto trayecto) {
+    if (!this.trayectos.contains(trayecto)) {
+      throw new ElTrayectoSeleccionadoNoPerteneceAEsteMiembro();
+    }
+
+    if (!trayecto.sePuedeCompartir()) {
+      throw new EsteTrayectoNoPuedeSerCompartido();
+    }
+
+    otro.registrarTrayecto(trayecto);
   }
 }

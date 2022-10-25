@@ -2,8 +2,8 @@ package organizacion;
 
 import admin.config.GestorDeFechas;
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
+import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
-import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import lombok.Getter;
 import mediciones.Medicion;
@@ -68,14 +68,16 @@ public class Organizacion {
   public Organizacion() {
   }
 
-  public void procesarVinculacion(boolean decision) {
-    Solicitud nuevaSolicitud = solicitudes.get(0);
-    solicitudes.remove(0);
-    if (decision) {
-      aceptarvinculacion(nuevaSolicitud);
-      return;
+  public void procesarVinculacion(Solicitud solicitud, boolean aceptado) {
+    if (!this.getSolicitudes().contains(solicitud)) {
+      throw new LaSolicitudNoPerteneceAEstaOrganizacion();
     }
-    rechazarVinculacion();
+
+    if (aceptado) {
+      solicitud.aceptarVinculacion();
+    } else {
+      solicitud.rechazarSolicitud();
+    }
   }
 
   public void incorporarSector(Sector unSector) {
@@ -83,23 +85,14 @@ public class Organizacion {
   }
 
   public void recibirSolicitud(Solicitud unaSolicitud) {
-    validarQueExistaSector(unaSolicitud.nombreDelSectorSolicitado());
+    validarQueExistaSector(unaSolicitud.getSectorSolicitado().getNombre());
     solicitudes.add(unaSolicitud);
-  }
-
-  // POR QUE ES UNA EXCEPTION SI NO ES UN ERROR
-  private void rechazarVinculacion() {
-    throw new NoSeAceptaVinculacion("Su pedido de Vinculacion Fue Rechazado");
   }
 
   private void validarQueExistaSector(String nombreSector) {
     if (sectores.stream().noneMatch(sector -> sector.getNombre().equals(nombreSector))) {
       throw new NoExisteElSectorVinculante("El organizacion.Sector Ingresado es Invalido");
     }
-  }
-
-  private void aceptarvinculacion(Solicitud unaSolicitud) {
-    unaSolicitud.getSectorSolicitado().admitirMiembro(unaSolicitud.getMiembroSolicitante());
   }
 
   // CALCULAR HC

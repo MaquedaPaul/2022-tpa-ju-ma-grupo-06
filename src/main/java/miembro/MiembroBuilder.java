@@ -8,6 +8,7 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
+//TODO ESTA AL PEDO ESTO
 public class MiembroBuilder {
   String nombre;
   String apellido;

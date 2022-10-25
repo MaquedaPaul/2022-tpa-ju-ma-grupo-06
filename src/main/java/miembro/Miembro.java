@@ -62,7 +62,6 @@ public class Miembro {
     this.trayectos = unosTrayectos;
   }
 
-
   public void registrarTrayecto(Trayecto unTrayecto) {
     requireNonNull(unTrayecto);
     trayectos.add(unTrayecto);
@@ -71,7 +70,6 @@ public class Miembro {
   public void solicitarVinculacion(Organizacion unaOrganizacion, Solicitud unaSolicitud) {
     unaOrganizacion.recibirSolicitud(unaSolicitud);
   }
-
 
   public double calcularHCTotal(Periodo periodo) {
     return this.getDiasDeTrabajo() * this.calcularHCTrayectos() * periodo.perioricidad();

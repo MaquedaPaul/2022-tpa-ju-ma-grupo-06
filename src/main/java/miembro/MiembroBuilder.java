@@ -1,6 +1,7 @@
-package organizacion;
+package miembro;
 
 
+import organizacion.TipoDocumento;
 import transporte.Trayecto;
 
 import java.util.List;

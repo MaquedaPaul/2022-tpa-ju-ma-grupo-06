@@ -1,7 +1,10 @@
-package organizacion;
+package miembro;
 
 import admin.config.GestorDeFechas;
 import lombok.Getter;
+import organizacion.Organizacion;
+import organizacion.Solicitud;
+import organizacion.TipoDocumento;
 import organizacion.periodo.Periodo;
 import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;

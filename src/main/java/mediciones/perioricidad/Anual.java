@@ -1,5 +1,6 @@
 package mediciones.perioricidad;
 
+import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import lombok.Getter;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
@@ -26,6 +27,10 @@ public class Anual implements Perioricidad {
   }
 
   public double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+
+    if (inicio.esDespuesDe(fin.getFecha())) {
+      throw new LaFechaDeInicioDebeSerAnteriorALaFechaDeFin();
+    }
 
     if (!this.esUnIntervaloValido(inicio, fin)) {
       return 0D;

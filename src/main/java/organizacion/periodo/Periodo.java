@@ -4,7 +4,7 @@ public interface Periodo {
 
   int getYear();
 
-  int getMonthValue();
+  int getMonth();
 
   int perioricidad();
 }

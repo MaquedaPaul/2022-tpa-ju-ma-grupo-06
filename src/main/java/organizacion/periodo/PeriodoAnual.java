@@ -2,11 +2,11 @@ package organizacion.periodo;
 
 import java.time.LocalDate;
 
-public class Anual implements Periodo {
+public class PeriodoAnual implements Periodo {
 
   private final LocalDate fecha;
 
-  public Anual(LocalDate fecha) {
+  public PeriodoAnual(LocalDate fecha) {
     this.fecha = fecha;
   }
 
@@ -14,7 +14,7 @@ public class Anual implements Periodo {
     return fecha.getYear();
   }
 
-  public int getMonthValue() {
+  public int getMonth() {
     return fecha.getMonthValue();
   }
 

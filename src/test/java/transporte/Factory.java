@@ -1,6 +1,6 @@
+package transporte;
+
 import linea.PuntoUbicacion;
-import transporte.Tramo;
-import transporte.Transporte;
 
 public class Factory {
 

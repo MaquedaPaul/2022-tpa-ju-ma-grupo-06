@@ -1,6 +1,10 @@
-import linea.*;
+package transporte;
+
+import linea.LineaTransporte;
+import linea.Parada;
+import linea.PuntoUbicacion;
+import linea.TipoTransporte;
 import org.junit.jupiter.api.Test;
-import transporte.TransportePublico;
 
 import java.io.IOException;
 import java.util.ArrayList;

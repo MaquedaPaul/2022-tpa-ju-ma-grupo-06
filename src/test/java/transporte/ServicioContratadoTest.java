@@ -1,9 +1,8 @@
+package transporte;
+
 import org.junit.jupiter.api.Test;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
-import transporte.ServicioContratado;
-import transporte.TipoVehiculo;
-import transporte.Tramo;
 
 import java.io.IOException;
 

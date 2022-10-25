@@ -1,8 +1,7 @@
 package organizacion;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import miembro.Miembro;
+
 import javax.persistence.*;
 
 @Entity(name = "SOLICITUD")

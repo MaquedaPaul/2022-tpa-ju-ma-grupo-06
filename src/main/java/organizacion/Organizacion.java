@@ -1,16 +1,18 @@
 package organizacion;
 
 import admin.config.GestorDeFechas;
+import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import lombok.Getter;
 import mediciones.Medicion;
 import mediciones.RepoMediciones;
+import miembro.Miembro;
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
 import organizacion.periodo.Periodo;
-import tipoconsumo.TipoConsumo;
+import organizacion.periodo.PeriodoMensual;
 import transporte.Trayecto;
 
 import javax.persistence.*;
@@ -121,13 +123,37 @@ public class Organizacion {
         .sum();
   }
 
+  public double calcularHCTotalEntre(PeriodoMensual fechaInicio, PeriodoMensual fechaFin) {
+    if (fechaInicio.esDespuesDe(fechaFin.getFecha())) {
+      throw new LaFechaDeInicioDebeSerAnteriorALaFechaDeFin();
+    }
+    return this.calcularHCMedicionesEntre(fechaInicio, fechaFin) + this.calcularHCMiembrosEntre(fechaInicio, fechaFin);
+  }
+
+  public double calcularHCMiembrosEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+    if (inicio.esDespuesDe(fin.getFecha())) {
+      throw new LaFechaDeInicioDebeSerAnteriorALaFechaDeFin();
+    }
+    return this.calcularHCTotalDeMiembros(inicio) * inicio.mesesDeDiferenciaCon(fin);
+  }
+
+  public double calcularHCMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+    return this.getMedicionesEntre(inicio, fin)
+        .stream()
+        .mapToDouble(medicion -> medicion.calcularHCEntre(inicio, fin))
+        .sum();
+  }
+
+  public List<Medicion> getMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+    if (inicio.esDespuesDe(fin.getFecha())) {
+      throw new LaFechaDeInicioDebeSerAnteriorALaFechaDeFin();
+    }
+    return RepoMediciones.getInstance().getMedicionesEntre(inicio, fin);
+  }
+
   public int getDiasDeTrabajo() {
     return GestorDeFechas.getInstance().getDiasDeTrabajo();
   }
-
-  /*
-   *
-   * */
 
   public List<Medicion> getMediciones() {
     return RepoMediciones.getInstance().medicionesDe(this);
@@ -146,7 +172,6 @@ public class Organizacion {
     return (100 * miembro.calcularHCTotal(periodo)) / this.calcularHCTotal(periodo);
   }
 
-
   public List<Miembro> getMiembros() {
     return this.getSectores()
         .stream().map(Sector::getMiembros)
@@ -161,19 +186,8 @@ public class Organizacion {
     return sector.getMiembros();
   }
 
-//TODO CAMBIAR YEAR Y YEARMONTH POR UNA INTERFACE Y DOS CLASES
-
-
-  public double indicadorHCMiembros(Periodo periodo) {
-    return calcularHCTotal(periodo) / this.getCantidadDeMiembros();
-  }
-
   public double indicadorHCMiembrosEnSector(Sector sector, Periodo periodo) {
     return calcularHCTotal(periodo) / this.getMiembrosEnSector(sector).size();
-  }
-
-  public int getCantidadDeMiembros() {
-    return this.getMiembros().size();
   }
 
   public void cargarContacto(Contacto unContacto) {
@@ -188,10 +202,5 @@ public class Organizacion {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
-  public Stream<TipoConsumo> getTiposDeConsumoUsados() {
-    return this.getMiembros().stream()
-        .map(Miembro::getTiposDeConsumoUsados)
-        .flatMap(Stream::distinct);
-  }
 }
 

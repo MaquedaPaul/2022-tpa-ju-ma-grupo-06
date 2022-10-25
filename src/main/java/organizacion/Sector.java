@@ -1,6 +1,7 @@
 package organizacion;
 
 import admin.config.GestorDeFechas;
+import miembro.Miembro;
 import transporte.Trayecto;
 
 import javax.persistence.*;

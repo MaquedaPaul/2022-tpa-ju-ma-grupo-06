@@ -1,7 +1,9 @@
+package organizacion;
+
 import admin.config.GestorDeFechas;
+import miembro.Miembro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import organizacion.*;
 import transporte.Trayecto;
 
 import java.util.ArrayList;

@@ -1,12 +1,17 @@
+package organizacion;
+
+import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.NoSeAceptaVinculacion;
 import exceptions.NoSeEncuentraException;
 import mediciones.Medicion;
+import miembro.Miembro;
+import miembro.MiembroBuilder;
 import notificaciones.Contacto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import organizacion.*;
-import organizacion.periodo.Anual;
-import organizacion.periodo.Mensual;
 import organizacion.periodo.Periodo;
+import organizacion.periodo.PeriodoAnual;
+import organizacion.periodo.PeriodoMensual;
 import transporte.Trayecto;
 
 import java.time.LocalDate;
@@ -43,8 +48,11 @@ public class OrganizacionTest {
   List<Trayecto> trayectos1 = new ArrayList<>();
   List<Trayecto> trayectos2 = new ArrayList<>();
 
-  Periodo mensual = new Mensual(LocalDate.of(2022, 10, 3));
-  Periodo anual = new Anual(LocalDate.of(2022, 10, 3));
+  Periodo mensual = new PeriodoMensual(LocalDate.of(2022, 10, 3));
+  Periodo anual = new PeriodoAnual(LocalDate.of(2022, 10, 3));
+
+  PeriodoMensual dic2020 = new PeriodoMensual(LocalDate.of(2020, 12, 1));
+  PeriodoMensual jul2021 = new PeriodoMensual(LocalDate.of(2021, 7, 1));
 
   @Test
   public void laOrganizacionIncorporaUnSector() {
@@ -73,9 +81,6 @@ public class OrganizacionTest {
         getMiembros().
         contains(jorgito));
   }
-
-  //HCO = HC total de la organización
-  //HCM = HC total del miembro
 
   @Test
   public void elHCMensualDeLosMiembrosEs2000() {
@@ -208,6 +213,60 @@ public class OrganizacionTest {
     nuevoMiembro.especificarTrayectos(new ArrayList<>());
     return nuevoMiembro.construir();
   }
+
+  @Test
+  public void elHCEntreDIC2020yJUL2021EsDe2200() {
+
+    PeriodoMensual dic2020 = new PeriodoMensual(LocalDate.of(2020, 12, 1));
+    PeriodoMensual jul2021 = new PeriodoMensual(LocalDate.of(2021, 7, 1));
+    mediciones.add(med1);
+    mediciones.add(med2);
+
+    when(spyOnu.getMedicionesEntre(dic2020, jul2021)).thenReturn(mediciones);
+    when(spyOnu.calcularHCMiembrosEntre(dic2020, jul2021)).thenReturn(1000D);
+
+    when(med1.calcularHCEntre(dic2020, jul2021)).thenReturn(200D);
+    when(med2.calcularHCEntre(dic2020, jul2021)).thenReturn(1000D);
+
+    assertEquals(2200, spyOnu.calcularHCTotalEntre(dic2020, jul2021));
+  }
+
+  @Test
+  public void elHCTotalDeMiembrosEntreDIC2020yJUL2021Es8000() {
+
+    PeriodoMensual dic2020 = new PeriodoMensual(LocalDate.of(2020, 12, 1));
+    PeriodoMensual jul2021 = new PeriodoMensual(LocalDate.of(2021, 7, 1));
+
+    when(spyOnu.calcularHCTotalDeMiembros(dic2020)).thenReturn(1000D);
+
+    Assertions.assertEquals(8000D, spyOnu.calcularHCMiembrosEntre(dic2020, jul2021));
+  }
+
+  @Test
+  public void elHCTotalDeMedicionesEntreDIC2020yJUL2021Es2000() {
+
+    Medicion medMock = mock(Medicion.class);
+    Medicion medMock2 = mock(Medicion.class);
+    List<Medicion> listMediciones = new ArrayList<>();
+    listMediciones.add(medMock2);
+    listMediciones.add(medMock);
+    when(spyOnu.getMedicionesEntre(dic2020, jul2021)).thenReturn(listMediciones);
+    when(medMock.calcularHCEntre(dic2020, jul2021)).thenReturn(5000D);
+    when(medMock2.calcularHCEntre(dic2020, jul2021)).thenReturn(3000D);
+    Assertions.assertEquals(8000D, spyOnu.calcularHCMedicionesEntre(dic2020, jul2021));
+  }
+
+  @Test
+  public void siLaFechaDeInicioEsPosteriorALaDeFinRompe() {
+    assertThrows(LaFechaDeInicioDebeSerAnteriorALaFechaDeFin.class,
+        () -> spyOnu.calcularHCMedicionesEntre(jul2021, dic2020));
+    assertThrows(LaFechaDeInicioDebeSerAnteriorALaFechaDeFin.class,
+        () -> spyOnu.calcularHCTotalEntre(jul2021, dic2020));
+    assertThrows(LaFechaDeInicioDebeSerAnteriorALaFechaDeFin.class,
+        () -> spyOnu.calcularHCMiembrosEntre(jul2021, dic2020));
+  }
+
+
 }
 
 

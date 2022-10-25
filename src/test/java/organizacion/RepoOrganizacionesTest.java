@@ -1,10 +1,12 @@
+package organizacion;
+
 import linea.LineaTransporte;
 import linea.Parada;
 import linea.PuntoUbicacion;
 import linea.TipoTransporte;
+import miembro.Miembro;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
-import organizacion.*;
 import transporte.Tramo;
 import transporte.TransportePublico;
 import transporte.Trayecto;
@@ -26,7 +28,7 @@ public class RepoOrganizacionesTest {
     List<Parada> paradasIda = new ArrayList<>();
     List<Parada> paradasVuelta = new ArrayList<>();
     LineaTransporte nuevaLinea =
-            new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
+        new LineaTransporte(TipoTransporte.COLECTIVO, "441", paradasIda, paradasVuelta);
     TransportePublico transporte = new TransportePublico(nuevaLinea, 20);
     List<Trayecto> trayectos = new ArrayList<>();
     Tramo unTramo = new Tramo(punto1, punto2, transporte);
@@ -67,6 +69,7 @@ public class RepoOrganizacionesTest {
         RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental);
         RepoOrganizacion.getInstance().agregarOrganizacion(OrgGubernamental2);
     }
+
     @Test
     public void sePuedeEliminarUnaOrganizacion() {
         RepoOrganizacion.getInstance().agregarOrganizacion(unaOrganizacionAgregada);

@@ -1,23 +1,16 @@
 package territorio;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import organizacion.Organizacion;
-import organizacion.RepoOrganizacion;
-import registrohc.RegistroHCOrganizacion;
-import registrohc.RepoMedicionesHCOrganizaciones;
+import organizacion.periodo.PeriodoMensual;
 
-import java.time.YearMonth;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class RepoSectorTerritorial implements WithGlobalEntityManager {
 
     private static RepoSectorTerritorial instance;
 
     private RepoSectorTerritorial() {
-
     }
 
     public static RepoSectorTerritorial getInstance() {
@@ -37,89 +30,24 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         entityManager().refresh(sector);
     }
 
-    //CADA LISTA DE ORGS ES UN SECTOR
-    //CADA STREAM DE MEDICIONES ES UNA ORG
-    //CADA STREAM DE LONGS ERAN UNA ORG
-    //CADA LONG DEL SUM DEL STREAM ES UNA ORG
-    //-> CADA LONG ES UN SECTOR
-    public List<HCPorSectorTerritorial> hcPorSectorTerritorial(YearMonth fechaInicio, YearMonth fechaFin) {
+    public List<HCPorSectorTerritorial> reporteHCPorSectorTerritorial(PeriodoMensual inicio, PeriodoMensual fin) {
 
-        //QUILMES 2000 07/2000
-        //QUILMES 2020 08/2000
-        List<SectorTerritorial> sectoresTerritoriales = this.getSectoresTerritoriales();
-        Stream<List<Organizacion>> organizacionesDeSectorresTerritoriales = sectoresTerritoriales.stream().map(SectorTerritorial::getOrganizaciones);
-        Stream<Stream<Long>> hcTotalPorCadaRegistro = hcTotalPorRegistros(organizacionesDeSectorresTerritoriales,fechaInicio,fechaFin);
-
-
-        List<Long> resultadosHC = hcTotalPorCadaRegistro
-                .map(longStream -> longStream.collect(Collectors.toList()))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        return generarReporteHCSector(sectoresTerritoriales, resultadosHC);
+        return this.getSectoresTerritoriales()
+            .stream()
+            .map(sector -> this.generarItemHCPorSectorTerritorial(sector, inicio, fin))
+            .collect(Collectors.toList());
     }
 
-    Stream <Stream<Long>> hcTotalPorRegistros(Stream<List<Organizacion>> organizacionesDeSectores, YearMonth fechaInicio, YearMonth fechaFin){
-        RepoMedicionesHCOrganizaciones repoMediciones = RepoMedicionesHCOrganizaciones.getInstance();
-        return organizacionesDeSectores.map(sectorTerritorial -> sectorTerritorial.stream()
-                .map(org -> repoMediciones.getRegistros(org, fechaInicio, fechaFin)
-                        .stream()
-                        .mapToLong(RegistroHCOrganizacion::hcTotal).sum()));
-
+    private HCPorSectorTerritorial generarItemHCPorSectorTerritorial(SectorTerritorial sector, PeriodoMensual inicio, PeriodoMensual fin) {
+        return new HCPorSectorTerritorial(sector.calcularHCEntre(inicio, fin), sector);
     }
 
-    public List<HCPorSectorTerritorial> generarReporteHCSector(List<SectorTerritorial> sectores, List<Long> resultados) {
+    public List<ComposicionHcSectorTerritorial> reporteComposicionHC(PeriodoMensual inicio, PeriodoMensual fin) {
 
-        return sectores.stream()
-                .map(sector -> new HCPorSectorTerritorial(resultados.get(sectores.indexOf(sector)), sector, null))
-                .collect(Collectors.toList());
+        return this.getSectoresTerritoriales()
+            .stream()
+            .map(sector -> sector.generarItemComposicionHCEntre(inicio, fin))
+            .collect(Collectors.toList());
     }
 
-    //TODO ADD GENERAR REPORTE
-    //Pensar en injectar algun objeto para flexibilizar este metodo
-    public List<HCPorSectorTerritorial> evolucionHCTotal(SectorTerritorial sector, YearMonth inicio, YearMonth fin) {
-        //Que significa evolución de hc total?
-
-        //Registro HC Organizacion es una clase que utilizo para guardar campos utiles
-        //Concretamente estamos almacenando el HC de los miembros y el HC de las mediciones de una Organizacion
-
-        Stream<RegistroHCOrganizacion> registros = sector
-                .getOrganizaciones().stream()
-                .map(org -> RepoOrganizacion.getInstance().evolucionHCTotal(org, inicio, fin).stream())
-                .flatMap(Stream::sorted);
-
-        //Por cada registro voy a armar un periodo con el par MES/AÑO
-        Stream<YearMonth> periodo = registros
-                .map(registro -> YearMonth.of(registro.getAnioImputacion(), registro.getMesImputacion()))
-                .distinct();
-
-
-        return periodo.map(fecha -> crearHCPorSectorTerritorialEnBaseA(fecha, registros, sector))
-                .collect(Collectors.toList());
-
-    }
-    private boolean equalsRegistroFecha(RegistroHCOrganizacion unRegistro, YearMonth unaFecha){
-        return YearMonth.of(unRegistro.getAnioImputacion(), unRegistro.getMesImputacion()).equals(unaFecha);
-    }
-
-    private HCPorSectorTerritorial crearHCPorSectorTerritorialEnBaseA(YearMonth unaFecha, Stream<RegistroHCOrganizacion> registros, SectorTerritorial sector){
-        Stream<RegistroHCOrganizacion> registrosCoincidenConFecha = registros.filter(registro ->equalsRegistroFecha(registro,unaFecha));
-        long hcTotal = registrosCoincidenConFecha.mapToLong(RegistroHCOrganizacion::hcTotal).sum();
-        return new HCPorSectorTerritorial(hcTotal, sector, unaFecha);
-    }
-/*
-    public List<ComposicionHcSectorTerritorial> composicionHcSectorTerritorial(SectorTerritorial sectorTerritorial,
-                                                                               YearMonth inicio,
-                                                                               YearMonth fin) {
-
-        List<Organizacion> organizaciones = RepoOrganizacion.getInstance().getOrganizaciones();
-
-        Stream<TipoConsumo> tipos = organizaciones.stream()
-            .map(Organizacion::getTiposDeConsumoUsados)
-            .flatMap(Stream::distinct);
-
-        List<Medicion> mediciones = RepoMediciones.getInstance().getMedicionesEntre(inicio, fin);
-
-    }
-
- */
 }

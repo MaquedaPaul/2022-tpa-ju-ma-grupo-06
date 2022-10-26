@@ -1,14 +1,15 @@
 package territorio;
 
-import tipoconsumo.TipoConsumo;
-
 public class ComposicionHcSectorTerritorial {
 
-  private final TipoConsumo tipo;
-  private final Long hc;
+  private final SectorTerritorial sectorTerritorial;
+  private final double hcMiembros;
+  private final double hcMediciones;
 
-  public ComposicionHcSectorTerritorial(TipoConsumo tipoConsumo, Long hc) {
-    this.hc = hc;
-    this.tipo = tipoConsumo;
+
+  public ComposicionHcSectorTerritorial(SectorTerritorial sectorTerritorial, double hcMiembros, double hcMediciones) {
+    this.sectorTerritorial = sectorTerritorial;
+    this.hcMiembros = hcMiembros;
+    this.hcMediciones = hcMediciones;
   }
 }

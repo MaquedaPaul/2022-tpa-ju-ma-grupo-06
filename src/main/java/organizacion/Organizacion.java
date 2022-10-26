@@ -14,6 +14,7 @@ import notificaciones.medioNotificacion.MedioNotificador;
 import organizacion.periodo.GeneradorDePeriodos;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
+import organizacion.repositorio.ComposicionHCOrganizacion;
 import organizacion.repositorio.EvolucionHCOrganizacion;
 import transporte.Trayecto;
 
@@ -208,8 +209,14 @@ public class Organizacion {
   }
 
   private EvolucionHCOrganizacion generarItemDeEvolucionHC(PeriodoMensual periodo) {
-    return new EvolucionHCOrganizacion(periodo.getFecha(), this.calcularHCTotal(periodo));
+    return new EvolucionHCOrganizacion(this, periodo.getFecha(), this.calcularHCTotal(periodo));
   }
 
+  public ComposicionHCOrganizacion reporteComposicionHC(PeriodoMensual inicio, PeriodoMensual fin) {
+
+    return new ComposicionHCOrganizacion(this,
+        this.calcularHCMiembrosEntre(inicio, fin),
+        this.calcularHCMedicionesEntre(inicio, fin));
+  }
 }
 

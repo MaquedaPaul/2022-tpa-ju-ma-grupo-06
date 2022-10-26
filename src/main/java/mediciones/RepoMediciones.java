@@ -2,8 +2,8 @@ package mediciones;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
+import organizacion.periodo.PeriodoMensual;
 
-import java.time.YearMonth;
 import java.util.List;
 
 public class RepoMediciones implements WithGlobalEntityManager {
@@ -40,14 +40,18 @@ public class RepoMediciones implements WithGlobalEntityManager {
         .getResultList();
   }
 
+  /*
+   * Las MEDICIONES se guardan con una fecha generada con los valores mes y año leidos del archivo csv,
+   * pero como no incluye el dia arbitrariamente setteo el dia en 15
+   *
+   * Los PERIODOS tienen el dia de su atributo fecha setteado en 1.
+   * */
   @SuppressWarnings("unchecked")
-  public List<Medicion> getMedicionesEntre(YearMonth inicio, YearMonth fin) {
-    return entityManager().createQuery("FROM Medicion WHERE mes BETWEEN :mesInicio AND :mesFin"
-            + " AND anio BETWEEN :anioInicio AND :anioFin")
-        .setParameter("mesInicio", inicio.getMonthValue())
-        .setParameter("mesFin", fin.getMonthValue())
-        .setParameter("anioInicio", inicio.getYear())
-        .setParameter("anioFin", inicio.getYear())
+  public List<Medicion> getMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+    return entityManager().createQuery("FROM Medicion " +
+            "WHERE Medicion.periodicidad.fecha BETWEEN :fechaInicio AND :fechaFin")
+        .setParameter("fechaInicio", inicio.getFecha())
+        .setParameter("fechaFin", fin.getFecha())
         .getResultList();
   }
 }

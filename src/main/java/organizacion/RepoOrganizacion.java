@@ -1,7 +1,9 @@
 package organizacion;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import organizacion.periodo.PeriodoMensual;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +26,6 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     entityManager().persist(nuevaOrganizacion);
     entityManager().getTransaction().commit();
   }
-  //em.persist(org);
-
-  //new medicion(org);
 
   public boolean estaPersistido(Organizacion org) {
     return entityManager().contains(org);
@@ -38,7 +37,7 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   @SuppressWarnings("unchecked")
-  public List<Organizacion> filtrarPorTipoOrganizacion(TipoOrganizacion tipoOrganizacion) {
+  public List<Organizacion> getOrganizacionesDelTipo(TipoOrganizacion tipoOrganizacion) {
     return entityManager()
         .createQuery("from Organizacion where tipo = :t")
         .setParameter("t", tipoOrganizacion)
@@ -51,33 +50,25 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     entityManager().getTransaction().commit();
   }
 
-  List<Organizacion> obtenerOrganizacionesPorTipo(List<Organizacion> organizaciones, TipoOrganizacion tipo){
-    return organizaciones.stream().filter(org -> org.getTipo() ==tipo).collect(Collectors.toList());
+  public List<HCPorTipoOrganizacion> reporteHCPorTipoOrganizacion(PeriodoMensual inicio, PeriodoMensual fin) {
+
+    List<TipoOrganizacion> tipos = Arrays.asList(TipoOrganizacion.values());
+
+    return tipos
+        .stream()
+        .map(tipo -> this.calcularHCDelTipoDeOrganizacion(tipo, inicio, fin))
+        .collect(Collectors.toList());
   }
 
+  private HCPorTipoOrganizacion calcularHCDelTipoDeOrganizacion(TipoOrganizacion tipo, PeriodoMensual inicio, PeriodoMensual fin) {
 
-/*
-COMPOSICIÓN HC TOTAL DE UNA ORGANIZACION
+    double total = this.getOrganizacionesDelTipo(tipo)
+        .stream()
+        .mapToDouble(org -> org.calcularHCTotalEntre(inicio, fin))
+        .sum();
 
-En principio agrupar y sumar HC Combustion Fija
+    return new HCPorTipoOrganizacion(total, tipo);
+  }
 
-
-
-
-*/
-
-
-
-  /*
-  * HC TOTAL POR SECTOR TERRITORIAL (FechaInicio, FechaFin, PERIORICIDAD)
-obtengo los sectores territoriales
-PARA CADA SECTOR:
-	obtengo las organizaciones pertenecientes al sector
-	calculo el hc de cada organizacion
-	sumo los resultados
-SECTOR TERRITORIAL: HC_TOTAL: FECHA INICIO : FECHA FIN
-
-  *
-  * */
 }
 

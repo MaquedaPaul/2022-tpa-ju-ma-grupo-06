@@ -1,4 +1,6 @@
-package organizacion;
+package organizacion.repositorio;
+
+import organizacion.TipoOrganizacion;
 
 public class HCPorTipoOrganizacion {
   double hc;

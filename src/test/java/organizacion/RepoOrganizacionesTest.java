@@ -7,6 +7,7 @@ import linea.TipoTransporte;
 import miembro.Miembro;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
+import organizacion.repositorio.RepoOrganizacion;
 import transporte.Tramo;
 import transporte.TransportePublico;
 import transporte.Trayecto;

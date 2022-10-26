@@ -1,6 +1,8 @@
-package organizacion;
+package organizacion.repositorio;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import organizacion.Organizacion;
+import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
 
 import java.util.Arrays;

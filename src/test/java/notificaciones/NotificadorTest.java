@@ -6,8 +6,8 @@ import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
 import org.junit.After;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
-import organizacion.RepoOrganizacion;
 import organizacion.TipoOrganizacion;
+import organizacion.repositorio.RepoOrganizacion;
 
 import java.time.*;
 import java.util.ArrayList;

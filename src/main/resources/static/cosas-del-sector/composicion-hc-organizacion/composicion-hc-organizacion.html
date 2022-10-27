@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="composicion-hc-organizacion.css">
+    <title>Title</title>
+</head>
+<body>
+
+<header id="header">
+    <div>
+        <a id="logo">
+            <img src="#" alt="logo-pagina">
+            <h1>Nombre Pagina</h1>
+        </a>
+    </div>
+    <nav id="navbar">
+        <button>
+            Usuario
+        </button>
+    </nav>
+</header>
+<div id="body">
+    <h2>COMPOSICIÓN HC DE UNA ORGANIZACIÓN</h2>
+    <div class="formulario-container">
+        <form class="formulario" method="post">
+            <label for="fechaDesde">
+                Desde
+                <input type="month" value="" id="fechaDesde" min="2020-1" max="2022-10"/>
+            </label>
+            <label for="fechaHasta">
+                Hasta
+                <input type="month" value="" id="fechaHasta" min="2020-1" max="2022-10"/>
+            </label>
+            <label for="nombreOrganizacion">
+                Organización
+                <input type="search"
+                       id="nombreOrganizacion"
+                       value=""
+                       placeholder="Ingrese una organizacion"
+                       list="organizaciones"
+                       autocomplete="off"
+                />
+            </label>
+            <datalist id="organizaciones">
+                <option>
+                    PiruloConsultingSA
+                </option>
+                <option>
+                    UTN FRBA Medrano
+                </option>
+                <option>
+                    Chocolatada SRL
+                </option>
+            </datalist>
+        </form>
+        <div class="btns-container">
+            <button>
+                Cancelar
+            </button>
+            <input type="submit" name="Consultar"/>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <p>Derechos Reservados @PiruloConsultingSA</p>
+</footer>
+</body>

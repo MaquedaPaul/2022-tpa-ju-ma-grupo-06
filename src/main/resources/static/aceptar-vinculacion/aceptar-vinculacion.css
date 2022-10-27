@@ -1,0 +1,160 @@
+body {
+    display: grid;
+    margin: 0;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+#header {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+    height: 50px;
+}
+
+#logo {
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+}
+
+#logo:hover {
+    cursor: pointer;
+}
+
+#navbar {
+    display: inline;
+}
+
+#body {
+    display: flex;
+    flex-direction: row;
+}
+
+#solicitudes {
+    padding: 10px;
+    min-width: 300px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.container-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid black;
+    width: 100%;
+    padding: 10px 10px 10px 10px;
+}
+
+.solicitud-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid red;
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+.solicitud-container:hover {
+    cursor: pointer;
+}
+
+.solicitud-container p {
+    margin: 0;
+    font-size: 15px;
+}
+
+.solicitud-cuerpo {
+    display: flex;
+    flex-direction: column;
+}
+
+.solicitud-miembro-container, .solicitud-sector-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.solicitud-nro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.solicitud-nro * {
+    padding: 5px;
+}
+
+.noscroll {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    overflow-y: scroll;
+    height: 45vh;
+}
+
+aside h2 {
+    margin: 5px;
+}
+
+.input-filtro {
+    width: 80%;
+    min-width: 100px;
+    margin: 10px;
+    height: 25px;
+}
+
+.input-filtro::placeholder {
+    font-style: italic;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+}
+
+.informacion-miembro-container {
+    overflow-y: scroll;
+    border: 2px solid blue;
+}
+
+.dato-container h3 {
+    margin: 0;
+}
+
+.dato-container {
+    padding: 0 10px 10px 10px;
+}
+
+.informacion-miembro-container {
+    padding: 10px;
+    margin-left: 10px;
+    height: 35vh;
+}
+
+.btn {
+    height: 50px;
+    width: 100px;
+}
+
+.botones-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}

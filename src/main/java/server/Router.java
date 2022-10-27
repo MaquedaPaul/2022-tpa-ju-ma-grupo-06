@@ -1,8 +1,6 @@
 package server;
 
-import controllers.HomeController;
-import controllers.RaizController;
-import controllers.SignInController;
+import controllers.*;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -11,10 +9,11 @@ public class Router {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     Spark.staticFiles.location("static");
     Spark.get("/", (request, response) -> new RaizController().getPage(request, response), engine);
-    Spark.get("/recomendaciones", (request, response) -> new RaizController().getPage(request, response), engine);
-    Spark.get("/signin", (request, response) -> new SignInController().getPage(request, response), engine);
-    Spark.post("/signin", (request, response) -> new SignInController().accederCuenta(request, response), engine);
-    Spark.post("/signin", (request, response) -> new SignInController().accederCuenta(request, response), engine);
+    Spark.get("/recomendaciones", (request, response) -> new RecomendacionController().getRecomendaciones(request, response), engine);
+    Spark.get("/home", (request, response) -> new HomeController().getHome(request, response), engine);
+    Spark.get("/signin", (request, response) -> new SignInController().getSignIn(request, response), engine);
+    Spark.post("/signin", (request, response) -> new SignInController().logIn(request, response), engine);
+    Spark.post("/signout", (request, response) -> new SignOutController().logOut(request, response), engine);
     //GET /miembro/:id/menu;
     //GET /organizaciones/:id/menu
     //GET /agentes/:id/menu

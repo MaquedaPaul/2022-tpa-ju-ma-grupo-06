@@ -1,6 +1,7 @@
 package organizacion;
 
 import admin.config.GestorDeFechas;
+import cuenta.OrganizacionCuenta;
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
@@ -55,6 +56,9 @@ public class Organizacion {
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  OrganizacionCuenta cuenta;
 
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
@@ -217,6 +221,10 @@ public class Organizacion {
     return new ComposicionHCOrganizacion(this,
         this.calcularHCMiembrosEntre(inicio, fin),
         this.calcularHCMedicionesEntre(inicio, fin));
+  }
+
+  public void setCuenta(OrganizacionCuenta cuenta) {
+    this.cuenta = cuenta;
   }
 }
 

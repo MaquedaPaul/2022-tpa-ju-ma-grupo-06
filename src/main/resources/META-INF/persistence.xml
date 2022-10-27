@@ -22,6 +22,7 @@
         <class>mediciones.Medicion</class>
         <class>tipoconsumo.TipoConsumo</class>
         <class>admin.FactorEmision</class>
+        <class>cuenta.Cuenta</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

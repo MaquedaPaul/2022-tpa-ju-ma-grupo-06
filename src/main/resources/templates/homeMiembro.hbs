@@ -1,0 +1,12 @@
+{{#partial "usuario"}}
+    <p>{{usuario}}</p>
+{{/partial}}
+
+{{#partial "content"}}
+    <h2>Bienvenido Miembro {{usuario}}</h2>
+    <a href="/recomendaciones" class="option-button">
+            recomendaciones
+        </a>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

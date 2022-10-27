@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tp Anual</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <a href="./">
+          <img src="logo.svg" alt="Logo de la Organizacion">
+          <h1>Impacto Ambiental</h1>
+        </a>
+        <div>
+            <img src="user.png" alt="Icono de Persona"></img>
+            {{#block "usuario"}}
+            {{/block}}
+        </div>
+      </nav>
+    </header>
+
+    {{#block "content"}}
+    {{/block}}
+
+    <footer>
+      <p>Test</p>
+    </footer>
+  </body>
+</html>

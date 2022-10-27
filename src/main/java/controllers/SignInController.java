@@ -8,4 +8,8 @@ public class SignInController {
   public ModelAndView getPage(Request request, Response response) {
     return new ModelAndView(null, "signin.hbs");
   }
+
+  public ModelAndView accederCuenta(Request request, Response response) {
+    return null;
+  }
 }

@@ -25,17 +25,18 @@
     <form>
         <div>
             <div>
+
                 <label for="tipo-consumo">Tipo de consumo</label>
-                <select class="white-button" name="tipo-consumo">
-                    <option disabled="">Selecciona una opcion</option>
-                    <option value="Anual">Un tipo</option>
-                    <option value="Mensual">Otro tipo</option>
-                </select>
+                <input list="tipo-consumos" id="tipo-consumo" name="Tipos de consumo">
+                <datalist class="white-button" id="tipo-consumos">
+                    <option value="Un tipo"></option>
+                    <option value="Otro tipo"></option>
+                </datalist>
 
             </div>
             <div>
                 <label for="periodicidad">Periodicidad</label>
-                <select class="white-button" name=periodicidad>
+                <select class="white-button" id=periodicidad>
                     <option disabled="">Selecciona una opcion</option>
                     <option value="Anual">Anual</option>
                     <option value="Mensual">Mensual</option>
@@ -44,11 +45,11 @@
 
             <div>
                 <label for="valor">Valor</label>
-                <input class="white-button" id="valor">
+                <input type="number" min="1" class="white-button" id="valor">
             </div>
             <div>
                 <label for="fecha-medicion">Fecha de medicion</label>
-                <input class="white-button" type="date" id="fecha-medicion">
+                <input max="2022-10" class="white-button" type="month" id="fecha-medicion">
             </div>
         </div>
         <div id="below-buttons">
@@ -56,7 +57,7 @@
                 <a class="white-button" href="index2.html">Atrás</a>
             </div>
             <div>
-                <input name="Ingresar" value="Ingresar" type="submit" class="white-button">
+                <input id="ingresar" class="white-button" value="Ingresar" type="submit">
             </div>
         </div>
 

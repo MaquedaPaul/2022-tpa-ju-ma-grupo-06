@@ -7,6 +7,7 @@ html {
 }
 
 body {
+    font-family: Lato-sa, sans-serif;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -36,6 +37,7 @@ a {
 
 #main-section {
     background-color: #E6F2EB;
+
     display: flex;
     flex-wrap: wrap;
     padding-top: 50px;
@@ -77,16 +79,21 @@ img {
 }
 
 form {
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     height: 20px;
+
 }
 
 form div {
-    margin-right: 30px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    margin-right: 20px;
     width: 100%;
+
 }
 
 form div label {
@@ -96,6 +103,12 @@ form div label {
 }
 
 #below-buttons{
+    font-weight: bold;
+    margin-right: 50px;
     width: 30%;
     display: inline-flex;
+}
+#ingresar{
+    font-weight: bold;
+    font-size: 25px;
 }

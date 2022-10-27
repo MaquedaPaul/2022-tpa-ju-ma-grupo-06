@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tp Anual</title>
+    <link rel="stylesheet" href="./crearMedicion.css">
+</head>
+
+<body>
+<header>
+    <nav>
+        <a href="./index2.html">
+            <img src="logo.svg" alt="Logo de la Organizacion">
+            <h1>Example</h1>
+        </a>
+        <button class="white-button">
+            <img src="user.png" alt="Icono de persona">
+            <p>Tipo</p>
+        </button>
+    </nav>
+</header>
+
+<h2>Crear Medición</h2>
+<div id="main-section">
+    <form>
+        <div>
+            <div>
+                <label for="tipo-consumo">Tipo de consumo</label>
+                <select class="white-button" name="tipo-consumo">
+                    <option disabled="">Selecciona una opcion</option>
+                    <option value="Anual">Un tipo</option>
+                    <option value="Mensual">Otro tipo</option>
+                </select>
+
+            </div>
+            <div>
+                <label for="periodicidad">Periodicidad</label>
+                <select class="white-button" name=periodicidad>
+                    <option disabled="">Selecciona una opcion</option>
+                    <option value="Anual">Anual</option>
+                    <option value="Mensual">Mensual</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="valor">Valor</label>
+                <input class="white-button" id="valor">
+            </div>
+            <div>
+                <label for="fecha-medicion">Fecha de medicion</label>
+                <input class="white-button" type="date" id="fecha-medicion">
+            </div>
+        </div>
+        <div id="below-buttons">
+            <div>
+                <a class="white-button" href="index2.html">Atrás</a>
+            </div>
+            <div>
+                <input name="Ingresar" value="Ingresar" type="submit" class="white-button">
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<footer>
+    <p>Test</p>
+</footer>
+</body>
+</html>

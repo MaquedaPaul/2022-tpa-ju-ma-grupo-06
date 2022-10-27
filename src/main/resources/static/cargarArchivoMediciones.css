@@ -36,8 +36,8 @@ a {
 
 #main-section {
     border: solid black;
+    align-self: center;
 
-    margin-left: 36%;
     margin-bottom: 5%;
     background-color: #E6F2EB;
     display: flex;
@@ -52,6 +52,7 @@ a {
 }
 
 h2 {
+
     font-size: 40px;
     padding: 40px;
     text-align: center;
@@ -88,9 +89,10 @@ img {
     background-color: white;
     cursor: pointer;
 }
+
 form {
     display: flex;
-
+    font-size: 25px;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
@@ -98,7 +100,7 @@ form {
 }
 
 form div {
-    margin-right: 30px;
+
     width: 100%;
 }
 
@@ -111,9 +113,12 @@ form div label {
 .below-button{
 
 }
+#atras{
+    margin-right: 30px;
+}
 
 #below-buttons{
-    width: 30%;
-
+    width: 35%;
+    margin-right: 30px;
     display: inline-flex;
 }

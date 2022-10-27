@@ -1,0 +1,29 @@
+{{#partial "usuario"}}
+    {{usuario}}
+{{/partial}}
+
+{{#partial "content"}}
+    <h2>Solicitar Vinculacion</h2>
+    <form >
+        <div>
+            Seleccione organización
+            <label for="selector-organizacion"></label>
+            <input class="white-button" name="Buscador-organizacion" value="" type="search" id="selector-organizacion">
+        </div>
+        <div>
+            Seleccione sector
+            <label for="selector-sector"></label>
+            <input class="white-button" name="Buscador-organizacion" value="" type="search" id="selector-sector">
+        </div>
+        <div class="below-buttons">
+                <a class="option-button" href="./home">
+                   Atrás
+                </a>
+                <a class="option-button">
+                    Ingresar
+                </a>
+        </div>
+    </form>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

@@ -10,7 +10,6 @@ public abstract class Cuenta {
   @Id
   String usuario;
   String password;
-
   public Cuenta(){
   }
 
@@ -28,4 +27,6 @@ public abstract class Cuenta {
   }
 
   public abstract String getTemplate();
+
+  public abstract String tipoCuenta();
 }

@@ -1,28 +1,5 @@
-<!DOCTYPE html>
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Calculadora HC</title>
-    <link rel="stylesheet" href="./styles.css">
-  </head>
-
-  <body>
-    <header>
-      <nav>
-        <a href="./index2.html">
-          <img src="logo.svg" alt="Logo de la Organizacion">
-          <h1>Example</h1>
-        </a>
-        <button class="white-button">
-          <img src="user.png" alt="Icono de persona">
-          <p>Tipo</p>
-        </button>
-      </nav>
-    </header>
-
-    <div class="divArreglo">
-        <h2 class="titulo">Registrar trayecto</h2>
+{{#partial "content"}}
+    <h2 class="titulo">Registrar trayecto</h2>
         <div class="contenedorTrayecto borde">
             <label for="nombreTrayecto">
                 <input type="text" id="nombreTrayecto" placeholder="Ingrese nombre del trayecto">
@@ -71,15 +48,11 @@
                 </div>
             </div>
         </div>
-        <div class="botonesContainer"> 
+        <div class="botonesContainer">
             <button class="white-button2">Cancelar</button>
             <button class="white-button2">Registrar</button>
         </div>
     </div>
+{{/partial}}
 
-
-        <footer>
-          <p>Test</p>
-        </footer>
-    </body>
-</html>
+{{>home-iniciado-sesion.hbs}}

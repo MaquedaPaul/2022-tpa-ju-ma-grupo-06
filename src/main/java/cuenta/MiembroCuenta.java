@@ -18,5 +18,7 @@ public class MiembroCuenta extends Cuenta {
     return "homeMiembro.hbs";
   }
 
-
+  public String tipoCuenta() {
+    return "miembro";
+  }
 }

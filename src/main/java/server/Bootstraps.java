@@ -27,7 +27,6 @@ public class Bootstraps implements WithGlobalEntityManager {
     AgenteTerritorial  agenteTerritorial = new AgenteTerritorial(sectorTerritorial);
     agenteTerritorial.setCuenta(agenteCuenta);
 
-
     new Bootstraps().persistir(organizacion);
     new Bootstraps().persistir(miembro);
     new Bootstraps().persistir(agenteTerritorial);

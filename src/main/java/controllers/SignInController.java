@@ -21,7 +21,10 @@ public class SignInController {
       response.redirect("/signin");
     }
     String usuario = cuenta.getUsuario();
+
+    String tipoCuenta = cuenta.tipoCuenta();
     request.session().attribute("logged_user", usuario);
+    request.session().attribute("user-type", tipoCuenta);
     response.redirect("/home");
     return null;
   }

@@ -94,19 +94,16 @@ form {
 }
 
 form div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   width: 100%;
 }
 
 form div label {
+  width: 100%;
   font-size: 25px;
   font-weight: bold;
-  display: block;
-}
-
-.option-button {
-  padding: 2px;
-  border: 2px black solid;
-  background-color: #d2cece;
 }
 
 #tarjetas {
@@ -115,9 +112,121 @@ form div label {
   gap: 20px;
 }
 
-.tarjeta {
+.tarjetaRecomendacion {
   border: 2px solid black;
   border-radius: 5px;
   width: 250px;
   height: 250px;
+}
+
+.below-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.option-button {
+  padding: 2px;
+  border: 2px black solid;
+  background-color: #d2cece;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.contenedorTrayecto {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+
+
+/*Thomas*/
+
+.volver {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.impactoMiembro {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+.divArreglo {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.claseForm{
+  margin-bottom: 10px;
+}
+
+.white-button2{
+  display:flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.borde{
+  border: 1px solid black;
+}
+
+.listaNoScroll{
+  border: 1px solid black;
+  list-style-type: none;
+  height: 30vh;
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.listaNoScroll li {
+  width: 70%;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+
+.tarjeta *{
+  margin: 0;
+  padding-bottom: 3px;
+}
+
+.botonesContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 300px;
+}
+
+h3{
+  margin-bottom: 0;
+}
+
+.divArreglo3{
+  width: 70%;
 }

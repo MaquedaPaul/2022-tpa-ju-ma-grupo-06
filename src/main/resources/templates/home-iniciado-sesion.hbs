@@ -13,17 +13,21 @@
           <img src="logo.svg" alt="Logo de la Organizacion">
           <h1>Impacto Ambiental</h1>
         </a>
-        <div>
+        <div class="white-button">
             <img src="user.png" alt="Icono de Persona"></img>
             {{#block "usuario"}}
+            {{usuario}}
             {{/block}}
+            <form action="/signout" method="POST">
+                <button type="submit">Salir</button>
+            </form>
         </div>
       </nav>
     </header>
-
-    {{#block "content"}}
-    {{/block}}
-
+        <div id="main-section">
+            {{#block "content"}}
+            {{/block}}
+        </div>
     <footer>
       <p>Test</p>
     </footer>

@@ -1,5 +1,7 @@
 package controllers;
 
+import cuenta.Cuenta;
+import cuenta.RepoCuentas;
 import miembro.Miembro;
 import organizacion.TipoDocumento;
 import spark.ModelAndView;
@@ -10,9 +12,12 @@ import java.util.ArrayList;
 
 public class HomeController {
   public ModelAndView getHome(Request request, Response response) {
-    String tipoUsuario = request.session().attribute("typo-usuario");
-    Miembro miembro = new Miembro("juan", "juan", TipoDocumento.DNI, 1, new ArrayList<>());
-    return new ModelAndView(miembro, "miembro.hbs");
+    String usuario = request.session().attribute("logged_user");
+    if (usuario == null) {
+      response.redirect("/signin");
+    }
+    Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(usuario);
+    return new ModelAndView(cuenta, cuenta.getTemplate());
   }
 
   public ModelAndView getTrayectos(Request request, Response response) {

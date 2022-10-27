@@ -1,9 +1,8 @@
 package territorio;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import cuenta.AgenteCuenta;
+
+import javax.persistence.*;
 
 @Entity
 public class AgenteTerritorial {
@@ -12,8 +11,11 @@ public class AgenteTerritorial {
   @GeneratedValue
   private Long id;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.PERSIST)
   SectorTerritorial sector;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  AgenteCuenta cuenta;
 
   public AgenteTerritorial(SectorTerritorial unSector) {
     this.sector = unSector;
@@ -25,5 +27,9 @@ public class AgenteTerritorial {
 
   public SectorTerritorial getSectorTerritorial() {
     return sector;
+  }
+
+  public void setCuenta(AgenteCuenta cuenta) {
+    this.cuenta = cuenta;
   }
 }

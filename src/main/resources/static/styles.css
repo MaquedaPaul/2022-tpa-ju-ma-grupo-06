@@ -35,18 +35,16 @@ a {
 }
 
 #main-section {
+  padding: 20px;
   background-color: #E6F2EB;
   display: flex;
   flex-wrap: wrap;
-  padding-top: 50px;
   text-align: center;
   justify-content: center;
-  width: 100%;
-  padding-bottom: 200px;
-  flex-grow: 1;
 }
 
 h2 {
+  width: 100%;
   font-size: 40px;
   padding: 40px;
   text-align: center;
@@ -70,9 +68,22 @@ img {
 }
 
 .white-button {
-  padding: 5px;
   background-color: white;
+  text-align: center;
+  border: 2px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 5px;
   cursor: pointer;
+}
+
+.white-button img {
+  width: 100%;
+}
+
+.white-button p {
+  width: 100%;
 }
 
 form {
@@ -80,7 +91,6 @@ form {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  height: 20px;
 }
 
 form div {
@@ -91,4 +101,23 @@ form div label {
   font-size: 25px;
   font-weight: bold;
   display: block;
+}
+
+.option-button {
+  padding: 2px;
+  border: 2px black solid;
+  background-color: #d2cece;
+}
+
+#tarjetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.tarjeta {
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 250px;
+  height: 250px;
 }

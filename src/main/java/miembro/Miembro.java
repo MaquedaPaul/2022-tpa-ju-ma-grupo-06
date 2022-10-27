@@ -1,6 +1,7 @@
 package miembro;
 
 import admin.config.GestorDeFechas;
+import cuenta.MiembroCuenta;
 import exceptions.ElTrayectoSeleccionadoNoPerteneceAEsteMiembro;
 import exceptions.EsteTrayectoNoPuedeSerCompartido;
 import lombok.Getter;
@@ -39,6 +40,9 @@ public class Miembro {
 
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
+
+  @OneToOne(cascade = CascadeType.PERSIST)
+  MiembroCuenta cuenta;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name="MIEMBRO_POR_TRAYECTO",
@@ -100,5 +104,9 @@ public class Miembro {
     }
 
     otro.registrarTrayecto(trayecto);
+  }
+
+  public void setCuenta(MiembroCuenta cuenta) {
+    this.cuenta = cuenta;
   }
 }

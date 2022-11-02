@@ -2,13 +2,11 @@ package territorio;
 
 import lombok.Getter;
 import organizacion.Organizacion;
-import organizacion.periodo.GeneradorDePeriodos;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -45,20 +43,6 @@ public class SectorTerritorial {
     organizaciones.add(organizacion);
   }
 
-  public List<EvolucionHCSectorTerritorial> reporteEvolucionHC(PeriodoMensual inicio, PeriodoMensual fin) {
-
-    GeneradorDePeriodos gen = new GeneradorDePeriodos();
-    List<PeriodoMensual> periodos = gen.generarPeriodosMensualesEntre(inicio, fin);
-
-    return periodos
-        .stream()
-        .map(this::crearItemDelReporteDeEvolucionHC)
-        .collect(Collectors.toList());
-  }
-
-  private EvolucionHCSectorTerritorial crearItemDelReporteDeEvolucionHC(PeriodoMensual periodo) {
-    return new EvolucionHCSectorTerritorial(this, periodo.getFecha(), this.calcularHC(periodo));
-  }
 
   public double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
     return this.getOrganizaciones()
@@ -67,20 +51,15 @@ public class SectorTerritorial {
         .sum();
   }
 
-  public ComposicionHcSectorTerritorial generarItemComposicionHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
-    return new ComposicionHcSectorTerritorial(this,
-        this.calcularHCMiembrosEntre(inicio, fin),
-        this.calcularHCMedicionesEntre(inicio, fin));
-  }
 
-  private double calcularHCMiembrosEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+  public double calcularHCMiembrosEntre(PeriodoMensual inicio, PeriodoMensual fin) {
     return this.getOrganizaciones()
         .stream()
         .mapToDouble(org -> org.calcularHCMiembrosEntre(inicio, fin))
         .sum();
   }
 
-  private double calcularHCMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+  public double calcularHCMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
     return this.getOrganizaciones()
         .stream()
         .mapToDouble(org -> org.calcularHCMedicionesEntre(inicio, fin))

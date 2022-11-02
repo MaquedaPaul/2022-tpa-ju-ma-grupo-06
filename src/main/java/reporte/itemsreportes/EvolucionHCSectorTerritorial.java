@@ -1,6 +1,7 @@
-package territorio;
+package reporte.itemsreportes;
 
 import lombok.Getter;
+import territorio.SectorTerritorial;
 
 import java.time.LocalDate;
 

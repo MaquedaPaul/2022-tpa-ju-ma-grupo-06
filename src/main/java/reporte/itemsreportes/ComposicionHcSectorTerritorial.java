@@ -1,4 +1,6 @@
-package territorio;
+package reporte.itemsreportes;
+
+import territorio.SectorTerritorial;
 
 public class ComposicionHcSectorTerritorial {
 

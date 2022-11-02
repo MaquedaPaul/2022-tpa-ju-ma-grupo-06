@@ -3,11 +3,8 @@ package organizacion.repositorio;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
-import organizacion.periodo.PeriodoMensual;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RepoOrganizacion implements WithGlobalEntityManager {
 
@@ -51,26 +48,5 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     entityManager().remove(organizacion);
     entityManager().getTransaction().commit();
   }
-
-  public List<HCPorTipoOrganizacion> reporteHCPorTipoOrganizacion(PeriodoMensual inicio, PeriodoMensual fin) {
-
-    List<TipoOrganizacion> tipos = Arrays.asList(TipoOrganizacion.values());
-
-    return tipos
-        .stream()
-        .map(tipo -> this.calcularHCDelTipoDeOrganizacion(tipo, inicio, fin))
-        .collect(Collectors.toList());
-  }
-
-  private HCPorTipoOrganizacion calcularHCDelTipoDeOrganizacion(TipoOrganizacion tipo, PeriodoMensual inicio, PeriodoMensual fin) {
-
-    double total = this.getOrganizacionesDelTipo(tipo)
-        .stream()
-        .mapToDouble(org -> org.calcularHCTotalEntre(inicio, fin))
-        .sum();
-
-    return new HCPorTipoOrganizacion(total, tipo);
-  }
-
 }
 

@@ -12,11 +12,8 @@ import mediciones.RepoMediciones;
 import miembro.Miembro;
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
-import organizacion.periodo.GeneradorDePeriodos;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
-import organizacion.repositorio.ComposicionHCOrganizacion;
-import organizacion.repositorio.EvolucionHCOrganizacion;
 import transporte.Trayecto;
 
 import javax.persistence.*;
@@ -202,26 +199,6 @@ public class Organizacion {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
-  public List<EvolucionHCOrganizacion> reporteEvolucionHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
-
-    GeneradorDePeriodos generador = new GeneradorDePeriodos();
-
-    List<PeriodoMensual> periodos = generador.generarPeriodosMensualesEntre(inicio, fin);
-
-    return periodos.stream().map(this::generarItemDeEvolucionHC).collect(Collectors.toList());
-
-  }
-
-  private EvolucionHCOrganizacion generarItemDeEvolucionHC(PeriodoMensual periodo) {
-    return new EvolucionHCOrganizacion(this, periodo.getFecha(), this.calcularHCTotal(periodo));
-  }
-
-  public ComposicionHCOrganizacion reporteComposicionHC(PeriodoMensual inicio, PeriodoMensual fin) {
-
-    return new ComposicionHCOrganizacion(this,
-        this.calcularHCMiembrosEntre(inicio, fin),
-        this.calcularHCMedicionesEntre(inicio, fin));
-  }
 
   public void setCuenta(OrganizacionCuenta cuenta) {
     this.cuenta = cuenta;

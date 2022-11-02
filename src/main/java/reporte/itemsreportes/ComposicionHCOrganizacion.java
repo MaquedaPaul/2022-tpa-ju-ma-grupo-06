@@ -1,4 +1,4 @@
-package organizacion.repositorio;
+package reporte.itemsreportes;
 
 import organizacion.Organizacion;
 

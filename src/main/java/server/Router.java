@@ -36,7 +36,7 @@ public class Router {
 
     //GET /miembros/:id/menu/vinculaciones
     //POST /miembros/:id/menu/vinculaciones + body;
-    Spark.get("/vinculacion", (request, response) -> new MiembroController().getVinculacion(request, response), engine);
+    Spark.get("/home/vinculacion", (request, response) -> new MiembroController().getVinculacion(request, response), engine);
     Spark.post("/home/vinculacion", (request, response) -> new MiembroController().getRegistro(request, response), engine);
 
     // Organizacion

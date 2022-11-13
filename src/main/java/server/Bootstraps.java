@@ -6,6 +6,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.TipoDocumento;
 import organizacion.TipoOrganizacion;
+import organizacion.repositorio.RepoOrganizacion;
 import territorio.AgenteTerritorial;
 import territorio.SectorTerritorial;
 import territorio.TipoSectorTerritorial;
@@ -19,8 +20,11 @@ public class Bootstraps implements WithGlobalEntityManager {
     miembro.setCuenta(miembroCuenta);
 
     OrganizacionCuenta organizacionCuenta = new OrganizacionCuenta("onu", "123");
-    Organizacion organizacion = new Organizacion("razon", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
+    Organizacion organizacion2 = new Organizacion("Sancor", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
+    Organizacion organizacion = new Organizacion("La Serenisima", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
     organizacion.setCuenta(organizacionCuenta);
+    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
+    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion2);
 
     AgenteCuenta agenteCuenta = new AgenteCuenta("007", "123");
     SectorTerritorial sectorTerritorial = new SectorTerritorial(new ArrayList<>(), TipoSectorTerritorial.DEPARTAMENTO);

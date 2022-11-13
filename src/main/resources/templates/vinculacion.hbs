@@ -18,11 +18,16 @@
 
 {{#partial "content"}}
     <h2>Solicitar Vinculacion</h2>
-    <form >
+    <form action="/home/vinculacion" method="POST">
         <div>
             Seleccione organización
             <label for="selector-organizacion"></label>
-            <input class="white-button" name="Buscador-organizacion" value="" type="search" id="selector-organizacion">
+            <input class="white-button" name="Buscador-organizacion" list="organizaciones" type="search" id="selector-organizacion">
+            <datalist id="organizaciones">
+                {{#each}}
+                 <option value="{{razonSocial}}"/>
+                {{/each}}
+            </datalist>
         </div>
         <div>
             Seleccione sector

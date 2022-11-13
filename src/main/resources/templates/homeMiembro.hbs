@@ -1,17 +1,19 @@
+{{#partial "navbar-options"}}
+    <div class="below-buttons">
+            <a class="option-button" href="/recomendaciones">
+                    Recomendaciones
+            </a>
+            <a class="option-button" href="/home/vinculacion">
+                Solicitar vinculacion
+            </a>
+            <a class="option-button" href="/home/trayectos">
+                    Trayectos
+            </a>
+        </div>
+{{/partial}}
+
 {{#partial "content"}}
     <h2>Bienvenido Miembro {{usuario}}</h2>
-    <div class="below-buttons column">
-        <a class="option-button" href="/recomendaciones">
-                Recomendaciones
-        </a>
-        <a class="option-button" href="./vinculacion">
-            Solicitar vinculacion
-        </a>
-        <a class="option-button" href="/home/trayectos">
-                Trayectos
-        </a>
-    </div>
-
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

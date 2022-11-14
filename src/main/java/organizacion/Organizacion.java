@@ -17,10 +17,7 @@ import organizacion.periodo.PeriodoMensual;
 import transporte.Trayecto;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -199,6 +196,13 @@ public class Organizacion {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
+  public Set<Sector> generarSectoresVacios() {
+    return sectores.stream()
+        .map(sector -> sector.getNombre())
+        .collect(Collectors.toSet())
+        .stream()
+        .map(nombre -> new Sector(nombre, new ArrayList<>())).collect(Collectors.toSet());
+  }
 
   public void setCuenta(OrganizacionCuenta cuenta) {
     this.cuenta = cuenta;

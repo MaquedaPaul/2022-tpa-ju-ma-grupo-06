@@ -1,12 +1,16 @@
 package controllers;
 
 import organizacion.Organizacion;
+import organizacion.Sector;
 import organizacion.repositorio.RepoOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MiembroController {
   public ModelAndView getTrayectos(Request request, Response response) {
@@ -37,7 +41,11 @@ public class MiembroController {
     comprobarSession(request, response);
     comprobarTipoCuenta(request, response);
     List<Organizacion> organizaciones =  RepoOrganizacion.getInstance().getOrganizaciones();
-    return new ModelAndView(organizaciones,"vinculacion.hbs");
+    List<Sector> sectores = new ArrayList<>(RepoOrganizacion.getInstance().obtenerTodosLosSectores());
+    HashMap<String, Object> hashMap = new HashMap<>();
+    hashMap.put("sectores",sectores);
+    hashMap.put("organizaciones", organizaciones);
+    return new ModelAndView(hashMap,"vinculacion.hbs");
   }
 
   public String comprobarSession(Request request, Response response) {

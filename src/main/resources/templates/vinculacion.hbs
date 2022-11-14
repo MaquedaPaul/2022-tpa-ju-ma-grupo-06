@@ -24,7 +24,7 @@
             <label for="selector-organizacion"></label>
             <input class="white-button" name="Buscador-organizacion" list="organizaciones" type="search" id="selector-organizacion">
             <datalist id="organizaciones">
-                {{#each}}
+                {{#each organizaciones}}
                  <option value="{{razonSocial}}"/>
                 {{/each}}
             </datalist>
@@ -32,7 +32,12 @@
         <div>
             Seleccione sector
             <label for="selector-sector"></label>
-            <input class="white-button" name="Buscador-organizacion" value="" type="search" id="selector-sector">
+            <input class="white-button" list="sectores" name="Buscador-organizacion" value="" type="search" id="selector-sector">
+            <datalist id="sectores">
+                            {{#each sectores}}
+                             <option value="{{nombre}}"/>
+                            {{/each}}
+                        </datalist>
         </div>
         <div class="below-buttons">
                 <a class="option-button" href="/home">

@@ -4,6 +4,7 @@ import cuenta.*;
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
+import organizacion.Sector;
 import organizacion.TipoDocumento;
 import organizacion.TipoOrganizacion;
 import organizacion.repositorio.RepoOrganizacion;
@@ -23,6 +24,10 @@ public class Bootstraps implements WithGlobalEntityManager {
     Organizacion organizacion2 = new Organizacion("Sancor", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
     Organizacion organizacion = new Organizacion("La Serenisima", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
     organizacion.setCuenta(organizacionCuenta);
+    organizacion.incorporarSector(new Sector("Compras", new ArrayList<>()));
+    organizacion.incorporarSector(new Sector("Ventas", new ArrayList<>()));
+    organizacion2.incorporarSector(new Sector("Recursos Humanos", new ArrayList<>()));
+    organizacion2.incorporarSector(new Sector("Administracion", new ArrayList<>()));
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion2);
 

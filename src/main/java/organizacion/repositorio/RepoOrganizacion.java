@@ -2,9 +2,12 @@ package organizacion.repositorio;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
+import organizacion.Sector;
 import organizacion.TipoOrganizacion;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RepoOrganizacion implements WithGlobalEntityManager {
 
@@ -47,6 +50,10 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     entityManager().getTransaction().begin();
     entityManager().remove(organizacion);
     entityManager().getTransaction().commit();
+  }
+
+  public Set<Sector> obtenerTodosLosSectores() {
+    return getOrganizaciones().stream().flatMap(organizacion -> organizacion.generarSectoresVacios().stream()).collect(Collectors.toSet());
   }
 }
 

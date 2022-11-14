@@ -204,5 +204,9 @@ public class Organizacion {
   public void setCuenta(OrganizacionCuenta cuenta) {
     this.cuenta = cuenta;
   }
+
+  public Sector obtenerSectorPor(String nombre) {
+    return sectores.stream().filter(sector -> sector.getNombre().equals(nombre)).findAny().orElse(null);
+  }
 }
 

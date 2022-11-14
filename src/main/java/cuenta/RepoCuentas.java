@@ -1,5 +1,6 @@
 package cuenta;
 
+import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
@@ -32,4 +33,9 @@ public class RepoCuentas implements WithGlobalEntityManager {
     return getCuentas().stream().filter(cuenta -> cuenta.getUsuario().equals(username)).findAny().orElse(null);
   }
 
+  public List<Miembro> obtenerMiembro(String usuario) {
+    return entityManager()
+        .createQuery("from Miembro where cuenta_usuario = :c").setParameter("c", usuario)
+        .getResultList();
+  }
 }

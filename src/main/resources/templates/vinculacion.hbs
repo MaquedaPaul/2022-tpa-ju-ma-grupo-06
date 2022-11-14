@@ -1,15 +1,15 @@
 {{#partial "navbar-options"}}
     <div class="below-buttons">
-            <a class="option-button" href="/recomendaciones">
-                    Recomendaciones
-            </a>
-            <a class="option-button" href="/home/vinculacion">
-                Solicitar vinculacion
-            </a>
-            <a class="option-button" href="/home/trayectos">
-                    Trayectos
-            </a>
-        </div>
+        <a class="option-button" href="/recomendaciones">
+            Recomendaciones
+        </a>
+        <a class="option-button" href="/home/vinculacion">
+            Solicitar vinculacion
+        </a>
+        <a class="option-button" href="/home/trayectos">
+            Trayectos
+        </a>
+    </div>
 {{/partial}}
 
 {{#partial "usuario"}}
@@ -22,30 +22,26 @@
         <div>
             Seleccione organización
             <label for="selector-organizacion"></label>
-            <input class="white-button" name="Buscador-organizacion" list="organizaciones" type="search" id="selector-organizacion">
+            <input class="white-button" name="organizacionSolicitada" list="organizaciones" type="search" id="selector-organizacion">
             <datalist id="organizaciones">
                 {{#each organizaciones}}
-                 <option value="{{razonSocial}}"/>
+                    <option value="{{razonSocial}}"/>
                 {{/each}}
             </datalist>
         </div>
         <div>
             Seleccione sector
             <label for="selector-sector"></label>
-            <input class="white-button" list="sectores" name="Buscador-organizacion" value="" type="search" id="selector-sector">
+            <input class="white-button" list="sectores" name="sectorSolicitado" value="" type="search" id="selector-sector">
             <datalist id="sectores">
-                            {{#each sectores}}
-                             <option value="{{nombre}}"/>
-                            {{/each}}
-                        </datalist>
+                {{#each sectores}}
+                    <option value="{{nombre}}"/>
+                {{/each}}
+            </datalist>
         </div>
         <div class="below-buttons">
-                <a class="option-button" href="/home">
-                   Atrás
-                </a>
-                <a class="option-button">
-                    Ingresar
-                </a>
+            <a class="option-button" href="/home">Atrás</a>
+            <button type="submit" class="option-button">Solicitar</button>
         </div>
     </form>
 {{/partial}}

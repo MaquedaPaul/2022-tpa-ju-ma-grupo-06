@@ -1,7 +1,10 @@
 package controllers;
 
+import cuenta.RepoCuentas;
+import miembro.Miembro;
 import organizacion.Organizacion;
 import organizacion.Sector;
+import organizacion.Solicitud;
 import organizacion.repositorio.RepoOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
@@ -20,8 +23,24 @@ public class MiembroController {
   }
 
   public ModelAndView pedirVinculacion(Request request, Response response) {
-    comprobarSession(request, response);
+    String usuario = comprobarSession(request, response);
     comprobarTipoCuenta(request, response);
+    String organizacionSolicitada = request.queryParams("organizacionSolicitada");
+    String sectorSolicitado = request.queryParams("sectorSolicitado");
+    Organizacion organizacionObjetivo = RepoOrganizacion.getInstance()
+        .getOrganizaciones().stream()
+        .filter(organizacion -> organizacion.getRazonSocial().equals(organizacionSolicitada))
+        .findAny().orElse(null);
+    if (organizacionObjetivo == null) {
+      response.redirect("/home/vinculacion");
+    }
+    Sector sectorObjetivo = organizacionObjetivo.obtenerSectorPor(sectorSolicitado);
+    if (sectorObjetivo == null) {
+      response.redirect("/home/vinculacion");
+    }
+    Miembro miembro =  RepoCuentas.getInstance().obtenerMiembro(usuario).get(0);
+    miembro.solicitarVinculacion(organizacionObjetivo, new Solicitud(miembro, sectorObjetivo));
+    response.redirect("/home");
     return null;
   }
 

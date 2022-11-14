@@ -5,6 +5,7 @@ import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.TipoOrganizacion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,7 +54,8 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public Set<Sector> obtenerTodosLosSectores() {
-    return getOrganizaciones().stream().flatMap(organizacion -> organizacion.generarSectoresVacios().stream()).collect(Collectors.toSet());
+    return getOrganizaciones().stream().flatMap(organizacion -> organizacion.generarSectoresVacios().stream())
+        .collect(Collectors.toSet()).stream().map(nombre -> new Sector(nombre, new ArrayList<>())).collect(Collectors.toSet());
   }
 }
 

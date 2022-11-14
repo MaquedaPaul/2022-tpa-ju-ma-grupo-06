@@ -196,12 +196,9 @@ public class Organizacion {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
-  public Set<Sector> generarSectoresVacios() {
+  public Set<String> generarSectoresVacios() {
     return sectores.stream()
-        .map(sector -> sector.getNombre())
-        .collect(Collectors.toSet())
-        .stream()
-        .map(nombre -> new Sector(nombre, new ArrayList<>())).collect(Collectors.toSet());
+        .map(sector -> sector.getNombre()).collect(Collectors.toSet());
   }
 
   public void setCuenta(OrganizacionCuenta cuenta) {

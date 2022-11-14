@@ -28,6 +28,7 @@ public class Bootstraps implements WithGlobalEntityManager {
     organizacion.incorporarSector(new Sector("Ventas", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Recursos Humanos", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Administracion", new ArrayList<>()));
+    organizacion2.incorporarSector(new Sector("Ventas", new ArrayList<>()));
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion2);
 

@@ -196,6 +196,7 @@ public class Organizacion {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
+
   public Set<String> generarSectoresVacios() {
     return sectores.stream()
         .map(sector -> sector.getNombre()).collect(Collectors.toSet());
@@ -207,6 +208,10 @@ public class Organizacion {
 
   public Sector obtenerSectorPor(String nombre) {
     return sectores.stream().filter(sector -> sector.getNombre().equals(nombre)).findAny().orElse(null);
+  }
+
+  public List<Solicitud> getSolicitudes() {
+    return solicitudes;
   }
 }
 

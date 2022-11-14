@@ -6,14 +6,10 @@
     </div>
 {{/partial}}
 
-
-{{#partial "usuario"}}
-    <p>{{usuario}}</p>
-{{/partial}}
-
-
 {{#partial "content"}}
-    <h2>Bienvenido Organizacion {{usuario}}</h2>
+    {{#each}}
+        <p>{{miembroSolicitante.nombre}}</p>
+    {{/each}}
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

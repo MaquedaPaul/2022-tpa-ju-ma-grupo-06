@@ -17,15 +17,18 @@ import java.util.ArrayList;
 public class Bootstraps implements WithGlobalEntityManager {
   public static void init() {
     MiembroCuenta miembroCuenta = new MiembroCuenta("lucas", "123");
-    Miembro miembro = new Miembro("nombre", "apellido", TipoDocumento.DNI,3,new ArrayList<>());
+    Miembro miembro = new Miembro("lucas", "blanco", TipoDocumento.DNI,3,new ArrayList<>());
     miembro.setCuenta(miembroCuenta);
 
-    OrganizacionCuenta organizacionCuenta = new OrganizacionCuenta("onu", "123");
-    Organizacion organizacion2 = new Organizacion("Sancor", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
-    Organizacion organizacion = new Organizacion("La Serenisima", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
-    organizacion.setCuenta(organizacionCuenta);
+    OrganizacionCuenta cuentaOnu = new OrganizacionCuenta("onu", "123");
+    OrganizacionCuenta cuentaSerenisima = new OrganizacionCuenta("serenisima", "123");
+    Organizacion organizacion2 = new Organizacion("onu", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
+    Organizacion organizacion = new Organizacion("serenisima", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
+    organizacion2.setCuenta(cuentaOnu);
+    organizacion.setCuenta(cuentaSerenisima);
     organizacion.incorporarSector(new Sector("Compras", new ArrayList<>()));
     organizacion.incorporarSector(new Sector("Ventas", new ArrayList<>()));
+
     organizacion2.incorporarSector(new Sector("Recursos Humanos", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Administracion", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Ventas", new ArrayList<>()));

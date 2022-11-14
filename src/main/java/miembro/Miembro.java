@@ -109,4 +109,8 @@ public class Miembro {
   public void setCuenta(MiembroCuenta cuenta) {
     this.cuenta = cuenta;
   }
+
+  public String getNombre() {
+      return nombre;
+  }
 }

@@ -57,5 +57,11 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     return getOrganizaciones().stream().flatMap(organizacion -> organizacion.generarSectoresVacios().stream())
         .collect(Collectors.toSet()).stream().map(nombre -> new Sector(nombre, new ArrayList<>())).collect(Collectors.toSet());
   }
+
+  public Organizacion getOrganizacionPor(String razonSocial) {
+    return getOrganizaciones().stream()
+        .filter(organizacion -> organizacion.getRazonSocial().equals(razonSocial))
+        .findAny().orElse(null);
+  }
 }
 

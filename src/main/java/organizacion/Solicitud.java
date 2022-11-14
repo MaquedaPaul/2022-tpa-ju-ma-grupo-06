@@ -39,4 +39,7 @@ public class Solicitud {
     procesada = true;
   }
 
+  public Miembro getMiembroSolicitante() {
+    return miembroSolicitante;
+  }
 }

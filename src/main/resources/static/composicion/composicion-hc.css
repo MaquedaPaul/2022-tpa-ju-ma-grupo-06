@@ -9,11 +9,6 @@
     --fonts: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-* {
-    font-family: var(--fonts);
-    color: var(--color-texto);
-}
-
 html {
     background-color: var(--color-fondo);
 }
@@ -21,9 +16,15 @@ html {
 body {
     display: flex;
     min-height: 100vh;
+    height: 100%;
     flex-direction: column;
     flex-wrap: wrap;
     margin: 0;
+}
+
+* {
+    font-family: var(--fonts);
+    color: var(--color-texto);
 }
 
 header {
@@ -42,10 +43,11 @@ nav {
     padding: 20px;
     background-color: var(--color-fondo);
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 footer {
@@ -137,74 +139,86 @@ footer {
     color: var(--color-seccion-activa);
 }
 
-/*TARJETAS SOLICITUD*/
-
-.tarjetas {
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0px 30px;
-}
-
-.tarjeta {
-    width: 100%;
-    border: 2px solid var(--verde-principal);
-    padding: 10px;
-    justify-content: space-between;
-    margin-right: 20px;
-    margin-bottom: 10px;
-}
-
-.tarjeta * {
-    width: 100%;
-}
-
-.header-tarjeta {
-    width: 50%;
-
-}
-
-.header-tarjeta h3 {
-    margin: 0;
+.titulo {
+    font-size: 40px;
     text-align: center;
-    font-size: 20px;
 }
 
-.botones-tarjeta {
-    height: 50px;
-    width: 300px;
-    padding: 10px 20px 0;
+/*COSAS DEL HC*/
+
+.container-hc {
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.hc-mensual, .hc-anual {
+    height: 150px;
+    width: 400px;
+    border: 3px solid var(--color-texto);
+    margin-bottom: 30px;
+    align-items: center;
     justify-content: space-evenly;
+    border-radius: 10px;
 }
 
-.botones-tarjeta * {
-    width: 80px;
-    height: 40px;
+.hc-mensual *, .hc-anual * {
+    margin: 0;
+}
+
+.green {
+    color: var(--verde-principal);
+}
+
+.form-evo-hc {
+    border: 3px solid var(--verde-principal);
+    width: 500px;
+    padding: 10px;
+    height: 200px;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.form-evo-hc * {
+    margin: 0;
+}
+
+.form-evo-hc label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+label input[type="month"] {
+    height: 30px;
+    width: 200px;
+    outline: none;
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-texto);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
 }
 
 .btn {
-    background-color: var(--color-boton-rechazar);
+    background-color: var(--verde-principal);
     border: none;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
-}
-
-.btn img {
-    width: 30px;
-    height: 30px;
-}
-
-.primary {
-    background-color: var(--verde-principal);
+    width: 70px;
+    color: var(--color-texto);
+    border-radius: 10px;
 }
 
 .btn:hover {
     background-color: var(--verde-mas-claro);
 }
 
-.titulo {
-    font-size: 40px;
-    text-align: center;
+#grafico {
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }

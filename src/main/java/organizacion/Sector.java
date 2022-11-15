@@ -64,5 +64,4 @@ public class Sector {
   public int getCantidadMiembros() {
     return getMiembros().size();
   }
-
 }

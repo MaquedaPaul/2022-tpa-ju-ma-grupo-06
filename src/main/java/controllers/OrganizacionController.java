@@ -12,6 +12,6 @@ public class OrganizacionController extends AccountController {
     String usuario = comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "organizacion");
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
-    return new ModelAndView(organizacion.getSolicitudes(), "gestionarVinculaciones.hbs");
+    return new ModelAndView(organizacion, "gestionarVinculaciones.hbs");
   }
 }

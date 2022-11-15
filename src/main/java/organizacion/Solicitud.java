@@ -42,4 +42,8 @@ public class Solicitud {
   public Miembro getMiembroSolicitante() {
     return miembroSolicitante;
   }
+
+  public Sector getSectorSolicitado() {
+    return sectorSolicitado;
+  }
 }

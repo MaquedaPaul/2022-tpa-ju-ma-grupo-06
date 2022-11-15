@@ -7,9 +7,19 @@
 {{/partial}}
 
 {{#partial "content"}}
-    {{#each}}
-        <p>{{miembroSolicitante.nombre}}</p>
-    {{/each}}
+    <div id="lista-solicitudes">
+        {{#each}}
+            <div id="solicitud">
+                <p>{{miembroSolicitante.nombre}}</p>
+                <form action="/home/vinculaciones/{{miembroSolicitante.id}}" method="POST">
+                    <button type="submit">Aceptar</button>
+                </form>
+                 <form action="/home/vinculaciones/{{miembroSolicitante.id}}" method="POST">
+                     <button type="submit">Rechazar</button>
+                 </form>
+            </div>
+        {{/each}}
+    </div>
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

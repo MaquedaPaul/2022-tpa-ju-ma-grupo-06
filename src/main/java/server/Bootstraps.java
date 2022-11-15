@@ -16,9 +16,12 @@ import java.util.ArrayList;
 
 public class Bootstraps implements WithGlobalEntityManager {
   public static void init() {
-    MiembroCuenta miembroCuenta = new MiembroCuenta("lucas", "123");
-    Miembro miembro = new Miembro("lucas", "blanco", TipoDocumento.DNI,3,new ArrayList<>());
+    MiembroCuenta miembroCuenta = new MiembroCuenta("juan", "123");
+    Miembro miembro = new Miembro("juan", "blanco", TipoDocumento.DNI,3,new ArrayList<>());
     miembro.setCuenta(miembroCuenta);
+    MiembroCuenta miembroCuenta2 = new MiembroCuenta("lucas", "123");
+    Miembro miembro2 = new Miembro("lucas", "blanco", TipoDocumento.DNI,3,new ArrayList<>());
+    miembro2.setCuenta(miembroCuenta2);
 
     OrganizacionCuenta cuentaOnu = new OrganizacionCuenta("onu", "123");
     OrganizacionCuenta cuentaSerenisima = new OrganizacionCuenta("serenisima", "123");
@@ -42,6 +45,7 @@ public class Bootstraps implements WithGlobalEntityManager {
 
     new Bootstraps().persistir(organizacion);
     new Bootstraps().persistir(miembro);
+    new Bootstraps().persistir(miembro2);
     new Bootstraps().persistir(agenteTerritorial);
   }
 

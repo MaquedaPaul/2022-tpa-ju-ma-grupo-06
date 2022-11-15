@@ -113,4 +113,8 @@ public class Miembro {
   public String getNombre() {
       return nombre;
   }
+
+  public Long getId() {
+    return id;
+  }
 }

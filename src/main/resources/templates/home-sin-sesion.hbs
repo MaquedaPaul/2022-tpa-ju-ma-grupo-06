@@ -7,22 +7,20 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <a href="./">
-          <img src="logo.svg" alt="Logo de la Organizacion">
+    <header class="flex-between">
+        <a href="/" class="flex-between">
+          <img src="logo.svg" alt="Logo de la Pagina">
           <h1>Impacto Ambiental</h1>
         </a>
-        <a href="./signin" class="white-button">
+        <a href="./signin" class="seccion">
             Iniciar Sesion
         </a>
-      </nav>
     </header>
         <div id="main-section">
             {{#block "content"}}
             {{/block}}
         </div>
-    <footer>
+    <footer class="flex-center">
       <p>Test</p>
     </footer>
   </body>

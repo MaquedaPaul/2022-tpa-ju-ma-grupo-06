@@ -45,7 +45,7 @@ public class Organizacion {
 
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
-  List<Solicitud> solicitudes;
+  Set<Solicitud> solicitudes;
 
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
@@ -62,7 +62,7 @@ public class Organizacion {
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
-    this.solicitudes = new ArrayList<>();
+    this.solicitudes = new HashSet<>();
     this.contactos = contactos;
   }
 
@@ -210,7 +210,7 @@ public class Organizacion {
     return sectores.stream().filter(sector -> sector.getNombre().equals(nombre)).findAny().orElse(null);
   }
 
-  public List<Solicitud> getSolicitudes() {
+  public Set<Solicitud> getSolicitudes() {
     return solicitudes;
   }
 }

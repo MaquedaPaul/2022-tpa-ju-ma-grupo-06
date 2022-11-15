@@ -7,30 +7,27 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <div id="left-side">
-            <a href="/">
-                  <img src="/logo.svg" alt="Logo de la Organizacion">
-                  <h1>Impacto Ambiental</h1>
-            </a>
+    <header class="flex-between">
+        <a href="/" class="flex-between">
+          <img src="/logo.svg" alt="Logo de la Pagina">
+          <h1>Impacto Ambiental</h1>
+        </a>
+        <nav>
             {{#block "navbar-options"}}
             {{/block}}
-        </div>
-
+        </nav>
         <div class="white-button">
             <img src="/user.png" alt="Icono de Persona"></img>
             <form action="/signout" method="POST">
                 <button type="submit">Salir</button>
             </form>
         </div>
-      </nav>
     </header>
         <div id="main-section">
             {{#block "content"}}
             {{/block}}
         </div>
-    <footer>
+    <footer class="flex-center">
       <p>Test</p>
     </footer>
   </body>

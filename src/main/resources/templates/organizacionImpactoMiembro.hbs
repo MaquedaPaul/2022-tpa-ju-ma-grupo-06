@@ -1,0 +1,28 @@
+{{#partial "navbar-options"}}
+    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+{{/partial}}
+
+
+{{#partial "usuario"}}
+    <p>{{usuario}}</p>
+{{/partial}}
+
+
+{{#partial "content"}}
+    <h2>Impacto de un miembro</h2>
+    <div class="divArreglo" id="main-section">
+        <form class="claseForm"action="//TODO">
+            <input type="search" name="miembro" value="" placeholder="Ingrese ID del miembro" required>
+            <button type="submit">Enviar</button>
+        </form>
+        <fieldset>
+            <p>Nombre: //TODO</p>
+            <p>Apellido: //TODO</p>
+            <p>Impacto: %//TODO</p>
+        </fieldset>
+    </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

@@ -1,0 +1,22 @@
+{{#partial "navbar-options"}}
+    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+{{/partial}}
+
+{{#partial "content"}}
+    <h2>Calculadora de HC</h2>
+    <div class="below-buttons column">
+        <a href="/home/calculadora-hc/hc-total" class="option-button">
+            HC total actual
+        </a>
+        <a href="/home/calculadora-hc/impacto-de-miembro" class="option-button">
+            Impacto de un miembro
+        </a>
+        <a href="/home/calculadora-hc/indicador-hc-sector" class="option-button">
+            HC miembros de un sector
+        </a>
+    </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

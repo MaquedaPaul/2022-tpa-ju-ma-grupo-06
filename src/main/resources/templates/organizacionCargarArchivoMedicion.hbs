@@ -1,0 +1,25 @@
+{{#partial "navbar-options"}}
+    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+{{/partial}}
+
+{{#partial "content"}}
+   <h2>Cargar Archivo Mediciones</h2>
+   <div id="main-section">
+       <form>
+           <div>
+               <p>Aceptados: .CSV</p>
+               <label for="fileSelect">Arrastre o haga click para subir:</label>
+               <input class="white-button-drop" id="fileSelect" type="file"
+                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+           </div>
+           <div id="below-buttons">
+               <div id="atras"><a class="white-button" href="listo/aceptar-vinculacion/index2.html">Atrás</a></div>
+               <div id="ingresar"><a class="white-button">Ingresar</a></div>
+           </div>
+       </form>
+   </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

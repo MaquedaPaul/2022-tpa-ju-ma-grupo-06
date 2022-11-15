@@ -15,7 +15,7 @@ public class OrganizacionCuenta extends Cuenta {
   }
 
   public String getTemplate() {
-    return "home-organizacion.hbs";
+    return "organizacionHome.hbs";
   }
 
   public String tipoCuenta() {

@@ -204,14 +204,6 @@ form div label {
 }
 
 /*Thomas*/
-
-.volver {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-}
-
 .impactoMiembro {
   text-align: center;
   margin-left: auto;
@@ -228,15 +220,6 @@ form div label {
 
 .claseForm{
   margin-bottom: 10px;
-}
-
-.white-button2{
-  display:flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
 }
 
 .borde{

@@ -1,0 +1,31 @@
+{{#partial "navbar-options"}}
+    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+{{/partial}}
+
+
+{{#partial "usuario"}}
+    <p>{{usuario}}</p>
+{{/partial}}
+
+
+{{#partial "content"}}
+   <h2>Registrar Mediciones</h2>
+   <div id="main-section">
+       <form>
+           <div>
+               <a class="option-button" href="/home/mediciones/perse">
+                   Cargar medición
+               </a>
+           </div>
+           <div>
+               <a class="option-button" href="/home/mediciones/archivo">
+                    Cargar CSV
+               </a>
+           </div>
+       </form>
+   </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

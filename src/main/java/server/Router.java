@@ -45,23 +45,23 @@ public class Router {
     //POST /organizaciones/:id/menu/vinculaciones/:vinculacion + body
     Spark.post("/home/vinculaciones", (request, response) -> new MiembroController().pedirVinculacion(request, response), engine);
     //GET /organizaciones/:id/menu/mediciones
-    Spark.get("/home/mediciones", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/mediciones", (request, response) -> new OrganizacionController().getMediciones(request, response), engine);
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=medicion
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=medicion + body
-    Spark.get("/home/mediciones/perse", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/mediciones/perse", (request, response) -> new OrganizacionController().getMedicionesPerse(request, response), engine);
     Spark.post("/home/mediciones/perse", (request, response) -> new MiembroController().getRegistro(request, response), engine);
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=archivo
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=archivo + body;
-    Spark.get("/home/mediciones/archivo", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/mediciones/archivo", (request, response) -> new OrganizacionController().getMedicionesArchivo(request, response), engine);
     Spark.post("/home/mediciones/archivo", (request, response) -> new MiembroController().getRegistro(request, response), engine);
     //GET /organizaciones/:id/menu/calculadora-hc
-    Spark.get("/home/calculadorahc", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/calculadora-hc", (request, response) -> new OrganizacionController().getCalculadoraHc(request, response), engine);
     //GET /organizaciones/:id/menu/calculadora-hc/hc-total
-    Spark.get("/home/calculadorahc/hc-total", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/calculadora-hc/hc-total", (request, response) -> new OrganizacionController().getHcTotal(request, response), engine);
     //GET /organizaciones/:id/menu/calculadora-hc/impacto-de-miembro?miembro=:id_miembro
-    Spark.get("/home/calculadorahc/impacto-de-miembro", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/calculadora-hc/impacto-de-miembro", (request, response) -> new OrganizacionController().getImpactoMiembro(request, response), engine);
     //GET /organizaciones/:id/menu/calculadora-hc/indicador-hc-sector?sector=:id_sector;
-    Spark.get("/home/calculadorahc/indicador-hc-sector", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/calculadora-hc/indicador-hc-sector", (request, response) -> new OrganizacionController().getIndicadorHcSector(request, response), engine);
 
     //Agente
     //GET /agentes/:id/menu/sectores/:sector/composicion-hc

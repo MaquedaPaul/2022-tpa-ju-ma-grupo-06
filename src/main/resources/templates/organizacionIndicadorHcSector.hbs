@@ -1,0 +1,27 @@
+{{#partial "navbar-options"}}
+    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+{{/partial}}
+
+
+{{#partial "usuario"}}
+    <p>{{usuario}}</p>
+{{/partial}}
+
+
+{{#partial "content"}}
+    <h2>Indicador HC promedio por miembro en un sector</h2>
+        <div class="divArreglo">
+            <form class="claseForm" action="//TODO">
+                <input name="sector" value="" type="search" placeholder="Ingrese el sector" required>
+                <button type="submit">Enviar</button>
+            </form>
+            <fieldset>
+                <p>Sector: //TODO</p>
+                <p>HC promedio por miembro: //TODO</p>
+            </fieldset>
+        </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

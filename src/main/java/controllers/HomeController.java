@@ -13,6 +13,7 @@ public class HomeController {
     String usuario = request.session().attribute("logged_user");
     if (usuario == null) {
       response.redirect("/signin");
+      return null;
     }
     Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(usuario);
     HashMap<String, Object> model = new HashMap<String, Object>();

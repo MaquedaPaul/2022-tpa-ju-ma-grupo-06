@@ -19,6 +19,7 @@ public class SignInController {
     Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(userQuery);
     if (cuenta == null || !Objects.equals(userQueryPassword, cuenta.getPassword())) {
       response.redirect("/signin");
+      return null;
     }
     String usuario = cuenta.getUsuario();
 

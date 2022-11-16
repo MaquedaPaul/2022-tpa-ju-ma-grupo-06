@@ -1,14 +1,15 @@
 package organizacion.repositorio;
-import lombok.Getter;
+
 import miembro.Miembro;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.*;
-import transporte.Trayecto;
+
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 

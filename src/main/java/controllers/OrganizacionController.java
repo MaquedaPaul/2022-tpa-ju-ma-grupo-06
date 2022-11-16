@@ -1,15 +1,19 @@
 package controllers;
 
 import cuenta.RepoCuentas;
+import miembro.Miembro;
+import miembro.RepoMiembros;
 import organizacion.Organizacion;
 import organizacion.Solicitud;
 import organizacion.TipoOrganizacion;
+import organizacion.periodo.PeriodoMensual;
 import organizacion.repositorio.RepoOrganizacion;
 import organizacion.repositorio.RepoSolicitud;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,10 +29,7 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getPage(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
-    if(usuario == null){
-      response.redirect("/signin");
-      return null;
-    }
+
 
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
 
@@ -50,36 +51,72 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getHcTotal(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
-    return new ModelAndView(organizacion, "organizacionHcTotal.hbs");
+    double valor = organizacion.calcularHCTotal(new PeriodoMensual(LocalDate.now()));
+    Map<String, Object> model = new HashMap<>();
+    model.put("valorhc",valor);
+    return new ModelAndView(model, "organizacionHcTotal.hbs");
+  }
+
+  public ModelAndView getImpactoMiembroBuscar(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Map<String, Object> model = new HashMap<>();
+
+    return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
   }
 
   public ModelAndView getImpactoMiembro(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
-    return new ModelAndView(organizacion, "organizacionImpactoMiembro.hbs");
+    Map<String, Object> model = new HashMap<>();
+
+    String idMiembro = request.queryParams("miembro");
+    response.redirect("/home/calculadora-hc/impacto-de-miembro/"+idMiembro);
+
+
+    return null;
+  }
+
+  public ModelAndView getImpactoMiembroConId(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Map<String, Object> model = new HashMap<>();
+    Long idMiembro = Long.valueOf((request.params("id")));
+    Miembro miembro =RepoMiembros.getInstance().getMiembrosPor(idMiembro);
+    model.put("nombre",miembro.getNombre());
+    model.put("apellido",miembro.getApellido());
+    double impacto = organizacion.impactoDeMiembro(miembro,new PeriodoMensual(LocalDate.now()));
+    model.put("impacto",impacto);
+    return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
   }
 
   public ModelAndView getIndicadorHcSector(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionIndicadorHcSector.hbs");
   }
 
   public ModelAndView getMediciones(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionRegistrarMediciones.hbs");
   }
 
   public ModelAndView getMedicionesArchivo(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionCargarArchivoMedicion.hbs");
   }
 
   public ModelAndView getMedicionesPerse(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+
+
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionCargarMedicion.hbs");
   }
@@ -120,4 +157,7 @@ public class OrganizacionController extends AccountController {
     return null;
 
   }
+
+
+
 }

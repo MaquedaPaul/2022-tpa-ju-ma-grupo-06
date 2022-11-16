@@ -32,8 +32,7 @@ public class Bootstraps implements WithGlobalEntityManager {
     organizacion2.incorporarSector(new Sector("Recursos Humanos", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Administracion", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Ventas", new ArrayList<>()));
-    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
-    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion2);
+
 
     AgenteCuenta agenteCuenta = new AgenteCuenta("007", "123");
     SectorTerritorial sectorTerritorial = new SectorTerritorial(new ArrayList<>(), TipoSectorTerritorial.DEPARTAMENTO);
@@ -45,6 +44,7 @@ public class Bootstraps implements WithGlobalEntityManager {
     //new Bootstraps().persistir(unaSolicitud);
 
     new Bootstraps().persistir(organizacion);
+    new Bootstraps().persistir(organizacion2);
     new Bootstraps().persistir(miembro);
     new Bootstraps().persistir(miembro2);
     new Bootstraps().persistir(agenteTerritorial);

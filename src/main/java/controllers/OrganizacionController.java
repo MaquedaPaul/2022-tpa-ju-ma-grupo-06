@@ -4,6 +4,7 @@ import cuenta.RepoCuentas;
 import miembro.Miembro;
 import miembro.RepoMiembros;
 import organizacion.Organizacion;
+import organizacion.Sector;
 import organizacion.Solicitud;
 import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
@@ -75,7 +76,6 @@ public class OrganizacionController extends AccountController {
     String idMiembro = request.queryParams("miembro");
     response.redirect("/home/calculadora-hc/impacto-de-miembro/"+idMiembro);
 
-
     return null;
   }
 
@@ -94,10 +94,34 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getIndicadorHcSector(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+
+    String nombreSector = request.queryParams("sector");
+    response.redirect("/home/calculadora-hc/indicador-hc-sector/"+nombreSector);
+
+    return null;
+  }
+
+  public ModelAndView getIndicadorHcSectorBuscar(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
 
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionIndicadorHcSector.hbs");
   }
+
+  public ModelAndView getIndicadorHcSectorConNombre(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Map<String, Object> model = new HashMap<>();
+    String nombreSector = request.params("nombre").toLowerCase();
+    //.toLowerCase()
+    Sector sector =organizacion.obtenerSectorPorCaseSensitive(nombreSector);
+    double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
+    model.put("nombre",sector.getNombre());
+    model.put("hcpromedio",hcPromedio);
+    return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
+  }
+
 
   public ModelAndView getMediciones(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);

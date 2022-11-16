@@ -103,6 +103,10 @@ public class Organizacion {
   }
 
   public double calcularHCTotalMediciones(Periodo periodo) {
+    if(getMediciones().isEmpty()){
+      return 0;
+    }
+
     return this.getMediciones()
         .stream()
         .filter(med -> med.esDelPeriodo(periodo))
@@ -111,6 +115,10 @@ public class Organizacion {
   }
 
   public double calcularHCTotalDeMiembros(Periodo periodo) {
+    if(getTrayectosDeLosMiembros().collect(Collectors.toList()).isEmpty()){
+      return 0;
+    }
+
     return periodo.perioricidad()
         * this.getDiasDeTrabajo()
         * this.getTrayectosDeLosMiembros()
@@ -164,7 +172,7 @@ public class Organizacion {
 
   public double impactoDeMiembro(Miembro miembro, Periodo periodo) {
 
-    return (100 * miembro.calcularHCTotal(periodo)) / this.calcularHCTotal(periodo);
+    return (100 * miembro.calcularHCTotal(periodo)) /  Math.max(1,this.calcularHCTotal(periodo));
   }
 
   public List<Miembro> getMiembros() {

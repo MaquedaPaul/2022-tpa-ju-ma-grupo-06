@@ -84,6 +84,9 @@ public class Miembro {
   }
 
   public double calcularHCTrayectos() {
+    if(getTrayectos().isEmpty()){
+      return 0;
+    }
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
   }
 

@@ -13,14 +13,16 @@
 {{#partial "content"}}
     <h2>Impacto de un miembro</h2>
     <div class="divArreglo" id="main-section">
-        <form class="claseForm"action="//TODO">
+        <form class="claseForm" method="get" action="/home/calculadora-hc/impacto-de-miembro">
             <input type="search" name="miembro" value="" placeholder="Ingrese ID del miembro" required>
             <button type="submit">Enviar</button>
         </form>
         <fieldset>
-            <p>Nombre: //TODO</p>
-            <p>Apellido: //TODO</p>
-            <p>Impacto: %//TODO</p>
+
+            <p>Nombre: {{nombre}}</p>
+            <p>Apellido: {{apellido}}</p>
+            <p>Impacto: %{{impacto}}</p>
+
         </fieldset>
     </div>
 {{/partial}}

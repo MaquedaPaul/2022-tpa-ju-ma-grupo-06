@@ -45,6 +45,7 @@ public class Organizacion {
 
   @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "organizacion_id")
+          //TODO:reveer con dani
   Set<Solicitud> solicitudes;
 
   @OneToMany(cascade = CascadeType.PERSIST)
@@ -213,5 +214,15 @@ public class Organizacion {
   public Set<Solicitud> getSolicitudes() {
     return solicitudes;
   }
+
+  public Solicitud getSolicitudPorId(Long id) {
+    return solicitudes.stream().filter(solicitud -> solicitud.getId().equals(id)).collect(Collectors.toList()).get(0);
+  }
+
+  public Set<Solicitud> getSolicitudesSinProcesar(){
+    Set<Solicitud> solicitudes = this.solicitudes.stream().filter(solicitud -> !solicitud.isProcesada()).collect(Collectors.toSet());
+    return solicitudes;
+  }
+
 }
 

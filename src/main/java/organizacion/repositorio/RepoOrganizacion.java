@@ -63,5 +63,7 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
         .filter(organizacion -> organizacion.getRazonSocial().equals(razonSocial))
         .findAny().orElse(null);
   }
+
+
 }
 

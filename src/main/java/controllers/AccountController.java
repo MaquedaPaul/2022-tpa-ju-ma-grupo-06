@@ -9,6 +9,7 @@ public class AccountController {
     String tipoCuenta = request.session().attribute("logged_user");
     if (usuario == null ) {
       response.redirect("/signin");
+      return null;
     }
     return usuario;
   }

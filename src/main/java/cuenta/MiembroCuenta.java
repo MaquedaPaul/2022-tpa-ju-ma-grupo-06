@@ -15,7 +15,7 @@ public class MiembroCuenta extends Cuenta {
   }
 
   public String getTemplate() {
-    return "homeMiembro.hbs";
+    return "miembroHome.hbs";
   }
 
   public String tipoCuenta() {

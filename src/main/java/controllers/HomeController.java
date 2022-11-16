@@ -6,6 +6,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+
 public class HomeController {
   public ModelAndView getHome(Request request, Response response) {
     String usuario = request.session().attribute("logged_user");
@@ -13,6 +15,8 @@ public class HomeController {
       response.redirect("/signin");
     }
     Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(usuario);
-    return new ModelAndView(cuenta, cuenta.getTemplate());
+    HashMap<String, Object> model = new HashMap<String, Object>();
+    model.put("cuenta", cuenta);
+    return new ModelAndView(model, cuenta.getTemplate());
   }
 }

@@ -63,5 +63,4 @@ public class OrganizacionController extends AccountController {
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionCargarMedicion.hbs");
   }
-
 }

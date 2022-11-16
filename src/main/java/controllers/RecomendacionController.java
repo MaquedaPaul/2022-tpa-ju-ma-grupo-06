@@ -9,6 +9,6 @@ public class RecomendacionController {
     if (request.session().attribute("logged_user") == null) {
       response.redirect("/signin");
     }
-    return new ModelAndView(null, "recomendaciones.hbs");
+    return new ModelAndView(null, "miembroRecomendaciones.hbs");
   }
 }

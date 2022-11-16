@@ -17,7 +17,7 @@ public class Router {
 
     MiembroController miembroController = new MiembroController();
     OrganizacionController organizacionController = new OrganizacionController();
-
+    AgenteController agenteController = new AgenteController();
 
     Spark.staticFiles.location("static");
     Spark.get("/", raizController::getPage, engine);
@@ -77,18 +77,28 @@ public class Router {
 
     //Agente
     //GET /agentes/:id/menu/sectores/:sector/composicion-hc
-    Spark.get("/home/composicion-hc", miembroController::getRegistro, engine);
+
     //GET /agentes/:id/menu/sectores/:sector/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-    Spark.get("/home/evolucion-hc", miembroController::getRegistro, engine);
+    Spark.get("/home/evolucion-hc", agenteController::getEvolucionHc, engine);
     Spark.get("/home/evolucion-hc/calculo", miembroController::getRegistro, engine);
     //GET /agentes/:id/menu/sectores/:sector/hc-total
-    Spark.get("/home/hc-total", miembroController::getRegistro, engine);
+
+    //GET /agentes/:id/menu/sectores/:sector/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
+
+    //GET /agentes/:id/menu/sectores/:sector/hc-total
+
+
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/composicion-hc
     Spark.get("/home/composicion-hc", miembroController::getRegistro, engine);
+    Spark.get("/home/composicion-hc", agenteController::getCompocicionHc, engine);
+
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/hc-total-por-tipo;
     Spark.get("/home/hc-total-por-tipo", miembroController::getRegistro, engine);
+    Spark.get("/home/hc-total", agenteController::getHcTotal, engine);
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-    Spark.get("/home/evolucion-hc-organizacion", miembroController::getRegistro, engine);
+
+    Spark.get("/home/evolucion-hc-organizacion", agenteController::getEvolucionOrganizacion, engine);
     Spark.get("/home/evolucion-hc-organizacion/calculo", miembroController::getRegistro, engine);
+
   }
 }

@@ -19,7 +19,7 @@ public class MiembroController extends AccountController {
   public ModelAndView getTrayectos(Request request, Response response) {
     comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "miembro");
-    return new ModelAndView(null,"trayectos.hbs");
+    return new ModelAndView(null,"miembroTrayectos.hbs");
   }
 
   public ModelAndView pedirVinculacion(Request request, Response response) {
@@ -52,7 +52,7 @@ public class MiembroController extends AccountController {
   public ModelAndView getRegistrarTrayecto(Request request, Response response) {
     comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "miembro");
-    return new ModelAndView(null,"registrarTrayecto.hbs");
+    return new ModelAndView(null,"miembroRegistrarTrayecto.hbs");
   }
 
   public ModelAndView getVinculacion(Request request, Response response) {
@@ -63,6 +63,6 @@ public class MiembroController extends AccountController {
     HashMap<String, Object> hashMap = new HashMap<>();
     hashMap.put("sectores",sectores);
     hashMap.put("organizaciones", organizaciones);
-    return new ModelAndView(hashMap,"vinculacion.hbs");
+    return new ModelAndView(hashMap,"miembroVinculacion.hbs");
   }
 }

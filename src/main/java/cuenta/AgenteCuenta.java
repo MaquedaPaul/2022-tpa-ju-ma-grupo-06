@@ -13,7 +13,7 @@ public class AgenteCuenta extends Cuenta {
   }
 
   public String getTemplate() {
-    return "homeAgente.hbs";
+    return "agenteHome.hbs";
   }
 
   public String tipoCuenta() {

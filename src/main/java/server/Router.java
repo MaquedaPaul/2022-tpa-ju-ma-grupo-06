@@ -65,18 +65,18 @@ public class Router {
 
     //Agente
     //GET /agentes/:id/menu/sectores/:sector/composicion-hc
-    Spark.get("/home/composicion-hc", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/composicion-hc", (request, response) -> new AgenteController().getCompocicionHc(request, response), engine);
     //GET /agentes/:id/menu/sectores/:sector/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-    Spark.get("/home/evolucion-hc", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/evolucion-hc", (request, response) -> new AgenteController().getEvolucionHc(request, response), engine);
     Spark.get("/home/evolucion-hc/calculo", (request, response) -> new MiembroController().getRegistro(request, response), engine);
     //GET /agentes/:id/menu/sectores/:sector/hc-total
-    Spark.get("/home/hc-total", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/hc-total", (request, response) -> new AgenteController().getHcTotal(request, response), engine);
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/composicion-hc
     Spark.get("/home/composicion-hc", (request, response) -> new MiembroController().getRegistro(request, response), engine);
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/hc-total-por-tipo;
     Spark.get("/home/hc-total-por-tipo", (request, response) -> new MiembroController().getRegistro(request, response), engine);
     //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-    Spark.get("/home/evolucion-hc-organizacion", (request, response) -> new MiembroController().getRegistro(request, response), engine);
+    Spark.get("/home/evolucion-hc-organizacion", (request, response) -> new AgenteController().getEvolucionOrganizacion(request, response), engine);
     Spark.get("/home/evolucion-hc-organizacion/calculo", (request, response) -> new MiembroController().getRegistro(request, response), engine);
   }
 }

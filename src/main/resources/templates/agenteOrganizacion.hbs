@@ -1,0 +1,41 @@
+{{#partial "navbar-options"}}
+    <a href="/home/composicion-hc" class="seccion" >Compocicion Hc del Sector</a>
+    <a href="/home/evolucion-hc" class="seccion">Evolución HC del Sector</a>
+    <a href="/home/hc-total" class="seccion">HC Total</a>
+    <a href="/home/evolucion-hc-organizacion" class="seccion ">Organizaciones</a>
+{{/partial}}
+
+{{#partial "usuario"}}
+    <p>{{usuario}}</p>
+{{/partial}}
+
+{{#partial "content"}}
+     <h2 class="titulo">HC de la organización</h2>
+
+         <div class="flex-row organizacion-item-list">
+             <div class=" flex-clm">
+                 <h3>
+                     Nombre Organización
+                 </h3>
+                 <p>
+                     Tipo: <span>TIPOORG</span>
+                 </p>
+             </div>
+             <form id="acciones" method="get" class="botones flex-row">
+                 <button type="submit" form="acciones" formaction="/home/organizaciones/:id/composicion-hc"
+                         class="btn-consulta">
+                     Composicion HC
+                 </button>
+                 <button type="submit" form="acciones" formaction="/home/organizaciones/:id/evolucion-hc"
+                         class="btn-consulta">
+                     Evolución HC
+                 </button>
+                 <button type="submit" form="acciones" formaction="/home/organizaciones/hc-tipo-organizacion?tipo=:tipo"
+                         class="btn-consulta">
+                     HC Total del TIPOORG
+                 </button>
+             </form>
+         </div>
+{{/partial}}
+
+{{>home-iniciado-sesion.hbs}}

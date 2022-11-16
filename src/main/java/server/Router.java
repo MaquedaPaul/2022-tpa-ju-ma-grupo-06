@@ -2,6 +2,7 @@ package server;
 
 import controllers.*;
 import miembro.Miembro;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,6 +21,11 @@ public class Router {
     AgenteController agenteController = new AgenteController();
 
     Spark.staticFiles.location("static");
+
+    Spark.after(((request, response) -> {
+      PerThreadEntityManagers.getEntityManager().clear();
+      PerThreadEntityManagers.closeEntityManager();
+    }));
     Spark.get("/", raizController::getPage, engine);
     Spark.get("/recomendaciones", recomendacionController::getRecomendaciones, engine);
     Spark.get("/home",homeController::getHome, engine);
@@ -51,9 +57,13 @@ public class Router {
     Spark.get("/home/vinculacion", miembroController::getVinculacion, engine);
     Spark.post("/home/vinculacion", miembroController::pedirVinculacion, engine);
 
+
     // Organizacion
     //GET /organizaciones/:id/menu/vinculaciones
     Spark.get("/home/vinculaciones", organizacionController::getPage, engine);
+    Spark.post("/home/vinculaciones/:id/aceptar", organizacionController::aceptarVinculacion,engine);
+    Spark.post("/home/vinculaciones/:id/rechazar", organizacionController::rechazarVinculacion,engine);
+
     //POST /organizaciones/:id/menu/vinculaciones/:vinculacion + body
     Spark.post("/home/vinculaciones", miembroController::pedirVinculacion, engine);
     //GET /organizaciones/:id/menu/mediciones

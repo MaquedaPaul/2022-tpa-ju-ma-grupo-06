@@ -13,7 +13,6 @@
         <class>organizacion.Solicitud</class>
         <class>organizacion.Miembro</class>
         <class>notificaciones.Contacto</class>
-        <class>organizacion.Miembro</class>
         <class>transporte.Trayecto</class>
         <class>transporte.Transporte</class>
         <class>transporte.Combustible</class>

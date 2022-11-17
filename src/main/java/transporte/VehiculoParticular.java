@@ -16,14 +16,15 @@ public class VehiculoParticular extends TransportePrivado {
   @Enumerated(EnumType.STRING)
   @Column(name = "TIPO_TRANSPORTE")
   private TipoVehiculo tipoVehiculo;
+  private String nombre;
 
   public VehiculoParticular() {
   }
 
-  public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro) {
+  public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro, String nombre) {
     this.tipoVehiculo = tipoVehiculo;
     this.consumoPorKilometro = consumoPorKilometro;
-
+    this.nombre = nombre;
   }
 
   public TipoVehiculo getTipoVehiculo() {
@@ -32,5 +33,10 @@ public class VehiculoParticular extends TransportePrivado {
 
   public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
     this.tipoVehiculo = tipoVehiculo;
+  }
+
+  @Override
+  public String getTipo() {
+    return "Vehiculo Particular";
   }
 }

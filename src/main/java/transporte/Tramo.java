@@ -72,4 +72,16 @@ public class Tramo {
   public TipoConsumo getTipoConsumo() {
     return this.transporteUtilizado.getTipoConsumo();
   }
+
+  public void setPuntoDestino(PuntoUbicacion puntoDestino) {
+    this.puntoDestino = puntoDestino;
+  }
+
+  public void setPuntoOrigen(PuntoUbicacion puntoOrigen) {
+    this.puntoOrigen = puntoOrigen;
+  }
+
+  public void setTransporteUtilizado(Transporte transporteUtilizado) {
+    this.transporteUtilizado = transporteUtilizado;
+  }
 }

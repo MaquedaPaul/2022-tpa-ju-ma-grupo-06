@@ -25,4 +25,9 @@ public class PropulsionHumana extends TransportePrivado {
   public boolean sePuedeCompartir() {
     return false;
   }
+
+  @Override
+  public String getTipo() {
+    return "Propulsion Humana";
+  }
 }

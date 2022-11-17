@@ -7,16 +7,17 @@
 {{#partial "content"}}
    <h2>Cargar Archivo Mediciones</h2>
    <div id="main-section">
-       <form>
+       <form enctype="multipart/form-data" method="post" id="id-form">
            <div>
                <p>Aceptados: .CSV</p>
                <label for="fileSelect">Arrastre o haga click para subir:</label>
                <input class="white-button-drop" id="fileSelect" type="file"
+                      name="uploaded_file"
                       accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
            </div>
            <div id="below-buttons">
-               <div id="atras"><a class="white-button" href="listo/aceptar-vinculacion/index2.html">Atrás</a></div>
-               <div id="ingresar"><a class="white-button">Ingresar</a></div>
+               <div id="atras"><a class="white-button" href="/home/mediciones">Atrás</a></div>
+               <input id="ingresar" class="white-button" value="Ingresar" type="submit" form="id-form">
            </div>
        </form>
    </div>

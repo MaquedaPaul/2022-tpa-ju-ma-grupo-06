@@ -11,17 +11,19 @@
         <div>
             <div>
 
+                <div>
                 <label for="tipo-consumo">Tipo de consumo</label>
-                <input list="tipo-consumos" id="tipo-consumo" name="Tipos de consumo">
+                <input list="tipo-consumos" id="tipo-consumo" name="tipo-de-consumo">
                 <datalist class="white-button" id="tipo-consumos">
-                    <option value="Un tipo"></option>
-                    <option value="Otro tipo"></option>
+                    {{#each tipoconsumos}}
+                    <option value="{{nombre}}"></option>
+                    {{/each}}
                 </datalist>
 
             </div>
             <div>
                 <label for="periodicidad">Periodicidad</label>
-                <select class="white-button" id=periodicidad>
+                <select class="white-button" id=periodicidad name="periodicidad">
                     <option disabled="">Selecciona una opcion</option>
                     <option value="Anual">Anual</option>
                     <option value="Mensual">Mensual</option>
@@ -30,11 +32,11 @@
 
             <div>
                 <label for="valor">Valor</label>
-                <input type="number" min="1" class="white-button" id="valor">
+                <input type="number" min="1" class="white-button" id="valor" name="valor">
             </div>
             <div>
                 <label for="fecha-medicion">Fecha de medicion</label>
-                <input max="2022-10" class="white-button" type="month" id="fecha-medicion">
+                <input max="2022-10" class="white-button" type="month" id="fecha-medicion" name="fecha-medicion">
             </div>
         </div>
         <div id="below-buttons">
@@ -42,7 +44,7 @@
                 <a class="white-button" href="listo/aceptar-vinculacion/index2.html">Atrás</a>
             </div>
             <div>
-                <input id="ingresar" class="white-button" value="Ingresar" type="submit">
+                <input id="ingresar" class="white-button" value="Ingresar" type="submit" formmethod="post" formaction="/home/mediciones/perse/creado" >
             </div>
         </div>
 

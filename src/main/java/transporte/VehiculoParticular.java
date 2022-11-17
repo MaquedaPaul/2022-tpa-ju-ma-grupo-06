@@ -1,10 +1,5 @@
 package transporte;
 
-//import java.io.IOException;
-//import linea.PuntoUbicacion;
-//import services.geodds.ServicioGeodds;
-//import services.geodds.entities.Distancia;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,12 +12,16 @@ public class VehiculoParticular extends TransportePrivado {
   @Column(name = "TIPO_TRANSPORTE")
   private TipoVehiculo tipoVehiculo;
 
+  private String vehiculo;
+
   public VehiculoParticular() {
   }
 
-  public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro) {
+  public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro, String vehiculo) {
     this.tipoVehiculo = tipoVehiculo;
     this.consumoPorKilometro = consumoPorKilometro;
+    this.vehiculo = vehiculo;
+
 
   }
 

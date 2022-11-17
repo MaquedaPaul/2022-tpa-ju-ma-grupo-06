@@ -12,6 +12,7 @@ import linea.PuntoUbicacion;
 import linea.TipoTransporte;
 import mediciones.Medicion;
 import miembro.Miembro;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.TipoDocumento;
@@ -29,7 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BootstrapsAgente {
+public class BootstrapsAgente implements WithGlobalEntityManager {
 
   public static void init() {
 
@@ -75,7 +76,7 @@ public class BootstrapsAgente {
 
     Transporte colectivo = new TransportePublico(linea144,60);
     colectivo.setCombustible(gasolina);
-    Transporte autito = new VehiculoParticular(TipoVehiculo.AUTO,40);
+    Transporte autito = new VehiculoParticular(TipoVehiculo.AUTO,40,"Fiat 1");
     autito.setCombustible(gasolina);
     Transporte remis = new ServicioContratado(TipoVehiculo.AUTO,30);
     remis.setCombustible(gasolina);
@@ -175,10 +176,19 @@ public class BootstrapsAgente {
     organizaciones.add(papelera);
 
     SectorTerritorial buenosAires = new SectorTerritorial(organizaciones, TipoSectorTerritorial.PROVINCIA);
-    AgenteTerritorial juanCarlos = new AgenteTerritorial(buenosAires);
+    AgenteTerritorial juanCarlos = new AgenteTerritorial(buenosAires, "juan carlos");
     juanCarlos.setCuenta(cuenta7);
+
+    //PERSISTIR
+
+    new Bootstraps().persistir(juanCarlos); //TODO ¿Guarda al agente con todas las otras cosas persistidas?
 
   }
 
+  public void persistir(Object object) {
+    entityManager().getTransaction().begin();
+    entityManager().persist(object);
+    entityManager().getTransaction().commit();
+  }
 
 }

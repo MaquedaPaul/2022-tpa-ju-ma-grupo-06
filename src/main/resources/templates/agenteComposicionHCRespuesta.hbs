@@ -10,8 +10,9 @@
                     /*COLUMNAS*/
                     ['Mes', 'Mediciones', 'Miembros'],
                     /*DATOS*/
-                    {{#each }}
+                    {{#each items}}
 
+                        ["{{this.periodoMensual.mes}} / {{this.periodoMensual.anio}}", {{this.hcMiembros}}, {{this.hcMediciones}}],
                     {{/each}}
                 ];
 
@@ -19,8 +20,8 @@
 
                 var options = {
                     chart: {
-                        title: 'Nombre Sector',
-                        subtitle: 'Periodo XX/XXXX - XX/XXXX',
+                        title: '{{sector.tipoSectorTerritorial}}',
+                        subtitle: 'Periodo {{inicio.mes}}/{{inicio.anio}}  - {{fin.mes}}/{{fin.anio}}',
                     }
                 };
 
@@ -32,10 +33,10 @@
 {{/partial}}
 
 {{#partial "navbar-options"}}
-    <a href="/home/composicion-hc" class="seccion" >Compocicion Hc del Sector</a>
+    <a href="/home/composicion-hc" class="seccion active" >Compocicion Hc del Sector</a>
     <a href="/home/evolucion-hc" class="seccion">Evolución HC del Sector</a>
     <a href="/home/hc-total" class="seccion">HC Total</a>
-    <a href="/home/evolucion-hc-organizacion" class="seccion ">Organizaciones</a>
+    <a href="/home/organizaciones" class="seccion ">Organizaciones</a>
 {{/partial}}
 
 {{#partial "usuario"}}
@@ -44,20 +45,9 @@
 
 {{#partial "content"}}
      <h2 class="titulo">Composición de HC del Sector</h2>
-        <form id="evolucion" method="get" action="/home/evolucion-hc/resultado" class="flex-clm form-evo-hc">
-            <h3>Ingrese el intervalo a consultar</h3>
-            <label for="inicio">
-                Inicio
-                <input type="month" id="inicio" max="30-12-2022"/>
-            </label>
-            <label for="fin">
-                Fin
-                <input type="month" id="fin" max="30-12-2022"/>
-            </label>
-            <button form="evolucion" type="submit" class="btn">
-                Consultar
-            </button>
-        </form>
+        <div id="grafico">
+
+        </div>
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

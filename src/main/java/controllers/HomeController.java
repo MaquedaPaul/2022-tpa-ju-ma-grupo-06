@@ -1,23 +1,33 @@
 package controllers;
 
 import cuenta.Cuenta;
-import cuenta.RepoCuentas;
+import global.Unidad;
+import organizacion.periodo.PeriodoMensual;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 
 public class HomeController {
   public ModelAndView getHome(Request request, Response response) {
-    String usuario = request.session().attribute("logged_user");
-    if (usuario == null) {
+    Cuenta cuenta = request.session().attribute("cuenta");
+    if (cuenta == null) {
       response.redirect("/signin");
       return null;
     }
-    Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(usuario);
-    HashMap<String, Object> model = new HashMap<String, Object>();
-    model.put("cuenta", cuenta);
-    return new ModelAndView(model, cuenta.getTemplate());
+    PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,11,15));
+    Map<String,Object> model = new HashMap<>();
+    model.put("totalMensual",2500D);
+    model.put("totalAnual",250700D);
+    model.put("unidad", Unidad.LTS);
+    model.put("sector","BUENOS AIRES");
+    model.put("usuario","007");
+    model.put("periodoActual",periodo);
+
+    cuenta.guardarEnSesion(request);
+    return new ModelAndView(model, cuenta.home());
   }
 }

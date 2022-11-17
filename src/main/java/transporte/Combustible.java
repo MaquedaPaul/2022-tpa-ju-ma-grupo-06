@@ -1,11 +1,14 @@
 package transporte;
 
 import admin.FactorEmision;
+import lombok.Getter;
+import lombok.Setter;
 import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 
 @Entity
+@Getter@Setter
 public class Combustible {
 
   @Id
@@ -13,7 +16,7 @@ public class Combustible {
   @Column(name = "ID_COMBUSTIBLE")
   Long id;
 
-  @Transient
+  @OneToOne(cascade = CascadeType.PERSIST)
   private TipoConsumo tipoConsumo;
 
   public Combustible() {

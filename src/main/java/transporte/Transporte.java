@@ -20,7 +20,7 @@ public abstract class Transporte {
   @Column(name = "CONSUMO_POR_KM")
   double consumoPorKilometro;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "ID_COMBUSTIBLE")
   Combustible combustible;
 

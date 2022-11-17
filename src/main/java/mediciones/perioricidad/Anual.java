@@ -1,13 +1,19 @@
 package mediciones.perioricidad;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
+import lombok.Getter;
+import lombok.Setter;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
 import java.time.LocalDate;
 
+@Getter@Setter
 public class Anual extends Perioricidad {
 
+  public Anual() {
+
+  }
 
   public Anual(LocalDate fechaImputacion, double valor) {
     this.setFecha(fechaImputacion);

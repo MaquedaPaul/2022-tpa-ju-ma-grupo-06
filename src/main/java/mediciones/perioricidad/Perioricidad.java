@@ -5,20 +5,26 @@ import lombok.Setter;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Embeddable;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Setter
 @Getter
-@Embeddable
+//@Embeddable
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "PERIORICIDAD")
+@Entity
 public abstract class Perioricidad {
 
+  @Id
+  @GeneratedValue
+  @Column(name = "Perioricidad")
+  private Long id;
+
+  @Column(name = "fecha")
   private LocalDate fecha;
+
+  @Column(name = "valor")
   private double valor;
 
   public abstract boolean esDelPeriodo(Periodo periodo);

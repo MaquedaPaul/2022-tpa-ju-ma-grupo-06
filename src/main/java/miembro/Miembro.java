@@ -5,6 +5,7 @@ import cuenta.MiembroCuenta;
 import exceptions.ElTrayectoSeleccionadoNoPerteneceAEsteMiembro;
 import exceptions.EsteTrayectoNoPuedeSerCompartido;
 import lombok.Getter;
+import lombok.Setter;
 import organizacion.Organizacion;
 import organizacion.Solicitud;
 import organizacion.TipoDocumento;
@@ -18,7 +19,7 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
-@Getter
+@Getter@Setter
 @Entity
 @Table(name = "MIEMBRO")
 public class Miembro {

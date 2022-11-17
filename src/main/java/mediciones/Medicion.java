@@ -1,15 +1,15 @@
 package mediciones;
 
 import lombok.Getter;
+import lombok.Setter;
 import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 import tipoconsumo.TipoConsumo;
-
 import javax.persistence.*;
 
-@Getter
+@Getter@Setter
 @Entity
 public class Medicion {
 
@@ -17,13 +17,14 @@ public class Medicion {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Organizacion organizacion;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private TipoConsumo tipoConsumo;
 
-  @Embedded
+  //@Embedded
+  @OneToOne(cascade = CascadeType.PERSIST)
   private Perioricidad periodicidad;
 
 

@@ -34,7 +34,7 @@ public class Organizacion {
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
 
-  //CAMBIAR A PUNTOUBICACION?
+  //TODO CAMBIAR A PUNTOUBICACION?
   private String ubicacionGeografica;
 
   private String clasificacion;

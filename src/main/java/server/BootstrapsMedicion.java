@@ -125,7 +125,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Miembro Alejandra = new Miembro("ALEJANDRA","CEBALLOS", TipoDocumento.DNI,46000004,new ArrayList<>());
     Miembro Ricardo = new Miembro("RICARDO","BUSTAMANTE", TipoDocumento.DNI,41000005,new ArrayList<>());
 
-    MiembroCuenta cuentaLucas = new MiembroCuenta("Lucas","1");
+    MiembroCuenta cuentaLucas = new MiembroCuenta("Lucas2","1");
     MiembroCuenta cuentaGabriel = new MiembroCuenta("Gabriel","2");
     MiembroCuenta cuentaMarcos = new MiembroCuenta("Marcos","3");
     MiembroCuenta cuentaJulieta = new MiembroCuenta("Julieta","4");
@@ -183,21 +183,78 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
 
     //TIPOS DE CONSUMO
 
-    TipoConsumo tipoConsumo1 = new TipoConsumo("Electricidad",Unidad.KWH,TipoActividad.ELECTRICIDAD_ADQUIRIDA_CONSUMIDA,TipoAlcance.EMISION_INDIRECTA_ASOC_ELECTRICIDAD);
+    TipoConsumo tipoConsumoGasNatural = new TipoConsumo("Gas natural",Unidad.M3,TipoActividad.COMBUSTION_FIJA,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoDiesel = new TipoConsumo("Diesel",Unidad.LT,TipoActividad.COMBUSTION_FIJA,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoNafta = new TipoConsumo("Nafta",Unidad.LT,TipoActividad.COMBUSTION_FIJA,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoCarbon = new TipoConsumo("Carbon",Unidad.KG,TipoActividad.COMBUSTION_FIJA,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoGasoilConsumido = new TipoConsumo("Gasoil consumido",Unidad.LTS,TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoNaftaConsumida = new TipoConsumo("Nafta consumida",Unidad.LTS,TipoActividad.COMBUSTION_MOVIL,TipoAlcance.EMISION_DIRECTA);
+    TipoConsumo tipoConsumoElectricidad = new TipoConsumo("Electricidad",Unidad.KWH,TipoActividad.ELECTRICIDAD_ADQUIRIDA_CONSUMIDA,TipoAlcance.EMISION_INDIRECTA_ASOC_ELECTRICIDAD);
+    TipoConsumo camionDeCargaOUtilitario = new TipoConsumo("TransporteUtilitario",null,TipoActividad.LOGISTICA_PRODUCTOS_RESIDUOS,TipoAlcance.OTRA_EMISION_INDIRECTA);
+    TipoConsumo distanciaMediaRecorrida = new TipoConsumo("DistanciaMediaRecorrida",Unidad.KM,TipoActividad.LOGISTICA_PRODUCTOS_RESIDUOS,TipoAlcance.OTRA_EMISION_INDIRECTA);
+
+
+    // FECHAS Pepsi
+
+    LocalDate medicionAño2020Pepsi = LocalDate.of(2020,12,20);
+    LocalDate medicionAño2021Pepsi = LocalDate.of(2021,12,30);
+    LocalDate medicionAño2022Pepsi = LocalDate.of(2022,11,10);
+
+    // FECHAS Estudio Juridico
+
+    LocalDate medicionAño2020Estudio = LocalDate.of(2020,12,10);
+    LocalDate medicionAño2021Estudio = LocalDate.of(2021,12,22);
+    LocalDate medicionAño2022Estudio = LocalDate.of(2022,11,30);
+
+    // FECHAS Afip
+
+    LocalDate medicionAño2020Afip = LocalDate.of(2020,12,11);
+    LocalDate medicionAño2021Afip = LocalDate.of(2021,12,10);
+    LocalDate medicionAño2022Afip = LocalDate.of(2022,11,22);
+
 
     //PERIODICIDAD
 
-    LocalDate medicionAño2021 = LocalDate.of(2021,12,30);
-    Perioricidad perioricidad1 = new Anual(medicionAño2021,3333);
+    Perioricidad perioricidadPepsi1 = new Anual(medicionAño2020Pepsi,3333);
+    Perioricidad perioricidadPepsi2 = new Anual(medicionAño2021Pepsi,2222);
+    Perioricidad perioricidadPepsi3 = new Anual(medicionAño2022Pepsi,120302);
+
+    Perioricidad perioricidadEstudio1 = new Anual(medicionAño2020Estudio,3333);
+    Perioricidad perioricidadEstudio2 = new Anual(medicionAño2021Estudio,2222);
+    Perioricidad perioricidadEstudio3 = new Anual(medicionAño2022Estudio,120302);
+
+    Perioricidad perioricidadAfip1 = new Anual(medicionAño2020Afip,3333);
+    Perioricidad perioricidadAfip2 = new Anual(medicionAño2021Afip,22324);
+    Perioricidad perioricidadAfip3 = new Anual(medicionAño2022Afip,503019222);
 
     //MEDICIONES
 
-    Medicion medicion1 = new Medicion(tipoConsumo1,perioricidad1,PepsiCo);
+    Medicion medicionPepsi1 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi1,PepsiCo);
+    Medicion medicionPepsi2 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi2,PepsiCo);
+    Medicion medicionPepsi3 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi3,PepsiCo);
+
+    Medicion medicionEstudio1 = new Medicion(tipoConsumoElectricidad,perioricidadEstudio1,EstudioJuridico);
+    Medicion medicionEstudio2 = new Medicion(tipoConsumoElectricidad,perioricidadEstudio2,EstudioJuridico);
+    Medicion medicionEstudio3 = new Medicion(tipoConsumoElectricidad,perioricidadEstudio3,EstudioJuridico);
+
+    Medicion medicionAfip1 = new Medicion(tipoConsumoElectricidad,perioricidadAfip1,Afip);
+    Medicion medicionAfip2 = new Medicion(tipoConsumoElectricidad,perioricidadAfip2,Afip);
+    Medicion medicionAfip3 = new Medicion(tipoConsumoElectricidad,perioricidadAfip3,Afip);
+
 
     //PERSISTIR
 
-    new Bootstraps().persistir(gilberto); //TODO ¿Guarda todo lo de antes?
-    new Bootstraps().persistir(medicion1);
+    new Bootstraps().persistir(gilberto);
+
+    new Bootstraps().persistir(medicionPepsi1);
+    new Bootstraps().persistir(medicionPepsi2);
+    new Bootstraps().persistir(medicionPepsi3);
+    new Bootstraps().persistir(medicionEstudio1);
+    new Bootstraps().persistir(medicionEstudio2);
+    new Bootstraps().persistir(medicionEstudio3);
+    new Bootstraps().persistir(medicionAfip1);
+    new Bootstraps().persistir(medicionAfip2);
+    new Bootstraps().persistir(medicionAfip3);
 
   }
 

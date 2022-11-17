@@ -13,36 +13,34 @@ import java.util.stream.Collectors;
 
 public class ReporteSectorTerritorial {
 
-  private final RepoSectorTerritorial repoSectorTerritorial;
+  private final GeneradorDePeriodos gen = new GeneradorDePeriodos();
 
-  public ReporteSectorTerritorial(RepoSectorTerritorial repo) {
-    this.repoSectorTerritorial = repo;
-  }
+  public List<ComposicionHcSectorTerritorial> reporteComposicionHC(PeriodoMensual inicio, PeriodoMensual fin, SectorTerritorial sectorTerritorial) {
 
-  public List<ComposicionHcSectorTerritorial> reporteComposicionHC(PeriodoMensual inicio, PeriodoMensual fin) {
+    List<PeriodoMensual> periodos = gen.generarPeriodosMensualesEntre(inicio, fin);
 
-    return repoSectorTerritorial.getSectoresTerritoriales()
-        .stream()
-        .map(sector -> this.generarItemComposicionHCEntre(sector, inicio, fin))
+    return periodos.stream()
+        .map(periodo -> this.generarItemComposicionHCEn(sectorTerritorial, periodo))
         .collect(Collectors.toList());
   }
 
-  public ComposicionHcSectorTerritorial generarItemComposicionHCEntre(SectorTerritorial sector, PeriodoMensual inicio, PeriodoMensual fin) {
+  public ComposicionHcSectorTerritorial generarItemComposicionHCEn(SectorTerritorial sector, PeriodoMensual periodo) {
     return new ComposicionHcSectorTerritorial(sector,
-        sector.calcularHCMiembrosEntre(inicio, fin),
-        sector.calcularHCMedicionesEntre(inicio, fin));
+        sector.calcularHCMiembros(periodo),
+        sector.calcularHCMediciones(periodo),
+        periodo);
   }
 
-  public List<HCPorSectorTerritorial> hcPorSectorTerritorial(PeriodoMensual inicio, PeriodoMensual fin) {
+  public List<HCPorSectorTerritorial> hcPorSectorTerritorial(PeriodoMensual inicio, PeriodoMensual fin, SectorTerritorial sectorTerritorial) {
 
-    return repoSectorTerritorial.getSectoresTerritoriales()
-        .stream()
-        .map(sector -> this.generarItemHCPorSectorTerritorial(sector, inicio, fin))
-        .collect(Collectors.toList());
+    List<PeriodoMensual> periodos = gen.generarPeriodosMensualesEntre(inicio, fin);
+
+    return null;
+
   }
 
-  private HCPorSectorTerritorial generarItemHCPorSectorTerritorial(SectorTerritorial sector, PeriodoMensual inicio, PeriodoMensual fin) {
-    return new HCPorSectorTerritorial(sector.calcularHCEntre(inicio, fin), sector);
+  private HCPorSectorTerritorial generarItemHCPorSectorTerritorial(SectorTerritorial sector, PeriodoMensual periodo) {
+    return new HCPorSectorTerritorial(sector.calcularHC(periodo), sector, periodo);
   }
 
   public List<EvolucionHCSectorTerritorial> reporteEvolucionHC(SectorTerritorial sector, PeriodoMensual inicio, PeriodoMensual fin) {
@@ -57,6 +55,6 @@ public class ReporteSectorTerritorial {
   }
 
   private EvolucionHCSectorTerritorial crearItemDelReporteDeEvolucionHC(SectorTerritorial sector, PeriodoMensual periodo) {
-    return new EvolucionHCSectorTerritorial(sector, periodo.getFecha(), sector.calcularHC(periodo));
+    return new EvolucionHCSectorTerritorial(sector, periodo, sector.calcularHC(periodo));
   }
 }

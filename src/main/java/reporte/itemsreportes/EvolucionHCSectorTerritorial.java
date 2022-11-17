@@ -1,6 +1,7 @@
 package reporte.itemsreportes;
 
 import lombok.Getter;
+import organizacion.periodo.PeriodoMensual;
 import territorio.SectorTerritorial;
 
 import java.time.LocalDate;
@@ -9,12 +10,12 @@ import java.time.LocalDate;
 public class EvolucionHCSectorTerritorial {
 
   private final SectorTerritorial sector;
-  private final LocalDate fecha;
+  private final PeriodoMensual periodo;
   private final double valor;
 
-  public EvolucionHCSectorTerritorial(SectorTerritorial sector, LocalDate fecha, double valor) {
+  public EvolucionHCSectorTerritorial(SectorTerritorial sector, PeriodoMensual fecha, double valor) {
     this.sector = sector;
-    this.fecha = fecha;
+    this.periodo = fecha;
     this.valor = valor;
   }
 }

@@ -8,9 +8,13 @@ import java.time.LocalDate;
 public class PeriodoMensual implements Periodo {
 
   private final LocalDate fecha;
+  private final int anio;
+  private final int mes;
 
   public PeriodoMensual(LocalDate fecha) {
     this.fecha = fecha;
+    anio = fecha.getYear();
+    mes = fecha.getMonthValue();
   }
 
   public int getYear() {

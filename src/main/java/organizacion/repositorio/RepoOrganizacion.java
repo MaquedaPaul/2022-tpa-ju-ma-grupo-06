@@ -24,7 +24,14 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     return repoOrganizacion;
   }
 
+  public Organizacion getOrganizacionById(Long id) {
+    return (Organizacion) entityManager().createQuery("FROM Organizacion WHERE Organizacion.id = :id").setParameter("id",id).getResultList().get(0);
+  }
+
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
+    if (entityManager() == null) {
+      System.out.println("ES NULL ESTO AHHHH");
+    }
     entityManager().getTransaction().begin();
     entityManager().persist(nuevaOrganizacion);
     entityManager().getTransaction().commit();

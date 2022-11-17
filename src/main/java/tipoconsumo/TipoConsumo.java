@@ -25,7 +25,7 @@ public class TipoConsumo {
   @Enumerated
   private TipoAlcance alcance;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private FactorEmision factorEmision;
 
   public TipoConsumo() {

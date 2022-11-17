@@ -4,14 +4,21 @@ import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
+@Entity
 public class Mensual extends Perioricidad {
 
 
   public Mensual(LocalDate fecha, double valor) {
     this.setFecha(fecha);
     this.setValor(valor);
+  }
+
+  public Mensual() {
+
   }
 
   public boolean esDelPeriodo(Periodo periodo) {

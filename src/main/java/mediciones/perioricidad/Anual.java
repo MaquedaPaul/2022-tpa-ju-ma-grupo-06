@@ -4,14 +4,20 @@ import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
+@Entity
 public class Anual extends Perioricidad {
-
 
   public Anual(LocalDate fechaImputacion, double valor) {
     this.setFecha(fechaImputacion);
     this.setValor(valor);
+  }
+
+  public Anual() {
+
   }
 
   public boolean esDelPeriodo(Periodo periodo) {

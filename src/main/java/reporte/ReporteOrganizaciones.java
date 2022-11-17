@@ -31,7 +31,7 @@ public class ReporteOrganizaciones {
   }
 
   private EvolucionHCOrganizacion generarItemDeEvolucionHC(Organizacion org, PeriodoMensual periodo) {
-    return new EvolucionHCOrganizacion(org, periodo.getFecha(), org.calcularHCTotal(periodo));
+    return new EvolucionHCOrganizacion(org, periodo, org.calcularHCTotal(periodo));
   }
 
   public List<HCPorTipoOrganizacion> hcPorTipoOrganizacion(PeriodoMensual inicio, PeriodoMensual fin) {
@@ -54,11 +54,21 @@ public class ReporteOrganizaciones {
     return new HCPorTipoOrganizacion(total, tipo);
   }
 
-  public ComposicionHCOrganizacion composicionHC(Organizacion org, PeriodoMensual inicio, PeriodoMensual fin) {
+  public List<ComposicionHCOrganizacion> composicionHCEntre(Organizacion org, PeriodoMensual inicio, PeriodoMensual fin) {
+
+    List<PeriodoMensual> periodos = new GeneradorDePeriodos().generarPeriodosMensualesEntre(inicio, fin);
+
+    return periodos.stream()
+        .map(periodo -> this.composicionHC(org, periodo))
+        .collect(Collectors.toList());
+  }
+
+  public ComposicionHCOrganizacion composicionHC(Organizacion org,PeriodoMensual periodo) {
 
     return new ComposicionHCOrganizacion(org,
-        org.calcularHCMiembrosEntre(inicio, fin),
-        org.calcularHCMedicionesEntre(inicio, fin));
+        org.calcularHCTotalDeMiembros(periodo),
+        org.calcularHCTotalMediciones(periodo),
+        periodo);
   }
 
 }

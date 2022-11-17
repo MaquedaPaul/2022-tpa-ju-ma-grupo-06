@@ -8,6 +8,7 @@ import organizacion.periodo.PeriodoMensual;
 import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -17,13 +18,14 @@ public class Medicion {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private Organizacion organizacion;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   private TipoConsumo tipoConsumo;
 
-  @Embedded
+  @ManyToOne(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "ID_PERIORICIDAD")
   private Perioricidad periodicidad;
 
 

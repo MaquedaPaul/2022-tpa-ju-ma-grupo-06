@@ -41,7 +41,7 @@ public class Miembro {
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne(fetch = FetchType.EAGER)
   MiembroCuenta cuenta;
 
   @ManyToMany(cascade = CascadeType.PERSIST)

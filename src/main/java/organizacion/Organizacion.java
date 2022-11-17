@@ -7,6 +7,7 @@ import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
 import lombok.Getter;
+import lombok.Setter;
 import mediciones.Medicion;
 import mediciones.RepoMediciones;
 import miembro.Miembro;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
+@Setter
 @Entity
 public class Organizacion {
 
@@ -39,20 +41,20 @@ public class Organizacion {
 
   private String clasificacion;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
   List<Sector> sectores;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
           //TODO:reveer con dani
   Set<Solicitud> solicitudes;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   OrganizacionCuenta cuenta;
 
 
@@ -208,7 +210,7 @@ public class Organizacion {
 
   public Set<String> generarSectoresVacios() {
     return sectores.stream()
-        .map(sector -> sector.getNombre()).collect(Collectors.toSet());
+        .map(Sector::getNombre).collect(Collectors.toSet());
   }
 
   public void setCuenta(OrganizacionCuenta cuenta) {

@@ -13,6 +13,11 @@ html {
   background-color: var(--background-color);
 }
 
+* {
+  font-family: var(--fonts);
+  color: var(--text-color);
+}
+
 body {
   display: flex;
   min-height: 100vh;
@@ -93,12 +98,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.flex-clm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 #main-section {
@@ -315,6 +314,41 @@ form div label {
   margin: 0;
 }
 
+.organizacion-item-list {
+  justify-content: space-between;
+  width: 100%;
+  margin: 5px 10px;
+  border: 3px solid var(--main-green);
+  height: 70px;
+}
+
+.organizacion-item-list * {
+  margin: 0;
+  padding: 5px;
+}
+.container {
+  width: 100%;
+}
+
+.botones {
+  height: 50px;
+  width: 500px;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  gap: 0;
+}
+.flex-row {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+ }
+
+.flex-clm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form-evo-hc label {
   display: flex;
   flex-direction: column;
@@ -333,6 +367,11 @@ label input[type="month"] {
   font-size: 15px;
 }
 
+button:hover {
+  cursor: pointer;
+  user-select: none;
+}
+
 .btn {
   background-color: var(--main-green);
   border: none;
@@ -341,12 +380,30 @@ label input[type="month"] {
   align-items: center;
   height: 40px;
   width: 70px;
-  color: var(--text-color);
+  color: var(--color-texto);
   border-radius: 10px;
 }
 
-.btn:hover {
+.btn-consulta {
+  background-color: var(--main-green);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+  width: 150px;
+  color: var(--color-texto);
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.btn:hover, .btn-consulta:hover {
   background-color: var(--light-green);
+}
+
+.text-start {
+  text-align: start;
+  width: 100%;
 }
 
 #grafico {

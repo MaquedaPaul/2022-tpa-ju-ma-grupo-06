@@ -1,15 +1,27 @@
 package cuenta;
 
+import lombok.Getter;
+import lombok.Setter;
+import spark.Request;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@PrimaryKeyJoinColumn(name = "cuentaId")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name = "cuenta")
+@DiscriminatorColumn(name = "tipo_cuenta")
 public abstract class Cuenta {
 
   @Id
-  String usuario;
-  String password;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  private String usuario;
+
+  private String password;
+
   public Cuenta(){
   }
 
@@ -26,7 +38,9 @@ public abstract class Cuenta {
     return password;
   }
 
-  public abstract String getTemplate();
+  public abstract String home();
 
   public abstract String tipoCuenta();
+
+  public abstract void guardarEnSesion(Request request);
 }

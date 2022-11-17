@@ -1,6 +1,6 @@
 package cuenta;
 
-import organizacion.Organizacion;
+import spark.Request;
 
 import javax.persistence.Entity;
 
@@ -14,11 +14,16 @@ public class OrganizacionCuenta extends Cuenta {
     super(usuario, password);
   }
 
-  public String getTemplate() {
+  public String home() {
     return "organizacionHome.hbs";
   }
 
   public String tipoCuenta() {
     return "organizacion";
+  }
+
+  @Override
+  public void guardarEnSesion(Request request) {
+
   }
 }

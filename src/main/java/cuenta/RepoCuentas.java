@@ -3,6 +3,7 @@ package cuenta;
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
+import territorio.AgenteTerritorial;
 
 import java.util.List;
 
@@ -36,13 +37,25 @@ public class RepoCuentas implements WithGlobalEntityManager {
 
   public List<Miembro> obtenerMiembro(String usuario) {
     return entityManager()
-        .createQuery("from Miembro where cuenta_usuario = :c").setParameter("c", usuario)
+        .createQuery("from Miembro where Organizacion.cuenta.usuario= :c").setParameter("c", usuario)
         .getResultList();
+  }
+
+  public AgenteTerritorial obtenerAgente(Cuenta cuenta) {
+    return (AgenteTerritorial) entityManager()
+        .createQuery("from AgenteTerritorial where cuenta = :cuenta").setParameter("cuenta", cuenta)
+        .getResultList().get(0);
+  }
+
+  public AgenteCuenta getAgente(String user) {
+    return (AgenteCuenta) entityManager()
+        .createQuery("from AgenteCuenta where AgenteCuenta.usuario = :c").setParameter("c", user)
+        .getResultList().get(0);
   }
 
   public List<Organizacion> obtenerOrganizacion(String usuario) {
     return entityManager()
-        .createQuery("from Organizacion where cuenta_usuario = :c").setParameter("c", usuario)
+        .createQuery("from Organizacion where Organizacion.cuenta.usuario = :c").setParameter("c", usuario)
         .getResultList();
   }
 }

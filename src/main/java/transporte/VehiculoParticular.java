@@ -23,7 +23,6 @@ public class VehiculoParticular extends TransportePrivado {
   public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro) {
     this.tipoVehiculo = tipoVehiculo;
     this.consumoPorKilometro = consumoPorKilometro;
-
   }
 
   public TipoVehiculo getTipoVehiculo() {
@@ -32,5 +31,10 @@ public class VehiculoParticular extends TransportePrivado {
 
   public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
     this.tipoVehiculo = tipoVehiculo;
+  }
+
+  @Override
+  public String getTipo() {
+    return "Vehiculo Particular";
   }
 }

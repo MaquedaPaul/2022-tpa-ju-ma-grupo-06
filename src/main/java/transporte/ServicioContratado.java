@@ -29,4 +29,8 @@ public class ServicioContratado extends TransportePrivado {
     return vehiculoContratado;
   }
 
+  @Override
+  public String getTipo() {
+    return "Servicion Contratado";
+  }
 }

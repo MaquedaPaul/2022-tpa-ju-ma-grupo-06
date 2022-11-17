@@ -41,17 +41,19 @@ public class Router {
     //GET /miembro/:id/menu/trayectos
     //get /home/trayectos
     Spark.get("/home/trayectos", miembroController::getTrayectos, engine);
+
     //GET /miembro/:id/menu/trayectos/registro
-    Spark.get("/registro", miembroController::getRegistro, engine);
-    Spark.get("/home/registrarTrayecto", miembroController::getRegistrarTrayecto, engine);
+    Spark.get("/home/trayectos/registro", miembroController::getRegistrarTrayecto, engine);
+    Spark.get("/home/trayectos/registro/tramo-nuevo", miembroController::getTrayectoNuevo, engine);
+    Spark.post("/home/trayectos/registro/tramo-nuevo", miembroController::cargarTramo, engine);
 
     //POST /miembro/:id/menu/trayectos/registro + body
     Spark.get("/home/trayectos/compartir", miembroController::getRegistro, engine);
     Spark.post("/home/trayectos/compartir", miembroController::getRegistro, engine);
     //TODO cual seria el nombre?
-    Spark.get("/home/trayectos/eliminar", miembroController::getRegistro, engine);
-    Spark.post("/home/trayectos/eliminar", miembroController::getRegistro, engine);
-
+    Spark.post("/home/trayectos/registro/eliminar", miembroController::eliminarTramo, engine);
+    Spark.post("/home/trayectos/registro/cancelar", miembroController::cancelarTrayecto, engine);
+    Spark.post("/home/trayectos/registro/crear", miembroController::crearTrayecto, engine);
     //GET /miembros/:id/menu/vinculaciones
     //POST /miembros/:id/menu/vinculaciones + body;
     Spark.get("/home/vinculacion", miembroController::getVinculacion, engine);

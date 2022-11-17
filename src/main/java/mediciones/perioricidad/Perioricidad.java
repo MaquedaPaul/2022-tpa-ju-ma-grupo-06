@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-@Embeddable
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "PERIORICIDAD")
 public abstract class Perioricidad {

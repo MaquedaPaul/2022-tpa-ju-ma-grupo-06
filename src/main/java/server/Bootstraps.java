@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class Bootstraps implements WithGlobalEntityManager {
   public static void init() {
+
+
     MiembroCuenta miembroCuenta = new MiembroCuenta("juan", "123");
     Miembro miembro = new Miembro("juan", "blanco", TipoDocumento.DNI,3,new ArrayList<>());
     miembro.setCuenta(miembroCuenta);
@@ -32,19 +34,19 @@ public class Bootstraps implements WithGlobalEntityManager {
     organizacion2.incorporarSector(new Sector("Recursos Humanos", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Administracion", new ArrayList<>()));
     organizacion2.incorporarSector(new Sector("Ventas", new ArrayList<>()));
-
+    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
+    RepoOrganizacion.getInstance().agregarOrganizacion(organizacion2);
 
     AgenteCuenta agenteCuenta = new AgenteCuenta("007", "123");
     SectorTerritorial sectorTerritorial = new SectorTerritorial(new ArrayList<>(), TipoSectorTerritorial.DEPARTAMENTO);
-    AgenteTerritorial  agenteTerritorial = new AgenteTerritorial(sectorTerritorial);
+    AgenteTerritorial  agenteTerritorial = new AgenteTerritorial(sectorTerritorial,"Daniel");
     agenteTerritorial.setCuenta(agenteCuenta);
 
     Solicitud unaSolicitud = new Solicitud(miembro2,organizacion2.obtenerSectorPor("Administracion"));
     miembro2.solicitarVinculacion(organizacion2,unaSolicitud);
     //new Bootstraps().persistir(unaSolicitud);
 
-    new Bootstraps().persistir(organizacion);
-    new Bootstraps().persistir(organizacion2);
+    new Bootstraps().persistir(organizacion); //TODO no entiendo por que se lo persiste 2 veces
     new Bootstraps().persistir(miembro);
     new Bootstraps().persistir(miembro2);
     new Bootstraps().persistir(agenteTerritorial);

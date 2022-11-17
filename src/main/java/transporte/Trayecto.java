@@ -1,5 +1,6 @@
 package transporte;
 
+import com.google.common.collect.Iterables;
 import lombok.Getter;
 import tipoconsumo.TipoConsumo;
 
@@ -69,5 +70,9 @@ public class Trayecto {
 
   public Stream<TipoConsumo> getTiposDeConsumo() {
     return getTramos().stream().map(Tramo::getTipoConsumo);
+  }
+
+  public Set<Tramo> getTramos() {
+    return tramos;
   }
 }

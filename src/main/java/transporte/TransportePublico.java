@@ -70,6 +70,11 @@ public class TransportePublico extends Transporte {
   public boolean esElMismo(PuntoUbicacion ubicacion, PuntoUbicacion puntoUbicacionParada) {
     return ubicacion.equals(puntoUbicacionParada);
   }
+
+  @Override
+  public String getTipo() {
+    return "Transporte Publico";
+  }
 }
 
 

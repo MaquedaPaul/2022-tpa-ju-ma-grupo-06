@@ -46,7 +46,7 @@ public class Bootstraps implements WithGlobalEntityManager {
     miembro2.solicitarVinculacion(organizacion2,unaSolicitud);
     //new Bootstraps().persistir(unaSolicitud);
 
-    new Bootstraps().persistir(organizacion); //TODO no entiendo por que se lo persiste 2 veces
+    new Bootstraps().persistir(organizacion);
     new Bootstraps().persistir(miembro);
     new Bootstraps().persistir(miembro2);
     new Bootstraps().persistir(agenteTerritorial);

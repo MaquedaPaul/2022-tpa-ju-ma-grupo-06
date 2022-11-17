@@ -11,7 +11,7 @@
         <class>organizacion.Sector</class>
         <class>organizacion.Organizacion</class>
         <class>organizacion.Solicitud</class>
-        <class>organizacion.Miembro</class>
+        <class>miembro.Miembro</class>
         <class>notificaciones.Contacto</class>
         <class>transporte.Trayecto</class>
         <class>transporte.Transporte</class>
@@ -29,7 +29,7 @@
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp-diseño-anual" />
             <property name="hibernate.connection.username" value="root" />
-            <property name="hibernate.connection.password" value="1554Daniel" />
+            <property name="hibernate.connection.password" value="" />
 
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

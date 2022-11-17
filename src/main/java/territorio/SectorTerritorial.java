@@ -17,7 +17,7 @@ public class SectorTerritorial {
   @GeneratedValue
   private Long id;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "sector_territorial_id")
   List<Organizacion> organizaciones;
 

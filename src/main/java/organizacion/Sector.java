@@ -1,6 +1,8 @@
 package organizacion;
 
 import admin.config.GestorDeFechas;
+import lombok.Getter;
+import lombok.Setter;
 import miembro.Miembro;
 import transporte.Trayecto;
 
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Entity
+@Getter@Setter
 public class Sector {
 
   //TODO puede ser que un miembro pueda estar en mas de un sector de distintas organizaciones

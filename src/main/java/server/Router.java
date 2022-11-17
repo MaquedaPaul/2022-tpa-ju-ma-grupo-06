@@ -73,11 +73,11 @@ public class Router {
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=medicion
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=medicion + body
     Spark.get("/home/mediciones/perse", organizacionController::getMedicionesPerse, engine);
-    Spark.post("/home/mediciones/perse", miembroController::getRegistro, engine);
+    Spark.post("/home/mediciones/perse/creado",organizacionController::crearMedicion,engine);
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=archivo
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=archivo + body;
     Spark.get("/home/mediciones/archivo", organizacionController::getMedicionesArchivo, engine);
-    Spark.post("/home/mediciones/archivo", miembroController::getRegistro, engine);
+    Spark.post("/home/mediciones/archivo", organizacionController::subirCSVs, engine);
     //GET /organizaciones/:id/menu/calculadora-hc
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);
     //GET /organizaciones/:id/menu/calculadora-hc/hc-total
@@ -87,7 +87,9 @@ public class Router {
     Spark.get("/home/calculadora-hc/impacto-de-miembro", organizacionController::getImpactoMiembro, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro/:id", organizacionController::getImpactoMiembroConId, engine);
     //GET /organizaciones/:id/menu/calculadora-hc/indicador-hc-sector?sector=:id_sector;
+    Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", organizacionController::getIndicadorHcSectorBuscar, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);
+    Spark.get("/home/calculadora-hc/indicador-hc-sector/:nombre", organizacionController::getIndicadorHcSectorConNombre, engine);
 
     //Agente
     //GET /agentes/:id/menu/sectores/:sector/composicion-hc

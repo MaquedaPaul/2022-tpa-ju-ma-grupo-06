@@ -17,10 +17,10 @@ public class Medicion {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private Organizacion organizacion;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private TipoConsumo tipoConsumo;
 
   @Embedded

@@ -13,13 +13,13 @@
 {{#partial "content"}}
     <h2>Indicador HC promedio por miembro en un sector</h2>
         <div class="divArreglo">
-            <form class="claseForm" action="//TODO">
+            <form class="claseForm" action="/home/calculadora-hc/indicador-hc-sector">
                 <input name="sector" value="" type="search" placeholder="Ingrese el sector" required>
                 <button type="submit">Enviar</button>
             </form>
             <fieldset>
-                <p>Sector: //TODO</p>
-                <p>HC promedio por miembro: //TODO</p>
+                <p>Sector: {{nombre}}</p>
+                <p>HC promedio por miembro: {{hcpromedio}}</p>
             </fieldset>
         </div>
 {{/partial}}

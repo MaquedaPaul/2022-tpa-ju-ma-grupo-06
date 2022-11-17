@@ -19,13 +19,13 @@ public class TipoConsumo {
   @Enumerated(EnumType.STRING)
   private Unidad unidad;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private TipoActividad actividad;
 
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   private TipoAlcance alcance;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   private FactorEmision factorEmision;
 
   public TipoConsumo() {

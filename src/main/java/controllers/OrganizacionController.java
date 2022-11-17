@@ -1,9 +1,16 @@
 package controllers;
 
 import cuenta.RepoCuentas;
+import lectorcsv.FormatoDeFechas;
+import lectorcsv.LectorDeCsv;
+import lectorcsv.TipoPerioricidad;
+import lectorcsv.ValidadorDeCabeceras;
+import mediciones.Medicion;
+import mediciones.RepoMediciones;
 import miembro.Miembro;
 import miembro.RepoMiembros;
 import organizacion.Organizacion;
+import organizacion.Sector;
 import organizacion.Solicitud;
 import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
@@ -12,10 +19,26 @@ import organizacion.repositorio.RepoSolicitud;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import tipoconsumo.RepoTipoDeConsumo;
+import tipoconsumo.TipoConsumo;
+import mediciones.perioricidad.Perioricidad;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static spark.Spark.staticFiles;
 
 public class OrganizacionController extends AccountController {
 
@@ -75,7 +98,6 @@ public class OrganizacionController extends AccountController {
     String idMiembro = request.queryParams("miembro");
     response.redirect("/home/calculadora-hc/impacto-de-miembro/"+idMiembro);
 
-
     return null;
   }
 
@@ -94,10 +116,34 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getIndicadorHcSector(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+
+    String nombreSector = request.queryParams("sector");
+    response.redirect("/home/calculadora-hc/indicador-hc-sector/"+nombreSector);
+
+    return null;
+  }
+
+  public ModelAndView getIndicadorHcSectorBuscar(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
 
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     return new ModelAndView(organizacion, "organizacionIndicadorHcSector.hbs");
   }
+
+  public ModelAndView getIndicadorHcSectorConNombre(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Map<String, Object> model = new HashMap<>();
+    String nombreSector = request.params("nombre").toLowerCase();
+    //.toLowerCase()
+    Sector sector =organizacion.obtenerSectorPorCaseSensitive(nombreSector);
+    double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
+    model.put("nombre",sector.getNombre());
+    model.put("hcpromedio",hcPromedio);
+    return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
+  }
+
 
   public ModelAndView getMediciones(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
@@ -115,11 +161,41 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getMedicionesPerse(Request request, Response response) {
     String usuario = comprobarSessionParaOrganizacion(request,response);
+    Map<String, Object> model = new HashMap<>();
+    //Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    model.put("tipoconsumos",RepoTipoDeConsumo.getInstance().getTiposConsumo());
 
 
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
-    return new ModelAndView(organizacion, "organizacionCargarMedicion.hbs");
+    return new ModelAndView(model, "organizacionCargarMedicion.hbs");
   }
+  public ModelAndView crearMedicion(Request request, Response response) {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Map<String, Object> model = new HashMap<>();
+    String tipoDeConsumo = request.queryParams("tipo-de-consumo");
+    String periodicidad = request.queryParams("periodicidad").toUpperCase();
+
+    double valor = Double.parseDouble(request.queryParams("valor"));
+    String fecha = request.queryParams("fecha-medicion");
+    DateTimeFormatter formatoFecha = new DateTimeFormatterBuilder()
+            .appendPattern("yyyy-MM")
+            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+            .toFormatter();
+    LocalDate fechaParseada = LocalDate.parse(fecha,formatoFecha);
+
+    TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
+
+    TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
+
+
+    Medicion medicion = new Medicion(unTipoConsumo,tipoPerioricidad.getPerioricidad(fechaParseada,valor),organizacion);
+    RepoMediciones.getInstance().cargarMedicion(medicion);
+
+    response.redirect("/home");
+
+    return null;
+  }
+
 
   Set<Solicitud> solicitudesSinProcesarDe(Organizacion organizacion){
     Set<Solicitud> solicitudesSinProcesar = organizacion.getSolicitudesSinProcesar();
@@ -158,6 +234,65 @@ public class OrganizacionController extends AccountController {
 
   }
 
+
+  public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {
+    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+
+    File uploadDir = new File("upload");
+    uploadDir.mkdir();
+    //staticFiles.externalLocation("upload");
+    Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".csv");
+
+    request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+    try (InputStream input = request.raw().getPart("uploaded_file").getInputStream()) {
+      Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+      // Use the input stream to create a file
+    }
+
+
+
+    LectorDeCsv lectorDeCsv = inicializarLectorCSV(organizacion,tempFile.toString());
+    lectorDeCsv.leerMediciones();
+    lectorDeCsv.cargarMediciones();
+    response.redirect("/home");
+    return null;
+  }
+  private LectorDeCsv inicializarLectorCSV(Organizacion organizacion, String path){
+
+    FormatoDeFechas formato;
+    ValidadorDeCabeceras validador;
+    LectorDeCsv lector;
+
+    DateTimeFormatter formatoMensual = new DateTimeFormatterBuilder()
+            .appendPattern("MM/yyyy")
+            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+            .toFormatter();
+    DateTimeFormatter formatoAnual = new DateTimeFormatterBuilder()
+            .appendPattern("yyyy")
+            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+            .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+            .toFormatter();
+
+    HashMap<TipoPerioricidad, DateTimeFormatter> formatos = new HashMap<>();
+    formatos.put(TipoPerioricidad.ANUAL, formatoAnual);
+    formatos.put(TipoPerioricidad.MENSUAL, formatoMensual);
+    formato = new FormatoDeFechas(formatos);
+
+    List<String> columnasEsperadas = new ArrayList<>();
+    columnasEsperadas.add("tipoconsumo");
+    columnasEsperadas.add("valor");
+    columnasEsperadas.add("perioricidad");
+    columnasEsperadas.add("periodo de imputacion");
+
+    validador = new ValidadorDeCabeceras(columnasEsperadas);
+    try {
+      lector = new LectorDeCsv(path, organizacion, formato, validador, RepoTipoDeConsumo.getInstance());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return lector;
+  }
 
 
 }

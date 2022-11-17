@@ -30,7 +30,7 @@ public class CalcularHcTest {
 
   @Test
   public void unTransportePrivadoPuedeCalcularSuHuellaDeCarbono() {
-    VehiculoParticular unVehiculo = new VehiculoParticular(TipoVehiculo.AUTO, 10);
+    VehiculoParticular unVehiculo = new VehiculoParticular(TipoVehiculo.AUTO, 10,"Peugeot");
     Combustible unCombustible = new Combustible(tipoConsumoEjemplo);
     unVehiculo.setCombustible(unCombustible);
     assertEquals(unVehiculo.calcularHc(), 200);

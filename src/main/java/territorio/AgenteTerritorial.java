@@ -11,14 +11,17 @@ public class AgenteTerritorial {
   @GeneratedValue
   private Long id;
 
+  private String nombre;
+
   @OneToOne(cascade = CascadeType.PERSIST)
   SectorTerritorial sector;
 
   @OneToOne(cascade = CascadeType.PERSIST)
   AgenteCuenta cuenta;
 
-  public AgenteTerritorial(SectorTerritorial unSector) {
+  public AgenteTerritorial(SectorTerritorial unSector, String nombre) {
     this.sector = unSector;
+    this.nombre = nombre;
   }
 
   public AgenteTerritorial() {

@@ -4,6 +4,7 @@ import lectorcsv.RepoTipoConsumo;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsumo {
@@ -32,14 +33,15 @@ public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsu
   }
 
   public boolean existeElTipoDeConsumo(String tipoConsumo) {
+
     List<TipoConsumo> tiposDeConsumoExistentes = this.getTiposConsumo();
-    return tiposDeConsumoExistentes.stream().filter(tipo -> tipo.getNombre().equals(tipoConsumo)).count() == 1;
+    return tiposDeConsumoExistentes.stream().filter(tipo -> tipo.getNombre().toLowerCase().equals(tipoConsumo.toLowerCase())).count() == 1;
   }
 
   public TipoConsumo getTipoConsumo(String tipoConsumo) {
 
     return this.getTiposConsumo().stream()
-        .filter(tipo -> tipo.getNombre().equals(tipoConsumo))
+        .filter(tipo -> tipo.getNombre().equalsIgnoreCase(tipoConsumo))
         .collect(Collectors.toList())
         .get(0);
   }

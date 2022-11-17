@@ -71,11 +71,11 @@ public class Router {
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=medicion
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=medicion + body
     Spark.get("/home/mediciones/perse", organizacionController::getMedicionesPerse, engine);
-    Spark.post("/home/mediciones/perse", miembroController::getRegistro, engine);
+    Spark.post("/home/mediciones/perse/creado",organizacionController::crearMedicion,engine);
     //GET /organizaciones/:id/menu/mediciones/registro?tipo=archivo
     //POST /organizaciones/:id/menu/mediciones/registro?tipo=archivo + body;
     Spark.get("/home/mediciones/archivo", organizacionController::getMedicionesArchivo, engine);
-    Spark.post("/home/mediciones/archivo", miembroController::getRegistro, engine);
+    Spark.post("/home/mediciones/archivo", organizacionController::subirCSVs, engine);
     //GET /organizaciones/:id/menu/calculadora-hc
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);
     //GET /organizaciones/:id/menu/calculadora-hc/hc-total

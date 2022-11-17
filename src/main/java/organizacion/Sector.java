@@ -44,7 +44,11 @@ public class Sector {
   }
 
   public double calcularPromedioHCPorMiembroPorMes() {
-    return this.calcularHCTotalDeMiembrosPorMes() / this.getCantidadMiembros();
+    double resultado =this.calcularHCTotalDeMiembrosPorMes() / this.getCantidadMiembros();
+    if(Double.isNaN(resultado)){
+      return 0;
+    }
+    return resultado;
   }
 
   public double calcularHCTotalDeMiembrosPorMes() {

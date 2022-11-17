@@ -85,7 +85,9 @@ public class Router {
     Spark.get("/home/calculadora-hc/impacto-de-miembro", organizacionController::getImpactoMiembro, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro/:id", organizacionController::getImpactoMiembroConId, engine);
     //GET /organizaciones/:id/menu/calculadora-hc/indicador-hc-sector?sector=:id_sector;
+    Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", organizacionController::getIndicadorHcSectorBuscar, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);
+    Spark.get("/home/calculadora-hc/indicador-hc-sector/:nombre", organizacionController::getIndicadorHcSectorConNombre, engine);
 
     //Agente
     //GET /agentes/:id/menu/sectores/:sector/composicion-hc

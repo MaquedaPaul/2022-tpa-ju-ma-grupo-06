@@ -1,8 +1,5 @@
 package mediciones;
 
-import mediciones.perioricidad.Anual;
-import mediciones.perioricidad.Mensual;
-import mediciones.perioricidad.Perioricidad;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
@@ -21,15 +18,12 @@ public class MedicionesTest {
   LocalDate dic2020 = LocalDate.of(2020, 12, 1);
   Organizacion orgMock = mock(Organizacion.class);
 
-  Perioricidad mensual = new Mensual(dic2020, 2000D);
-  Perioricidad anual = new Anual(dic2020, 2000D);
-
   Periodo periodoAnual = new PeriodoAnual(dic2020);
   Periodo periodoMensual = new PeriodoMensual(dic2020);
 
-  Medicion medicionMensual = new Medicion(tconsumo, mensual, orgMock);
-  Medicion medicionAnual = new Medicion(tconsumo, anual, orgMock);
-  Medicion medicionAnual2020 = new Medicion(tconsumo, anual, orgMock);
+  Medicion medicionMensual = new MedicionMensual(orgMock, tconsumo, dic2020,2000D);
+  Medicion medicionAnual = new MedicionAnual(orgMock, tconsumo, dic2020,2000D);
+  Medicion medicionAnual2020 = new MedicionAnual(orgMock, tconsumo, dic2020,2000D);
 
   @Test
   public void unaMedicionMensualAnteUnaConsultaAnualDevuelveSuValorNormal() {

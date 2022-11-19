@@ -1,26 +1,31 @@
 package lectorcsv;
 
+import mediciones.Medicion;
+import mediciones.MedicionAnual;
+import mediciones.MedicionMensual;
 import mediciones.perioricidad.Anual;
 import mediciones.perioricidad.Mensual;
 import mediciones.perioricidad.Perioricidad;
+import organizacion.Organizacion;
+import tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 
 public enum TipoPerioricidad {
   ANUAL() {
     @Override
-    public Perioricidad getPerioricidad(LocalDate fecha, double valor) {
-      return new Anual(fecha, valor);
+    public Medicion buildMedicion(Organizacion org, TipoConsumo tipo, LocalDate fecha, double valor) {
+      return new MedicionAnual(org,tipo,fecha,valor);
     }
 
   },
 
   MENSUAL() {
     @Override
-    public Perioricidad getPerioricidad(LocalDate fecha, double valor) {
-      return new Mensual(fecha, valor);
+    public Medicion buildMedicion(Organizacion org, TipoConsumo tipo, LocalDate fecha, double valor) {
+      return new MedicionMensual(org,tipo,fecha,valor);
     }
   };
 
-  public abstract Perioricidad getPerioricidad(LocalDate fecha, double valor);
+  public abstract Medicion buildMedicion(Organizacion org, TipoConsumo tipo, LocalDate fecha, double valor);
 }

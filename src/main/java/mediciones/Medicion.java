@@ -1,7 +1,7 @@
 package mediciones;
 
 import lombok.Getter;
-import mediciones.perioricidad.Perioricidad;
+import lombok.Setter;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
@@ -10,13 +10,16 @@ import tipoconsumo.TipoConsumo;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Getter
 @Entity
-public class Medicion {
+@Getter
+@Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "PERIORICIDAD")
+public abstract class Medicion {
 
   @Id
   @GeneratedValue
-  private Long id;
+  long id;
 
   @ManyToOne(fetch = FetchType.EAGER)
   private Organizacion organizacion;
@@ -24,32 +27,21 @@ public class Medicion {
   @ManyToOne(fetch = FetchType.EAGER)
   private TipoConsumo tipoConsumo;
 
-  @ManyToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "ID_PERIORICIDAD")
-  private Perioricidad periodicidad;
+  private LocalDate fecha;
 
+  private double valor;
 
-  public Medicion(TipoConsumo unTipoConsumo,
-                  Perioricidad unaPerioricidad,
-                  Organizacion organizacion) {
-    this.tipoConsumo = unTipoConsumo;
-    this.periodicidad = unaPerioricidad;
-    this.organizacion = organizacion;
+  public abstract double calcularHC(Periodo periodo);
+
+  public abstract double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin);
+
+  public abstract boolean esDelPeriodo(Periodo periodo);
+
+  public abstract boolean fueRegistradaEntre(PeriodoMensual inicio, PeriodoMensual fin);
+
+  public int getYear() {
+    return this.getFecha().getYear();
   }
 
-  public Medicion() {
-  }
-
-  public double calcularHC(Periodo periodo) {
-    return this.esDelPeriodo(periodo) ? this.getPeriodicidad().calcularHC(periodo) : 0D;
-  }
-
-  public double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
-    return this.getPeriodicidad().calcularHCEntre(inicio, fin);
-  }
-
-  public boolean esDelPeriodo(Periodo periodo) {
-    return this.getPeriodicidad().esDelPeriodo(periodo);
-  }
 
 }

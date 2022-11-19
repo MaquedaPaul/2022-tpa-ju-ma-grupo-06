@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class Organizacion {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   private Long id;
 
   private String razonSocial;
@@ -45,10 +45,12 @@ public class Organizacion {
   @JoinColumn(name = "organizacion_id")
   List<Sector> sectores;
 
+  /*
   @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
           //TODO:reveer con dani
   Set<Solicitud> solicitudes;
+*/
 
   @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
@@ -65,7 +67,6 @@ public class Organizacion {
     this.ubicacionGeografica = Objects.requireNonNull(ubicacionGeografica);
     this.sectores = new ArrayList<>();
     this.clasificacion = Objects.requireNonNull(clasificacion);
-    this.solicitudes = new HashSet<>();
     this.contactos = contactos;
   }
 
@@ -90,7 +91,8 @@ public class Organizacion {
 
   public void recibirSolicitud(Solicitud unaSolicitud) {
     validarQueExistaSector(unaSolicitud.getSectorSolicitado().getNombre());
-    solicitudes.add(unaSolicitud);
+    //TODO REPENSAR SOLICITUDES
+    //solicitudes.add(unaSolicitud);
   }
 
   private void validarQueExistaSector(String nombreSector) {
@@ -196,15 +198,15 @@ public class Organizacion {
   }
 
   public void cargarContacto(Contacto unContacto) {
-    contactos.add(unContacto);
+    //contactos.add(unContacto);
   }
 
   public List<Contacto> getContactos() {
-    return contactos;
+    return new ArrayList<>();
   }
 
   public void notificarContactos(List<MedioNotificador> medios) {
-    medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
+    //medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
 
@@ -225,16 +227,19 @@ public class Organizacion {
   }
 
   public Set<Solicitud> getSolicitudes() {
-    return solicitudes;
+    ///return solicitudes;
+    return new HashSet<>();
   }
 
   public Solicitud getSolicitudPorId(Long id) {
-    return solicitudes.stream().filter(solicitud -> solicitud.getId().equals(id)).collect(Collectors.toList()).get(0);
+    //return solicitudes.stream().filter(solicitud -> solicitud.getId().equals(id)).collect(Collectors.toList()).get(0);
+    return null;
   }
 
   public Set<Solicitud> getSolicitudesSinProcesar(){
-    Set<Solicitud> solicitudes = this.solicitudes.stream().filter(solicitud -> !solicitud.isProcesada()).collect(Collectors.toSet());
-    return solicitudes;
+    //Set<Solicitud> solicitudes = this.solicitudes.stream().filter(solicitud -> !solicitud.isProcesada()).collect(Collectors.toSet());
+    //return solicitudes;
+    return new HashSet<>();
   }
 
 }

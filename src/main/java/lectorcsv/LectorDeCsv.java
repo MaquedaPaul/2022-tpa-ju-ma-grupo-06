@@ -6,6 +6,7 @@ import exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
+import mediciones.MedicionAntigua;
 import mediciones.RepoMediciones;
 import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
@@ -28,12 +29,13 @@ public class LectorDeCsv {
   private final Organizacion organizacion;
   private final FormatoDeFechas formatoDeFechas;
   private final ValidadorDeCabeceras cabeceraEsperada;
+
   @Setter
   private RepoTipoConsumo repoConsumos;
-
   private TipoConsumo tipoConsumo;
-  private Perioricidad perioricidad;
   private double valor;
+  private LocalDate fecha;
+  private TipoPerioricidad perioricidad;
 
   private final List<Medicion> mediciones = new ArrayList<>();
 
@@ -90,11 +92,13 @@ public class LectorDeCsv {
 
   public void validarFormatoLeido(List<String> campos) {
 
+    perioricidad = TipoPerioricidad.valueOf(campos.get(2));
+
     this.tieneLaCantidadCorrectaDeColumnas(campos);
     this.esUnTipoDeConsumoValido(campos.get(0));
     this.elValorLeidoEsPositivo(Integer.parseInt(campos.get(1)));
     this.esUnaPerioricidadValida(campos.get(2));
-    this.tieneElFormatoValido(campos.get(3), TipoPerioricidad.valueOf(campos.get(2)));
+    this.tieneElFormatoValido(campos.get(3), perioricidad);
 
   }
 
@@ -133,24 +137,21 @@ public class LectorDeCsv {
 
   private void asignarParametros(List<String> atributos) {
 
-    LocalDate fechaImputacion = this.getFormatoDeFechas().parsear(atributos.get(3),
+    fecha = this.getFormatoDeFechas().parsear(atributos.get(3),
         TipoPerioricidad.valueOf(atributos.get(2)));
 
     this.tipoConsumo = repoConsumos.getTipoConsumo(atributos.get(0));
     this.valor = Integer.parseInt(atributos.get(1));
-    this.perioricidad = TipoPerioricidad.valueOf(atributos.get(2)).getPerioricidad(fechaImputacion, this.valor);
+
   }
 
   private void guardarMedicion() {
-    Medicion nuevaMedicion = new Medicion(tipoConsumo,
-        perioricidad,
-        organizacion);
-    mediciones.add(nuevaMedicion);
+    Medicion medicion = perioricidad.buildMedicion(organizacion,tipoConsumo,fecha,valor);
+    mediciones.add(medicion);
   }
 
   public void cargarMediciones() {
     mediciones.forEach(medicion -> RepoMediciones.getInstance().cargarMedicion(medicion));
-    mediciones.clear();
   }
 
 }

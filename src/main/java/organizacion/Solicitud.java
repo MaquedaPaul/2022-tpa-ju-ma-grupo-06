@@ -6,7 +6,7 @@ import miembro.Miembro;
 
 import javax.persistence.*;
 
-@Entity(name = "SOLICITUD")
+@Entity(name = "Solicitud")
 @Getter
 @Setter
 public class Solicitud {
@@ -28,7 +28,7 @@ public class Solicitud {
   public Solicitud() {
   }
 
-  public boolean isProcesada() {
+  public boolean estaProcesada() {
     return procesada;
   }
 
@@ -46,11 +46,7 @@ public class Solicitud {
     procesada = true;
   }
 
-  public Miembro getMiembroSolicitante() {
-    return miembroSolicitante;
-  }
-
-  public Sector getSectorSolicitado() {
-    return sectorSolicitado;
+  public boolean perteneceA(Organizacion organizacion) {
+    return organizacion.existeElSector(this.sectorSolicitado);
   }
 }

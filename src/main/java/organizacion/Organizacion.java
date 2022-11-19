@@ -15,6 +15,7 @@ import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
+import organizacion.repositorio.RepoSolicitud;
 import transporte.Trayecto;
 
 import javax.persistence.*;
@@ -44,13 +45,6 @@ public class Organizacion {
   @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
   List<Sector> sectores;
-
-  /*
-  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinColumn(name = "organizacion_id")
-          //TODO:reveer con dani
-  Set<Solicitud> solicitudes;
-*/
 
   @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinColumn(name = "organizacion_id")
@@ -91,8 +85,7 @@ public class Organizacion {
 
   public void recibirSolicitud(Solicitud unaSolicitud) {
     validarQueExistaSector(unaSolicitud.getSectorSolicitado().getNombre());
-    //TODO REPENSAR SOLICITUDES
-    //solicitudes.add(unaSolicitud);
+    RepoSolicitud.getInstance().addSolicitud(unaSolicitud);
   }
 
   private void validarQueExistaSector(String nombreSector) {
@@ -119,7 +112,7 @@ public class Organizacion {
   }
 
   public double calcularHCTotalDeMiembros(Periodo periodo) {
-    if(getTrayectosDeLosMiembros().collect(Collectors.toList()).isEmpty()){
+    if(!getTrayectosDeLosMiembros().findAny().isPresent()){
       return 0;
     }
 
@@ -198,7 +191,7 @@ public class Organizacion {
   }
 
   public void cargarContacto(Contacto unContacto) {
-    //contactos.add(unContacto);
+    contactos.add(unContacto);
   }
 
   public List<Contacto> getContactos() {
@@ -206,7 +199,7 @@ public class Organizacion {
   }
 
   public void notificarContactos(List<MedioNotificador> medios) {
-    //medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
+    medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
   }
 
 
@@ -227,19 +220,18 @@ public class Organizacion {
   }
 
   public Set<Solicitud> getSolicitudes() {
-    ///return solicitudes;
-    return new HashSet<>();
-  }
-
-  public Solicitud getSolicitudPorId(Long id) {
-    //return solicitudes.stream().filter(solicitud -> solicitud.getId().equals(id)).collect(Collectors.toList()).get(0);
-    return null;
+    return RepoSolicitud.getInstance().getSolicitudesDe(this);
   }
 
   public Set<Solicitud> getSolicitudesSinProcesar(){
-    //Set<Solicitud> solicitudes = this.solicitudes.stream().filter(solicitud -> !solicitud.isProcesada()).collect(Collectors.toSet());
-    //return solicitudes;
-    return new HashSet<>();
+    return RepoSolicitud.getInstance()
+        .getSolicitudesDe(this)
+        .stream().filter(solicitud -> !solicitud.estaProcesada())
+        .collect(Collectors.toSet());
+  }
+
+  public boolean existeElSector(Sector sector) {
+    return this.getSectores().contains(sector);
   }
 
 }

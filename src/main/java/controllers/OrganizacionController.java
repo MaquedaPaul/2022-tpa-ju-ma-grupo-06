@@ -5,14 +5,13 @@ import lectorcsv.FormatoDeFechas;
 import lectorcsv.LectorDeCsv;
 import lectorcsv.TipoPerioricidad;
 import lectorcsv.ValidadorDeCabeceras;
-import mediciones.Medicion;
+import mediciones.MedicionAntigua;
 import mediciones.RepoMediciones;
 import miembro.Miembro;
 import miembro.RepoMiembros;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.Solicitud;
-import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
 import organizacion.repositorio.RepoOrganizacion;
 import organizacion.repositorio.RepoSolicitud;
@@ -21,7 +20,6 @@ import spark.Request;
 import spark.Response;
 import tipoconsumo.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
-import mediciones.perioricidad.Perioricidad;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -36,9 +34,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static spark.Spark.staticFiles;
 
 public class OrganizacionController extends AccountController {
 
@@ -188,8 +183,8 @@ public class OrganizacionController extends AccountController {
     TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
 
 
-    Medicion medicion = new Medicion(unTipoConsumo,tipoPerioricidad.getPerioricidad(fechaParseada,valor),organizacion);
-    RepoMediciones.getInstance().cargarMedicion(medicion);
+    //Medicion medicion = new Medicion(unTipoConsumo,tipoPerioricidad.getPerioricidad(fechaParseada,valor),organizacion);
+    //RepoMediciones.getInstance().cargarMedicion(medicion);
 
     response.redirect("/home");
 
@@ -197,18 +192,20 @@ public class OrganizacionController extends AccountController {
   }
 
 
+  /* //TODO: ESTO ES UN PASAMANO
   Set<Solicitud> solicitudesSinProcesarDe(Organizacion organizacion){
     Set<Solicitud> solicitudesSinProcesar = organizacion.getSolicitudesSinProcesar();
     return solicitudesSinProcesar;
   }
+  */
 
   private void procesarVinculacion(boolean aceptar,String usuario, Request request, Response response){
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     Map<String, Object> model = new HashMap<>();
     Long idVinculacion = Long.valueOf((request.params("id")));
     System.out.println(idVinculacion);
-    Solicitud solicitud =organizacion.getSolicitudPorId(idVinculacion);
-    //Solicitud solicitud = RepoSolicitud.getInstance().getSolicitudPor(idVinculacion);
+    //Solicitud solicitud = organizacion.getSolicitudPorId(idVinculacion);
+    Solicitud solicitud = RepoSolicitud.getInstance().getSolicitudById(idVinculacion);
     organizacion.procesarVinculacion(solicitud,aceptar);
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
 

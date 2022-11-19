@@ -5,6 +5,7 @@ import organizacion.Organizacion;
 import organizacion.periodo.PeriodoMensual;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepoMediciones implements WithGlobalEntityManager {
   private static RepoMediciones repoMediciones = null;
@@ -25,9 +26,13 @@ public class RepoMediciones implements WithGlobalEntityManager {
     entityManager().getTransaction().commit();
   }
 
+  public Medicion getMedicionById(long id) {
+    return entityManager().find(Medicion.class,id);
+  }
+
   public int medicionesTotales() {
     return entityManager()
-        .createQuery("From Medicion ")
+        .createQuery("From Medicion")
         .getResultList()
         .size();
   }
@@ -48,10 +53,10 @@ public class RepoMediciones implements WithGlobalEntityManager {
    * */
   @SuppressWarnings("unchecked")
   public List<Medicion> getMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
-    return entityManager().createQuery("FROM Medicion " +
-            "WHERE Medicion.periodicidad.fecha BETWEEN :fechaInicio AND :fechaFin")
-        .setParameter("fechaInicio", inicio.getFecha())
-        .setParameter("fechaFin", fin.getFecha())
-        .getResultList();
+
+    List<Medicion> mediciones = entityManager().createQuery("FROM Medicion ").getResultList();
+    return mediciones.stream()
+        .filter(m -> m.fueRegistradaEntre(inicio, fin))
+        .collect(Collectors.toList());
   }
 }

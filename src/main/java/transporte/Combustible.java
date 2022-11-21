@@ -3,7 +3,7 @@ package transporte;
 import admin.FactorEmision;
 import lombok.Getter;
 import lombok.Setter;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 

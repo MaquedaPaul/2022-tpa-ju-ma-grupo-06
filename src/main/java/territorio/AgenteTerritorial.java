@@ -13,10 +13,10 @@ public class AgenteTerritorial {
 
   private String nombre;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   SectorTerritorial sector;
 
-  @Embedded
+  @OneToOne
   AgenteCuenta cuenta;
 
   public AgenteTerritorial(SectorTerritorial unSector, String nombre) {

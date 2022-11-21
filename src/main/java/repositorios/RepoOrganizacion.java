@@ -25,7 +25,7 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public Organizacion getOrganizacionById(Long id) {
-    return (Organizacion) entityManager().createQuery("FROM Organizacion WHERE Organizacion.id = :id").setParameter("id",id).getResultList().get(0);
+    return (Organizacion) entityManager().find(Organizacion.class,id);
   }
 
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {

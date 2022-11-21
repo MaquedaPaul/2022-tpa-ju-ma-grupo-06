@@ -2,7 +2,7 @@ package repositorios;
 
 import lectorcsv.RepoTipoConsumo;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +34,8 @@ public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsu
 
   public boolean existeElTipoDeConsumo(String tipoConsumo) {
 
-    List<TipoConsumo> tiposDeConsumoExistentes = this.getTiposConsumo();
-    return tiposDeConsumoExistentes.stream().filter(tipo -> tipo.getNombre().toLowerCase().equals(tipoConsumo.toLowerCase())).count() == 1;
+    return this.getTiposConsumo().stream().anyMatch(t -> t.getNombre().toUpperCase().equals(tipoConsumo.toUpperCase()));
+
   }
 
   public TipoConsumo getTipoConsumo(String tipoConsumo) {

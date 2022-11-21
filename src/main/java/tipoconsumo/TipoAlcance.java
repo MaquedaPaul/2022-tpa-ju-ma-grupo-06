@@ -1,4 +1,4 @@
-package utils.tipoconsumo;
+package tipoconsumo;
 
 public enum TipoAlcance {
   EMISION_DIRECTA,

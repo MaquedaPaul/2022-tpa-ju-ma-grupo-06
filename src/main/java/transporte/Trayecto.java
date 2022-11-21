@@ -1,7 +1,7 @@
 package transporte;
 
 import lombok.Getter;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.util.HashSet;

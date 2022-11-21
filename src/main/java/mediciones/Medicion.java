@@ -5,7 +5,7 @@ import lombok.Setter;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.time.LocalDate;

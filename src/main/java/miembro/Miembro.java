@@ -10,7 +10,7 @@ import organizacion.Organizacion;
 import organizacion.Solicitud;
 import organizacion.TipoDocumento;
 import organizacion.periodo.Periodo;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
 
 import javax.persistence.*;

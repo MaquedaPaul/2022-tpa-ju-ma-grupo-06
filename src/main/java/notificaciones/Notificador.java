@@ -1,7 +1,7 @@
 package notificaciones;
 
 import notificaciones.medioNotificacion.MedioNotificador;
-import organizacion.repositorio.RepoOrganizacion;
+import repositorios.RepoOrganizacion;
 
 import java.util.ArrayList;
 import java.util.List;

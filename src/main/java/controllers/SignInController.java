@@ -1,7 +1,7 @@
 package controllers;
 
 import cuenta.Cuenta;
-import cuenta.RepoCuentas;
+import repositorios.RepoCuentas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,11 +21,7 @@ public class SignInController {
       response.redirect("/signin");
       return null;
     }
-    String usuario = cuenta.getUsuario();
-
-    String tipoCuenta = cuenta.tipoCuenta();
-    request.session().attribute("logged_user", usuario);
-    request.session().attribute("user-type", tipoCuenta);
+    request.session().attribute("cuenta",cuenta);
     response.redirect("/home");
     return null;
   }

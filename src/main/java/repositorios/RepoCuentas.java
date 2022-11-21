@@ -1,5 +1,7 @@
-package cuenta;
+package repositorios;
 
+import cuenta.AgenteCuenta;
+import cuenta.Cuenta;
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;

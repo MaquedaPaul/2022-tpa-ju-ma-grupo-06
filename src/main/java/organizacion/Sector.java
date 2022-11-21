@@ -22,7 +22,8 @@ public class Sector {
 
   String nombre;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  //NO SE DEBEN PERSISTIR EN CASCADA, LOS MIEMBROS YA DEBEN ESTAR EN EL SISTEMA
+  @OneToMany
   List<Miembro> miembros;
 
   public Sector(String nombre, List<Miembro> unosMiembros) {

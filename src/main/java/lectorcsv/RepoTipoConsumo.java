@@ -1,6 +1,6 @@
 package lectorcsv;
 
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 public interface RepoTipoConsumo {
 

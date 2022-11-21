@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import organizacion.*;
-import organizacion.repositorio.RepoSolicitud;
+import repositorios.RepoSolicitud;
 
 import java.util.ArrayList;
 

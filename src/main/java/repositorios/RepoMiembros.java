@@ -1,14 +1,11 @@
-package miembro;
+package repositorios;
 
+import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import organizacion.Sector;
-import organizacion.TipoDocumento;
 
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RepoMiembros implements WithGlobalEntityManager {
     private static RepoMiembros RepoMiembros = null;

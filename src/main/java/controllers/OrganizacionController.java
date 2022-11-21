@@ -1,25 +1,23 @@
 package controllers;
 
-import cuenta.RepoCuentas;
+import repositorios.RepoCuentas;
 import lectorcsv.FormatoDeFechas;
 import lectorcsv.LectorDeCsv;
 import lectorcsv.TipoPerioricidad;
 import lectorcsv.ValidadorDeCabeceras;
-import mediciones.MedicionAntigua;
-import mediciones.RepoMediciones;
 import miembro.Miembro;
-import miembro.RepoMiembros;
+import repositorios.RepoMiembros;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.Solicitud;
 import organizacion.periodo.PeriodoMensual;
-import organizacion.repositorio.RepoOrganizacion;
-import organizacion.repositorio.RepoSolicitud;
+import repositorios.RepoOrganizacion;
+import repositorios.RepoSolicitud;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import tipoconsumo.RepoTipoDeConsumo;
-import tipoconsumo.TipoConsumo;
+import repositorios.RepoTipoDeConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -277,7 +275,7 @@ public class OrganizacionController extends AccountController {
     formato = new FormatoDeFechas(formatos);
 
     List<String> columnasEsperadas = new ArrayList<>();
-    columnasEsperadas.add("tipoconsumo");
+    columnasEsperadas.add("utils/tipoconsumo");
     columnasEsperadas.add("valor");
     columnasEsperadas.add("perioricidad");
     columnasEsperadas.add("periodo de imputacion");

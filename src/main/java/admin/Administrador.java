@@ -1,6 +1,6 @@
 package admin;
 
-import global.Unidad;
+import repositorios.RepoFactoresEmision;
 
 import javax.persistence.*;
 

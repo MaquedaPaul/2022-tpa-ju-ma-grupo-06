@@ -9,13 +9,13 @@ import exceptions.NoSeEncuentraException;
 import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
-import mediciones.RepoMediciones;
+import repositorios.RepoMediciones;
 import miembro.Miembro;
 import notificaciones.Contacto;
 import notificaciones.medioNotificacion.MedioNotificador;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
-import organizacion.repositorio.RepoSolicitud;
+import repositorios.RepoSolicitud;
 import transporte.Trayecto;
 
 import javax.persistence.*;

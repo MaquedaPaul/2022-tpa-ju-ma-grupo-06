@@ -1,4 +1,4 @@
-package organizacion.repositorio;
+package repositorios;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;

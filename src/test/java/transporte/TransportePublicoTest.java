@@ -23,10 +23,10 @@ public class TransportePublicoTest {
 
   // PARADAS
 
-  Parada ubicacionInicio = new Parada(0, punto1, true);
-  Parada ubicacionIntermedia = new Parada(1,punto2, true);
-  Parada ubicacionFinal = new Parada(2, punto3, true);
-  Parada otraUbicacion = new Parada(3, punto1, false);
+  Parada ubicacionInicio = new Parada(0, punto1);
+  Parada ubicacionIntermedia = new Parada(1,punto2);
+  Parada ubicacionFinal = new Parada(2, punto3);
+  Parada otraUbicacion = new Parada(3, punto1);
 
   // LISTA DE UbicacionS
   List<Parada> paradasDeIdaDel138 = new ArrayList<>();
@@ -72,7 +72,7 @@ public class TransportePublicoTest {
     paradasDeIdaDel138.add(ubicacionFinal);
 
     assertEquals(linea138.getRecorridoDeIda().size(), 3);
-    linea138.agregarParadaAlRecorrido(otraUbicacion);
+    linea138.agregarParadaAlRecorrido(otraUbicacion,true);
     assertEquals(linea138.getRecorridoTotal().size(), 4);
   }
 

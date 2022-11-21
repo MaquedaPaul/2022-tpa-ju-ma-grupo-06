@@ -3,7 +3,7 @@ package transporte;
 import exceptions.NoSePudoCalcularElTramo;
 import linea.PuntoUbicacion;
 import lombok.Getter;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.io.IOException;

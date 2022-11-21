@@ -5,7 +5,6 @@ import organizacion.periodo.PeriodoMensual;
 import reporte.itemsreportes.ComposicionHcSectorTerritorial;
 import reporte.itemsreportes.EvolucionHCSectorTerritorial;
 import territorio.HCPorSectorTerritorial;
-import territorio.RepoSectorTerritorial;
 import territorio.SectorTerritorial;
 
 import java.util.List;

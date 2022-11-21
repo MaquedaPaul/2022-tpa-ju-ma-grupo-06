@@ -1,5 +1,6 @@
-package mediciones;
+package repositorios;
 
+import mediciones.Medicion;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.periodo.PeriodoMensual;

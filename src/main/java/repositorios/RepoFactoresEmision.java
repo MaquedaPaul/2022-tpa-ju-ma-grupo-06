@@ -1,5 +1,6 @@
-package admin;
+package repositorios;
 
+import admin.FactorEmision;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public class RepoFactoresEmision implements WithGlobalEntityManager {
 
   private static RepoFactoresEmision repoFactoresEmision = null;
 
-  public RepoFactoresEmision() {
+  private RepoFactoresEmision() {
   }
 
   public static RepoFactoresEmision getInstance() {
@@ -39,4 +40,7 @@ public class RepoFactoresEmision implements WithGlobalEntityManager {
     return getFactoresEmision().size();
   }
 
+  public FactorEmision getFactorById(long id) {
+    return entityManager().find(FactorEmision.class,id);
+  }
 }

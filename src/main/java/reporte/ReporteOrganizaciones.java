@@ -4,7 +4,7 @@ import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
 import organizacion.periodo.GeneradorDePeriodos;
 import organizacion.periodo.PeriodoMensual;
-import organizacion.repositorio.RepoOrganizacion;
+import repositorios.RepoOrganizacion;
 import reporte.itemsreportes.ComposicionHCOrganizacion;
 import reporte.itemsreportes.EvolucionHCOrganizacion;
 import reporte.itemsreportes.HCPorTipoOrganizacion;

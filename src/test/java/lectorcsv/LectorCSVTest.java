@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
-import tipoconsumo.TipoActividad;
-import tipoconsumo.TipoAlcance;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoActividad;
+import utils.tipoconsumo.TipoAlcance;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -62,7 +62,7 @@ public class LectorCSVTest {
     formato = new FormatoDeFechas(formatos);
 
     List<String> columnasEsperadas = new ArrayList<>();
-    columnasEsperadas.add("tipoconsumo");
+    columnasEsperadas.add("utils/tipoconsumo");
     columnasEsperadas.add("valor");
     columnasEsperadas.add("perioricidad");
     columnasEsperadas.add("periodo de imputacion");

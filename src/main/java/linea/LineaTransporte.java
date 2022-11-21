@@ -16,14 +16,14 @@ public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(name = "PARADAS_POR_LINEA",
       joinColumns = @JoinColumn(name = "ID_LINEA"),
       inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoDeIda;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
   @JoinTable(name = "PARADAS_POR_LINEA",
       joinColumns = @JoinColumn(name = "ID_LINEA"),
       inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
@@ -57,8 +57,8 @@ public class LineaTransporte {
     return paradas;
   }
 
-  public void agregarParadaAlRecorrido(Parada unaParada) {
-    if (unaParada.esDeIda()) {
+  public void agregarParadaAlRecorrido(Parada unaParada, boolean esDeIda) {
+    if (esDeIda) {
       recorridoDeIda.add(unaParada);
     } else {
       recorridoVuelta.add(unaParada);

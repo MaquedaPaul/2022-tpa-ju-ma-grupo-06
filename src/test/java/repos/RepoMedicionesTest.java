@@ -1,19 +1,21 @@
+package repos;
+
 import admin.FactorEmision;
 import cuenta.OrganizacionCuenta;
 import global.Unidad;
 import mediciones.Medicion;
 import mediciones.MedicionAnual;
 import mediciones.MedicionMensual;
-import mediciones.RepoMediciones;
+import repositorios.RepoMediciones;
 import org.junit.jupiter.api.*;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
-import tipoconsumo.TipoActividad;
-import tipoconsumo.TipoAlcance;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoActividad;
+import utils.tipoconsumo.TipoAlcance;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

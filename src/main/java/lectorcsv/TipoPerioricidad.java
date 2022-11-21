@@ -3,11 +3,8 @@ package lectorcsv;
 import mediciones.Medicion;
 import mediciones.MedicionAnual;
 import mediciones.MedicionMensual;
-import mediciones.perioricidad.Anual;
-import mediciones.perioricidad.Mensual;
-import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 

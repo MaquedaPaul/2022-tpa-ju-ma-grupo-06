@@ -10,7 +10,7 @@ import organizacion.TipoOrganizacion;
 
 import organizacion.periodo.PeriodoAnual;
 import organizacion.periodo.PeriodoMensual;
-import organizacion.repositorio.RepoOrganizacion;
+import repositorios.RepoOrganizacion;
 import reporte.ReporteOrganizaciones;
 import reporte.ReporteSectorTerritorial;
 import reporte.itemsreportes.*;

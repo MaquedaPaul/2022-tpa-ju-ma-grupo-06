@@ -16,7 +16,7 @@ public class AgenteTerritorial {
   @OneToOne(cascade = CascadeType.PERSIST)
   SectorTerritorial sector;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @Embedded
   AgenteCuenta cuenta;
 
   public AgenteTerritorial(SectorTerritorial unSector, String nombre) {

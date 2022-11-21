@@ -4,7 +4,7 @@ import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;

@@ -1,5 +1,6 @@
 package cuenta;
 
+import repositorios.RepoCuentas;
 import spark.Request;
 
 import javax.persistence.Entity;

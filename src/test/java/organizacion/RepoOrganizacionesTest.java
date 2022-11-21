@@ -7,7 +7,7 @@ import linea.TipoTransporte;
 import miembro.Miembro;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Test;
-import organizacion.repositorio.RepoOrganizacion;
+import repositorios.RepoOrganizacion;
 import transporte.Tramo;
 import transporte.TransportePublico;
 import transporte.Trayecto;
@@ -53,11 +53,11 @@ public class RepoOrganizacionesTest {
     List<Organizacion> listadoOrganizacionesGubernamentales = new ArrayList<>();
 
     {
-        paradasIda.add(new Parada(700, punto1, true));
-        paradasVuelta.add(new Parada(700, punto2, false));
+        paradasIda.add(new Parada(700, punto1));
+        paradasVuelta.add(new Parada(700, punto2));
         //tramos.add(unTramo);
-        paradasIda.add(new Parada(700, punto1, true));
-        paradasVuelta.add(new Parada(700, punto2, false));
+        paradasIda.add(new Parada(700, punto1));
+        paradasVuelta.add(new Parada(700, punto2));
         tramos.add(unTramo);
         trayectos.add(unTrayecto);
         miembros.add(unMiembro);

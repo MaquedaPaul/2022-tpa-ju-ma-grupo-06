@@ -6,11 +6,9 @@ import exceptions.*;
 import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
-import mediciones.MedicionAntigua;
-import mediciones.RepoMediciones;
-import mediciones.perioricidad.Perioricidad;
+import repositorios.RepoMediciones;
 import organizacion.Organizacion;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

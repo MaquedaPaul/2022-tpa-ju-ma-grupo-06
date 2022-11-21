@@ -1,13 +1,13 @@
 package controllers;
 
-import cuenta.RepoCuentas;
+import repositorios.RepoCuentas;
 import exceptions.NoConcuerdaInicioYFin;
 import linea.PuntoUbicacion;
 import miembro.Miembro;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.Solicitud;
-import organizacion.repositorio.RepoOrganizacion;
+import repositorios.RepoOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -15,9 +15,7 @@ import transporte.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MiembroController extends AccountController {
   public ModelAndView getTrayectos(Request request, Response response) {

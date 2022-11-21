@@ -1,7 +1,7 @@
 package transporte;
 
 import linea.PuntoUbicacion;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.io.IOException;

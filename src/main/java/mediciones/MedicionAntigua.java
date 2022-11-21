@@ -5,7 +5,7 @@ import mediciones.perioricidad.Perioricidad;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 

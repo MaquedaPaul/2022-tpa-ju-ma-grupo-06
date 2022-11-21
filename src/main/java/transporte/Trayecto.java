@@ -1,8 +1,7 @@
 package transporte;
 
-import com.google.common.collect.Iterables;
 import lombok.Getter;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.util.HashSet;

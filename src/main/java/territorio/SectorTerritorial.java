@@ -17,7 +17,9 @@ public class SectorTerritorial {
   @GeneratedValue
   private Long id;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  private String nombre;
+
+  @OneToMany(fetch = FetchType.EAGER)
   @JoinColumn(name = "sector_territorial_id")
   List<Organizacion> organizaciones;
 
@@ -26,9 +28,10 @@ public class SectorTerritorial {
 
   public SectorTerritorial(
       List<Organizacion> organizaciones,
-      TipoSectorTerritorial tipoSectorTerritorial) {
+      TipoSectorTerritorial tipoSectorTerritorial, String nombre) {
     this.organizaciones = organizaciones;
     this.tipoSectorTerritorial = tipoSectorTerritorial;
+    this.nombre = nombre;
   }
 
   public SectorTerritorial() {
@@ -52,17 +55,17 @@ public class SectorTerritorial {
   }
 
 
-  public double calcularHCMiembrosEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+  public double calcularHCMiembros(PeriodoMensual inicio) {
     return this.getOrganizaciones()
         .stream()
-        .mapToDouble(org -> org.calcularHCMiembrosEntre(inicio, fin))
+        .mapToDouble(org -> org.calcularHCTotalDeMiembros(inicio))
         .sum();
   }
 
-  public double calcularHCMedicionesEntre(PeriodoMensual inicio, PeriodoMensual fin) {
+  public double calcularHCMediciones(PeriodoMensual inicio) {
     return this.getOrganizaciones()
         .stream()
-        .mapToDouble(org -> org.calcularHCMedicionesEntre(inicio, fin))
+        .mapToDouble(org -> org.calcularHCTotalMediciones(inicio))
         .sum();
   }
 }

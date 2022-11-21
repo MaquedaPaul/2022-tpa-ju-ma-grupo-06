@@ -6,7 +6,7 @@ import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoAnual;
 import organizacion.periodo.PeriodoMensual;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 

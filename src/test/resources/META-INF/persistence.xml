@@ -9,7 +9,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>organizacion.Organizacion</class>
         <class>cuenta.OrganizacionCuenta</class>
-        <class>tipoconsumo.TipoConsumo</class>
+        <class>utils.tipoconsumo.TipoConsumo</class>
         <class>mediciones.Medicion</class>
         <class>mediciones.MedicionMensual</class>
         <class>mediciones.MedicionAnual</class>

@@ -17,15 +17,11 @@ public class Parada {
   @JoinColumn(name = "ID_PUNTO_UBICACION")
   private PuntoUbicacion puntoUbicacion;
 
-  @Column(name = "ES_DE_IDA")
-  private boolean esDeIda;
-
   public Parada() {
   }
 
-  public Parada(int kmActual,PuntoUbicacion puntoUbicacion, boolean esDeIda) {
+  public Parada(int kmActual,PuntoUbicacion puntoUbicacion) {
     this.kmActual = kmActual;
-    this.esDeIda = esDeIda;
     this.puntoUbicacion = puntoUbicacion;
   }
 
@@ -37,7 +33,4 @@ public class Parada {
     return this.puntoUbicacion;
   }
 
-  public boolean esDeIda() {
-    return esDeIda;
-  }
 }

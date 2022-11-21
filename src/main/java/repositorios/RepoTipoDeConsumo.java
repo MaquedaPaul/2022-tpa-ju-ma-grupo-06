@@ -1,10 +1,10 @@
-package tipoconsumo;
+package repositorios;
 
 import lectorcsv.RepoTipoConsumo;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import utils.tipoconsumo.TipoConsumo;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsumo {
@@ -44,6 +44,10 @@ public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsu
         .filter(tipo -> tipo.getNombre().equalsIgnoreCase(tipoConsumo))
         .collect(Collectors.toList())
         .get(0);
+  }
+
+  public TipoConsumo getTipoConsumoById(long id) {
+    return entityManager().find(TipoConsumo.class,id);
   }
   //TODO
   //El metodo de arriba recibe un Tipo de Consumo o un String?

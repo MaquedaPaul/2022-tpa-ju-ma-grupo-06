@@ -2,9 +2,9 @@ import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 import global.Unidad;
 import org.junit.jupiter.api.Test;
-import tipoconsumo.TipoActividad;
-import tipoconsumo.TipoAlcance;
-import tipoconsumo.TipoConsumo;
+import utils.tipoconsumo.TipoActividad;
+import utils.tipoconsumo.TipoAlcance;
+import utils.tipoconsumo.TipoConsumo;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;

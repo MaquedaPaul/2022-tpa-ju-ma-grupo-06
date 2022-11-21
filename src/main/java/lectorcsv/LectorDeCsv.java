@@ -8,7 +8,7 @@ import lombok.Setter;
 import mediciones.Medicion;
 import repositorios.RepoMediciones;
 import organizacion.Organizacion;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class LectorDeCsv {
@@ -57,7 +58,7 @@ public class LectorDeCsv {
       throw new LaCabeceraNoTieneUnFormatoValido();
     }
     linea = this.lineaLeida();
-    while (!linea.isEmpty()) {
+    while ((!linea.isEmpty()) && !Objects.equals(linea.get(0), "")) {
       this.validarFormatoLeido(linea);
       this.asignarParametros(linea);
       this.guardarMedicion();

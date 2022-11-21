@@ -31,7 +31,7 @@ public class LectorMediciones {
     formatos.put(TipoPerioricidad.MENSUAL, formatoMensual);
 
     List<String> columnasEsperadas = new ArrayList<>();
-    columnasEsperadas.add("utils/tipoconsumo");
+    columnasEsperadas.add("tipoconsumo");
     columnasEsperadas.add("valor");
     columnasEsperadas.add("perioricidad");
     columnasEsperadas.add("periodo de imputacion");

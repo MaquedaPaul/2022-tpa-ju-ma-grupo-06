@@ -40,7 +40,7 @@ public abstract class Cuenta {
 
   public abstract String home();
 
-  public abstract String tipoCuenta();
+  public abstract TipoCuenta tipoCuenta();
 
   public abstract void guardarEnSesion(Request request);
 }

@@ -18,8 +18,8 @@ public class OrganizacionCuenta extends Cuenta {
     return "organizacionHome.hbs";
   }
 
-  public String tipoCuenta() {
-    return "organizacion";
+  public TipoCuenta tipoCuenta() {
+    return TipoCuenta.ORGANIZACION;
   }
 
   @Override

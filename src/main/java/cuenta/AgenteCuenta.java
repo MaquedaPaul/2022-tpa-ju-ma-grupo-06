@@ -19,8 +19,8 @@ public class AgenteCuenta extends Cuenta {
     return "agenteHome.hbs";
   }
 
-  public String tipoCuenta() {
-    return "agente";
+  public TipoCuenta tipoCuenta() {
+    return TipoCuenta.AGENTE;
   }
 
   public void guardarEnSesion(Request request) {

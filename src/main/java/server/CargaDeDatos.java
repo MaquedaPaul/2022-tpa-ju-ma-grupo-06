@@ -51,9 +51,9 @@ public class CargaDeDatos implements WithGlobalEntityManager {
   }
 
   public static void persistirFactoresEmision() {
-    FactorEmision kwh = new FactorEmision(20, Unidad.KWH);
-    FactorEmision lts = new FactorEmision(15, Unidad.LTS);
-    FactorEmision km = new FactorEmision(30, Unidad.KG);
+    FactorEmision kwh = new FactorEmision(0.2, Unidad.KWH);
+    FactorEmision lts = new FactorEmision(0.1, Unidad.LTS);
+    FactorEmision km = new FactorEmision(0.3, Unidad.KG);
 
     dbConnection.persistir(kwh);
     dbConnection.persistir(lts);
@@ -124,13 +124,19 @@ public class CargaDeDatos implements WithGlobalEntityManager {
   public static void persistirTransportes() {
     LineaTransporte linea = dbConnection.getById(1,LineaTransporte.class);
     Transporte colectivo = new TransportePublico(linea,40);
+    colectivo.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(colectivo);
 
     Transporte vehiculoPart = new VehiculoParticular(TipoVehiculo.AUTO,40,"FORD FIESTA");
+    vehiculoPart.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(vehiculoPart);
+
     Transporte servicioContr = new ServicioContratado(TipoVehiculo.CAMIONETA,60);
+    servicioContr.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(servicioContr);
+
     Transporte bicicleta = new PropulsionHumana("BICICLETA");
+    bicicleta.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(bicicleta);
   }
 
@@ -251,8 +257,11 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     List<Organizacion> orgs = new ArrayList<>();
     orgs.add(org1);
     orgs.add(org2);
+    System.out.println(orgs.size());
     SectorTerritorial bsas = new SectorTerritorial(orgs, TipoSectorTerritorial.PROVINCIA,"BUENOS AIRES");
+    System.out.println(bsas.getOrganizaciones().size());
     dbConnection.persistir(bsas);
+    System.out.println(bsas.getOrganizaciones().size());
   }
 
   public static void persistirAgente() {

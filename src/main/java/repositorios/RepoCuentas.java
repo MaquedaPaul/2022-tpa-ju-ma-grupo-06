@@ -61,9 +61,9 @@ public class RepoCuentas implements WithGlobalEntityManager {
         .getResultList().get(0);
   }
 
-  public List<Organizacion> obtenerOrganizacion(String usuario) {
-    return entityManager()
-        .createQuery("from Organizacion where Organizacion.cuenta.usuario = :c").setParameter("c", usuario)
-        .getResultList();
+  public Organizacion obtenerOrganizacion(Cuenta cuenta) {
+    return (Organizacion) entityManager()
+        .createQuery("from Organizacion where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())
+        .getResultList().get(0);
   }
 }

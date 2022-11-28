@@ -1,22 +1,20 @@
 package controllers;
 
-import repositorios.RepoCuentas;
+import cuenta.OrganizacionCuenta;
+import mediciones.Medicion;
+import repositorios.*;
 import lectorcsv.FormatoDeFechas;
 import lectorcsv.LectorDeCsv;
 import lectorcsv.TipoPerioricidad;
 import lectorcsv.ValidadorDeCabeceras;
 import miembro.Miembro;
-import repositorios.RepoMiembros;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.Solicitud;
 import organizacion.periodo.PeriodoMensual;
-import repositorios.RepoOrganizacion;
-import repositorios.RepoSolicitud;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import repositorios.RepoTipoDeConsumo;
 import tipoconsumo.TipoConsumo;
 
 
@@ -36,19 +34,14 @@ import java.util.*;
 
 public class OrganizacionController extends AccountController {
 
-  private String comprobarSessionParaOrganizacion(Request request, Response response){
-    String usuario = comprobarSession(request, response);
-
-    comprobarTipoCuenta(request, response, "organizacion");
-    return usuario;
-
+  private Organizacion obtenerOrganizacion(Request request){
+    OrganizacionCuenta usuario = request.session().attribute("cuenta");
+    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario);
+    return organizacion;
   }
 
   public ModelAndView getPage(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-
-
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
 
     Map<String, Object> model = new HashMap<>();
     //RepoSolicitud.init();
@@ -61,15 +54,12 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getCalculadoraHc(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     return new ModelAndView(organizacion, "organizacionCalculadoraHc.hbs");
   }
 
   public ModelAndView getHcTotal(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     double valor = organizacion.calcularHCTotal(new PeriodoMensual(LocalDate.now()));
     Map<String, Object> model = new HashMap<>();
     model.put("valorhc",valor);
@@ -77,16 +67,14 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getImpactoMiembroBuscar(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
 
     return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
   }
 
   public ModelAndView getImpactoMiembro(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
 
     String idMiembro = request.queryParams("miembro");
@@ -96,8 +84,7 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getImpactoMiembroConId(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     Long idMiembro = Long.valueOf((request.params("id")));
     Miembro miembro =RepoMiembros.getInstance().getMiembrosPor(idMiembro);
@@ -109,8 +96,7 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getIndicadorHcSector(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
 
     String nombreSector = request.queryParams("sector");
     response.redirect("/home/calculadora-hc/indicador-hc-sector/"+nombreSector);
@@ -119,19 +105,16 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getIndicadorHcSectorBuscar(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     return new ModelAndView(organizacion, "organizacionIndicadorHcSector.hbs");
   }
 
   public ModelAndView getIndicadorHcSectorConNombre(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     String nombreSector = request.params("nombre").toLowerCase();
     //.toLowerCase()
-    Sector sector =organizacion.obtenerSectorPorCaseSensitive(nombreSector);
+    Sector sector =organizacion.obtenerSectorSinCaseSensitive(nombreSector);
     double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
     model.put("nombre",sector.getNombre());
     model.put("hcpromedio",hcPromedio);
@@ -140,21 +123,17 @@ public class OrganizacionController extends AccountController {
 
 
   public ModelAndView getMediciones(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     return new ModelAndView(organizacion, "organizacionRegistrarMediciones.hbs");
   }
 
   public ModelAndView getMedicionesArchivo(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     return new ModelAndView(organizacion, "organizacionCargarArchivoMedicion.hbs");
   }
 
   public ModelAndView getMedicionesPerse(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     //Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     model.put("tipoconsumos",RepoTipoDeConsumo.getInstance().getTiposConsumo());
@@ -163,8 +142,7 @@ public class OrganizacionController extends AccountController {
     return new ModelAndView(model, "organizacionCargarMedicion.hbs");
   }
   public ModelAndView crearMedicion(Request request, Response response) {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     String tipoDeConsumo = request.queryParams("tipo-de-consumo");
     String periodicidad = request.queryParams("periodicidad").toUpperCase();
@@ -180,10 +158,8 @@ public class OrganizacionController extends AccountController {
     TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
 
     TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
-
-
-    //Medicion medicion = new Medicion(unTipoConsumo,tipoPerioricidad.getPerioricidad(fechaParseada,valor),organizacion);
-    //RepoMediciones.getInstance().cargarMedicion(medicion);
+    Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
+    RepoMediciones.getInstance().cargarMedicion(medicion);
 
     response.redirect("/home");
 
@@ -199,7 +175,7 @@ public class OrganizacionController extends AccountController {
   */
 
   private void procesarVinculacion(boolean aceptar,String usuario, Request request, Response response){
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     Long idVinculacion = Long.valueOf((request.params("id")));
     System.out.println(idVinculacion);
@@ -232,8 +208,7 @@ public class OrganizacionController extends AccountController {
 
 
   public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {
-    String usuario = comprobarSessionParaOrganizacion(request,response);
-    Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
+    Organizacion organizacion = obtenerOrganizacion(request);
 
     File uploadDir = new File("upload");
     uploadDir.mkdir();

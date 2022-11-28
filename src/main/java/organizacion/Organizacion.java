@@ -214,7 +214,7 @@ public class Organizacion {
   public Sector obtenerSectorPor(String nombre) {
     return sectores.stream().filter(sector -> sector.getNombre().equals(nombre)).findAny().orElse(null);
   }
-  public Sector obtenerSectorPorCaseSensitive(String nombre){
+  public Sector obtenerSectorSinCaseSensitive(String nombre){
     return sectores.stream().filter(sector -> sector.getNombre().toLowerCase().equals(nombre)).findAny().orElse(null);
   }
 

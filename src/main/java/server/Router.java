@@ -1,7 +1,6 @@
 package server;
 
 import controllers.*;
-import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -22,10 +21,14 @@ public class Router {
 
     Spark.staticFiles.location("static");
 
+    /*
     Spark.after(((request, response) -> {
       PerThreadEntityManagers.getEntityManager().clear();
       PerThreadEntityManagers.closeEntityManager();
     }));
+*/
+    //Spark.before(Validador::validarAcceso);
+
     Spark.get("/", raizController::getPage, engine);
     Spark.get("/recomendaciones", recomendacionController::getRecomendaciones, engine);
     Spark.get("/home",homeController::getHome, engine);
@@ -91,30 +94,17 @@ public class Router {
     Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector/:nombre", organizacionController::getIndicadorHcSectorConNombre, engine);
 
-    //Agente
-    //GET /agentes/:id/menu/sectores/:sector/composicion-hc
-
-    //GET /agentes/:id/menu/sectores/:sector/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-    Spark.get("/home/evolucion-hc", agenteController::getEvolucionHc, engine);
-    Spark.get("/home/evolucion-hc/calculo", miembroController::getRegistro, engine);
-    //GET /agentes/:id/menu/sectores/:sector/hc-total
-
-    //GET /agentes/:id/menu/sectores/:sector/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-
-    //GET /agentes/:id/menu/sectores/:sector/hc-total
-
-
-    //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/composicion-hc
-    Spark.get("/home/composicion-hc", miembroController::getRegistro, engine);
-    Spark.get("/home/composicion-hc", agenteController::getCompocicionHc, engine);
-
-    //GET /agentes/:id/menu/sectores/:sector/organizaciones/hc-total-por-tipo;
-    Spark.get("/home/hc-total-por-tipo", miembroController::getRegistro, engine);
-    Spark.get("/home/hc-total", agenteController::getHcTotal, engine);
-    //GET /agentes/:id/menu/sectores/:sector/organizaciones/:organizacion/evolucion-hc?desde=:fechaInicio&hasta=:fechaFin
-
-    Spark.get("/home/evolucion-hc-organizacion", agenteController::getEvolucionOrganizacion, engine);
-    Spark.get("/home/evolucion-hc-organizacion/calculo", miembroController::getRegistro, engine);
-
+    //AGENTE
+    Spark.get("/home/composicion-hc",agenteController::getComposicionHc,engine);
+    Spark.get("/home/composicion-hc/grafico",agenteController::getComposicionHcGrafico,engine);
+    Spark.get("/home/evolucion-hc",agenteController::getEvolucionHc,engine);
+    Spark.get("/home/evolucion-hc/grafico",agenteController::getEvolucionHcGrafico,engine);
+    Spark.get("home/organizaciones",agenteController::getOrganizaciones,engine);
+    Spark.get("home/hc-total",agenteController::getHcTotal,engine);
+    Spark.get("/home/organizaciones/hc-tipo-organizacion/:tipo",agenteController::getHcTipoOrg,engine);
+    Spark.get("/home/organizaciones/:id/evolucion-hc/consulta",agenteController::getEvolucionHcOrg,engine);
+    Spark.get("/home/organizaciones/:id/evolucion-hc/grafico",agenteController::getEvolucionHcOrgGrafico,engine);
+    Spark.get("/home/organizaciones/:id/composicion-hc/consulta",agenteController::getComposicionHcOrg,engine);
+    Spark.get("/home/organizaciones/:id/composicion-hc/grafico",agenteController::getComposicionHcOrgGrafico,engine);
   }
 }

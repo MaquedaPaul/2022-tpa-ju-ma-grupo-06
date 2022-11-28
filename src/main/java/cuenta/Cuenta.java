@@ -5,6 +5,7 @@ import lombok.Setter;
 import spark.Request;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -40,7 +41,9 @@ public abstract class Cuenta {
 
   public abstract String home();
 
-  public abstract TipoCuenta tipoCuenta();
-
   public abstract void guardarEnSesion(Request request);
+
+  public abstract boolean puedeAccederA(String path);
+
+  public abstract Map<String, Object> datosDelHome(Request request);
 }

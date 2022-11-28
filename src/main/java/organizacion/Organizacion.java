@@ -53,7 +53,6 @@ public class Organizacion {
   @OneToOne
   OrganizacionCuenta cuenta;
 
-
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
                       String clasificacion, List<Contacto> contactos) {
     this.razonSocial = Objects.requireNonNull(razonSocial);

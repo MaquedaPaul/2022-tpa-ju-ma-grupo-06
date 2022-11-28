@@ -1,7 +1,6 @@
 package controllers;
 
 import cuenta.AgenteCuenta;
-import cuenta.Cuenta;
 
 import global.Unidad;
 import organizacion.Organizacion;
@@ -38,18 +37,6 @@ public class AgenteController {
 
   private final ReporteSectorTerritorial genReporte = new ReporteSectorTerritorial();
 
-  public ModelAndView getComposicionHc(Request request, Response response) {
-
-    Cuenta cuentaUser = request.session().attribute("cuenta");
-
-    if (!Validador.tieneAcceso(cuentaUser,"agente")) {
-      response.redirect("/home");
-      return null;
-    }
-
-    return new ModelAndView(cuentaUser,"agenteComposicionHCConsulta.hbs");
-  }
-
   private PeriodoMensual getPeriodoInicio(Request request) {
     return new PeriodoMensual(LocalDate.parse(request.queryParams("inicio"),formatoFecha));
   }
@@ -58,13 +45,17 @@ public class AgenteController {
     return new PeriodoMensual(LocalDate.parse(request.queryParams("fin"),formatoFecha));
   }
 
+  //RUTAS
+
+  public ModelAndView getComposicionHc(Request request, Response response) {
+
+    AgenteCuenta cuentaUser = request.session().attribute("cuenta");
+
+    return new ModelAndView(cuentaUser,"agenteComposicionHCConsulta.hbs");
+  }
+
   public ModelAndView getComposicionHcGrafico(Request request, Response response) {
     AgenteCuenta agenteCuenta = request.session().attribute("cuenta");
-
-    if (!Validador.tieneAcceso(agenteCuenta,"agente")) {
-      response.redirect("/home");
-      return null;
-    }
 
     //OBTENER PERIODOS
     PeriodoMensual inicio = this.getPeriodoInicio(request);
@@ -75,7 +66,6 @@ public class AgenteController {
       response.redirect("/home/composicion-hc");
       return null;
     }
-
 
     AgenteTerritorial agente = request.session().attribute("agente");
     //OBTENER SECTOR
@@ -118,21 +108,11 @@ public class AgenteController {
   public ModelAndView getEvolucionHc(Request request, Response response) {
     AgenteCuenta agenteCuenta = request.session().attribute("cuenta");
 
-    if (!Validador.tieneAcceso(agenteCuenta,"agente")) {
-      response.redirect("/home");
-      return null;
-    }
-
-    return new ModelAndView("","agenteEvolucionHcConsulta.hbs");
+    return new ModelAndView(agenteCuenta,"agenteEvolucionHcConsulta.hbs");
   }
 
   public ModelAndView getEvolucionHcGrafico(Request request, Response response) {
     AgenteCuenta agenteCuenta = request.session().attribute("cuenta");
-
-    if (!Validador.tieneAcceso(agenteCuenta,"agente")) {
-      response.redirect("/home");
-      return null;
-    }
 
     PeriodoMensual inicio = getPeriodoInicio(request);
     PeriodoMensual fin = getPeriodoFin(request);
@@ -146,6 +126,7 @@ public class AgenteController {
     model.put("sector",sector);
     model.put("inicio",inicio);
     model.put("fin",fin);
+    model.put("usuario",agenteCuenta.getUsuario());
     return new ModelAndView(model,"agenteEvolucionHcRespuesta.hbs");
 /*
     PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,7,15));
@@ -180,11 +161,12 @@ public class AgenteController {
     PeriodoAnual periodoAnual = new PeriodoAnual(LocalDate.now());
     Map<String,Object> model = new HashMap<>();
 
+    //
     model.put("totalMensual",sector.calcularHC(periodo));
+    //
     model.put("totalAnual",sector.calcularHC(periodoAnual));
-    //TODO IMPLEMENTAR
-    model.put("unidad", Unidad.LTS);
-    model.put("sector","BUENOS AIRES");
+    model.put("unidad", "ESTO NI IDEA");
+    model.put("sector",sector.getNombre());
     model.put("usuario",cuenta.getUsuario());
     model.put("periodoActual",periodo);
 
@@ -193,13 +175,13 @@ public class AgenteController {
 
   public ModelAndView getOrganizaciones(Request request,Response response) {
 
-    //AgenteCuenta cuenta = request.session().attribute("cuenta");
+    AgenteCuenta cuenta = request.session().attribute("cuenta");
     AgenteTerritorial agente = request.session().attribute("agente");
     SectorTerritorial sector = agente.getSectorTerritorial();
     List<Organizacion> organizaciones = sector.getOrganizaciones();
-
+    System.out.println(organizaciones.size());
     Map<String,Object> model = new HashMap<>();
-    model.put("usuario","JORGE");
+    model.put("usuario",cuenta.getUsuario());
     model.put("organizaciones",organizaciones);
     /*
     Organizacion org1 = new Organizacion("PIRULO SA", TipoOrganizacion.EMPRESA,"","",null);
@@ -224,8 +206,9 @@ public class AgenteController {
     AgenteTerritorial agente = request.session().attribute("agente");
     AgenteCuenta cuenta = request.session().attribute("cuenta");
     PeriodoMensual periodo = new PeriodoMensual(LocalDate.now());
+    PeriodoMensual periodo2 = new PeriodoMensual(LocalDate.now().plusDays(1L));
     HCPorTipoOrganizacion hcPorTipoOrganizacion = new ReporteOrganizaciones(RepoOrganizacion.getInstance())
-        .hcPorTipoOrganizacion(periodo,periodo)
+        .hcPorTipoOrganizacion(periodo,periodo2)
         .stream()
         .filter(rep -> rep.getUnTipo() == TipoOrganizacion.valueOf(request.params("tipo"))).collect(Collectors.toList()).get(0);
 
@@ -233,8 +216,8 @@ public class AgenteController {
     model.put("valorMensual",hcPorTipoOrganizacion.getHc());
     model.put("valorAnual",1000D);
     model.put("unidad", Unidad.LTS);
-    model.put("sector","BUENOS AIRES");
-    model.put("usuario","007");
+    model.put("sector",agente.getSectorTerritorial().getNombre());
+    model.put("usuario",cuenta.getUsuario());
     model.put("periodoActual",periodo);
     model.put("tipo",hcPorTipoOrganizacion.getUnTipo());
 

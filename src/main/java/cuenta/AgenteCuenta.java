@@ -1,9 +1,16 @@
 package cuenta;
 
+import organizacion.periodo.PeriodoAnual;
+import organizacion.periodo.PeriodoMensual;
 import repositorios.RepoCuentas;
 import spark.Request;
+import territorio.AgenteTerritorial;
+import territorio.SectorTerritorial;
 
 import javax.persistence.Entity;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class AgenteCuenta extends Cuenta {
@@ -19,16 +26,29 @@ public class AgenteCuenta extends Cuenta {
     return "agenteHome.hbs";
   }
 
-  public TipoCuenta tipoCuenta() {
-    return TipoCuenta.AGENTE;
-  }
-
   public void guardarEnSesion(Request request) {
-    Cuenta agente = RepoCuentas.getInstance().accountByUsername(request.queryParams("user"));
-    request.session().attribute("cuenta",agente);
-    request.session().attribute("agente",RepoCuentas.getInstance().obtenerAgente(agente));
-
+    request.session().attribute("cuenta",this);
+    request.session().attribute("agente",RepoCuentas.getInstance().obtenerAgente(this));
   }
 
+  @Override
+  public boolean puedeAccederA(String path) {
+    return TipoCuenta.AGENTE.puedeAccederA(path);
+  }
 
+  public Map<String, Object> datosDelHome(Request request) {
+    Map<String, Object> model = new HashMap<>();
+    AgenteTerritorial agente = request.session().attribute("agente");
+    SectorTerritorial sectorTerritorial = agente.getSectorTerritorial();
+    double totalAnual = sectorTerritorial.calcularHC(new PeriodoAnual(LocalDate.now()));
+    double totalMensual = sectorTerritorial.calcularHC(new PeriodoMensual(LocalDate.now()));
+
+    model.put("sector",sectorTerritorial);
+    model.put("cuenta",this);
+    model.put("periodoActual",new PeriodoMensual(LocalDate.now()));
+    model.put("totalMensual",totalMensual);
+    model.put("totalAnual",totalAnual);
+    model.put("unidad","NIIDEAAAAA");
+    return model;
+  }
 }

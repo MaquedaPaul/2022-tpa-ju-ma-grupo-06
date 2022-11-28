@@ -34,9 +34,13 @@ public class RepoCuentas implements WithGlobalEntityManager {
   }
 
   public Cuenta accountByUsername(String username) {
-    return getCuentas().stream().filter(cuenta -> cuenta.getUsuario().equals(username)).findAny().orElse(null);
+    return (Cuenta) entityManager()
+        .createQuery("FROM Cuenta WHERE usuario = :user").setParameter("user",username)
+        .getResultList()
+        .get(0);
   }
 
+  //POR QUE ES UNA LISTA????
   public List<Miembro> obtenerMiembro(String usuario) {
     return entityManager()
         .createQuery("from Miembro where Organizacion.cuenta.usuario= :c").setParameter("c", usuario)
@@ -45,11 +49,13 @@ public class RepoCuentas implements WithGlobalEntityManager {
 
   public AgenteTerritorial obtenerAgente(Cuenta cuenta) {
     return (AgenteTerritorial) entityManager()
-        .createQuery("from AgenteTerritorial where cuenta = :cuenta").setParameter("cuenta", cuenta.getId())
-        .getResultList().get(0);
+        .createQuery("FROM AgenteTerritorial WHERE cuenta.id = :cuenta_id")
+        .setParameter("cuenta_id",cuenta.getId())
+        .getResultList()
+        .get(0);
   }
 
-  public AgenteCuenta getAgente(String user) {
+  public AgenteCuenta getCuentaAgente(String user) {
     return (AgenteCuenta) entityManager()
         .createQuery("from Cuenta where Cuenta.usuario = :c").setParameter("c", user)
         .getResultList().get(0);

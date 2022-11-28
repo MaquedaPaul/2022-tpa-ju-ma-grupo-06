@@ -13,9 +13,9 @@ import org.uqbarproject.jpa.java8.extras.test.AbstractPersistenceTest;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
 import organizacion.periodo.PeriodoMensual;
-import utils.tipoconsumo.TipoActividad;
-import utils.tipoconsumo.TipoAlcance;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoActividad;
+import tipoconsumo.TipoAlcance;
+import tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

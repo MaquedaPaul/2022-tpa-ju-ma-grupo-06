@@ -4,7 +4,7 @@ import mediciones.Medicion;
 import mediciones.MedicionAnual;
 import mediciones.MedicionMensual;
 import organizacion.Organizacion;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
 
 import java.time.LocalDate;
 

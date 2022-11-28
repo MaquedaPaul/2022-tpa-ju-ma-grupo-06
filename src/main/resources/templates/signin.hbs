@@ -1,6 +1,6 @@
 {{#partial "content"}}
     <h2>Iniciar Sesion</h2>
-    <form action="/signin" method="POST">
+    <form action="/signin" method="POST" id="login">
         <div>
             <label for="primer-input">Usuario</label>
             <input id="primer-input" type="text" name="user">
@@ -9,7 +9,7 @@
           <label for="segundo-input">Contraseña</label>
           <input id="segundo-input" type="password" name="password">
         </div>
-        <button type="summit">Iniciar</button>
+        <button type="submit" form="login">Iniciar</button>
     </form>
 {{/partial}}
 

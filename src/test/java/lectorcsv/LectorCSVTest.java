@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
-import utils.tipoconsumo.TipoActividad;
-import utils.tipoconsumo.TipoAlcance;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoActividad;
+import tipoconsumo.TipoAlcance;
+import tipoconsumo.TipoConsumo;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -62,7 +62,7 @@ public class LectorCSVTest {
     formato = new FormatoDeFechas(formatos);
 
     List<String> columnasEsperadas = new ArrayList<>();
-    columnasEsperadas.add("utils/tipoconsumo");
+    columnasEsperadas.add("tipoconsumo");
     columnasEsperadas.add("valor");
     columnasEsperadas.add("perioricidad");
     columnasEsperadas.add("periodo de imputacion");
@@ -122,4 +122,9 @@ public class LectorCSVTest {
     Assertions.assertEquals(5, lector.getCantidadDeMediciones());
   }
 
+  @Test
+  public void lectorMedicionesAnda() {
+    LectorMediciones lector = new LectorMediciones("src/main/resources/medicionesCorrectas.csv",new Organizacion());
+    lector.leerMediciones();
+  }
 }

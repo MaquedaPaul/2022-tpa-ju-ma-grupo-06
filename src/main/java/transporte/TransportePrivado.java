@@ -1,8 +1,10 @@
 package transporte;
 
 import linea.PuntoUbicacion;
+import services.geodds.ServicioDistancia;
 import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
+import utils.ServiceLocator;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -11,7 +13,7 @@ import java.io.IOException;
 @MappedSuperclass
 public abstract class TransportePrivado extends Transporte {
   @Transient
-  ServicioGeodds servicioGeodds = ServicioGeodds.getInstancia();
+  ServicioDistancia servicioGeodds = ServiceLocator.getInstance().getServicioDistancia();
 
   @Override
   public double distanciaEntre(PuntoUbicacion origen, PuntoUbicacion destino) throws IOException {

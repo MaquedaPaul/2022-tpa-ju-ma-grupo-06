@@ -19,7 +19,7 @@ public class SectorTerritorial {
 
   private String nombre;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany
   @JoinColumn(name = "sector_territorial_id")
   List<Organizacion> organizaciones;
 

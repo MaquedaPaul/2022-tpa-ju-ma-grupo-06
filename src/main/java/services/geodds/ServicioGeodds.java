@@ -9,7 +9,7 @@ import services.geodds.entities.Distancia;
 
 import java.io.IOException;
 
-public class ServicioGeodds {
+public class ServicioGeodds implements ServicioDistancia {
   private static ServicioGeodds instancia = null;
   private Retrofit retrofit;
   private static final String urlAPI = Configuracion.getUrlApi();

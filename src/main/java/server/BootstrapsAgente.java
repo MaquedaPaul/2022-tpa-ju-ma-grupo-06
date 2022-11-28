@@ -64,8 +64,8 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     PuntoUbicacion kiosko = new PuntoUbicacion(22,"Llalala",2900);
     PuntoUbicacion casaJorge = new PuntoUbicacion(22,"Llalala",3000);
 
-    Parada inicio = new Parada(0,casaJuan,true);
-    Parada fin = new Parada(30,trabajo,true);
+    Parada inicio = new Parada(0,casaJuan);
+    Parada fin = new Parada(30,trabajo);
     List<Parada> paradas = new ArrayList<>();
     paradas.add(inicio);
     paradas.add(fin);
@@ -175,7 +175,7 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     organizaciones.add(consultora);
     organizaciones.add(papelera);
 
-    SectorTerritorial buenosAires = new SectorTerritorial(organizaciones, TipoSectorTerritorial.PROVINCIA);
+    SectorTerritorial buenosAires = new SectorTerritorial(organizaciones, TipoSectorTerritorial.PROVINCIA, "Buenos Aires");
     AgenteTerritorial juanCarlos = new AgenteTerritorial(buenosAires, "juan carlos");
     juanCarlos.setCuenta(cuenta7);
 

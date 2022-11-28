@@ -6,8 +6,7 @@ import cuenta.OrganizacionCuenta;
 import global.Unidad;
 import linea.PuntoUbicacion;
 import mediciones.Medicion;
-import mediciones.perioricidad.Anual;
-import mediciones.perioricidad.Perioricidad;
+
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
@@ -170,7 +169,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     organizaciones.add(EstudioJuridico);
     organizaciones.add(Afip);
 
-    SectorTerritorial municipioBuenosAires = new SectorTerritorial(organizaciones, TipoSectorTerritorial.MUNICIPIO);
+    SectorTerritorial municipioBuenosAires = new SectorTerritorial(organizaciones, TipoSectorTerritorial.MUNICIPIO, "Municipio Buenos Aires");
 
     //AGENTE SECTORIAL
 
@@ -214,7 +213,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
 
 
     //PERIODICIDAD
-
+/*
     Perioricidad perioricidadPepsi1 = new Anual(medicionAño2020Pepsi,3333);
     Perioricidad perioricidadPepsi2 = new Anual(medicionAño2021Pepsi,2222);
     Perioricidad perioricidadPepsi3 = new Anual(medicionAño2022Pepsi,120302);
@@ -226,9 +225,9 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Perioricidad perioricidadAfip1 = new Anual(medicionAño2020Afip,3333);
     Perioricidad perioricidadAfip2 = new Anual(medicionAño2021Afip,22324);
     Perioricidad perioricidadAfip3 = new Anual(medicionAño2022Afip,503019222);
-
+*/
     //MEDICIONES
-
+/*
     Medicion medicionPepsi1 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi1,PepsiCo);
     Medicion medicionPepsi2 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi2,PepsiCo);
     Medicion medicionPepsi3 = new Medicion(tipoConsumoElectricidad,perioricidadPepsi3,PepsiCo);
@@ -240,12 +239,12 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Medicion medicionAfip1 = new Medicion(tipoConsumoElectricidad,perioricidadAfip1,Afip);
     Medicion medicionAfip2 = new Medicion(tipoConsumoElectricidad,perioricidadAfip2,Afip);
     Medicion medicionAfip3 = new Medicion(tipoConsumoElectricidad,perioricidadAfip3,Afip);
-
+*/
 
     //PERSISTIR
 
     new Bootstraps().persistir(gilberto);
-
+/*
     new Bootstraps().persistir(medicionPepsi1);
     new Bootstraps().persistir(medicionPepsi2);
     new Bootstraps().persistir(medicionPepsi3);
@@ -255,6 +254,8 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     new Bootstraps().persistir(medicionAfip1);
     new Bootstraps().persistir(medicionAfip2);
     new Bootstraps().persistir(medicionAfip3);
+    */
+
 
   }
 

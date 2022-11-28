@@ -4,7 +4,7 @@ import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
-import mediciones.MedicionAntigua;
+
 import miembro.Miembro;
 import miembro.MiembroBuilder;
 import notificaciones.Contacto;
@@ -29,12 +29,12 @@ public class OrganizacionTest {
   Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
   Organizacion spyOnu = spy(onu);
   Miembro spyjorgito = spy(jorgito);
+//TODO
+  //MedicionAntigua med1 = mock(MedicionAntigua.class);
+  //MedicionAntigua med2 = mock(MedicionAntigua.class);
+  //MedicionAntigua med3 = mock(MedicionAntigua.class);
 
-  MedicionAntigua med1 = mock(MedicionAntigua.class);
-  MedicionAntigua med2 = mock(MedicionAntigua.class);
-  MedicionAntigua med3 = mock(MedicionAntigua.class);
-
-  List<MedicionAntigua> mediciones = new ArrayList<>();
+  //List<MedicionAntigua> mediciones = new ArrayList<>();
 
   Miembro miembro1 = mock(Miembro.class);
   Miembro miembro2 = mock(Miembro.class);
@@ -108,10 +108,10 @@ public class OrganizacionTest {
 
   @Test
   public void elHCMensualDeLosMiembrosEs2000() {
-
-    mediciones.add(med1);
-    mediciones.add(med2);
-    mediciones.add(med3);
+//TODO
+    //mediciones.add(med1);
+    //mediciones.add(med2);
+    //mediciones.add(med3);
 
     Sector sector1 = mock(Sector.class);
     Sector sector2 = mock(Sector.class);
@@ -145,9 +145,10 @@ public class OrganizacionTest {
 
   @Test
   public void elHCAnualDeLosMiembrosEs24000() {
-    mediciones.add(med1);
-    mediciones.add(med2);
-    mediciones.add(med3);
+    //TODO
+    //mediciones.add(med1);
+    //mediciones.add(med2);
+    //mediciones.add(med3);
 
     Sector sector1 = mock(Sector.class);
     Sector sector2 = mock(Sector.class);

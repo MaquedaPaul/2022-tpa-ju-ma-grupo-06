@@ -29,6 +29,7 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
+
     if (entityManager() == null) {
       System.out.println("ES NULL ESTO AHHHH");
     }

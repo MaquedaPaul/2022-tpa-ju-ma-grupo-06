@@ -17,7 +17,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import repositorios.RepoTipoDeConsumo;
-import utils.tipoconsumo.TipoConsumo;
+import tipoconsumo.TipoConsumo;
+
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;

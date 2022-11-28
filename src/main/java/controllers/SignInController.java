@@ -16,6 +16,7 @@ public class SignInController {
   public ModelAndView logIn(Request request, Response response) {
     String userQuery = request.queryParams("user");
     String userQueryPassword = request.queryParams("password");
+    //TODO CONTROLAR NULL EN REPO CUENTAS
     Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(userQuery);
     if (cuenta == null || !Objects.equals(userQueryPassword, cuenta.getPassword())) {
       response.redirect("/signin");

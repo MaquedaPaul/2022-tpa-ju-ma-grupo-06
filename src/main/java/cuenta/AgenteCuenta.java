@@ -51,4 +51,10 @@ public class AgenteCuenta extends Cuenta {
     model.put("unidad","NIIDEAAAAA");
     return model;
   }
+
+  @Override
+  public void limpiarSession(Request request) {
+    request.session().attribute("cuenta",null);
+    request.session().attribute("agente",null);
+  }
 }

@@ -9,7 +9,15 @@ import spark.Response;
 import java.util.Objects;
 
 public class SignInController {
+  private boolean comprobarSesionActiva(Request request){
+    return request.session().attribute("cuenta") != null;
+  }
+
   public ModelAndView getSignIn(Request request, Response response) {
+    if(comprobarSesionActiva(request)){
+      response.redirect("/home");
+      return null;
+    }
     return new ModelAndView(null, "signin.hbs");
   }
 

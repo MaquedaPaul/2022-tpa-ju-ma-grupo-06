@@ -46,4 +46,6 @@ public abstract class Cuenta {
   public abstract boolean puedeAccederA(String path);
 
   public abstract Map<String, Object> datosDelHome(Request request);
+
+  public abstract void limpiarSession(Request request);
 }

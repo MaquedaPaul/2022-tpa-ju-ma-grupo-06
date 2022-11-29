@@ -1,5 +1,6 @@
 package cuenta;
 
+import repositorios.RepoCuentas;
 import spark.Request;
 
 import javax.persistence.Entity;
@@ -26,7 +27,8 @@ public class MiembroCuenta extends Cuenta {
 
   @Override
   public void guardarEnSesion(Request request) {
-
+    request.session().attribute("cuenta",this);
+    request.session().attribute("miembro", RepoCuentas.getInstance().obtenerMiembro(this));
   }
 
   @Override
@@ -37,6 +39,12 @@ public class MiembroCuenta extends Cuenta {
   @Override
   public Map<String, Object> datosDelHome(Request request) {
     return null;
+  }
+
+  @Override
+  public void limpiarSession(Request request) {
+    request.session().attribute("cuenta",null);
+    request.session().attribute("miembro", null);
   }
 
   public Map<String, Object> datosDelHome() {

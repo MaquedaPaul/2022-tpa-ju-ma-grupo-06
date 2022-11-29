@@ -1,12 +1,10 @@
 package controllers;
 
 import cuenta.OrganizacionCuenta;
+import lectorcsv.*;
 import mediciones.Medicion;
+import organizacion.periodo.PeriodoAnual;
 import repositorios.*;
-import lectorcsv.FormatoDeFechas;
-import lectorcsv.LectorDeCsv;
-import lectorcsv.TipoPerioricidad;
-import lectorcsv.ValidadorDeCabeceras;
 import miembro.Miembro;
 import organizacion.Organizacion;
 import organizacion.Sector;
@@ -39,18 +37,16 @@ public class OrganizacionController extends AccountController {
     Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario);
     return organizacion;
   }
+  private String obtenerUsuario (Request request){
+    OrganizacionCuenta cuenta = request.session().attribute("cuenta");
+    return cuenta.getUsuario();
+  }
 
-  public ModelAndView getPage(Request request, Response response) {
+  public ModelAndView getVinculaciones(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
-
     Map<String, Object> model = new HashMap<>();
-    //RepoSolicitud.init();
-    //model.put("solicitudes",RepoSolicitud.getSolicitudesv2());
-
-    List<Solicitud> solicitudesSinProcesar = new ArrayList<>(organizacion.getSolicitudesSinProcesar());
-    model.put("solicitudes",solicitudesSinProcesar);
-    //TODO SOLO MOSTRAR LAS QUE NO ESTAN PROCESADAS
-    return new ModelAndView(organizacion, "organizacionGestionarVinculaciones.hbs");
+    model.put("solicitudes",organizacion.getSolicitudesSinProcesar());
+    return new ModelAndView(model, "organizacionGestionarVinculaciones.hbs");
   }
 
   public ModelAndView getCalculadoraHc(Request request, Response response) {
@@ -60,64 +56,84 @@ public class OrganizacionController extends AccountController {
 
   public ModelAndView getHcTotal(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
-    double valor = organizacion.calcularHCTotal(new PeriodoMensual(LocalDate.now()));
+    int anioActual = LocalDate.now().getYear();
+    //TODO
+    double valor = organizacion.calcularHCTotal(new PeriodoAnual(LocalDate.of(anioActual,1, 15)));
     Map<String, Object> model = new HashMap<>();
     model.put("valorhc",valor);
     return new ModelAndView(model, "organizacionHcTotal.hbs");
   }
 
   public ModelAndView getImpactoMiembroBuscar(Request request, Response response) {
-    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
+    model.put("miembroNoNull", true);
+    model.put("comprobacion", true);
 
     return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
   }
 
   public ModelAndView getImpactoMiembro(Request request, Response response) {
-    Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
 
-    String idMiembro = request.queryParams("miembro");
-    response.redirect("/home/calculadora-hc/impacto-de-miembro/"+idMiembro);
+    String nombreApellido = request.queryParams("miembro");
+    response.redirect("/home/calculadora-hc/impacto-de-miembro/"+nombreApellido);
 
     return null;
   }
 
-  public ModelAndView getImpactoMiembroConId(Request request, Response response) {
+  public ModelAndView getImpactoMiembroConNombreYApellido(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
-    Long idMiembro = Long.valueOf((request.params("id")));
-    Miembro miembro =RepoMiembros.getInstance().getMiembrosPor(idMiembro);
-    model.put("nombre",miembro.getNombre());
-    model.put("apellido",miembro.getApellido());
-    double impacto = organizacion.impactoDeMiembro(miembro,new PeriodoMensual(LocalDate.now()));
-    model.put("impacto",impacto);
+    String nombreApellido = request.params("nombreApellido");
+    Miembro miembro =RepoMiembros.getInstance().getMiembrosPorNombreYApellido(nombreApellido);
+    boolean miembroNoNull = miembro != null;
+    model.put("miembroNoNull", miembroNoNull);
+    if(miembroNoNull){
+      boolean miembroPerteneceAOrg = organizacion.miembroPerteneceAlaOrganizacion(miembro);
+      model.put("nombre",miembro.getNombre());
+      model.put("apellido",miembro.getApellido());
+      if(!miembroPerteneceAOrg){
+        return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
+      }
+      double impacto = organizacion.impactoDeMiembro(miembro,new PeriodoMensual(LocalDate.now()));
+      model.put("impacto",impacto);
+      model.put("comprobacion", miembroPerteneceAOrg);
+      return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
+    }
     return new ModelAndView(model, "organizacionImpactoMiembro.hbs");
   }
 
   public ModelAndView getIndicadorHcSector(Request request, Response response) {
-    Organizacion organizacion = obtenerOrganizacion(request);
-
     String nombreSector = request.queryParams("sector");
-    response.redirect("/home/calculadora-hc/indicador-hc-sector/"+nombreSector);
 
+    response.redirect("/home/calculadora-hc/indicador-hc-sector/"+nombreSector);
     return null;
   }
 
   public ModelAndView getIndicadorHcSectorBuscar(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
-    return new ModelAndView(organizacion, "organizacionIndicadorHcSector.hbs");
+    Map<String, Object> model = new HashMap<>();
+    model.put("sectorNoNull", true);
+    model.put("comprobacion", true);
+    return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
   }
 
   public ModelAndView getIndicadorHcSectorConNombre(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
+
+
     String nombreSector = request.params("nombre").toLowerCase();
-    //.toLowerCase()
-    Sector sector =organizacion.obtenerSectorSinCaseSensitive(nombreSector);
-    double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
-    model.put("nombre",sector.getNombre());
-    model.put("hcpromedio",hcPromedio);
+    Sector sector = organizacion.obtenerSectorSinCaseSensitive(nombreSector);
+    boolean sectorNoNull = sector != null;
+    model.put("sectorNoNull", sectorNoNull);
+    if(sectorNoNull){
+      model.put("nombre",sector.getNombre());
+      double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
+      model.put("hcpromedio",hcPromedio);
+      return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
+    }
+
     return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
   }
 
@@ -135,7 +151,6 @@ public class OrganizacionController extends AccountController {
   public ModelAndView getMedicionesPerse(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
-    //Organizacion organizacion = RepoCuentas.getInstance().obtenerOrganizacion(usuario).get(0);
     model.put("tipoconsumos",RepoTipoDeConsumo.getInstance().getTiposConsumo());
 
 
@@ -167,16 +182,9 @@ public class OrganizacionController extends AccountController {
   }
 
 
-  /* //TODO: ESTO ES UN PASAMANO
-  Set<Solicitud> solicitudesSinProcesarDe(Organizacion organizacion){
-    Set<Solicitud> solicitudesSinProcesar = organizacion.getSolicitudesSinProcesar();
-    return solicitudesSinProcesar;
-  }
-  */
 
   private void procesarVinculacion(boolean aceptar,String usuario, Request request, Response response){
     Organizacion organizacion = obtenerOrganizacion(request);
-    Map<String, Object> model = new HashMap<>();
     Long idVinculacion = Long.valueOf((request.params("id")));
     System.out.println(idVinculacion);
     //Solicitud solicitud = organizacion.getSolicitudPorId(idVinculacion);
@@ -188,8 +196,7 @@ public class OrganizacionController extends AccountController {
 
 
   public ModelAndView aceptarVinculacion(Request request, Response response) {
-    String usuario = comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "organizacion");
+    String usuario = obtenerUsuario(request);
     procesarVinculacion(true,usuario,request,response);
     response.redirect("/home/vinculaciones");
 
@@ -198,8 +205,7 @@ public class OrganizacionController extends AccountController {
 
 
   public ModelAndView rechazarVinculacion(Request request, Response response) {
-    String usuario = comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "organizacion");
+    String usuario = obtenerUsuario(request);
     procesarVinculacion(false,usuario,request,response);
     response.redirect("/home/vinculaciones");
     return null;
@@ -221,49 +227,13 @@ public class OrganizacionController extends AccountController {
       // Use the input stream to create a file
     }
 
-
-
-    LectorDeCsv lectorDeCsv = inicializarLectorCSV(organizacion,tempFile.toString());
-    lectorDeCsv.leerMediciones();
-    lectorDeCsv.cargarMediciones();
+    LectorMediciones lector = new LectorMediciones(tempFile.toString(),organizacion);
+    lector.leerMediciones();
+    lector.cargarMediciones();
     response.redirect("/home");
     return null;
   }
-  private LectorDeCsv inicializarLectorCSV(Organizacion organizacion, String path){
 
-    FormatoDeFechas formato;
-    ValidadorDeCabeceras validador;
-    LectorDeCsv lector;
-
-    DateTimeFormatter formatoMensual = new DateTimeFormatterBuilder()
-            .appendPattern("MM/yyyy")
-            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
-            .toFormatter();
-    DateTimeFormatter formatoAnual = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy")
-            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
-            .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-            .toFormatter();
-
-    HashMap<TipoPerioricidad, DateTimeFormatter> formatos = new HashMap<>();
-    formatos.put(TipoPerioricidad.ANUAL, formatoAnual);
-    formatos.put(TipoPerioricidad.MENSUAL, formatoMensual);
-    formato = new FormatoDeFechas(formatos);
-
-    List<String> columnasEsperadas = new ArrayList<>();
-    columnasEsperadas.add("utils/tipoconsumo");
-    columnasEsperadas.add("valor");
-    columnasEsperadas.add("perioricidad");
-    columnasEsperadas.add("periodo de imputacion");
-
-    validador = new ValidadorDeCabeceras(columnasEsperadas);
-    try {
-      lector = new LectorDeCsv(path, organizacion, formato, validador, RepoTipoDeConsumo.getInstance());
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return lector;
-  }
 
 
 }

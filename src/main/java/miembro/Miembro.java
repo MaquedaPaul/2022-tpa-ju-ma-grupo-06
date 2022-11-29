@@ -117,6 +117,7 @@ public class Miembro {
   public String getNombre() {
       return nombre;
   }
+  public String getNombreYApellido() { return getNombre() + " " + getApellido();}
 
   public Long getId() {
     return id;

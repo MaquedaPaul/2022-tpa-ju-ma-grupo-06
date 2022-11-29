@@ -184,6 +184,9 @@ public class Organizacion {
     }
     return sector.getMiembros();
   }
+  public boolean miembroPerteneceAlaOrganizacion(Miembro miembro){
+    return getMiembros().contains(miembro);
+  }
 
   public double indicadorHCMiembrosEnSector(Sector sector, Periodo periodo) {
     return calcularHCTotal(periodo) / this.getMiembrosEnSector(sector).size();

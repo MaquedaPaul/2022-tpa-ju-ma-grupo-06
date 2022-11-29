@@ -1,5 +1,6 @@
 package controllers;
 
+import com.opencsv.exceptions.CsvValidationException;
 import cuenta.OrganizacionCuenta;
 import lectorcsv.*;
 import mediciones.Medicion;
@@ -160,25 +161,30 @@ public class OrganizacionController extends AccountController {
     Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     String tipoDeConsumo = request.queryParams("tipo-de-consumo");
-    String periodicidad = request.queryParams("periodicidad").toUpperCase();
-
-    double valor = Double.parseDouble(request.queryParams("valor"));
-    String fecha = request.queryParams("fecha-medicion");
-    DateTimeFormatter formatoFecha = new DateTimeFormatterBuilder()
-            .appendPattern("yyyy-MM")
-            .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
-            .toFormatter();
-    LocalDate fechaParseada = LocalDate.parse(fecha,formatoFecha);
-
-    TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
-
     TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
-    Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
-    RepoMediciones.getInstance().cargarMedicion(medicion);
+    boolean tipoConsumoNull = unTipoConsumo == null;
+    model.put("tipoConsumoNull",tipoConsumoNull);
+    if(!tipoConsumoNull){
+      String periodicidad = request.queryParams("periodicidad").toUpperCase();
 
-    response.redirect("/home");
+      double valor = Double.parseDouble(request.queryParams("valor"));
+      String fecha = request.queryParams("fecha-medicion");
+      DateTimeFormatter formatoFecha = new DateTimeFormatterBuilder()
+              .appendPattern("yyyy-MM")
+              .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
+              .toFormatter();
+      LocalDate fechaParseada = LocalDate.parse(fecha,formatoFecha);
 
-    return null;
+      TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
+
+
+      Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
+      RepoMediciones.getInstance().cargarMedicion(medicion);
+      model.put("exito", true);
+      return new ModelAndView(model,"organizacionCargarMedicion.hbs");
+    }
+    return new ModelAndView(model,"organizacionCargarMedicion.hbs");
+
   }
 
 
@@ -226,6 +232,7 @@ public class OrganizacionController extends AccountController {
       Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
       // Use the input stream to create a file
     }
+
 
     LectorMediciones lector = new LectorMediciones(tempFile.toString(),organizacion);
     lector.leerMediciones();

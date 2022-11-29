@@ -42,8 +42,7 @@ public class RepoTipoDeConsumo implements WithGlobalEntityManager, RepoTipoConsu
 
     return this.getTiposConsumo().stream()
         .filter(tipo -> tipo.getNombre().equalsIgnoreCase(tipoConsumo))
-        .collect(Collectors.toList())
-        .get(0);
+        .findAny().orElse(null);
   }
 
   public TipoConsumo getTipoConsumoById(long id) {

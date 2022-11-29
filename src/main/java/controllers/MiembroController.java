@@ -1,5 +1,7 @@
 package controllers;
 
+import cuenta.MiembroCuenta;
+import cuenta.OrganizacionCuenta;
 import repositorios.RepoCuentas;
 import exceptions.NoConcuerdaInicioYFin;
 import linea.PuntoUbicacion;
@@ -18,15 +20,31 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MiembroController extends AccountController {
+
+
+
+  private Miembro obtenerMiembro(Request request){
+    MiembroCuenta usuario = request.session().attribute("cuenta");
+    Miembro miembro = RepoCuentas.getInstance().obtenerMiembro(usuario);
+    return miembro;
+  }
+  private String obtenerUsuario (Request request){
+    MiembroCuenta cuenta = request.session().attribute("cuenta");
+    return cuenta.getUsuario();
+  }
+
+
   public ModelAndView getTrayectos(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     return new ModelAndView(null,"miembroTrayectos.hbs");
   }
 
   public ModelAndView pedirVinculacion(Request request, Response response) {
-    String usuario = comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+/*    String usuario = comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
+    String usuario = obtenerUsuario(request);
     String organizacionSolicitada = request.queryParams("organizacionSolicitada");
     String sectorSolicitado = request.queryParams("sectorSolicitado");
     Organizacion organizacionObjetivo = RepoOrganizacion.getInstance().getOrganizacionPor(organizacionSolicitada);
@@ -38,7 +56,7 @@ public class MiembroController extends AccountController {
     if (sectorObjetivo == null) {
       response.redirect("/home/vinculacion");
     }
-    Miembro miembro =  RepoCuentas.getInstance().obtenerMiembro(usuario).get(0);
+    Miembro miembro =  obtenerMiembro(request);
     miembro.solicitarVinculacion(organizacionObjetivo, new Solicitud(miembro, sectorObjetivo));
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacionObjetivo);
     response.redirect("/home");
@@ -46,14 +64,14 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView getRegistro(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     return new ModelAndView(null,"registro.hbs");
   }
 
   public ModelAndView getRegistrarTrayecto(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     if (trayecto == null) {
       request.session().attribute("trayecto", new BuilderTrayecto());
@@ -62,8 +80,8 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView getVinculacion(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     List<Organizacion> organizaciones =  RepoOrganizacion.getInstance().getOrganizaciones();
     List<Sector> sectores = new ArrayList<>(RepoOrganizacion.getInstance().obtenerTodosLosSectores());
     HashMap<String, Object> hashMap = new HashMap<>();
@@ -73,14 +91,14 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView getTrayectoNuevo(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     return new ModelAndView(null,"miembroTrayectoNuevo.hbs");
   }
 
   public ModelAndView cargarTramo(Request request, Response response) throws NoConcuerdaInicioYFin {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
 
     int localidadIdPartida = Integer.parseInt(request.queryParams("localidad-partida"));
     String callePartida = request.queryParams("calle-partida");
@@ -111,8 +129,8 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView eliminarTramo(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     if (!trayecto.getTramos().isEmpty()) {
       trayecto.eliminarUltimoTramo();
@@ -123,8 +141,8 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView cancelarTrayecto(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = new BuilderTrayecto();
     request.session().attribute("trayecto", trayecto);
     response.redirect("/home/trayectos/registro");
@@ -132,8 +150,8 @@ public class MiembroController extends AccountController {
   }
 
   public ModelAndView crearTrayecto(Request request, Response response) {
-    comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");
+    /*comprobarSession(request, response);
+    comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     Trayecto trayectoNuevo = trayecto.build();
     response.redirect("/home/trayectos/registro");

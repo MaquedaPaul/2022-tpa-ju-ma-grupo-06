@@ -5,52 +5,50 @@
 {{/partial}}
 
 {{#partial "content"}}
-<h2>Crear Medición</h2>
-<div id="main-section">
-    <form>
+    <h2>Crear Medición</h2>
+    <form class="flex-clm form-evo-hc" id="ingresar">
+        <label for="tipo-consumo"><h3>Tipo de consumo</h3></label>
+        <input list="tipo-consumos" id="tipo-consumo" name="tipo-de-consumo" class="flex-clm form form-evo-hc">
+        <datalist id="tipo-consumos">
+            {{#each tipoconsumos}}
+                <option value="{{nombre}}"></option>
+            {{/each}}
+        </datalist>
+
+        <label for="periodicidad" ><h3>Periodicidad</h3></label>
+        <select id=periodicidad name="periodicidad" class="flex-clm form form-evo-hc">
+            <option disabled="">Selecciona una opcion</option>
+            <option value="Anual">Anual</option>
+            <option value="Mensual">Mensual</option>
+        </select>
+
+        <label for="valor"><h3>Valor</h3></label>
+        <input type="number" min="1" class="flex-clm form form-evo-hc" id="valor" name="valor">
+
+        <label for="fecha-medicion"><h3>Fecha de medicion</h3> </label>
+        <input max="2022-10" type="month" id="fecha-medicion"
+               name="fecha-medicion" class="flex-clm form form-evo-hc">
         <div>
-            <div>
-
-                <div>
-                <label for="tipo-consumo">Tipo de consumo</label>
-                <input list="tipo-consumos" id="tipo-consumo" name="tipo-de-consumo">
-                <datalist class="white-button" id="tipo-consumos">
-                    {{#each tipoconsumos}}
-                    <option value="{{nombre}}"></option>
-                    {{/each}}
-                </datalist>
-
-            </div>
-            <div>
-                <label for="periodicidad">Periodicidad</label>
-                <select class="white-button" id=periodicidad name="periodicidad">
-                    <option disabled="">Selecciona una opcion</option>
-                    <option value="Anual">Anual</option>
-                    <option value="Mensual">Mensual</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="valor">Valor</label>
-                <input type="number" min="1" class="white-button" id="valor" name="valor">
-            </div>
-            <div>
-                <label for="fecha-medicion">Fecha de medicion</label>
-                <input max="2022-10" class="white-button" type="month" id="fecha-medicion" name="fecha-medicion">
-            </div>
-        </div>
-        <div id="below-buttons">
-            <div>
-                <a class="white-button" href="/home/mediciones">Atrás</a>
-            </div>
-            <div>
-                <input id="ingresar" class="white-button" value="Ingresar" type="submit" formmethod="post" formaction="/home/mediciones/perse/creado" >
-            </div>
+            <button type="submit" form="acciones" formaction="/home/mediciones"
+                    class="btn-consulta">
+                Atrás
+            </button>
+            <button id="ingresar" type="submit" form="acciones" formmethod="post"
+                    formaction="/home/mediciones/perse/creado"
+                    class="btn-consulta">
+                Ingresar
+            </button>
         </div>
 
+        {{#if tipoConsumoNull}}
+            Error: el tipo de consumo ingresado no existe
+        {{/if}}
+        {{#if exito}}
+            La medicion fue cargada con exito
+        {{/if}}
     </form>
 
-</div>
+
 
 {{/partial}}
 

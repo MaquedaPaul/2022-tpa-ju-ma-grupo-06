@@ -13,16 +13,18 @@
 {{#partial "content"}}
    <h2>Registrar Mediciones</h2>
    <div id="main-section">
-       <form>
+       <form id="acciones" >
            <div>
-               <a class="option-button" href="/home/mediciones/perse">
+               <button type="submit" form="acciones" formaction="/home/mediciones/perse" formmethod="get"
+                       class="btn-consulta">
                    Cargar medición
-               </a>
+               </button>
            </div>
            <div>
-               <a class="option-button" href="/home/mediciones/archivo">
-                    Cargar CSV
-               </a>
+               <button type="submit" form="acciones" formaction="/home/mediciones/archivo" formmethod="get"
+                       class="btn-consulta">
+                   Cargar CSV
+               </button>
            </div>
        </form>
    </div>

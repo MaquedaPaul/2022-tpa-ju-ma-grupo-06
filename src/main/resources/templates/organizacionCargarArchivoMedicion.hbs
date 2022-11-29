@@ -5,22 +5,25 @@
 {{/partial}}
 
 {{#partial "content"}}
-   <h2>Cargar Archivo Mediciones</h2>
-   <div id="main-section">
-       <form enctype="multipart/form-data" method="post" id="id-form">
-           <div>
-               <p>Aceptados: .CSV</p>
-               <label for="fileSelect">Arrastre o haga click para subir:</label>
-               <input class="white-button-drop" id="fileSelect" type="file"
-                      name="uploaded_file"
-                      accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-           </div>
-           <div id="below-buttons">
-               <div id="atras"><a class="white-button" href="/home/mediciones">Atrás</a></div>
-               <input id="ingresar" class="white-button" value="Ingresar" type="submit" form="id-form">
-           </div>
-       </form>
-   </div>
+    <h2>Cargar Archivo Mediciones</h2>
+    <form enctype="multipart/form-data" method="post" id="id-form" class="flex-clm form form-evo-hc">
+        <h4>Aceptados:<span class="green"> .CSV</span></h4>
+        <label for="fileSelect"><h3>Arrastre o haga click para subir:</h3></label>
+        <input class="white-button-drop" id="fileSelect" type="file"
+               name="uploaded_file"
+               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+        <div>
+            <button type="submit" form="id-form" formaction="/home/mediciones"
+                    class="btn-consulta">
+                Atrás
+            </button>
+            <button id="ingresar" type="submit" form="id-form" formmethod="post"
+                    class="btn-consulta">
+                Ingresar
+            </button>
+        </div>
+    </form>
+
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

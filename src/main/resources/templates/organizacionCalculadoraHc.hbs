@@ -6,17 +6,21 @@
 
 {{#partial "content"}}
     <h2>Calculadora de HC</h2>
-    <div class="below-buttons column">
-        <a href="/home/calculadora-hc/hc-total" class="option-button">
+    <form id="acciones" method="get" class="botones flex-row">
+        <button type="submit" form="acciones" formaction="/home/calculadora-hc/hc-total"
+                class="btn-consulta">
             HC total actual
-        </a>
-        <a href="/home/calculadora-hc/impacto-de-miembro/buscador" class="option-button">
+        </button>
+
+        <button type="submit" form="acciones" formaction="/home/calculadora-hc/impacto-de-miembro/buscador"
+                class="btn-consulta">
             Impacto de un miembro
-        </a>
-        <a href="/home/calculadora-hc/indicador-hc-sector/buscador" class="option-button">
+        </button>
+        <button type="submit" form="acciones" formaction="/home/calculadora-hc/indicador-hc-sector/buscador"
+                class="btn-consulta">
             HC miembros de un sector
-        </a>
-    </div>
+        </button>
+    </form>
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

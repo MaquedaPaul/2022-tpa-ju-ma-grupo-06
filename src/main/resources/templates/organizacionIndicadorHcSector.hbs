@@ -17,14 +17,18 @@
             <input name="sector" value="" type="search" placeholder="Ingrese el sector" required>
             <button type="submit">Enviar</button>
         </form>
-        <fieldset>
+
             {{#if sectorNoNull}}
-                    <p>Sector: {{nombre}}</p>
-                    <p>HC promedio por miembro: {{hcpromedio}}</p>
+                <div class="container-hc flex-clm">
+                    <div class="hc-mensual flex-clm">
+                        <h3>Sector: <span class="green">{{nombre}}</span></h3>
+                        <h3>HC promedio por miembro: <span class="green">{{hcpromedio}}</span></h3>
+                    </div>
+                </div>
             {{else}}
-                El sector no existe o no pertenece a la organizacion
+                <h3><span class="red">  El sector no existe o no pertenece a la organizacion </span></h3>
             {{/if}}
-        </fieldset>
+
     </div>
 {{/partial}}
 

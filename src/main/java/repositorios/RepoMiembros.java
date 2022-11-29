@@ -6,6 +6,7 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Locale;
 
 public class RepoMiembros implements WithGlobalEntityManager {
     private static RepoMiembros RepoMiembros = null;
@@ -43,6 +44,13 @@ public class RepoMiembros implements WithGlobalEntityManager {
         entityManager().getTransaction().begin();
         entityManager().remove(miembros);
         entityManager().getTransaction().commit();
+    }
+
+
+    public Miembro getMiembrosPorNombreYApellido(String nombreApellido){
+        return getMiembros().stream()
+                .filter(miembro -> miembro.getNombreYApellido().toUpperCase().equals(nombreApellido.toUpperCase()))
+                .findAny().orElse(null);
     }
     public Miembro getMiembrosPor(long id) {
         return getMiembros().stream()

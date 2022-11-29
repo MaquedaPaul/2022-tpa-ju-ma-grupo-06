@@ -40,11 +40,11 @@ public class RepoCuentas implements WithGlobalEntityManager {
         .get(0);
   }
 
-  //POR QUE ES UNA LISTA????
-  public List<Miembro> obtenerMiembro(String usuario) {
-    return entityManager()
-        .createQuery("from Miembro where Organizacion.cuenta.usuario= :c").setParameter("c", usuario)
-        .getResultList();
+  //TODO REVISAR PEDRO LOPEZ
+  public Miembro obtenerMiembro(Cuenta cuenta) {
+    return (Miembro) entityManager()
+            .createQuery("from Miembro where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())
+            .getResultList().get(0);
   }
 
   public AgenteTerritorial obtenerAgente(Cuenta cuenta) {

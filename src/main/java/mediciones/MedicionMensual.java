@@ -41,8 +41,9 @@ public class MedicionMensual extends Medicion {
 
   @Override
   public boolean esDelPeriodo(Periodo periodo) {
-    return this.getYear() == periodo.getYear() &&
-        this.getMonth() == periodo.getMonth();
+    return this.getYear() == periodo.getYear()
+        && (this.getMonth() == periodo.getMonth()
+        || periodo.perioricidad() == 12);
   }
 
   private int getMonth() {

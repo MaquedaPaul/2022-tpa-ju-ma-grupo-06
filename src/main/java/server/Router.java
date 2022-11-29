@@ -1,7 +1,6 @@
 package server;
 
 import controllers.*;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -65,7 +64,7 @@ public class Router {
 
     // Organizacion
     //GET /organizaciones/:id/menu/vinculaciones
-    Spark.get("/home/vinculaciones", organizacionController::getPage, engine);
+    Spark.get("/home/vinculaciones", organizacionController::getVinculaciones, engine);
     Spark.post("/home/vinculaciones/:id/aceptar", organizacionController::aceptarVinculacion,engine);
     Spark.post("/home/vinculaciones/:id/rechazar", organizacionController::rechazarVinculacion,engine);
 
@@ -88,7 +87,7 @@ public class Router {
     //GET /organizaciones/:id/menu/calculadora-hc/impacto-de-miembro?miembro=:id_miembro
     Spark.get("/home/calculadora-hc/impacto-de-miembro/buscador", organizacionController::getImpactoMiembroBuscar, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro", organizacionController::getImpactoMiembro, engine);
-    Spark.get("/home/calculadora-hc/impacto-de-miembro/:id", organizacionController::getImpactoMiembroConId, engine);
+    Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", organizacionController::getImpactoMiembroConNombreYApellido, engine);
     //GET /organizaciones/:id/menu/calculadora-hc/indicador-hc-sector?sector=:id_sector;
     Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", organizacionController::getIndicadorHcSectorBuscar, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);

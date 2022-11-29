@@ -23,7 +23,7 @@ public class Sector {
   String nombre;
 
   //NO SE DEBEN PERSISTIR EN CASCADA, LOS MIEMBROS YA DEBEN ESTAR EN EL SISTEMA
-  @OneToMany
+  @ManyToMany
   List<Miembro> miembros;
 
   public Sector(String nombre, List<Miembro> unosMiembros) {

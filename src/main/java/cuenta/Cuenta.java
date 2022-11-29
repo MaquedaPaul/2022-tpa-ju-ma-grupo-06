@@ -14,9 +14,9 @@ import java.util.Map;
 @Table(name = "cuenta")
 @DiscriminatorColumn(name = "tipo_cuenta")
 public abstract class Cuenta {
-
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "CuentaId")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String usuario;

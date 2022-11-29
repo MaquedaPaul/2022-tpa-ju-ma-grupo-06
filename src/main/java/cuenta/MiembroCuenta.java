@@ -3,7 +3,7 @@ package cuenta;
 import repositorios.RepoCuentas;
 import spark.Request;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 public class Organizacion {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String razonSocial;
@@ -50,7 +50,7 @@ public class Organizacion {
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.PERSIST)
   OrganizacionCuenta cuenta;
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,

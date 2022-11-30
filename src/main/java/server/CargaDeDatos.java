@@ -143,6 +143,8 @@ public class CargaDeDatos implements WithGlobalEntityManager {
   public static void persistirCuentas() {
     Cuenta cuentaJuan = new MiembroCuenta("JUANCARLOS800","GTAVDESCARGAR");
     Cuenta cuentaPedro = new MiembroCuenta("PEDROLOPEZ","PIRULOYASOCIADOS");
+    Cuenta cuentaDaniel = new MiembroCuenta("Daniel_Aiz","GTAVCDESCARGAR");
+    Cuenta cuentaMarcos = new MiembroCuenta("Marquitos999","VamosMessi1984");
     Cuenta cuentaPepsi = new OrganizacionCuenta("PEPSICO","COCACOLASUCKS");
     Cuenta cuentaMovistar = new OrganizacionCuenta("MOVISTAR","CLAROSUCKS");
     Cuenta cuentaBuenosAires = new AgenteCuenta("BUENOS AIRES","CORDOBASUCKS");
@@ -153,6 +155,8 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     dbConnection.persistir(cuentaMovistar);
     dbConnection.persistir(cuentaBuenosAires);
     dbConnection.persistir(cuentaAlmagro);
+    dbConnection.persistir(cuentaDaniel);
+    dbConnection.persistir(cuentaMarcos);
   }
 
   public static void persistirMiembrosConTrayectos() {
@@ -195,8 +199,18 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Miembro pedro = new Miembro("PEDRO","LOPEZ", TipoDocumento.DNI,42223222,trayectosPedro);
     juan.setCuenta(cuentaPedro);
 
+    MiembroCuenta cuentaDaniel = dbConnection.getById(7,MiembroCuenta.class);
+    Miembro daniel = new Miembro("DANIEL","AIZCORBE", TipoDocumento.DNI,42203222,trayectosPedro);
+    daniel.setCuenta(cuentaDaniel);
+
+    MiembroCuenta cuentaMarcos = dbConnection.getById(8,MiembroCuenta.class);
+    Miembro marcos = new Miembro("MARCOS","PIRULO", TipoDocumento.DNI,422202222,trayectosJuan);
+    marcos.setCuenta(cuentaMarcos);
+
     dbConnection.persistir(juan);
     dbConnection.persistir(pedro);
+    dbConnection.persistir(daniel);
+    dbConnection.persistir(marcos);
   }
 
   public static void persistirOrganizacionesConSectores() {
@@ -224,9 +238,11 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     movistar.setCuenta(cuentaMovistar);
 
     Sector ventas = new Sector("VENTAS",new ArrayList<>());
+    ventas.admitirMiembro(dbConnection.getById(4,Miembro.class));
     Sector marketing = new Sector("MARKETING",new ArrayList<>());
 
     Sector servicioTecnico = new Sector("SERVICIO TECNICO",new ArrayList<>());
+    servicioTecnico.admitirMiembro(dbConnection.getById(3,Miembro.class));
     Sector ventas2 = new Sector("VENTAS",new ArrayList<>());
     pepsiCo.incorporarSector(ventas);
     pepsiCo.incorporarSector(marketing);
@@ -257,11 +273,8 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     List<Organizacion> orgs = new ArrayList<>();
     orgs.add(org1);
     orgs.add(org2);
-    System.out.println(orgs.size());
     SectorTerritorial bsas = new SectorTerritorial(orgs, TipoSectorTerritorial.PROVINCIA,"BUENOS AIRES");
-    System.out.println(bsas.getOrganizaciones().size());
     dbConnection.persistir(bsas);
-    System.out.println(bsas.getOrganizaciones().size());
   }
 
   public static void persistirAgente() {

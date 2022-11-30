@@ -22,6 +22,15 @@
                 Ingresar
             </button>
         </div>
+        {{#if ingresoValido}}
+            Archivo CSV subido correctamente
+        {{/if}}
+        {{#if formatoNoValido}}
+            El formato del Archivo CSV es inválido
+        {{/if}}
+        {{#if sinArchivo}}
+            No se subió ningún archivo
+        {{/if}}
     </form>
 
 {{/partial}}

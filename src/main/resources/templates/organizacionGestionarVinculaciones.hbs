@@ -24,6 +24,12 @@
                  </form>
             </div>
         {{/each}}
+        {{#if miembroAceptado}}
+            <h3>Fue aceptado: {{solicitud.miembroSolicitante.nombre}} {{solicitud.miembroSolicitante.apellido}}</h3>
+            {{/if}}
+        {{#if miembroRechazado}}
+            <h3>Fue rechazado: {{solicitud.miembroSolicitante.nombre}} {{solicitud.miembroSolicitante.apellido}}</h3>
+        {{/if}}
     </div>
 {{/partial}}
 

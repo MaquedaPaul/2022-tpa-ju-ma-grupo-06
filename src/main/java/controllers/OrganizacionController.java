@@ -43,12 +43,7 @@ public class OrganizacionController extends AccountController {
     return cuenta.getUsuario();
   }
 
-  public ModelAndView getVinculaciones(Request request, Response response) {
-    Organizacion organizacion = obtenerOrganizacion(request);
-    Map<String, Object> model = new HashMap<>();
-    model.put("solicitudes",organizacion.getSolicitudesSinProcesar());
-    return new ModelAndView(model, "organizacionGestionarVinculaciones.hbs");
-  }
+
 
   public ModelAndView getCalculadoraHc(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
@@ -187,9 +182,14 @@ public class OrganizacionController extends AccountController {
 
   }
 
+  public ModelAndView getVinculaciones(Request request, Response response) {
+    Organizacion organizacion = obtenerOrganizacion(request);
+    Map<String, Object> model = new HashMap<>();
+    model.put("solicitudes",organizacion.getSolicitudesSinProcesar());
+    return new ModelAndView(model, "organizacionGestionarVinculaciones.hbs");
+  }
 
-
-  private void procesarVinculacion(boolean aceptar,String usuario, Request request, Response response){
+  private Solicitud procesarVinculacion(boolean aceptar,String usuario, Request request, Response response){
     Organizacion organizacion = obtenerOrganizacion(request);
     Long idVinculacion = Long.valueOf((request.params("id")));
     System.out.println(idVinculacion);
@@ -197,48 +197,65 @@ public class OrganizacionController extends AccountController {
     Solicitud solicitud = RepoSolicitud.getInstance().getSolicitudById(idVinculacion);
     organizacion.procesarVinculacion(solicitud,aceptar);
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
-
+    return solicitud;
   }
 
 
   public ModelAndView aceptarVinculacion(Request request, Response response) {
     String usuario = obtenerUsuario(request);
-    procesarVinculacion(true,usuario,request,response);
-    response.redirect("/home/vinculaciones");
-
-    return null;
+    Solicitud solicitud = procesarVinculacion(true,usuario,request,response);
+    Map<String, Object> model = new HashMap<>();
+    model.put("miembroAceptado", true);
+    model.put("solicitud",solicitud);
+    return new ModelAndView(model,"organizacionGestionarVinculaciones.hbs");
   }
 
 
   public ModelAndView rechazarVinculacion(Request request, Response response) {
     String usuario = obtenerUsuario(request);
-    procesarVinculacion(false,usuario,request,response);
-    response.redirect("/home/vinculaciones");
-    return null;
+    Solicitud solicitud = procesarVinculacion(false,usuario,request,response);
+    Map<String, Object> model = new HashMap<>();
+    model.put("miembroRechazado", true);
+    model.put("solicitud",solicitud);
+    return new ModelAndView(model,"organizacionGestionarVinculaciones.hbs");
 
   }
 
 
   public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {
     Organizacion organizacion = obtenerOrganizacion(request);
+    Map<String, Object> model = new HashMap<>();
+
+
+
 
     File uploadDir = new File("upload");
     uploadDir.mkdir();
     //staticFiles.externalLocation("upload");
     Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".csv");
 
+
     request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
     try (InputStream input = request.raw().getPart("uploaded_file").getInputStream()) {
       Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
       // Use the input stream to create a file
     }
-
+    if(tempFile.toFile().length() == 0){
+      model.put("sinArchivo",true);
+      return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+    }
 
     LectorMediciones lector = new LectorMediciones(tempFile.toString(),organizacion);
-    lector.leerMediciones();
+    try {
+      lector.leerMediciones();
+    }catch (Exception e){
+      model.put("formatoNoValido",true);
+      return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+    }
+
     lector.cargarMediciones();
-    response.redirect("/home");
-    return null;
+    model.put("ingresoValido",true);
+    return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
   }
 
 

@@ -6,6 +6,8 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class SignInController {
@@ -30,8 +32,9 @@ public class SignInController {
 
     if (cuenta == null || !Objects.equals(userQueryPassword, cuenta.getPassword())) {
       System.out.println("ingreso: " + userQuery + userQueryPassword);
-      response.redirect("/signin");
-      return null;
+      Map<String, Object> model = new HashMap<>();
+      model.put("usuarioInexistente",true);
+      return new ModelAndView(model,"signin.hbs");
     }
 
     cuenta.guardarEnSesion(request);

@@ -44,4 +44,9 @@ public class PuntoUbicacion {
     return this.localidadId == puntoUbicacion.getLocalidadId() && this.calle.equals(puntoUbicacion.getCalle())  &&
         this.altura == puntoUbicacion.getAltura();
   }
+
+    public boolean sonIguales(PuntoUbicacion puntoDestino) {
+    //TODO
+    return true;
+    }
 }

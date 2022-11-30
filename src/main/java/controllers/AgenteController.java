@@ -3,12 +3,14 @@ package controllers;
 import cuenta.AgenteCuenta;
 
 import global.Unidad;
+import mediciones.Medicion;
 import organizacion.Organizacion;
 
 import organizacion.TipoOrganizacion;
 
 import organizacion.periodo.PeriodoAnual;
 import organizacion.periodo.PeriodoMensual;
+import repositorios.RepoMediciones;
 import repositorios.RepoOrganizacion;
 import reporte.ReporteOrganizaciones;
 import reporte.ReporteSectorTerritorial;
@@ -79,29 +81,6 @@ public class AgenteController {
     model.put("fin",fin);
 
     return new ModelAndView(model,"agenteComposicionHCRespuesta.hbs");
-    //
-
-    /*
-    PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,7,15));
-    PeriodoMensual periodo2 = new PeriodoMensual(LocalDate.of(2020,8,15));
-    PeriodoMensual periodo3 = new PeriodoMensual(LocalDate.of(2020,9,15));
-
-
-    List<ComposicionHcSectorTerritorial> items = new ArrayList<>();
-    SectorTerritorial sector = new SectorTerritorial(null, TipoSectorTerritorial.PROVINCIA);
-    ComposicionHcSectorTerritorial elem1 = new ComposicionHcSectorTerritorial(sector,200D,2000D,periodo);
-    ComposicionHcSectorTerritorial elem2 = new ComposicionHcSectorTerritorial(sector,220D,2200D,periodo2);
-    ComposicionHcSectorTerritorial elem3 = new ComposicionHcSectorTerritorial(sector,230D,2900D,periodo3);
-    items.add(elem1);
-    items.add(elem2);
-    items.add(elem3);
-
-    Map<String,Object> model = new HashMap<>();
-    model.put("items",items);
-    model.put("sector",sector);
-    model.put("inicio",inicio);
-    model.put("fin",fin);
-    */
 
   }
 
@@ -128,28 +107,8 @@ public class AgenteController {
     model.put("fin",fin);
     model.put("usuario",agenteCuenta.getUsuario());
     return new ModelAndView(model,"agenteEvolucionHcRespuesta.hbs");
-/*
-    PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,7,15));
-    PeriodoMensual periodo2 = new PeriodoMensual(LocalDate.of(2020,8,15));
-    PeriodoMensual periodo3 = new PeriodoMensual(LocalDate.of(2020,9,15));
 
-    List<EvolucionHCSectorTerritorial> evols = new ArrayList<>();
-    SectorTerritorial sector = new SectorTerritorial(null, TipoSectorTerritorial.PROVINCIA);
-
-    EvolucionHCSectorTerritorial evo1 = new EvolucionHCSectorTerritorial(sector, periodo, 2000D);
-    EvolucionHCSectorTerritorial evo2 = new EvolucionHCSectorTerritorial(sector, periodo2, 3000D);
-    EvolucionHCSectorTerritorial evo3 = new EvolucionHCSectorTerritorial(sector, periodo3, 2500D);
-
-    evols.add(evo1);
-    evols.add(evo2);
-    evols.add(evo3);
-
-    Map<String,Object> model = new HashMap<>();
-    model.put("items",evols);
-    model.put("sector",sector);
-    model.put("inicio",inicio);
-    model.put("fin",fin);
-*/}
+}
 
   public ModelAndView getHcTotal(Request request,Response response) {
 
@@ -163,10 +122,14 @@ public class AgenteController {
 
     //
     model.put("totalMensual",sector.calcularHC(periodo));
+    System.out.println(sector.calcularHCMiembros(periodo));
+    System.out.println(sector.calcularHCMediciones(periodo));
     //
+    List<Organizacion> orgs = sector.getOrganizaciones();
     model.put("totalAnual",sector.calcularHC(periodoAnual));
+
     model.put("unidad", "ESTO NI IDEA");
-    model.put("sector",sector.getNombre());
+    model.put("sector",sector);
     model.put("usuario",cuenta.getUsuario());
     model.put("periodoActual",periodo);
 
@@ -183,21 +146,7 @@ public class AgenteController {
     Map<String,Object> model = new HashMap<>();
     model.put("usuario",cuenta.getUsuario());
     model.put("organizaciones",organizaciones);
-    /*
-    Organizacion org1 = new Organizacion("PIRULO SA", TipoOrganizacion.EMPRESA,"","",null);
-    Organizacion org2 = new Organizacion("SANGUCHITOS Y ASOCIADOS", TipoOrganizacion.ONG,"","",null);
-    Organizacion org3 = new Organizacion("PIRULO PAYBACK SRL", TipoOrganizacion.INSTITUCION,"","",null);
-    org1.setId(1L);
-    org2.setId(2L);
-    org3.setId(3L);
-    List<Organizacion> organizaciones = new ArrayList<>();
-    organizaciones.add(org1);
-    organizaciones.add(org2);
-    organizaciones.add(org3);
-    Map<String,Object> model = new HashMap<>();
-    model.put("usuario","JORGE");
-    model.put("organizaciones",organizaciones);
-*/
+
     return new ModelAndView(model,"agenteOrganizacion.hbs");
   }
 
@@ -262,23 +211,7 @@ public class AgenteController {
     model.put("items",items);
 
     return new ModelAndView(model,"agenteOrgEvolucionHCRespuesta.hbs");
-    /*
-    PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,11,15));
-    Organizacion org = new Organizacion();
 
-    EvolucionHCOrganizacion evo1 = new EvolucionHCOrganizacion(org,periodo,2000D);
-    EvolucionHCOrganizacion evo2 = new EvolucionHCOrganizacion(org,periodo,5000D);
-    EvolucionHCOrganizacion evo3 = new EvolucionHCOrganizacion(org,periodo,4000D);
-    items.add(evo1);
-    items.add(evo2);
-    items.add(evo3);
-
-    Map<String,Object> model = new HashMap<>();
-    model.put("usuario","007");
-    model.put("nombreOrg","PAPELERA S.A");
-    model.put("id",request.params("id"));
-    model.put("items",items);
-*/
   }
 
   public ModelAndView getComposicionHcOrg(Request request, Response response) {
@@ -314,30 +247,6 @@ public class AgenteController {
     model.put("fin",fin);
 
     return new ModelAndView(model,"agenteOrgComposicionHCRespuesta.hbs");
-/*
-    PeriodoMensual periodo = new PeriodoMensual(LocalDate.of(2020,7,15));
-    PeriodoMensual periodo2 = new PeriodoMensual(LocalDate.of(2020,8,15));
-    PeriodoMensual periodo3 = new PeriodoMensual(LocalDate.of(2020,9,15));
-
-
-    List<ComposicionHCOrganizacion> items = new ArrayList<>();
-    Organizacion org = new Organizacion();
-    ComposicionHCOrganizacion comp1 = new ComposicionHCOrganizacion(org,2900D,200D, periodo);
-    ComposicionHCOrganizacion comp2 = new ComposicionHCOrganizacion(org,6000D, 3000D, periodo2);
-    ComposicionHCOrganizacion comp3 = new ComposicionHCOrganizacion(org,4200D, 2400D, periodo3);
-    items.add(comp1);
-    items.add(comp2);
-    items.add(comp3);
-
-
-    Map<String,Object> model = new HashMap<>();
-    model.put("nombreOrg","PIRULO S.A");
-    model.put("items",items);
-    model.put("inicio",inicio);
-    model.put("fin",fin);
-    model.put("valorAnual",9600D);
-    model.put("valorMensual",300D);
-    */
 
   }
 

@@ -24,6 +24,7 @@ public class Validador {
       response.redirect("/signin");
       return;
     }
+
     System.out.println("la session existe");
     Cuenta cuenta = request.session().attribute("cuenta");
 

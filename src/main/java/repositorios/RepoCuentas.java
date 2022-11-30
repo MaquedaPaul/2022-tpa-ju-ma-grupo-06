@@ -8,6 +8,7 @@ import organizacion.Organizacion;
 import territorio.AgenteTerritorial;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class RepoCuentas implements WithGlobalEntityManager {
@@ -33,18 +34,27 @@ public class RepoCuentas implements WithGlobalEntityManager {
     return entityManager().createQuery("From Cuenta").getResultList();
   }
 
+  private Object checkOutOfBounds(List<Object> objects){
+    if(objects.isEmpty()){
+      return null;
+    }
+    return objects.get(0);
+  }
+
+
   public Cuenta accountByUsername(String username) {
-    return (Cuenta) entityManager()
-        .createQuery("FROM Cuenta WHERE usuario = :user").setParameter("user",username)
-        .getResultList()
-        .get(0);
+
+
+    return (Cuenta) checkOutOfBounds(entityManager()
+            .createQuery("FROM Cuenta WHERE usuario = :user").setParameter("user",username)
+            .getResultList());
   }
 
   //TODO REVISAR PEDRO LOPEZ
   public Miembro obtenerMiembro(Cuenta cuenta) {
-    return (Miembro) entityManager()
+    return (Miembro) checkOutOfBounds(entityManager()
             .createQuery("from Miembro where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())
-            .getResultList().get(0);
+            .getResultList());
   }
 
   public AgenteTerritorial obtenerAgente(Cuenta cuenta) {
@@ -62,8 +72,10 @@ public class RepoCuentas implements WithGlobalEntityManager {
   }
 
   public Organizacion obtenerOrganizacion(Cuenta cuenta) {
-    return (Organizacion) entityManager()
-        .createQuery("from Organizacion where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())
-        .getResultList().get(0);
+
+    Object resultadoQuery = checkOutOfBounds(entityManager()
+            .createQuery("from Organizacion where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())
+            .getResultList());
+    return (Organizacion) resultadoQuery;
   }
 }

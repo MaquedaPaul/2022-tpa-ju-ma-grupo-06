@@ -68,7 +68,7 @@ public class TransportePublico extends Transporte {
 
   //conviene usar equals
   public boolean esElMismo(PuntoUbicacion ubicacion, PuntoUbicacion puntoUbicacionParada) {
-    return ubicacion.equals(puntoUbicacionParada);
+    return ubicacion.esIgualA(puntoUbicacionParada);
   }
 
   @Override

@@ -7,7 +7,7 @@ import spark.Request;
 import territorio.AgenteTerritorial;
 import territorio.SectorTerritorial;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;

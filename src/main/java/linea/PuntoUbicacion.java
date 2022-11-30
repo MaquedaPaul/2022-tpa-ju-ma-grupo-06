@@ -40,7 +40,7 @@ public class PuntoUbicacion {
     return altura;
   }
 
-  public boolean sonIguales(PuntoUbicacion puntoUbicacion) {
+  public boolean esIgualA(PuntoUbicacion puntoUbicacion) {
     return this.localidadId == puntoUbicacion.getLocalidadId() && this.calle.equals(puntoUbicacion.getCalle())  &&
         this.altura == puntoUbicacion.getAltura();
   }

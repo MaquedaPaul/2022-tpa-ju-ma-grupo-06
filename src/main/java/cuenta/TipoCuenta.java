@@ -7,13 +7,38 @@ public enum TipoCuenta {
   MIEMBRO() {
     @Override
     public boolean puedeAccederA(String path) {
-      String[] pathsValidos = {""};
+      String[] pathsValidos = {
+          ".*/home/trayectos",
+          ".*/home/trayectos/registro",
+          ".*/home/trayectos/registro/tramo-nuevo",
+          ".*/home/trayectos/compartir",
+          ".*/home/trayectos/registro/eliminar",
+          ".*/home/trayectos/registro/cancelar",
+          ".*/home/trayectos/registro/crear",
+          ".*/home/vinculacion"
+      };
       return Arrays.asList(pathsValidos).contains(path);
     }
   }, ORGANIZACION() {
     @Override
     public boolean puedeAccederA(String path) {
-      String[] pathsValidos = {""};
+      String[] pathsValidos = {
+          ".*/home/vinculaciones",
+          ".*/home/vinculaciones/.*/aceptar",
+          ".*/home/vinculaciones/.*/rechazar",
+          ".*/home/mediciones",
+          ".*/home/mediciones/perse",
+          ".*/home/mediciones/perse/creado",
+          ".*/home/mediciones/archivo",
+          ".*/home/calculadora-hc",
+          ".*/home/calculadora-hc/hc-total",
+          ".*/home/calculadora-hc/impacto-de-miembro/buscador",
+          ".*/home/calculadora-hc/impacto-de-miembro",
+          ".*/home/calculadora-hc/impacto-de-miembro/.*",
+          ".*/home/calculadora-hc/indicador-hc-sector/buscador",
+          ".*/home/calculadora-hc/indicador-hc-sector",
+          ".*/home/calculadora-hc/indicador-hc-sector/.*"
+      };
       return Arrays.asList(pathsValidos).contains(path);
     }
   }, AGENTE() {

@@ -9,6 +9,7 @@ import miembro.Miembro;
 import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.Solicitud;
+import repositorios.RepoMiembros;
 import repositorios.RepoOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
@@ -21,13 +22,12 @@ import java.util.List;
 
 public class MiembroController extends AccountController {
 
-
-
   private Miembro obtenerMiembro(Request request){
     MiembroCuenta usuario = request.session().attribute("cuenta");
     Miembro miembro = RepoCuentas.getInstance().obtenerMiembro(usuario);
     return miembro;
   }
+
   private String obtenerUsuario (Request request){
     MiembroCuenta cuenta = request.session().attribute("cuenta");
     return cuenta.getUsuario();
@@ -154,6 +154,11 @@ public class MiembroController extends AccountController {
     comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     Trayecto trayectoNuevo = trayecto.build();
+    request.session().attribute("trayecto", null);
+    Miembro miembro = obtenerMiembro(request);
+    miembro.registrarTrayecto(trayectoNuevo);
+    RepoMiembros.getInstance().agregarMiembro(miembro);
+    miembro = obtenerMiembro(request);
     response.redirect("/home/trayectos/registro");
     return null;
   }

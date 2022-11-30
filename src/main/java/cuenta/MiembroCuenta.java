@@ -45,6 +45,7 @@ public class MiembroCuenta extends Cuenta {
   public void limpiarSession(Request request) {
     request.session().attribute("cuenta",null);
     request.session().attribute("miembro", null);
+    request.session().attribute("trayecto", null);
   }
 
   public Map<String, Object> datosDelHome() {

@@ -81,7 +81,7 @@ public class OrganizacionController extends AccountController {
     Organizacion organizacion = obtenerOrganizacion(request);
     Map<String, Object> model = new HashMap<>();
     String nombreApellido = request.params("nombreApellido");
-    Miembro miembro =RepoMiembros.getInstance().getMiembrosPorNombreYApellido(nombreApellido);
+    Miembro miembro = RepoMiembros.getInstance().getMiembrosPorNombreYApellido(nombreApellido);
     boolean miembroNoNull = miembro != null;
     model.put("miembroNoNull", miembroNoNull);
     if(miembroNoNull){

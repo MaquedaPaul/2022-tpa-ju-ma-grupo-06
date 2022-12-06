@@ -7,6 +7,7 @@ public enum TipoCuenta {
     @Override
     public boolean puedeAccederA(String path) {
       String[] pathsValidos = {
+          ".*/home",
           ".*/recomendaciones",
           ".*/home/trayectos",
           ".*/home/trayectos/registro",
@@ -17,12 +18,13 @@ public enum TipoCuenta {
           ".*/home/trayectos/registro/crear",
           ".*/home/vinculacion"
       };
-      return Arrays.asList(pathsValidos).contains(path);
+      return Arrays.stream(pathsValidos).anyMatch(path::matches);
     }
   }, ORGANIZACION() {
     @Override
     public boolean puedeAccederA(String path) {
       String[] pathsValidos = {
+          ".*/home",
           ".*/recomendaciones",
           ".*/home/vinculaciones",
           ".*/home/vinculaciones/.*/aceptar",
@@ -40,7 +42,7 @@ public enum TipoCuenta {
           ".*/home/calculadora-hc/indicador-hc-sector",
           ".*/home/calculadora-hc/indicador-hc-sector/.*"
       };
-      return Arrays.asList(pathsValidos).contains(path);
+      return Arrays.stream(pathsValidos).anyMatch(path::matches);
     }
   }, AGENTE() {
     @Override

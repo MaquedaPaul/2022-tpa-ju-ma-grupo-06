@@ -197,7 +197,7 @@ public class Organizacion {
   }
 
   public List<Contacto> getContactos() {
-    return new ArrayList<>();
+    return this.contactos;
   }
 
   public void notificarContactos(List<MedioNotificador> medios) {

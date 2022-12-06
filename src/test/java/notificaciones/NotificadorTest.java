@@ -11,6 +11,7 @@ import repositorios.RepoOrganizacion;
 
 import java.time.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,7 +30,8 @@ public class NotificadorTest {
     assertTrue(compraGamer.getContactos().isEmpty());
     compraGamer.cargarContacto(juan);
     compraGamer.cargarContacto(jorge);
-    assertTrue(compraGamer.getContactos().contains(jorge) && compraGamer.getContactos().contains(juan));
+    List<Contacto> contactos = compraGamer.getContactos();
+    assertTrue(contactos.contains(jorge) && contactos.contains(juan));
   }
 
   //EL MAIN YA NO SE ENCUENTRA EN NOTIFICADOR

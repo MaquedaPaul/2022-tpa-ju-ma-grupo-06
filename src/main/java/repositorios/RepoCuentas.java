@@ -50,7 +50,7 @@ public class RepoCuentas implements WithGlobalEntityManager {
             .getResultList());
   }
 
-  //TODO REVISAR PEDRO LOPEZ
+
   public Miembro obtenerMiembro(Cuenta cuenta) {
     return (Miembro) checkOutOfBounds(entityManager()
             .createQuery("from Miembro where cuenta.id = :cuenta_id").setParameter("cuenta_id", cuenta.getId())

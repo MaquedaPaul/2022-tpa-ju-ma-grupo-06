@@ -33,7 +33,7 @@ public class MiembroCuenta extends Cuenta {
 
   @Override
   public boolean puedeAccederA(String path) {
-    return false;
+    return nivelDeAcceso().puedeAccederA(path);
   }
 
   @Override

@@ -169,8 +169,13 @@ public class MiembroController extends AccountController {
     comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     Trayecto trayectoNuevo = trayecto.build();
+
+    Map<String, Object> model = new HashMap<>();
+
     if (trayectoNuevo.getTramos().isEmpty()) {
-      response.redirect("/home/trayectos/registro");
+      //response.redirect("/home/trayectos/registro");
+      model.put("trayectoVacio",true);
+      return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
     } else {
       request.session().attribute("trayecto", null);
       Miembro miembro = obtenerMiembro(request);

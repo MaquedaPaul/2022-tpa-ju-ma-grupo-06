@@ -179,8 +179,8 @@ form div label {
 .tarjetaRecomendacion {
   border: 2px solid black;
   border-radius: 5px;
-  width: 250px;
-  height: 250px;
+  width: auto;
+  height: auto;
 }
 
 .below-buttons {

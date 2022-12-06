@@ -195,7 +195,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Miembro juan = new Miembro("JUAN","CARLOS", TipoDocumento.DNI,42222222,trayectosJuan);
     juan.setCuenta(cuentaJuan);
 
-    MiembroCuenta cuentaPedro = dbConnection.getById(1,MiembroCuenta.class);
+    MiembroCuenta cuentaPedro = dbConnection.getById(2,MiembroCuenta.class);
     Miembro pedro = new Miembro("PEDRO","LOPEZ", TipoDocumento.DNI,42223222,trayectosPedro);
     juan.setCuenta(cuentaPedro);
 

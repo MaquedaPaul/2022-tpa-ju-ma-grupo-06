@@ -26,7 +26,9 @@ public class Router {
       PerThreadEntityManagers.closeEntityManager();
     }));
 */
+
     //Spark.before(Validador::validarAcceso);
+
 
     Spark.get("/", raizController::getPage, engine);
     Spark.get("/recomendaciones", recomendacionController::getRecomendaciones, engine);

@@ -35,11 +35,15 @@
             <label for="altura-llegada">Altura</label>
             <input id="altura-llegada" name="altura-llegada">
         </div>
+        {{#if tramoIncorecto}}
+                <p style="color: red">El tramo Ingresado es incorrecto</p>
+            {{/if}}
         <div class="flex-center gap">
             <a href="/home/trayectos/registro">Volver</a>
             <button type="summit">Cargar</button>
         </div>
     </form>
+
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

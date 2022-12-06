@@ -5,7 +5,11 @@
 {{/partial}}
 
 {{#partial "content"}}
+
     <h2 class="titulo">Registrar trayecto</h2>
+    {{#if trayectoVacio}}
+        <p style="color: red">Error: ¡El trayecto no tiene tramos!</p>
+    {{/if}}
         <div class="contenedorTrayecto borde">
             <div class="contenedorTrayecto">
                 <h3>Tramos</h3>
@@ -52,7 +56,7 @@
                 <button class="btn-2 first">Registrar</button>
             </form>
         </div>
-    </div>
+
 {{/partial}}
 
 {{>home-iniciado-sesion.hbs}}

@@ -1,6 +1,7 @@
 package server;
 
 import controllers.*;
+import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,12 +21,12 @@ public class Router {
 
     Spark.staticFiles.location("static");
 
-    /*
-    Spark.after(((request, response) -> {
-      PerThreadEntityManagers.getEntityManager().clear();
-      PerThreadEntityManagers.closeEntityManager();
+
+    Spark.before(((request, response) -> {
+      PerThreadEntityManagers.getEntityManager().getTransaction().begin();
+      PerThreadEntityManagers.getEntityManager().flush();
+      PerThreadEntityManagers.getEntityManager().close();
     }));
-*/
 
     //Spark.before(Validador::validarAcceso);
 

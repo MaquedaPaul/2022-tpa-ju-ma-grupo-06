@@ -1,11 +1,8 @@
 package controllers;
 
 import cuenta.Cuenta;
-import cuenta.TipoCuenta;
 import spark.Request;
 import spark.Response;
-
-import java.util.Objects;
 
 import static spark.Spark.halt;
 

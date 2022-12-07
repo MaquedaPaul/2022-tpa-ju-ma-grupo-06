@@ -5,7 +5,11 @@ import global.Unidad;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
+import organizacion.TipoOrganizacion;
+import repositorios.RepoOrganizacion;
+import repositorios.RepoTipoDeConsumo;
 import tipoconsumo.TipoActividad;
 import tipoconsumo.TipoAlcance;
 import tipoconsumo.TipoConsumo;
@@ -24,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class LectorCSVTest {
+public class LectorCSVTest implements WithGlobalEntityManager {
 
   static Organizacion mockOrg;
   static FormatoDeFechas formato;
@@ -33,12 +37,10 @@ public class LectorCSVTest {
 
   List<String> campos = mock(ArrayList.class);
 
-  static RepoTipoConsumo repoMock = mock(RepoTipoConsumo.class);
-
-  TipoConsumo gas = new TipoConsumo("Gas Natural",
+  static TipoConsumo gas = new TipoConsumo("Gas Natural",
       Unidad.CM3, TipoActividad.COMBUSTION_MOVIL,
       TipoAlcance.EMISION_DIRECTA);
-  TipoConsumo nafta = new TipoConsumo("Nafta",
+  static TipoConsumo nafta = new TipoConsumo("Nafta",
       Unidad.LTS, TipoActividad.COMBUSTION_MOVIL,
       TipoAlcance.EMISION_DIRECTA);
 
@@ -54,7 +56,7 @@ public class LectorCSVTest {
 
   @BeforeAll
   static void inicializar() {
-    mockOrg = mock(Organizacion.class);
+    mockOrg = new Organizacion("", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
 
     HashMap<TipoPerioricidad, DateTimeFormatter> formatos = new HashMap<>();
     formatos.put(TipoPerioricidad.ANUAL, formatoAnual);
@@ -69,17 +71,20 @@ public class LectorCSVTest {
 
     validador = new ValidadorDeCabeceras(columnasEsperadas);
     try {
-      lector = new LectorDeCsv("src/test/java/lectorcsv/medicionesprueba/medicionesCorrectas.csv", mockOrg, formato, validador, repoMock);
+      lector = new LectorDeCsv("src/test/resources/mediciones-test.csv", mockOrg, formato, validador, RepoTipoDeConsumo.getInstance());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
 
+    RepoTipoDeConsumo.getInstance().agregarNuevoTipoDeConsumo(gas);
+    RepoTipoDeConsumo.getInstance().agregarNuevoTipoDeConsumo(nafta);
+    RepoOrganizacion.getInstance().agregarOrganizacion(mockOrg);
   }
 
   @Test
   public void elLectorFallaSiLaRutaDelArchivoNoExiste() {
     assertThrows(NoSuchFileException.class,
-        () -> new LectorDeCsv("hola no funciono", mockOrg, formato, validador, repoMock));
+        () -> new LectorDeCsv("hola no funciono", mockOrg, formato, validador, RepoTipoDeConsumo.getInstance()));
   }
 
   @Test
@@ -113,18 +118,15 @@ public class LectorCSVTest {
 
   @Test
   public void puedoGuardarLasMedicionesQueEstenCorrectas() {
-    when(repoMock.existeElTipoDeConsumo("Gas Natural")).thenReturn(true);
-    when(repoMock.existeElTipoDeConsumo("Nafta")).thenReturn(true);
-    when(repoMock.getTipoConsumo("Gas Natural")).thenReturn(gas);
-    when(repoMock.getTipoConsumo("Nafta")).thenReturn(nafta);
     Assertions.assertEquals(lector.getCantidadDeMediciones(), 0);
     assertDoesNotThrow(lector::leerMediciones);
-    Assertions.assertEquals(5, lector.getCantidadDeMediciones());
+    Assertions.assertEquals(10, lector.getCantidadDeMediciones());
   }
 
   @Test
   public void lectorMedicionesAnda() {
-    LectorMediciones lector = new LectorMediciones("src/main/resources/medicionesCorrectas.csv",new Organizacion());
-    lector.leerMediciones();
+    LectorMediciones lector = new LectorMediciones("src/test/resources/mediciones-test.csv",mockOrg);
+    assertDoesNotThrow(lector::leerMediciones);
+    assertDoesNotThrow(lector::cargarMediciones);
   }
 }

@@ -190,6 +190,7 @@ public class OrganizacionTest {
     when(spyjorgito.getTrayectos()).thenReturn(trayectos1);
     when(trayecto2.calcularHC()).thenReturn(300D);
     when(trayecto3.calcularHC()).thenReturn(100D);
+
     when(spyOnu.calcularHCTotal(mensual)).thenReturn(40000D);
     when(spyOnu.calcularHCTotalMediciones(any())).thenReturn(0D);
     assertEquals(20D, spyOnu.impactoDeMiembro(spyjorgito, mensual));

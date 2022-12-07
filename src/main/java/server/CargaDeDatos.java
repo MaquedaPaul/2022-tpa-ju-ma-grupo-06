@@ -168,7 +168,9 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Set<Tramo> tramos3 = new HashSet<>();
 
     PuntoUbicacion pu1 = new PuntoUbicacion(1,"San Lorenzo",6153);
-    PuntoUbicacion pu2 = new PuntoUbicacion(1,"25 de mayo",4224);
+
+    //TODO ni se utiliza
+    //PuntoUbicacion pu2 = new PuntoUbicacion(1,"25 de mayo",4224);
     PuntoUbicacion pu3 = new PuntoUbicacion(3,"Dante",2222);
     PuntoUbicacion pu4 = new PuntoUbicacion(3,"Dante",2900);
 

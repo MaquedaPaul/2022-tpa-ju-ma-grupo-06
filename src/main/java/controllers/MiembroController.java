@@ -45,17 +45,19 @@ public class MiembroController extends AccountController {
   public ModelAndView pedirVinculacion(Request request, Response response) {
 /*    String usuario = comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "miembro");*/
-    String usuario = obtenerUsuario(request);
+
     String organizacionSolicitada = request.queryParams("organizacionSolicitada");
     String sectorSolicitado = request.queryParams("sectorSolicitado");
     Organizacion organizacionObjetivo = RepoOrganizacion.getInstance().getOrganizacionPor(organizacionSolicitada);
 
     if (organizacionObjetivo == null) {
       response.redirect("/home/vinculacion");
+      return null;
     }
     Sector sectorObjetivo = organizacionObjetivo.obtenerSectorPor(sectorSolicitado);
     if (sectorObjetivo == null) {
       response.redirect("/home/vinculacion");
+      return null;
     }
     Miembro miembro =  obtenerMiembro(request);
     miembro.solicitarVinculacion(organizacionObjetivo, new Solicitud(miembro, sectorObjetivo));
@@ -181,7 +183,7 @@ public class MiembroController extends AccountController {
       Miembro miembro = obtenerMiembro(request);
       miembro.registrarTrayecto(trayectoNuevo);
       RepoMiembros.getInstance().agregarMiembro(miembro);
-      miembro = obtenerMiembro(request);
+
       model.put("trayectoCargadoConExito",true);
       return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
       //response.redirect("/home/trayectos/registro");

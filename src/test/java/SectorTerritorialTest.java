@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 public class SectorTerritorialTest {
 
-  SectorTerritorial sector = RepoSectorTerritorial.getInstance().getSectorById(1);
+//  SectorTerritorial sector = RepoSectorTerritorial.getInstance().getSectorById(1);
 
   @Test
   public void test() {

@@ -29,7 +29,7 @@ public enum TipoTransporte implements WithGlobalEntityManager {
     }
   },
 
-  PROPULSION_HUMANA {
+  VEHICULO_PARTICULAR {
     @Override
     public Transporte getTransporte(String[] queryParams) {
       String tipoTransporte = queryParams[1];
@@ -42,7 +42,7 @@ public enum TipoTransporte implements WithGlobalEntityManager {
       }
 
       try {
-        nombre += queryParams[3];
+        nombre += " " +  queryParams[3];
       } catch (Exception e) {
         // do nothing
       }
@@ -84,7 +84,7 @@ public enum TipoTransporte implements WithGlobalEntityManager {
     }
   },
 
-  VEHICULO_PARTICULAR {
+  PROPULSION_HUMANA {
     @Override
     public Transporte getTransporte(String[] queryParams) {
       String tipoTransporte = queryParams[1];

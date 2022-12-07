@@ -100,12 +100,12 @@ public class MiembroController extends AccountController {
   public ModelAndView getTrayectoNuevo(Request request, Response response) {
     /*comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "miembro");*/
-    HashMap<String, List<Transporte>> map = mapearTransportePortipo();
+    Map<String, Object> map = mapearTransportePortipo();
     return new ModelAndView(map,"miembroTrayectoNuevo.hbs");
   }
 
-  private HashMap<String, List<Transporte>> mapearTransportePortipo() {
-    HashMap<String, List<Transporte>> map = new HashMap<>();
+  private Map<String, Object> mapearTransportePortipo() {
+    Map<String, Object> map = new HashMap<>();
     List<Transporte> transportesPublicos = RepoTransporte.Instance.queryTransportesPor("TransportePublico");
     List<Transporte> transportesPropulsion = RepoTransporte.Instance.queryTransportesPor("PropulsionHumana");
     List<Transporte> transportesParticulares = RepoTransporte.Instance.queryTransportesPor("VehiculoParticular");
@@ -127,6 +127,7 @@ public class MiembroController extends AccountController {
     Transporte transporte = tipoTranporte.getTransporte(queryParams);
 
     if (tipoTranporte == null || puntoPartida == null || puntoLlegada == null || transporte == null) {
+        model = mapearTransportePortipo();
         model.put("tramoIncorecto", true);
         return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
       }

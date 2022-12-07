@@ -182,8 +182,9 @@ public class MiembroController extends AccountController {
       miembro.registrarTrayecto(trayectoNuevo);
       RepoMiembros.getInstance().agregarMiembro(miembro);
       miembro = obtenerMiembro(request);
-      response.redirect("/home/trayectos/registro");
+      model.put("trayectoCargadoConExito",true);
+      return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
+      //response.redirect("/home/trayectos/registro");
     }
-    return null;
   }
 }

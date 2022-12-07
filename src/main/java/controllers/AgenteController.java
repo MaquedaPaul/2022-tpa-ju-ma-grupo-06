@@ -122,8 +122,6 @@ public class AgenteController {
 
     //
     model.put("totalMensual",sector.calcularHC(periodo));
-    System.out.println(sector.calcularHCMiembros(periodo));
-    System.out.println(sector.calcularHCMediciones(periodo));
     //
     List<Organizacion> orgs = sector.getOrganizaciones();
     model.put("totalAnual",sector.calcularHC(periodoAnual));
@@ -142,7 +140,6 @@ public class AgenteController {
     AgenteTerritorial agente = request.session().attribute("agente");
     SectorTerritorial sector = agente.getSectorTerritorial();
     List<Organizacion> organizaciones = sector.getOrganizaciones();
-    System.out.println(organizaciones.size());
     Map<String,Object> model = new HashMap<>();
     model.put("usuario",cuenta.getUsuario());
     model.put("organizaciones",organizaciones);

@@ -181,6 +181,7 @@ form div label {
   border-radius: 5px;
   width: auto;
   height: auto;
+  margin-bottom: 10px;
 }
 
 .below-buttons {

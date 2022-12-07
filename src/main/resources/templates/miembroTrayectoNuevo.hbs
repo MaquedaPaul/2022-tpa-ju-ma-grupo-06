@@ -10,7 +10,7 @@
     <form class="scroll-box gap" action="/home/trayectos/registro/tramo-nuevo" method="POST">
         <div class="scroll-box">
             <label for="tipo-transporte" class="paragraph-header">Tipo Transporte</label>
-            <input list="tipo-transportes" id="tipo-transporte" name="tipo-transporte" class="paragraph-header">
+            <input list="tipo-transportes" id="tipo-transporte" name="tipo-transporte" >
             <datalist id="tipo-transportes">
                 {{#each tipotransportes}}
                     <option value="{{lineaUtilizada.nombre}}"></option>

@@ -16,6 +16,12 @@ public class Validador {
       return;
     }
 
+
+    if (request.url().endsWith("/")) {
+      System.out.println("ENTRE AL ROOT");
+      return;
+    }
+
     if (request.url().endsWith("/favicon.ico")) {
       System.out.println("IGNORO EL FAVICON");
       return;

@@ -153,6 +153,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
   public static void persistirTransportes() {
     LineaTransporte linea = dbConnection.getById(1,LineaTransporte.class);
     Transporte colectivo = new TransportePublico(linea,40);
+
     colectivo.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(colectivo);
 

@@ -307,7 +307,7 @@ form div label {
 
 .form-evo-hc {
   border: 3px solid var(--main-green);
-  width: 500px;
+  width: 50%;
   padding: 10px;
   justify-content: space-between;
   border-radius: 10px;

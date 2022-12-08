@@ -48,7 +48,7 @@ public class AgenteCuenta extends Cuenta {
     model.put("periodoActual",new PeriodoMensual(LocalDate.now()));
     model.put("totalMensual",totalMensual);
     model.put("totalAnual",totalAnual);
-    model.put("unidad","NIIDEAAAAA");
+    model.put("unidad","");
     return model;
   }
 

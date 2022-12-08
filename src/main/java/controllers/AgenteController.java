@@ -123,7 +123,7 @@ public class AgenteController {
     //
     model.put("totalAnual",sector.calcularHC(periodoAnual));
 
-    model.put("unidad", "ESTO NI IDEA");
+    model.put("unidad", "");
     model.put("sector",sector);
     model.put("usuario",cuenta.getUsuario());
     model.put("periodoActual",periodo);

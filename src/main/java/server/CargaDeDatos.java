@@ -157,13 +157,13 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Cuenta cuentaPepsi = new OrganizacionCuenta("PEPSICO","COCACOLASUCKS");
     Cuenta cuentaMovistar = new OrganizacionCuenta("MOVISTAR","CLAROSUCKS");
     Cuenta cuentaBuenosAires = new AgenteCuenta("BUENOS AIRES","CORDOBASUCKS");
-    Cuenta cuentaAlmagro = new AgenteCuenta("ALMAGRO","MEDRANO 591");
+    //Cuenta cuentaAlmagro = new AgenteCuenta("ALMAGRO","MEDRANO 591");
     dbConnection.persistir(cuentaJuan);
     dbConnection.persistir(cuentaPedro);
     dbConnection.persistir(cuentaPepsi);
     dbConnection.persistir(cuentaMovistar);
     dbConnection.persistir(cuentaBuenosAires);
-    dbConnection.persistir(cuentaAlmagro);
+    //dbConnection.persistir(cuentaAlmagro);
     dbConnection.persistir(cuentaDaniel);
     dbConnection.persistir(cuentaMarcos);
   }

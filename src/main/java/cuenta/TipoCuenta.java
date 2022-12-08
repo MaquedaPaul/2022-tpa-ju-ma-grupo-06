@@ -7,6 +7,7 @@ public enum TipoCuenta {
     @Override
     public boolean puedeAccederA(String path) {
       String[] pathsValidos = {
+          ".*/",
           ".*/home",
           ".*/recomendaciones",
           ".*/home/trayectos",
@@ -24,6 +25,7 @@ public enum TipoCuenta {
     @Override
     public boolean puedeAccederA(String path) {
       String[] pathsValidos = {
+          ".*/",
           ".*/home",
           ".*/home/vinculaciones",
           ".*/home/vinculaciones/.*/aceptar",
@@ -47,6 +49,7 @@ public enum TipoCuenta {
     @Override
     public boolean puedeAccederA(String path) {
       String[] pathsValidos = {
+          ".*/",
           ".*/home",
           ".*/home/composicion-hc",
           ".*/home/composicion-hc/grafico",

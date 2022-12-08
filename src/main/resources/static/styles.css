@@ -18,6 +18,10 @@ html {
   color: var(--text-color);
 }
 
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   min-height: 100vh;
@@ -27,7 +31,7 @@ body {
 }
 
 header {
-  height: 60px;
+  height: 80px;
   padding: 5px 20px;
   gap: 30px;
   background-color: var(--main-green);
@@ -150,24 +154,22 @@ form div label {
 #tarjetas {
   display: flex;
   flex-direction: column;
-  width: 100%;
   border: 2px solid var(--main-green);
   padding: 10px;
   justify-content: space-between;
   margin-right: 20px;
   margin-bottom: 10px;
+  gap: 20px;
+  flex-grow: 1;
 }
 
 .tarjeta {
   display: flex;
   background-color: #B6E2DD;
   align-items: center;
-  width: 100%;
   border: 2px solid var(--main-green);
   padding: 10px;
   justify-content: space-between;
-  margin-right: 20px;
-  margin-bottom: 10px;
 }
 
 .header-tarjeta {

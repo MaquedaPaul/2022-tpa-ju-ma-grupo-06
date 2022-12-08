@@ -18,7 +18,7 @@ public class MiembroCuenta extends Cuenta {
   }
 
   public String home() {
-    return "miembroHome.hbs";
+    return "miembroRecomendaciones.hbs";
   }
 
   public TipoCuenta nivelDeAcceso() {

@@ -37,13 +37,13 @@
                             <h3>Nombre: <span class="green">{{nombre}}</span></h3>
                             <h3>Apellido: <span class="green">{{apellido}}</span></h3>
                             <h3>Impacto: <span class="green">{{impacto}}%</span></h3>
-                            Error: el miembro ingresado no pertenece a la organizacion
+                            <p style="color: red"> Error: el miembro ingresado no pertenece a la organizacion </p>
                         </div>
                     </div>
 
                 {{/if}}
             {{else}}
-                Error: el miembro no existe
+                <p style="color: red"> Error: el miembro no existe </p>
             {{/if}}
     </div>
 {{/partial}}

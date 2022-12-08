@@ -1,6 +1,6 @@
 {{#partial "content"}}
     <h2>Iniciar Sesion</h2>
-    <form action="/signin" method="POST" id="login">
+    <form style="display: flex; flex-direction: column;" action="/signin" method="POST" id="login">
         <div>
             <label for="primer-input">Usuario</label>
             <input id="primer-input" type="text" name="user">
@@ -11,10 +11,10 @@
         </div>
         <button type="submit" form="login" class="btn-2 first">Iniciar sesión</button>
         {{#if usuarioInexistente}}
-            Error: usuario inexistente
-        {{/if}}
-
+                <p style="color: red">Error: usuario inexistente</p>
+            {{/if}}
     </form>
+
 {{/partial}}
 
 {{>home-sin-sesion.hbs}}

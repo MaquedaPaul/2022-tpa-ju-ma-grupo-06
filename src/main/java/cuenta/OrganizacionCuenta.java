@@ -18,7 +18,7 @@ public class OrganizacionCuenta extends Cuenta {
   }
 
   public String home() {
-    return "organizacionHome.hbs";
+    return "organizacionCalculadoraHc.hbs";
   }
 
   public TipoCuenta nivelDeAcceso() {

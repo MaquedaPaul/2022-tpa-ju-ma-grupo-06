@@ -13,18 +13,13 @@ public enum TipoTransporte implements WithGlobalEntityManager {
       String transporteUtilizado = queryParams[0];
       String tipoTransporte = queryParams[1];
       String linea = queryParams[2];
-
-      try {
-        transportes = (List<TransportePublico>) entityManager()
-            .createQuery("from Transporte where TRANSPORTE_UTILIZADO = TransportePublico")
-            .getResultList();
-      } catch (Exception e) {
-        transportes = null;
-      }
-
+      transportes = (List<TransportePublico>) entityManager()
+          .createQuery("from Transporte where TRANSPORTE_UTILIZADO = :d")
+          .setParameter("d", tipoTransporte)
+          .getResultList();
       Transporte transporte = transportes.stream()
-          .filter(elemento -> elemento.getLineaUtilizada().getNombre().equals(linea)).findFirst().orElse(null);
-
+          .filter(elemento -> elemento.getLineaUtilizada().getNombre().equals(linea))
+          .findFirst().orElse(null);
       return transporte;
     }
   },
@@ -44,20 +39,15 @@ public enum TipoTransporte implements WithGlobalEntityManager {
       try {
         nombre += " " +  queryParams[3];
       } catch (Exception e) {
-        // do nothing
+        // Esto no hace nada
       }
-
-      try {
-        transporte = (Transporte) entityManager()
+      transporte = (Transporte) entityManager()
             .createQuery("from Transporte where TIPO_TRANSPORTE = :d and nombre = :nombre")
             .setParameter("d", tipoTransporte).setParameter("nombre", nombre)
             .getResultList()
             .stream()
             .findFirst()
             .orElse(null);
-      } catch (Exception e) {
-        transporte = null;
-      }
       return transporte;
     }
   },
@@ -66,20 +56,13 @@ public enum TipoTransporte implements WithGlobalEntityManager {
     @Override
     public Transporte getTransporte(String[] queryParams) {
       String tipoTransporte = queryParams[1];
-      Transporte transporte;
-
-      try {
-        transporte = (Transporte) entityManager()
+      Transporte transporte = (Transporte) entityManager()
           .createQuery("from Transporte where TIPO_TRANSPORTE = :d")
           .setParameter("d", tipoTransporte)
           .getResultList()
           .stream()
           .findFirst()
           .orElse(null);
-      return transporte;
-    } catch (Exception e) {
-        transporte = null;
-      }
       return transporte;
     }
   },

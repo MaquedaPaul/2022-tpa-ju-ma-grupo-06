@@ -2,6 +2,7 @@ package controllers;
 
 import cuenta.MiembroCuenta;
 import cuenta.OrganizacionCuenta;
+import linea.BuilderPuntoUbicacion;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import repositorios.RepoCuentas;
 import exceptions.NoConcuerdaInicioYFin;
@@ -120,13 +121,39 @@ public class MiembroController extends AccountController {
   public ModelAndView cargarTramo(Request request, Response response) throws NoConcuerdaInicioYFin {
     Map<String, Object> model = new HashMap<>();
     String[] queryParams = getQueryParams(request.queryParams("tipo-transporte"));
+    PuntoUbicacion puntoPartida;
+    PuntoUbicacion puntoLlegada;
+    TipoTransporte tipoTranporte;
+    Transporte transporte;
 
-    PuntoUbicacion puntoPartida = generarPuntoUbicacion("localidad-partida", "calle-partida", "altura-partida", request);
-    PuntoUbicacion puntoLlegada = generarPuntoUbicacion("localidad-llegada", "calle-llegada", "altura-llegada", request);
-    TipoTransporte tipoTranporte = getTipoTransporte(queryParams);
-    Transporte transporte = tipoTranporte.getTransporte(queryParams);
+    try {
+      puntoPartida = new BuilderPuntoUbicacion()
+          .setLocalidadId(request.queryParams("localidad-partida"))
+          .setAltura(request.queryParams("altura-partida"))
+          .setCalle(request.queryParams("calle-partida"))
+          .build();
+      puntoLlegada = new BuilderPuntoUbicacion()
+          .setLocalidadId(request.queryParams("localidad-llegada"))
+          .setAltura(request.queryParams("calle-llegada"))
+          .setCalle(request.queryParams("altura-llegada"))
+          .build();
+    } catch (NumberFormatException numberFormatException) {
+        model = mapearTransportePortipo();
+        model.put("tramoIncorecto", true);
+        return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
+    }
 
-    if (tipoTranporte == null || puntoPartida == null || puntoLlegada == null || transporte == null) {
+    try {
+      tipoTranporte = TipoTransporte.valueOf(queryParams[0]);
+    } catch (IllegalArgumentException illegalArgumentException) {
+      model = mapearTransportePortipo();
+      model.put("tramoIncorecto", true);
+      return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
+    }
+
+    transporte = tipoTranporte.getTransporte(queryParams);
+
+    if (transporte == null) {
         model = mapearTransportePortipo();
         model.put("tramoIncorecto", true);
         return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
@@ -135,6 +162,7 @@ public class MiembroController extends AccountController {
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
 
     trayecto.setTransporte(transporte).setPuntoDestino(puntoLlegada);
+
     try {
       trayecto.setPuntoOrigen(puntoPartida);
     } catch(Exception e) {
@@ -147,35 +175,8 @@ public class MiembroController extends AccountController {
     return null;
   }
 
-  private PuntoUbicacion generarPuntoUbicacion(String localidad, String calle, String altura, Request request) {
-    String localidadIdString = request.queryParams(localidad);
-    String calleString = request.queryParams(calle);
-    String alturaString = request.queryParams(altura);
-    PuntoUbicacion nuevoPunto;
-
-    try {
-      int alturaLlegada = Integer.parseInt(alturaString);
-      int localidadIdLlegada = Integer.parseInt(localidadIdString);
-      nuevoPunto = new PuntoUbicacion(localidadIdLlegada, calleString, alturaLlegada);
-    } catch (Exception e) {
-      nuevoPunto = null;
-    }
-
-    return nuevoPunto;
-  }
-
   private String[] getQueryParams(String queryParams) {
     return queryParams.split(" ");
-  }
-
-  private TipoTransporte getTipoTransporte(String[] queryParams) {
-    TipoTransporte tipoTransporte;
-    try {
-      tipoTransporte = TipoTransporte.valueOf(queryParams[0]);
-    } catch (Exception e) {
-      tipoTransporte = null;
-    }
-    return tipoTransporte;
   }
 
   public ModelAndView eliminarTramo(Request request, Response response) {

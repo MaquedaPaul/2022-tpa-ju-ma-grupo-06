@@ -482,3 +482,8 @@ button:hover {
 .mejorar{
   width:450px
 }
+
+.destacar {
+  font-size: 1.2rem;
+  font-weight: bold;
+}

@@ -317,7 +317,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Organizacion pepsiCo = new Organizacion(
         "PepsiCo S.A",
         TipoOrganizacion.EMPRESA,
-        "Vedia 4090",
+        new PuntoUbicacion(14, "esquinaDeTuCasa", 27),
         "Bebidas",
         new ArrayList<>()
     );
@@ -325,7 +325,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Organizacion movistar = new Organizacion(
         "MOVISTAR",
         TipoOrganizacion.EMPRESA,
-        "25 de mayo 4224",
+        new PuntoUbicacion(14, "algunLugar", 27),
         "Telefonía",
         new ArrayList<>()
     );

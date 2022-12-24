@@ -32,7 +32,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Organizacion PepsiCo = new Organizacion(
         "PepsiCo S.A",
         TipoOrganizacion.EMPRESA,
-        "Vedia 4090",
+        new PuntoUbicacion(14, "avenidaSiempreViva", 27),
         "Bebidas",
         new ArrayList<>()
     );
@@ -40,7 +40,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Organizacion EstudioJuridico = new Organizacion(
         "Estudio Juridico C&D S.R.L",
         TipoOrganizacion.EMPRESA,
-        "25 de mayo 4224",
+        new PuntoUbicacion(14, "avenidaAvecesViva", 27),
         "Asistencia Legal",
         new ArrayList<>()
     );
@@ -48,7 +48,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
     Organizacion Afip = new Organizacion(
         "Afip",
         TipoOrganizacion.GUBERNAMENTAL,
-        "San Martin 2621",
+        new PuntoUbicacion(14, "avenidaNuncaViva", 27),
         "Agente de Retención",
         new ArrayList<>()
     );

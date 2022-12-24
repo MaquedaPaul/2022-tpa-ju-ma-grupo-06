@@ -91,9 +91,9 @@ public class MiembroController extends AccountController {
     /*comprobarSession(request, response);
     comprobarTipoCuenta(request, response, "miembro");*/
     List<Organizacion> organizaciones =  RepoOrganizacion.getInstance().getOrganizaciones();
-    List<Sector> sectores = new ArrayList<>(RepoOrganizacion.getInstance().obtenerTodosLosSectores());
+    List<String> nombreSectores = new ArrayList<>(RepoOrganizacion.getInstance().nombreDeTodosLosSectores());
     HashMap<String, Object> hashMap = new HashMap<>();
-    hashMap.put("sectores",sectores);
+    hashMap.put("nombreSectores",nombreSectores);
     hashMap.put("organizaciones", organizaciones);
     return new ModelAndView(hashMap,"miembroVinculacion.hbs");
   }

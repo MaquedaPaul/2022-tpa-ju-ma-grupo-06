@@ -1,6 +1,7 @@
 package server;
 
 import cuenta.*;
+import linea.PuntoUbicacion;
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.*;
@@ -25,8 +26,8 @@ public class Bootstraps implements WithGlobalEntityManager {
 
     OrganizacionCuenta cuentaOnu = new OrganizacionCuenta("onu", "123");
     OrganizacionCuenta cuentaSerenisima = new OrganizacionCuenta("serenisima", "123");
-    Organizacion organizacion2 = new Organizacion("onu", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
-    Organizacion organizacion = new Organizacion("serenisima", TipoOrganizacion.INSTITUCION, "argentina", "sa", new ArrayList<>());
+    Organizacion organizacion2 = new Organizacion("onu", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(12, "medrano", 24), "sa", new ArrayList<>());
+    Organizacion organizacion = new Organizacion("serenisima", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(14, "belgrano", 27), "sa", new ArrayList<>());
     organizacion2.setCuenta(cuentaOnu);
     organizacion.setCuenta(cuentaSerenisima);
     organizacion.incorporarSector(new Sector("Compras", new ArrayList<>()));

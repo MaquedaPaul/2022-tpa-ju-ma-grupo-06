@@ -6,6 +6,7 @@ import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
+import linea.PuntoUbicacion;
 import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
@@ -37,8 +38,8 @@ public class Organizacion {
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
 
-  //TODO CAMBIAR A PUNTOUBICACION?
-  private String ubicacionGeografica;
+  @OneToOne(cascade = CascadeType.PERSIST)
+  private PuntoUbicacion ubicacionGeografica;
 
   private String clasificacion;
 
@@ -53,7 +54,7 @@ public class Organizacion {
   @OneToOne(cascade = CascadeType.PERSIST)
   OrganizacionCuenta cuenta;
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
+  public Organizacion(String razonSocial, TipoOrganizacion tipo, PuntoUbicacion ubicacionGeografica,
                       String clasificacion, List<Contacto> contactos) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
@@ -199,12 +200,6 @@ public class Organizacion {
 
   public void notificarContactos(List<MedioNotificador> medios) {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
-  }
-
-
-  public Set<String> generarSectoresVacios() {
-    return sectores.stream()
-        .map(Sector::getNombre).collect(Collectors.toSet());
   }
 
   public void setCuenta(OrganizacionCuenta cuenta) {

@@ -1,10 +1,10 @@
 package organizacion;
 
-import admin.config.GestorDeFechas;
 import lombok.Getter;
 import lombok.Setter;
 import miembro.Miembro;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -56,7 +56,7 @@ public class Sector {
   }
 
   public double calcularHCTotalDeMiembrosPorMes() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
+    return ServiceLocator.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
         .mapToDouble(Trayecto::calcularHC)
         .sum();
   }

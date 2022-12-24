@@ -1,6 +1,5 @@
 package organizacion;
 
-import admin.config.GestorDeFechas;
 import cuenta.OrganizacionCuenta;
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
@@ -17,6 +16,7 @@ import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 import repositorios.RepoSolicitud;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.*;
@@ -148,7 +148,7 @@ public class Organizacion {
   }
 
   public int getDiasDeTrabajo() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo();
+    return ServiceLocator.getInstance().getDiasDeTrabajo();
   }
 
   public List<Medicion> getMediciones() {

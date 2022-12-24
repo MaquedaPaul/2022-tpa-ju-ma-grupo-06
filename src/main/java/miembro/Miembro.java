@@ -1,6 +1,5 @@
 package miembro;
 
-import admin.config.GestorDeFechas;
 import cuenta.MiembroCuenta;
 import exceptions.ElTrayectoSeleccionadoNoPerteneceAEsteMiembro;
 import exceptions.EsteTrayectoNoPuedeSerCompartido;
@@ -12,6 +11,7 @@ import organizacion.TipoDocumento;
 import organizacion.periodo.Periodo;
 import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -81,7 +81,7 @@ public class Miembro {
   }
 
   public int getDiasDeTrabajo() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo();
+    return ServiceLocator.getInstance().getDiasDeTrabajo();
   }
 
   public double calcularHCTrayectos() {

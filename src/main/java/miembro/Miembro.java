@@ -91,13 +91,6 @@ public class Miembro {
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
   }
 
-  //TODO ¿DONDE SE USA ESTO?
-  public Stream<TipoConsumo> getTiposDeConsumoUsados() {
-    return this.getTrayectos().stream()
-        .map(Trayecto::getTiposDeConsumo)
-        .flatMap(Stream::distinct);
-  }
-
   public void compartirTrayectoCon(Miembro otro, Trayecto trayecto) {
     if (!this.trayectos.contains(trayecto)) {
       throw new ElTrayectoSeleccionadoNoPerteneceAEsteMiembro();

@@ -31,14 +31,6 @@ public class FormatoDeFechasTest {
     Assertions.assertFalse(formatoFechas.tieneElFormatoValido("08/2011", TipoPerioricidad.ANUAL));
   }
 
-  @Test
-  public void mensualNoEsUnPeriodoValidoSiNoSeCargaEnElFormato() {
-    formato.put(TipoPerioricidad.ANUAL, formatoAnual);
-
-    formatoFechas = new FormatoDeFechas(formato);
-    Assertions.assertFalse(formatoFechas.esUnPeriodoValido(TipoPerioricidad.MENSUAL));
-
-  }
 
   @Test
   public void unaFechaMensualSoloEncajaConUnFormatoMensual() {

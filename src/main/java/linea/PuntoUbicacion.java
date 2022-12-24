@@ -1,6 +1,7 @@
 package linea;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class PuntoUbicacion {
@@ -22,6 +23,19 @@ public class PuntoUbicacion {
   public PuntoUbicacion() {
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof PuntoUbicacion)) return false;
+    PuntoUbicacion that = (PuntoUbicacion) o;
+    return getLocalidadId() == that.getLocalidadId() && getAltura() == that.getAltura() && Objects.equals(getCalle(), that.getCalle());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getLocalidadId(), getCalle(), getAltura());
+  }
+
   public PuntoUbicacion(int localidadId, String calle, int altura) {
     this.localidadId = localidadId;
     this.calle = calle;
@@ -40,13 +54,4 @@ public class PuntoUbicacion {
     return altura;
   }
 
-  public boolean esIgualA(PuntoUbicacion puntoUbicacion) {
-    return this.localidadId == puntoUbicacion.getLocalidadId() && this.calle.equals(puntoUbicacion.getCalle())  &&
-        this.altura == puntoUbicacion.getAltura();
-  }
-
-    public boolean sonIguales(PuntoUbicacion puntoDestino) {
-    //TODO
-    return true;
-    }
 }

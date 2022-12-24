@@ -28,7 +28,7 @@ public class BuilderTrayecto {
   }
 
   public void checkearInicioYFin() throws NoConcuerdaInicioYFin {
-    if (!tramos.isEmpty() && !ultimoTramo.getPuntoOrigen().esIgualA(Iterables.getLast(tramos).getPuntoDestino())) {
+    if (!tramos.isEmpty() && !ultimoTramo.getPuntoOrigen().equals(Iterables.getLast(tramos).getPuntoDestino())) {
       throw new NoConcuerdaInicioYFin("Inicio y fin no concuerdan");
     }
   }

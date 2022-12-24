@@ -58,8 +58,4 @@ public class AgenteCuenta extends Cuenta {
     request.session().attribute("agente",null);
   }
 
-  @Override
-  public String getRecomendaciones() {
-    return null;
-  }
 }

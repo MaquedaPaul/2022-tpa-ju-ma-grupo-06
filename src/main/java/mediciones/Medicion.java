@@ -29,8 +29,6 @@ public abstract class Medicion {
 
   private LocalDate fecha;
 
-  private double valor;
-
   public  abstract double calcularHC(Periodo periodo);
 
   public abstract double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin);

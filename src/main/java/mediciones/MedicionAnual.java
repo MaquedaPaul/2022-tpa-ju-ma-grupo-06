@@ -1,6 +1,7 @@
 package mediciones;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
+import lombok.Getter;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
@@ -10,11 +11,14 @@ import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 public class MedicionAnual extends Medicion {
+
+  private double valor;
 
   public MedicionAnual(Organizacion org, TipoConsumo tipoConsumo, LocalDate fecha, double valor) {
     this.setFecha(fecha);
-    this.setValor(valor/12);
+    this.valor = valor;
     this.setOrganizacion(org);
     this.setTipoConsumo(tipoConsumo);
   }
@@ -25,7 +29,7 @@ public class MedicionAnual extends Medicion {
 
   @Override
   public double calcularHC(Periodo periodo) {
-    return this.getValor() * periodo.perioricidad();
+    return this.valor * (periodo.perioricidad() / 12D);
   }
 
   @Override

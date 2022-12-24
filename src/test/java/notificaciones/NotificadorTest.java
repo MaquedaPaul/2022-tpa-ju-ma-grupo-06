@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
-import repositorios.RepoOrganizacion;
 
 import java.time.*;
 import java.util.ArrayList;

@@ -61,14 +61,9 @@ public class TransportePublico extends Transporte {
     return this.lineaUtilizada
         .getRecorridoTotal()
         .stream()
-        .filter(unaParada -> esElMismo(ubicacion, unaParada.getPuntoUbicacion()))
+        .filter(unaParada -> ubicacion.equals(unaParada.getPuntoUbicacion()))
         .collect(Collectors.toList())
         .get(0);
-  }
-
-  //conviene usar equals
-  public boolean esElMismo(PuntoUbicacion ubicacion, PuntoUbicacion puntoUbicacionParada) {
-    return ubicacion.esIgualA(puntoUbicacionParada);
   }
 
   @Override

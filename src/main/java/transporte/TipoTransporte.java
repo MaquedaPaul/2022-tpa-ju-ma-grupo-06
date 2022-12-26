@@ -10,12 +10,12 @@ public enum TipoTransporte implements WithGlobalEntityManager {
     @Override
     public Transporte getTransporte(String[] queryParams) {
       List<TransportePublico> transportes;
-      String transporteUtilizado = queryParams[0];
+      String transporteUtilizado = "TransportePublico";
       String tipoTransporte = queryParams[1];
       String linea = queryParams[2];
       transportes = (List<TransportePublico>) entityManager()
           .createQuery("from Transporte where TRANSPORTE_UTILIZADO = :d")
-          .setParameter("d", tipoTransporte)
+          .setParameter("d", transporteUtilizado)
           .getResultList();
       Transporte transporte = transportes.stream()
           .filter(elemento -> elemento.getLineaUtilizada().getNombre().equals(linea))

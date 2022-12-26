@@ -134,8 +134,8 @@ public class MiembroController extends AccountController {
           .build();
       puntoLlegada = new BuilderPuntoUbicacion()
           .setLocalidadId(request.queryParams("localidad-llegada"))
-          .setAltura(request.queryParams("calle-llegada"))
-          .setCalle(request.queryParams("altura-llegada"))
+          .setAltura(request.queryParams("altura-llegada"))
+          .setCalle(request.queryParams("calle-llegada"))
           .build();
     } catch (NumberFormatException numberFormatException) {
         model = mapearTransportePortipo();

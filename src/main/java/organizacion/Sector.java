@@ -69,7 +69,8 @@ public class Sector {
         .distinct();
   }
 
-  public double getPromedioHc() {
+  // Se usa en la vista
+  private double getPromedioHc() {
     return this.calcularHCTotalDeMiembrosPorMes();
   }
 

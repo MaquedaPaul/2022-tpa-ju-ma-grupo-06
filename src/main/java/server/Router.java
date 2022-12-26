@@ -77,7 +77,6 @@ public class Router {
     Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", organizacionController::getImpactoMiembroConNombreYApellido, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", organizacionController::getIndicadorHcSectorBuscar, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);
-    Spark.get("/home/calculadora-hc/indicador-hc-sector/:nombre", organizacionController::getIndicadorHcSectorConNombre, engine);
 
     //AGENTE
     Spark.get("/home/composicion-hc",agenteController::getComposicionHc,engine);

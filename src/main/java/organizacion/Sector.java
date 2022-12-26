@@ -69,6 +69,10 @@ public class Sector {
         .distinct();
   }
 
+  public double getPromedioHc() {
+    return this.calcularHCTotalDeMiembrosPorMes();
+  }
+
   public int getCantidadMiembros() {
     return getMiembros().size();
   }

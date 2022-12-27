@@ -3,16 +3,16 @@ package transporte;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum TipoTransporte implements WithGlobalEntityManager {
   TRANSPORTE_PUBLICO {
     @Override
-    public Transporte getTransporte(String[] queryParams) {
+    public Transporte getTransporte(Map<String, String> mapTransporte) {
       List<TransportePublico> transportes;
       String transporteUtilizado = "TransportePublico";
-      String tipoTransporte = queryParams[1];
-      String linea = queryParams[2];
+      String linea = mapTransporte.get("linea");
       transportes = (List<TransportePublico>) entityManager()
           .createQuery("from Transporte where TRANSPORTE_UTILIZADO = :d")
           .setParameter("d", transporteUtilizado)
@@ -26,24 +26,12 @@ public enum TipoTransporte implements WithGlobalEntityManager {
 
   VEHICULO_PARTICULAR {
     @Override
-    public Transporte getTransporte(String[] queryParams) {
-      String tipoTransporte = queryParams[1];
-      String nombre = "";
-      Transporte transporte;
-      try {
-        nombre = queryParams[2];
-      } catch (Exception e) {
-        transporte = null;
-      }
-
-      try {
-        nombre += " " +  queryParams[3];
-      } catch (Exception e) {
-        // Esto no hace nada
-      }
-      transporte = (Transporte) entityManager()
+    public Transporte getTransporte(Map<String, String> mapTransporte) {
+      String tipoTransporte = mapTransporte.get("tipoTransporte");
+      String nombreVehiculo = mapTransporte.get("nombreVehiculo");
+      Transporte transporte = (Transporte) entityManager()
             .createQuery("from Transporte where TIPO_TRANSPORTE = :d and nombre = :nombre")
-            .setParameter("d", tipoTransporte).setParameter("nombre", nombre)
+            .setParameter("d", tipoTransporte).setParameter("nombre", nombreVehiculo)
             .getResultList()
             .stream()
             .findFirst()
@@ -54,8 +42,8 @@ public enum TipoTransporte implements WithGlobalEntityManager {
 
   SERCICIO_CONTRATADO {
     @Override
-    public Transporte getTransporte(String[] queryParams) {
-      String tipoTransporte = queryParams[1];
+    public Transporte getTransporte(Map<String, String> mapTransporte) {
+      String tipoTransporte = mapTransporte.get("tipoTransporte");
       Transporte transporte = (Transporte) entityManager()
           .createQuery("from Transporte where TIPO_TRANSPORTE = :d")
           .setParameter("d", tipoTransporte)
@@ -69,8 +57,8 @@ public enum TipoTransporte implements WithGlobalEntityManager {
 
   PROPULSION_HUMANA {
     @Override
-    public Transporte getTransporte(String[] queryParams) {
-      String tipoTransporte = queryParams[1];
+    public Transporte getTransporte(Map<String, String> mapTransporte) {
+      String tipoTransporte = mapTransporte.get("tipoTransporte");
       Transporte transporte =  (Transporte) entityManager()
           .createQuery("from Transporte where TIPO_TRANSPORTE = :d")
           .setParameter("d", tipoTransporte)
@@ -82,5 +70,5 @@ public enum TipoTransporte implements WithGlobalEntityManager {
     }
   };
 
-  public abstract Transporte getTransporte(String[] queryParams);
+  public abstract Transporte getTransporte(Map<String, String> mapTransporte);
 }

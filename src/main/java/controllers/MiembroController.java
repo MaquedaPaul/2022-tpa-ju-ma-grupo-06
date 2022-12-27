@@ -120,11 +120,21 @@ public class MiembroController extends AccountController {
 
   public ModelAndView cargarTramo(Request request, Response response) throws NoConcuerdaInicioYFin {
     Map<String, Object> model = new HashMap<>();
-    String[] queryParams = getQueryParams(request.queryParams("tipo-transporte"));
+    String[] queryParamsArray = request.queryParams("tipo-transporte").split(" ");
+    Map<String, String> mapTransporte;
     PuntoUbicacion puntoPartida;
     PuntoUbicacion puntoLlegada;
     TipoTransporte tipoTranporte;
     Transporte transporte;
+
+    try {
+      mapTransporte = MappeadorTransporte.valueOf(queryParamsArray[0])
+          .mapearTransporte(queryParamsArray);
+    } catch (IndexOutOfBoundsException | IllegalArgumentException exception) {
+      model = mapearTransportePortipo();
+      model.put("tramoIncorecto", true);
+      return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
+    }
 
     try {
       puntoPartida = new BuilderPuntoUbicacion()
@@ -144,14 +154,14 @@ public class MiembroController extends AccountController {
     }
 
     try {
-      tipoTranporte = TipoTransporte.valueOf(queryParams[0]);
+      tipoTranporte = TipoTransporte.valueOf(queryParamsArray[0]);
     } catch (IllegalArgumentException illegalArgumentException) {
       model = mapearTransportePortipo();
       model.put("tramoIncorecto", true);
       return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
     }
 
-    transporte = tipoTranporte.getTransporte(queryParams);
+    transporte = tipoTranporte.getTransporte(mapTransporte);
 
     if (transporte == null) {
         model = mapearTransportePortipo();
@@ -160,7 +170,6 @@ public class MiembroController extends AccountController {
       }
 
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
-
     trayecto.setTransporte(transporte).setPuntoDestino(puntoLlegada);
 
     try {
@@ -169,14 +178,11 @@ public class MiembroController extends AccountController {
       model.put("tramoIncorecto", true);
       return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
     }
+
     trayecto.agregarTramo();
     request.session().attribute("trayecto", trayecto);
     response.redirect("/home/trayectos/registro");
     return null;
-  }
-
-  private String[] getQueryParams(String queryParams) {
-    return queryParams.split(" ");
   }
 
   public ModelAndView eliminarTramo(Request request, Response response) {

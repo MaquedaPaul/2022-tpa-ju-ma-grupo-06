@@ -170,11 +170,13 @@ public class MiembroController extends AccountController {
       }
 
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
-    trayecto.setTransporte(transporte).setPuntoDestino(puntoLlegada);
+
 
     try {
+      trayecto.setTransporte(transporte).setPuntoDestino(puntoLlegada);
       trayecto.setPuntoOrigen(puntoPartida);
     } catch(Exception e) {
+      model = mapearTransportePortipo();
       model.put("tramoIncorecto", true);
       return new ModelAndView(model,"miembroTrayectoNuevo.hbs");
     }

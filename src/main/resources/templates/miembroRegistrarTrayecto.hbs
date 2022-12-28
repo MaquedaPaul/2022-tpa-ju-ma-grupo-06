@@ -1,5 +1,4 @@
 {{#partial "content"}}
-
     <h2 class="titulo">Registrar trayecto</h2>
     {{#if trayectoVacio}}
         <p style="color: red">Error: ¡El trayecto no tiene tramos!</p>
@@ -7,53 +6,50 @@
     {{#if trayectoCargadoConExito}}
         <p style="color: green">Felicidades: ¡El trayecto fue cargado con éxito!</p>
     {{/if}}
-        <div class="contenedorTrayecto borde">
-            <div class="contenedorTrayecto">
-                <h3>Tramos</h3>
-                <div class="divArreglo3">
-                    <ul class="listaNoScroll gap">
-                        {{#each tramos}}
-                            <li class="tarjeta column gap">
-                                <div class="scroll-box">
-                                    <p class="paragraph-header">Tipo Transporte</p>
-                                    <p>{{transporteUtilizado.tipo}}</p>
-                                </div>
 
-                                <div class="scroll-box">
-                                    <p class="paragraph-header">Punto de Partida</p>
-                                    <p>Localidad id {{puntoOrigen.localidadId}}</p>
-                                    <p>calle {{puntoOrigen.calle}}</p>
-                                    <p>altura {{puntoOrigen.altura}}</p>
-                                </div>
-                                <div class="scroll-box">
-                                    <p class="paragraph-header">Punto de Llegada</p>
-                                    <p>Localidad id {{puntoDestino.localidadId}}</p>
-                                    <p>calle {{puntoDestino.calle}}</p>
-                                    <p>altura {{puntoDestino.altura}}</p>
-                                </div>
-                            </li>
-                        {{/each}}
-                    </ul>
+    <h3>Tramos</h3>
+        <div class="contenedorTrayecto gap">
+            {{#each tramos}}
+                <div class="contenedor-tramo gap">
+                    <div class="scroll-box white-border-background">
+                        <p class="paragraph-header">Tipo Transporte</p>
+                        <p>{{transporteUtilizado.tipo}}</p>
+                    </div>
+                    <div class="contenedor-puntos">
+                        <div class="scroll-box white-border-background">
+                            <p class="paragraph-header">Punto de Partida</p>
+                            <p>Localidad id {{puntoOrigen.localidadId}}</p>
+                            <p>calle {{puntoOrigen.calle}}</p>
+                            <p>altura {{puntoOrigen.altura}}</p>
+                        </div>
+                        <div class="scroll-box white-border-background">
+                            <p class="paragraph-header">Punto de Llegada</p>
+                            <p>Localidad id {{puntoDestino.localidadId}}</p>
+                            <p>calle {{puntoDestino.calle}}</p>
+                            <p>altura {{puntoDestino.altura}}</p>
+                        </div>
+                        {{#if @last}}
+                            <form action="/home/trayectos/registro/eliminar" method="POST">
+                                <button type="submit" class="cross-icon">x</button>
+                            </form>
+                        {{/if}}
+                   </div>
                 </div>
-                <div class="flex-center gap">
-                    <form action="/home/trayectos/registro/eliminar" method="POST">
-                        <button type="submit" class="btn-2 first">Borrar</button>
-                    </form>
-                    <a href="/home/trayectos/registro/tramo-nuevo" class="btn-2 first">
-                        Agregar
-                    </a>
-                </div>
-            </div>
+            {{/each}}
         </div>
         <div class="botonesContainer">
             <form action="/home/trayectos/registro/cancelar" method="POST">
                 <button type="submit" class="btn-2 first">Cancelar</button>
             </form>
+
+            <a href="/home/trayectos/registro/tramo-nuevo" class="btn-2 first">
+                Agregar
+            </a>
+
             <form action="/home/trayectos/registro/crear" method="POST">
                 <button class="btn-2 first">Registrar</button>
             </form>
         </div>
-
 {{/partial}}
 
 {{>miembro-home-iniciado-sesion.hbs}}

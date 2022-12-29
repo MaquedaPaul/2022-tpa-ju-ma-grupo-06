@@ -38,7 +38,7 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     Organizacion papelera = new Organizacion(
         "PAPELERA S.A",
         TipoOrganizacion.EMPRESA,
-        "BALCARCE 50",
+        new PuntoUbicacion(27, "recoleta", 102),
         "NO SE QUE ES ESTO",
         new ArrayList<>()
     );
@@ -46,7 +46,7 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     Organizacion consultora = new Organizacion(
         "EpicConsulting S.R.L",
         TipoOrganizacion.EMPRESA,
-        "CABILDO 2032",
+        new PuntoUbicacion(104, "usuriaga", 207),
         "NO SE QUE ES ESTO",
         new ArrayList<>()
     );
@@ -54,7 +54,7 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     Organizacion sanJose = new Organizacion(
         "E.E.S SAN JOSE",
         TipoOrganizacion.INSTITUCION,
-        "JURAMENTO 1020",
+        new PuntoUbicacion(14, "ezquinaDeMiCasa", 27),
         "NO SE QUE ES ESTO",
         new ArrayList<>()
     );

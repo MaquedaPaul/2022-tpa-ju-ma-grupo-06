@@ -1,6 +1,5 @@
 package miembro;
 
-import admin.config.GestorDeFechas;
 import cuenta.MiembroCuenta;
 import exceptions.ElTrayectoSeleccionadoNoPerteneceAEsteMiembro;
 import exceptions.EsteTrayectoNoPuedeSerCompartido;
@@ -12,6 +11,7 @@ import organizacion.TipoDocumento;
 import organizacion.periodo.Periodo;
 import tipoconsumo.TipoConsumo;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Miembro {
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
 
-  @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER)
   MiembroCuenta cuenta;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
@@ -81,7 +81,7 @@ public class Miembro {
   }
 
   public int getDiasDeTrabajo() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo();
+    return ServiceLocator.getInstance().getDiasDeTrabajo();
   }
 
   public double calcularHCTrayectos() {
@@ -89,13 +89,6 @@ public class Miembro {
       return 0;
     }
     return getTrayectos().stream().mapToDouble(Trayecto::calcularHC).sum();
-  }
-
-  //TODO ¿DONDE SE USA ESTO?
-  public Stream<TipoConsumo> getTiposDeConsumoUsados() {
-    return this.getTrayectos().stream()
-        .map(Trayecto::getTiposDeConsumo)
-        .flatMap(Stream::distinct);
   }
 
   public void compartirTrayectoCon(Miembro otro, Trayecto trayecto) {
@@ -114,16 +107,6 @@ public class Miembro {
     this.cuenta = cuenta;
   }
 
-  public String getNombre() {
-      return nombre;
-  }
   public String getNombreYApellido() { return getNombre() + " " + getApellido();}
 
-  public Long getId() {
-    return id;
-  }
-
-  public String getApellido() {
-    return apellido;
-  }
 }

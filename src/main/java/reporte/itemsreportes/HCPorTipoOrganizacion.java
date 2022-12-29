@@ -1,7 +1,9 @@
 package reporte.itemsreportes;
 
+import lombok.Getter;
 import organizacion.TipoOrganizacion;
 
+@Getter
 public class HCPorTipoOrganizacion {
   double hc;
   TipoOrganizacion unTipo;
@@ -11,11 +13,4 @@ public class HCPorTipoOrganizacion {
     this.unTipo = tipo;
   }
 
-  public double getHc() {
-    return hc;
-  }
-
-  public TipoOrganizacion getUnTipo() {
-    return unTipo;
-  }
 }

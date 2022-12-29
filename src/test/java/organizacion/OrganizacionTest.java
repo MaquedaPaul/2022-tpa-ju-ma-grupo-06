@@ -5,6 +5,7 @@ import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
 
+import linea.PuntoUbicacion;
 import miembro.Miembro;
 import miembro.MiembroBuilder;
 import notificaciones.Contacto;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 public class OrganizacionTest {
 
-  Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+  Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(1,"San Juan",333), "texto3", new ArrayList<>());
   Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
   Organizacion spyOnu = spy(onu);
   Miembro spyjorgito = spy(jorgito);
@@ -66,7 +67,7 @@ public class OrganizacionTest {
   @Test
   public void siLaSolicitudNoPerteneceALaOrgNoPuedeProcesarla() {
 
-    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
     Sector sector = mock(Sector.class);
     Miembro miembro1 = mock(Miembro.class);
     Solicitud solicitud = new Solicitud(miembro1, sector);
@@ -80,7 +81,7 @@ public class OrganizacionTest {
 
   @Test
   public void siElSectorDeLaSolicitudNoPerteneceALaOrganizacionNoSePuedeAgregarALasSolicitudes() {
-    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
     Sector sector = mock(Sector.class);
     Miembro miembro1 = mock(Miembro.class);
     Solicitud solicitud = new Solicitud(miembro1, sector);
@@ -93,7 +94,7 @@ public class OrganizacionTest {
   @Test
   public void laOrganizacionNoAceptaVinculacion() {
 
-    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
+    Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
     Sector sector = mock(Sector.class);
     Miembro miembro1 = mock(Miembro.class);
     Solicitud solicitud = new Solicitud(miembro1, sector);
@@ -182,7 +183,7 @@ public class OrganizacionTest {
 
   @Test
   public void elImpactoDeJorgeEnOctubre2021EsDel20Porciento() {
-    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+    Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(2,"San Miguel",304), "texto3", new ArrayList<>());
     Organizacion spyOnu = spy(onu);
 
     trayectos1.add(trayecto2);

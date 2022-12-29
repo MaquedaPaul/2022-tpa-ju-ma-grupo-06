@@ -16,7 +16,7 @@ public class Combustible {
   @Column(name = "ID_COMBUSTIBLE")
   Long id;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   private TipoConsumo tipoConsumo;
 
   public Combustible() {

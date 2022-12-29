@@ -1,11 +1,11 @@
 package organizacion;
 
-import admin.config.GestorDeFechas;
 import cuenta.OrganizacionCuenta;
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
 import exceptions.LaSolicitudNoPerteneceAEstaOrganizacion;
 import exceptions.NoExisteElSectorVinculante;
 import exceptions.NoSeEncuentraException;
+import linea.PuntoUbicacion;
 import lombok.Getter;
 import lombok.Setter;
 import mediciones.Medicion;
@@ -17,6 +17,7 @@ import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
 import repositorios.RepoSolicitud;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.*;
@@ -37,8 +38,8 @@ public class Organizacion {
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
 
-  //TODO CAMBIAR A PUNTOUBICACION?
-  private String ubicacionGeografica;
+  @OneToOne(cascade = CascadeType.PERSIST)
+  private PuntoUbicacion ubicacionGeografica;
 
   private String clasificacion;
 
@@ -50,10 +51,10 @@ public class Organizacion {
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   OrganizacionCuenta cuenta;
 
-  public Organizacion(String razonSocial, TipoOrganizacion tipo, String ubicacionGeografica,
+  public Organizacion(String razonSocial, TipoOrganizacion tipo, PuntoUbicacion ubicacionGeografica,
                       String clasificacion, List<Contacto> contactos) {
     this.razonSocial = Objects.requireNonNull(razonSocial);
     this.tipo = Objects.requireNonNull(tipo);
@@ -148,7 +149,7 @@ public class Organizacion {
   }
 
   public int getDiasDeTrabajo() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo();
+    return ServiceLocator.getInstance().getDiasDeTrabajo();
   }
 
   public List<Medicion> getMediciones() {
@@ -193,22 +194,8 @@ public class Organizacion {
     contactos.add(unContacto);
   }
 
-  public List<Contacto> getContactos() {
-    return this.contactos;
-  }
-
   public void notificarContactos(List<MedioNotificador> medios) {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
-  }
-
-
-  public Set<String> generarSectoresVacios() {
-    return sectores.stream()
-        .map(Sector::getNombre).collect(Collectors.toSet());
-  }
-
-  public void setCuenta(OrganizacionCuenta cuenta) {
-    this.cuenta = cuenta;
   }
 
   public Sector obtenerSectorPor(String nombre) {

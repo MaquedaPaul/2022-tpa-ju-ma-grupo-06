@@ -4,6 +4,7 @@ import linea.LineaTransporte;
 import linea.Parada;
 import linea.PuntoUbicacion;
 import linea.TipoTransporte;
+import lombok.Getter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Entity
+@Getter
 public class TransportePublico extends Transporte {
 
   @ManyToOne(cascade = CascadeType.PERSIST)
@@ -25,10 +27,6 @@ public class TransportePublico extends Transporte {
   public TransportePublico(LineaTransporte lineaUtilizada, double consumoPorKilometro) {
     this.lineaUtilizada = lineaUtilizada;
     this.consumoPorKilometro = consumoPorKilometro;
-  }
-
-  public LineaTransporte getLineaUtilizada() {
-    return lineaUtilizada;
   }
 
   public TipoTransporte getTransporteInvolucrado() {
@@ -61,14 +59,9 @@ public class TransportePublico extends Transporte {
     return this.lineaUtilizada
         .getRecorridoTotal()
         .stream()
-        .filter(unaParada -> esElMismo(ubicacion, unaParada.getPuntoUbicacion()))
+        .filter(unaParada -> ubicacion.equals(unaParada.getPuntoUbicacion()))
         .collect(Collectors.toList())
         .get(0);
-  }
-
-  //conviene usar equals
-  public boolean esElMismo(PuntoUbicacion ubicacion, PuntoUbicacion puntoUbicacionParada) {
-    return ubicacion.esIgualA(puntoUbicacionParada);
   }
 
   @Override

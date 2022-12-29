@@ -2,6 +2,7 @@ package repos;
 
 import cuenta.MiembroCuenta;
 import cuenta.OrganizacionCuenta;
+import linea.PuntoUbicacion;
 import miembro.Miembro;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class RepoSolicitudTest extends AbstractPersistenceTest implements WithGl
 
   RepoSolicitud repo = RepoSolicitud.getInstance();
 
-  Organizacion org = new Organizacion("", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
+  Organizacion org = new Organizacion("", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"",new ArrayList<>());
   OrganizacionCuenta cuenta = new OrganizacionCuenta("aaaa","aaaa");
   Sector ventas = new Sector("ventas",new ArrayList<>());
 
@@ -26,7 +27,7 @@ public class RepoSolicitudTest extends AbstractPersistenceTest implements WithGl
   Miembro jorge = new Miembro("jorge","jorge", TipoDocumento.DNI,32323,new ArrayList<>());
   MiembroCuenta cuentaJorge = new MiembroCuenta("bbsb","bqwbbb");
 
-  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
+  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"",new ArrayList<>());
   OrganizacionCuenta cuenta2 = new OrganizacionCuenta("bbsad","asdawas");
   Sector compras = new Sector("compras",new ArrayList<>());
 

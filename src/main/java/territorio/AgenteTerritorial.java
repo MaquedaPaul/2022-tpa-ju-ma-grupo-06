@@ -20,7 +20,7 @@ public class AgenteTerritorial {
   @OneToOne(cascade = CascadeType.PERSIST)
   SectorTerritorial sector;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   AgenteCuenta cuenta;
 
   public AgenteTerritorial(SectorTerritorial unSector, String unNombre) {
@@ -36,7 +36,4 @@ public class AgenteTerritorial {
     return sector;
   }
 
-  public void setCuenta(AgenteCuenta cuenta) {
-    this.cuenta = cuenta;
-  }
 }

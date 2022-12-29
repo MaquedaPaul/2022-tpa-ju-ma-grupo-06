@@ -2,10 +2,7 @@ package server;
 
 import linea.PuntoUbicacion;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
-import transporte.PropulsionHumana;
-import transporte.Tramo;
-import transporte.Transporte;
-import transporte.Trayecto;
+import transporte.*;
 
 public class BootstrapsTramosApi implements WithGlobalEntityManager {
   public static void init() {
@@ -34,10 +31,10 @@ public class BootstrapsTramosApi implements WithGlobalEntityManager {
 
     // TRAYECTOS
 
-    Trayecto trayecto = new Trayecto();
-    trayecto.agregarTramo(tramo1);
-    trayecto.agregarTramo(tramo2);
-
+    BuilderTrayecto builder = new BuilderTrayecto();
+    builder.agregarTramo(tramo1);
+    builder.agregarTramo(tramo2);
+    Trayecto trayecto = builder.build();
   }
 
   public void persistir(Object object) {

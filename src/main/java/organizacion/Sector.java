@@ -1,10 +1,10 @@
 package organizacion;
 
-import admin.config.GestorDeFechas;
 import lombok.Getter;
 import lombok.Setter;
 import miembro.Miembro;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 @Entity
 @Getter@Setter
 public class Sector {
-
 
   @Id
   @GeneratedValue
@@ -39,14 +38,6 @@ public class Sector {
     miembros.add(unMiembro);
   }
 
-  public List<Miembro> getMiembros() {
-    return miembros;
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
   public double calcularPromedioHCPorMiembroPorMes() {
     double resultado =this.calcularHCTotalDeMiembrosPorMes() / this.getCantidadMiembros();
     if(Double.isNaN(resultado)){
@@ -56,7 +47,7 @@ public class Sector {
   }
 
   public double calcularHCTotalDeMiembrosPorMes() {
-    return GestorDeFechas.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
+    return ServiceLocator.getInstance().getDiasDeTrabajo() * this.getTrayectosDeMiembros()
         .mapToDouble(Trayecto::calcularHC)
         .sum();
   }
@@ -67,6 +58,11 @@ public class Sector {
         .map(Miembro::getTrayectos)
         .flatMap(Collection::stream)
         .distinct();
+  }
+
+  // Se usa en la vista
+  private double getPromedioHc() {
+    return this.calcularHCTotalDeMiembrosPorMes();
   }
 
   public int getCantidadMiembros() {

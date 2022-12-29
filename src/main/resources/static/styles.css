@@ -112,6 +112,7 @@ img {
   text-align: center;
   justify-content: center;
 }
+
 .seccion {
   font-weight: bold;
   height: 100%;
@@ -204,15 +205,15 @@ form div label {
 
 .contenedorTrayecto {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 60%;
-  margin-left: 20%;
-  margin-right: 20%;
+  flex-wrap: wrap;
+  min-height: 270px;
+  counter-reset: numero-tramo;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding: 0 20px;
 }
 
-/*Thomas*/
 .impactoMiembro {
   text-align: center;
   margin-left: auto;
@@ -395,8 +396,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55px;
-  width: 150px;
+  height: 37px;
+  width: 130px;
   color: var(--color-texto);
   border-radius: 10px;
   margin: 10px;
@@ -481,4 +482,79 @@ button:hover {
 
 .mejorar{
   width:450px
+}
+
+.destacar {
+  font-size: 1.06rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.box-shadow {
+  box-shadow: 2px 2px 1px black;
+}
+
+.input-spacing {
+  margin-bottom: 15px;
+}
+
+.contenedor-tramo {
+  background-color: var(--main-green);
+  width: 200px;
+  height: 270px;
+  box-shadow: 2px 2px 3px black;
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  padding: 20px;
+  gap: 10px;
+}
+
+.contenedor-tramo::before {
+  position: absolute;
+  counter-increment: numero-tramo;
+  content: counter(numero-tramo);
+  top: 3px;
+  left: 3px;
+  border: 2px solid black;
+  border-radius: 50%;
+  background-color: white;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.contenedor-tramo:hover {
+  transform: scale(1.02);
+  box-shadow: 3px 3px 5px black;
+}
+
+.contenedor-puntos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.white-border-background {
+  border-color: white;
+  background-color: white;
+}
+
+.cross-icon {
+  background-color: red;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
+  border: none;
+}
+
+.cross-icon:hover {
+  transform: scale(1.1);
+}
+
+.cross-icon:active {
+  transform: scale(0.9);
 }

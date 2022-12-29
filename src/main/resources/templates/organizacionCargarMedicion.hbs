@@ -1,11 +1,5 @@
-{{#partial "navbar-options"}}
-    <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
-    <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
-    <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
-{{/partial}}
-
 {{#partial "content"}}
-    <h2>Crear Medición</h2>
+    <h2>Ingresar Medición</h2>
     <form class="flex-clm form-evo-hc" id="acciones">
         <label for="tipo-consumo"><h3>Tipo de consumo</h3></label>
         <input list="tipo-consumos" id="tipo-consumo" name="tipo-de-consumo" class="flex-clm form form-evo-hc">
@@ -30,13 +24,13 @@
                name="fecha-medicion" class="flex-clm form form-evo-hc">
         <div>
             <button type="submit" form="acciones" formaction="/home/mediciones"
-                    class="btn-consulta">
-                Atrás
+                    class="btn-2 first">
+                 Atrás
             </button>
             <button id="ingresar" type="submit" form="acciones" formmethod="post"
                     formaction="/home/mediciones/perse/creado"
-                    class="btn-consulta">
-                Ingresar
+                    class="btn-consulta destacar">
+                Guardar
             </button>
         </div>
 
@@ -52,4 +46,4 @@
 
 {{/partial}}
 
-{{>home-iniciado-sesion.hbs}}
+{{>organizacion-home-iniciado-sesion.hbs}}

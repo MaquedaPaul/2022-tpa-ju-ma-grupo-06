@@ -1,9 +1,7 @@
 package transporte;
 
-//import java.io.IOException;
-//import linea.PuntoUbicacion;
-//import services.geodds.ServicioGeodds;
-//import services.geodds.entities.Distancia;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Entity
+@Getter@Setter
 public class VehiculoParticular extends TransportePrivado {
 
   @Enumerated(EnumType.STRING)
@@ -25,14 +24,6 @@ public class VehiculoParticular extends TransportePrivado {
     this.tipoVehiculo = tipoVehiculo;
     this.consumoPorKilometro = consumoPorKilometro;
     this.nombre = nombre;
-  }
-
-  public TipoVehiculo getTipoVehiculo() {
-    return tipoVehiculo;
-  }
-
-  public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
-    this.tipoVehiculo = tipoVehiculo;
   }
 
   @Override

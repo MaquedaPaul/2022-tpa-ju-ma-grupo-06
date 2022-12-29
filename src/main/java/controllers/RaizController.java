@@ -9,6 +9,6 @@ public class RaizController {
     if (request.session().attribute("cuenta") != null) {
       response.redirect("/home");
     }
-    return new ModelAndView(null, "raiz.hbs");
+    return new ModelAndView("", "raiz.hbs");
   }
 }

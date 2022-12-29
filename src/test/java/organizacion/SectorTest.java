@@ -1,11 +1,11 @@
 package organizacion;
 
-import admin.config.GestorDeFechas;
 import miembro.Miembro;
 import miembro.MiembroTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import transporte.Trayecto;
+import utils.ServiceLocator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ class SectorTest {
 
   Sector sector = new Sector("sector prueba", miembros);
 
-  int diasLaborales = GestorDeFechas.getInstance().getDiasDeTrabajo();
+  int diasLaborales = ServiceLocator.getInstance().getDiasDeTrabajo();
 
   @BeforeEach
   public void init() {

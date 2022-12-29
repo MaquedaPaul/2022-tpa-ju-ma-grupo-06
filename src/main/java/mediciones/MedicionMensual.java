@@ -1,6 +1,7 @@
 package mediciones;
 
 import exceptions.LaFechaDeInicioDebeSerAnteriorALaFechaDeFin;
+import lombok.Getter;
 import organizacion.Organizacion;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoMensual;
@@ -10,12 +11,15 @@ import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 public class MedicionMensual extends Medicion {
+
+  private double valor;
 
   public MedicionMensual(Organizacion org, TipoConsumo tipoConsumo, LocalDate fecha, double valor) {
 
     this.setFecha(fecha);
-    this.setValor(valor);
+    this.valor = valor;
     this.setOrganizacion(org);
     this.setTipoConsumo(tipoConsumo);
   }

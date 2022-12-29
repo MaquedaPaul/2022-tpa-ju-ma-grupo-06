@@ -31,7 +31,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.*;
 
-public class OrganizacionController extends AccountController {
+public class OrganizacionController {
 
   private Organizacion obtenerOrganizacion(Request request){
     OrganizacionCuenta usuario = request.session().attribute("cuenta");
@@ -105,32 +105,12 @@ public class OrganizacionController extends AccountController {
   }
 
   public ModelAndView getIndicadorHcSectorBuscar(Request request, Response response) {
-
-    Map<String, Object> model = new HashMap<>();
-    model.put("sectorNoNull", true);
-    model.put("comprobacion", true);
-    return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
-  }
-
-  public ModelAndView getIndicadorHcSectorConNombre(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);
+    List<Sector> sectoresOrganizacion = organizacion.getSectores();
     Map<String, Object> model = new HashMap<>();
-
-
-    String nombreSector = request.params("nombre").toLowerCase();
-    Sector sector = organizacion.obtenerSectorSinCaseSensitive(nombreSector);
-    boolean sectorNoNull = sector != null;
-    model.put("sectorNoNull", sectorNoNull);
-    if(sectorNoNull){
-      model.put("nombre",sector.getNombre());
-      double hcPromedio = sector.calcularPromedioHCPorMiembroPorMes();
-      model.put("hcpromedio",hcPromedio);
-      return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
-    }
-
+    model.put("sectores", sectoresOrganizacion);
     return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
   }
-
 
   public ModelAndView getMediciones(Request request, Response response) {
     Organizacion organizacion = obtenerOrganizacion(request);

@@ -1,5 +1,6 @@
 package notificaciones;
 
+import linea.PuntoUbicacion;
 import notificaciones.medioNotificacion.MedioNotificador;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterEmail;
 import notificaciones.medioNotificacion.apisMensajeria.AdapterWhatsapp;
@@ -7,7 +8,6 @@ import org.junit.After;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
-import repositorios.RepoOrganizacion;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class NotificadorTest {
 
-  Organizacion compraGamer = new Organizacion("Compra Gamer", TipoOrganizacion.EMPRESA, "Calle falsa 123", "PG13", new ArrayList<>());
+  Organizacion compraGamer = new Organizacion("Compra Gamer", TipoOrganizacion.EMPRESA, new PuntoUbicacion(1,"San Juan",333), "PG13", new ArrayList<>());
   Contacto juan = new Contacto("Juan Carlos", "juanca@gmail.com", "1552207303");
   Contacto jorge = new Contacto("Jorge Carlos", "jorgeca@gmail.com", "1552207343");
   String mesActual = LocalDate.now().getMonth().toString();
@@ -71,7 +71,7 @@ public class NotificadorTest {
       contactos.add(contactoMock);
     }
     assertEquals(15, contactos.size());
-    Organizacion nueva = new Organizacion("text",TipoOrganizacion.INSTITUCION,"text","text",contactos);
+    Organizacion nueva = new Organizacion("text",TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333),"text",contactos);
     //TODO Rompe por DB, transaccción ya activa
     /*
     RepoOrganizacion.getInstance().agregarOrganizacion(nueva);
@@ -111,7 +111,7 @@ public class NotificadorTest {
     medioMock.setMensaje(mensajeNotificacion);
     medioMock.setUrl(url);
     medioMock.setAsunto(asunto);
-    Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+    Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333), "texto3", new ArrayList<>());
     Contacto jorge = new Contacto("Jorge Nitales", "jorgeni@gmail.com", "1552207070");
     String asuntoEsperado = "RECOMENDACIONES " + mesActual + " " + anioActual;
     String mensajeEsperado = "Hola Jorge Nitales de ONU, te envio el link a la pagina del mes " + mesActual + ": " + url;
@@ -171,7 +171,7 @@ public class NotificadorTest {
     MedioNotificador medioMock = spy(new AdapterEmail());
     medioMock.setMensaje(mensajeNotificacion);
     medioMock.setUrl(url);
-    Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION, "texto2", "texto3", new ArrayList<>());
+    Organizacion onu = new Organizacion("ONU", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(1,"San Juan",333), "texto3", new ArrayList<>());
     Contacto jose = new Contacto("Jose Pereira", "jorgeni@gmail.com", "1552207070");
     String mensajeEsperado = "Hola Jose Pereira de ONU, te envio el link a la pagina del mes " + mesActual + ": " + url;
     assertEquals(mensajeEsperado, medioMock.mensajePersonalizadoPara(jose, onu));

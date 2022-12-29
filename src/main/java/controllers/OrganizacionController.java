@@ -229,11 +229,8 @@ public class OrganizacionController extends AccountController {
 
     File uploadDir = new File("upload");
 
-    boolean comprobacion =uploadDir.mkdir();
-    if(!comprobacion){
-      //TODO
-      return null;
-    }
+    uploadDir.mkdir();
+
 
     //staticFiles.externalLocation("upload");
     Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".csv");
@@ -252,14 +249,17 @@ public class OrganizacionController extends AccountController {
     LectorMediciones lector = new LectorMediciones(tempFile.toString(),organizacion);
     try {
       lector.leerMediciones();
-    }catch (Exception e){
+      lector.cargarMediciones();
+      model.put("ingresoValido",true);
+      return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+    }
+    //TODO PONER MAS CATCHS y no atrapar ni lanzar excepciones genéricas
+    catch (Exception e){
       model.put("formatoNoValido",true);
       return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
     }
 
-    lector.cargarMediciones();
-    model.put("ingresoValido",true);
-    return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+
   }
 
 

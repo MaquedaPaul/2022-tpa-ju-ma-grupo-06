@@ -7,7 +7,6 @@ import exceptions.NoSeEncuentraException;
 
 import linea.PuntoUbicacion;
 import miembro.Miembro;
-import miembro.MiembroBuilder;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -231,13 +230,8 @@ public class OrganizacionTest {
                                        String apellido,
                                        int documento,
                                        TipoDocumento unTipo) {
-    MiembroBuilder nuevoMiembro = new MiembroBuilder();
-    nuevoMiembro.especificarNombre(nombre);
-    nuevoMiembro.especificarApellido(apellido);
-    nuevoMiembro.especificarNumeroDocumento(documento);
-    nuevoMiembro.especificarTipoDocumento(unTipo);
-    nuevoMiembro.especificarTrayectos(new ArrayList<>());
-    return nuevoMiembro.construir();
+
+    return new Miembro(nombre, apellido, unTipo, documento, new ArrayList<>());
   }
 
   /*

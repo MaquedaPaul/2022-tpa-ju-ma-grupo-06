@@ -3,10 +3,12 @@ package tipoconsumo;
 import admin.FactorEmision;
 import exceptions.UnidadFeNoCorrespondienteConUnidadTipoConsumo;
 import global.Unidad;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
 public class TipoConsumo {
 
   @Id
@@ -53,21 +55,5 @@ public class TipoConsumo {
       throw new UnidadFeNoCorrespondienteConUnidadTipoConsumo(
           "La unidad del FE no se corresponde con la unidad del tipo.consumo.TipoConsumo");
     }
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
-  public TipoActividad getActividad() {
-    return actividad;
-  }
-
-  public TipoAlcance getAlcance() {
-    return alcance;
-  }
-
-  public FactorEmision getFactorEmision() {
-    return factorEmision;
   }
 }

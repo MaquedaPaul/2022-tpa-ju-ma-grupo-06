@@ -214,7 +214,6 @@ form div label {
   padding: 0 20px;
 }
 
-/*Thomas*/
 .impactoMiembro {
   text-align: center;
   margin-left: auto;
@@ -397,8 +396,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55px;
-  width: 150px;
+  height: 37px;
+  width: 130px;
   color: var(--color-texto);
   border-radius: 10px;
   margin: 10px;
@@ -486,12 +485,18 @@ button:hover {
 }
 
 .destacar {
-  font-size: 1.2rem;
+  font-size: 1.06rem;
   font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .box-shadow {
   box-shadow: 2px 2px 1px black;
+}
+
+.input-spacing {
+  margin-bottom: 15px;
 }
 
 .contenedor-tramo {

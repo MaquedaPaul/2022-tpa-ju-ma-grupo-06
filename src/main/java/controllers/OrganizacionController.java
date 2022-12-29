@@ -31,7 +31,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.*;
 
-public class OrganizacionController extends AccountController {
+public class OrganizacionController {
 
   private Organizacion obtenerOrganizacion(Request request){
     OrganizacionCuenta usuario = request.session().attribute("cuenta");

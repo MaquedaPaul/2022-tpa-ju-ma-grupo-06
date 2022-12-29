@@ -70,5 +70,4 @@ public class ReporteOrganizaciones {
         org.calcularHCTotalMediciones(periodo),
         periodo);
   }
-
 }

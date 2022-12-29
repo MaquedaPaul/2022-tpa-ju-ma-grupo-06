@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @MappedSuperclass
 public abstract class TransportePrivado extends Transporte {
+
   @Transient
   ServicioDistancia servicioGeodds = ServiceLocator.getInstance().getServicioDistancia();
 

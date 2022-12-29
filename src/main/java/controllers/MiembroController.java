@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MiembroController extends AccountController {
+public class MiembroController {
 
   private Miembro obtenerMiembro(Request request){
     MiembroCuenta usuario = request.session().attribute("cuenta");

@@ -1,9 +1,12 @@
 package transporte;
 
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
+@Getter
 public class PropulsionHumana extends TransportePrivado {
 
   @Column(name = "TIPO_TRANSPORTE")
@@ -15,10 +18,6 @@ public class PropulsionHumana extends TransportePrivado {
   public PropulsionHumana(String herramientaUtilizada) {
     this.herramientaUtilizada = herramientaUtilizada;
     this.consumoPorKilometro = 0;
-  }
-
-  public String getHerramientaUtilizada() {
-    return herramientaUtilizada;
   }
 
   @Override

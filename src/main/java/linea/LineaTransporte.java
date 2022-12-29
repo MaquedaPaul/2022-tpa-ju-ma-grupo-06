@@ -1,10 +1,12 @@
 package linea;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity @Getter
 public class LineaTransporte {
 
   @Id
@@ -85,10 +87,6 @@ public class LineaTransporte {
 
   public Parada finalDelRecorridoDeRegreso() {
     return recorridoDeIda.get(recorridoDeIda.size() - 1);
-  }
-
-  public String getNombre() {
-    return nombre;
   }
 
   public String diplay() {

@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 
 public class MiembroTest {
 
-  Organizacion org1 = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
-  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA, "", "", new ArrayList<>());
+  Organizacion org1 = new Organizacion("", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
+  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA, new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
   List<Trayecto> trayectos = mock(ArrayList.class);
   Miembro miembro1 = new Miembro("", "", TipoDocumento.DNI, 1, trayectos);
 

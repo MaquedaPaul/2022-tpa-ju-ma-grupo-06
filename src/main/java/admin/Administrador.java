@@ -1,10 +1,13 @@
 package admin;
 
+import lombok.Getter;
+import lombok.Setter;
 import repositorios.RepoFactoresEmision;
 
 import javax.persistence.*;
 
 @Entity
+@Getter@Setter
 @Table(name = "Administrador")
 public class Administrador {
 
@@ -24,22 +27,6 @@ public class Administrador {
   public Administrador(String unUsuario, String unPassword) {
     this.usuario = unUsuario;
     this.password = unPassword;
-  }
-
-  public String getUsuario() {
-    return usuario;
-  }
-
-  public void setUsuario(String usuario) {
-    this.usuario = usuario;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   void crearFactorEmision(FactorEmision unFactor) {

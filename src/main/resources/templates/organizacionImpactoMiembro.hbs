@@ -7,16 +7,23 @@
     <h2>Impacto de un miembro</h2>
     <div class="divArreglo" id="main-section">
         <form class="claseForm" method="get" action="/home/calculadora-hc/impacto-de-miembro">
-            <input class="flex-clm form form-evo-hc" type="search" name="miembro" value="" placeholder="Ingrese nombre y apellido del miembro" required>
+
+            {{#if estaActivadoBoton}}
+            <select id="selector-organizacion" name="miembro" class="flex-clm form form-evo-hc">
+                {{#each miembros}}
+                    <option>{{nombre}} {{apellido}}</option>
+                {{/each}}
+            </select>
             <button type="submit" class="btn-consulta">
                 Calcular
             </button>
+            {{else}}
+                No hay miembros en la organización
+                {{/if}}
+
         </form>
 
-
-            {{#if miembroNoNull}}
-                {{#if comprobacion}}
-
+            {{#if conSeleccion}}
                     <div class="container-hc flex-clm">
                         <div class="hc-mensual flex-clm">
                             <h3>Nombre: <span class="green">{{nombre}}</span></h3>
@@ -24,19 +31,6 @@
                             <h3>Impacto: <span class="green">{{impacto}}%</span></h3>
                         </div>
                     </div>
-                {{else}}
-                    <div class="container-hc flex-clm">
-                        <div class="hc-mensual flex-clm">
-                            <h3>Nombre: <span class="green">{{nombre}}</span></h3>
-                            <h3>Apellido: <span class="green">{{apellido}}</span></h3>
-                            <h3>Impacto: <span class="green">{{impacto}}%</span></h3>
-                            <p style="color: red"> Error: el miembro ingresado no pertenece a la organizacion </p>
-                        </div>
-                    </div>
-
-                {{/if}}
-            {{else}}
-                <p style="color: red"> Error: el miembro no existe </p>
             {{/if}}
     </div>
 {{/partial}}

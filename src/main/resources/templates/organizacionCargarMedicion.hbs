@@ -2,12 +2,12 @@
     <h2>Ingresar Medición</h2>
     <form class="flex-clm form-evo-hc" id="acciones">
         <label for="tipo-consumo"><h3>Tipo de consumo</h3></label>
-        <input list="tipo-consumos" id="tipo-consumo" name="tipo-de-consumo" class="flex-clm form form-evo-hc">
-        <datalist id="tipo-consumos">
-            {{#each tipoconsumos}}
-                <option value="{{nombre}}"></option>
+        <select id="tipo-consumo" name="tipo-consumo" class="flex-clm form form-evo-hc">
+            <option disabled="">Selecciona una opcion</option>
+        {{#each tipoconsumos}}
+                <option value="{{nombre}}"> {{nombre}}</option>
             {{/each}}
-        </datalist>
+        </select>
 
         <label for="periodicidad" ><h3>Periodicidad</h3></label>
         <select id=periodicidad name="periodicidad" class="flex-clm form form-evo-hc">

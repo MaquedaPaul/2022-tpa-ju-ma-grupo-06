@@ -80,13 +80,6 @@ h3 {
   margin: 0;
 }
 
-footer {
-  font-weight: bold;
-  background-color: var(--main-green);
-  height: 50px;
-  margin-top: auto;
-}
-
 img {
   width: 40px;
   height: 40px;
@@ -557,4 +550,75 @@ button:hover {
 
 .cross-icon:active {
   transform: scale(0.9);
+}
+
+/*footer {
+  font-weight: bold;
+  background-color: var(--main-green);
+  height: 50px;
+  margin-top: auto;
+}
+ */
+footer {
+  background-color: var(--main-green);
+  margin-top: auto;
+  padding: 15px;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.social-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons li {
+  margin: 0 10px;
+}
+
+.social-icons li a {
+  color: #fff;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.social-icons li a:hover {
+  color: #eee;
+}
+
+.pFooter{
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 20px 0 0 0;
+  text-align: center;
+  color: #1F2421;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.copyright {
+  font-size: 14px;
+  text-align: center;
+  color: darkgray;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.copyright a {
+  color: darkgray;
+}
+
+.copyright a:hover {
+  color: #333;
+}
+
+.aFooter{
+  color: darkgray;
+  font-family: sans-serif;
+  display: inline-block;
 }

@@ -17,7 +17,8 @@ public enum TipoCuenta {
           ".*/home/trayectos/registro/eliminar",
           ".*/home/trayectos/registro/cancelar",
           ".*/home/trayectos/registro/crear",
-          ".*/home/vinculacion"
+          ".*/home/vinculacion",
+          ".*/not-found"
       };
       return Arrays.stream(pathsValidos).anyMatch(path::matches);
     }
@@ -41,7 +42,8 @@ public enum TipoCuenta {
           ".*/home/calculadora-hc/impacto-de-miembro/.*",
           ".*/home/calculadora-hc/indicador-hc-sector/buscador",
           ".*/home/calculadora-hc/indicador-hc-sector",
-          ".*/home/calculadora-hc/indicador-hc-sector/.*"
+          ".*/home/calculadora-hc/indicador-hc-sector/.*",
+          ".*/not-found"
       };
       return Arrays.stream(pathsValidos).anyMatch(path::matches);
     }
@@ -61,7 +63,8 @@ public enum TipoCuenta {
           ".*/home/organizaciones/.*/evolucion-hc/consulta",
           ".*/home/organizaciones/.*/evolucion-hc/grafico",
           ".*/home/organizaciones/.*/composicion-hc/consulta",
-          ".*/home/organizaciones/.*/composicion-hc/grafico"
+          ".*/home/organizaciones/.*/composicion-hc/grafico",
+          ".*/not-found"
       };
       return Arrays.stream(pathsValidos).anyMatch(path::matches);
     }

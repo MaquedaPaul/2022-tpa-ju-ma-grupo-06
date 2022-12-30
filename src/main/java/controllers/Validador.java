@@ -36,9 +36,9 @@ public class Validador {
     if (!cuenta.puedeAccederA(request.url())) {
       System.out.println("NO PUEDO ACCEDER");
       System.out.println("REDIRECCIONO AL NOT FOUND");
-      //TODO AGREGAR PANTALLA 404 NOT FOUND
-      //halt(404);
-      response.redirect("/");
+      response.type("text/html");
+      response.status(404);
+      response.redirect("/not-found");
       return;
     }
     System.out.println("PUEDO ACCEDER");

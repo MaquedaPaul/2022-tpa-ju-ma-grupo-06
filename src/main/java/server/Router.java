@@ -9,6 +9,7 @@ public class Router {
   public static void init() {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
     RaizController raizController = new RaizController();
+    ErrorController errorController = new ErrorController();
     HomeController homeController = new HomeController();
     RecomendacionController recomendacionController = new RecomendacionController();
 
@@ -29,7 +30,7 @@ public class Router {
     }));
 
     Spark.before(Validador::validarAcceso);
-    Spark.notFound(homeController::getHome);
+    Spark.notFound(errorController::get404Page);
     Spark.after(
         (req, res) ->
         {
@@ -40,6 +41,7 @@ public class Router {
     );
 
     //COMUNES PARA TODOS
+    Spark.get("/not-found", errorController::get404Page,engine);
     Spark.get("/", raizController::getPage, engine);
     Spark.get("/recomendaciones", recomendacionController::getRecomendaciones, engine);
     Spark.get("/home",homeController::getHome, engine);

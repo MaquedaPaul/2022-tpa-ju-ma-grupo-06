@@ -552,13 +552,10 @@ button:hover {
   transform: scale(0.9);
 }
 
-/*footer {
-  font-weight: bold;
-  background-color: var(--main-green);
-  height: 50px;
-  margin-top: auto;
-}
+/*
+CSS para el Footer
  */
+
 footer {
   background-color: var(--main-green);
   margin-top: auto;
@@ -622,3 +619,62 @@ footer {
   font-family: sans-serif;
   display: inline-block;
 }
+
+/*
+CSS para la página de error
+ */
+
+.bodyError {
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.h1Error {
+  color: #c00;
+  font-size: 2em;
+  font-family: sans-serif;
+  margin-top: 5px;
+}
+
+.pError {
+  margin: 1em 0;
+  font-family: sans-serif;
+}
+
+.imgError {
+  width: 45%;
+  height: 45%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.aError {
+  text-decoration: none;
+}
+
+.buttonError {
+  background-color: #006600;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.buttonError:hover {
+  background-color: #009900;
+}
+
+.buttonError a {
+  color: #fff;
+  text-decoration: none;
+}
+

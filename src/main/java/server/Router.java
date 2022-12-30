@@ -1,6 +1,7 @@
 package server;
 
 import controllers.*;
+import controllers.organizacion.*;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,6 +19,10 @@ public class Router {
 
     MiembroController miembroController = new MiembroController();
     OrganizacionController organizacionController = new OrganizacionController();
+    ImpactoController impactoController = new ImpactoController();
+    IndicadorController indicadorController = new IndicadorController();
+    MedicionController medicionController = new MedicionController();
+    VinculacionController vinculacionController = new VinculacionController();
     AgenteController agenteController = new AgenteController();
 
     Spark.staticFiles.location("static");
@@ -63,22 +68,22 @@ public class Router {
     Spark.post("/home/vinculacion", miembroController::pedirVinculacion, engine);
 
     //ORGANIZACION
-    Spark.get("/home/vinculaciones", organizacionController::getVinculaciones, engine);
-    Spark.post("/home/vinculaciones/:id/aceptar", organizacionController::aceptarVinculacion,engine);
-    Spark.post("/home/vinculaciones/:id/rechazar", organizacionController::rechazarVinculacion,engine);
+    Spark.get("/home/vinculaciones", vinculacionController::getVinculaciones, engine);
+    Spark.post("/home/vinculaciones/:id/aceptar", vinculacionController::aceptarVinculacion,engine);
+    Spark.post("/home/vinculaciones/:id/rechazar", vinculacionController::rechazarVinculacion,engine);
     Spark.post("/home/vinculaciones", miembroController::pedirVinculacion, engine);
-    Spark.get("/home/mediciones", organizacionController::getMediciones, engine);
-    Spark.get("/home/mediciones/perse", organizacionController::getMedicionesPerse, engine);
-    Spark.post("/home/mediciones/perse/creado",organizacionController::crearMedicion,engine);
-    Spark.get("/home/mediciones/archivo", organizacionController::getMedicionesArchivo, engine);
-    Spark.post("/home/mediciones/archivo", organizacionController::subirCSVs, engine);
+    Spark.get("/home/mediciones", medicionController::getMediciones, engine);
+    Spark.get("/home/mediciones/perse", medicionController::getMedicionesPerse, engine);
+    Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion,engine);
+    Spark.get("/home/mediciones/archivo", medicionController::getMedicionesArchivo, engine);
+    Spark.post("/home/mediciones/archivo", medicionController::subirCSVs, engine);
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);
     Spark.get("/home/calculadora-hc/hc-total", organizacionController::getHcTotal, engine);
-    Spark.get("/home/calculadora-hc/impacto-de-miembro/buscador", organizacionController::getImpactoMiembroBuscar, engine);
-    Spark.get("/home/calculadora-hc/impacto-de-miembro", organizacionController::getImpactoMiembro, engine);
-    Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", organizacionController::getImpactoMiembroConNombreYApellido, engine);
-    Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", organizacionController::getIndicadorHcSectorBuscar, engine);
-    Spark.get("/home/calculadora-hc/indicador-hc-sector", organizacionController::getIndicadorHcSector, engine);
+    Spark.get("/home/calculadora-hc/impacto-de-miembro/buscador", impactoController::getImpactoMiembroBuscar, engine);
+    Spark.get("/home/calculadora-hc/impacto-de-miembro", impactoController::getImpactoMiembro, engine);
+    Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", impactoController::getImpactoMiembroConNombreYApellido, engine);
+    Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", indicadorController::getIndicadorHcSectorBuscar, engine);
+    Spark.get("/home/calculadora-hc/indicador-hc-sector", indicadorController::getIndicadorHcSector, engine);
 
     //AGENTE
     Spark.get("/home/composicion-hc",agenteController::getComposicionHc,engine);

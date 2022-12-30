@@ -1,4 +1,4 @@
-package controllers;
+package controllers.base;
 
 import cuenta.Cuenta;
 import spark.ModelAndView;

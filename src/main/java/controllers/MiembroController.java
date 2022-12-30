@@ -41,15 +41,10 @@ public class MiembroController {
 
 
   public ModelAndView getTrayectos(Request request, Response response) {
-
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
     return new ModelAndView(null,"miembroTrayectos.hbs");
   }
 
   public ModelAndView pedirVinculacion(Request request, Response response) {
-/*    String usuario = comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
 
     String organizacionSolicitada = request.queryParams("organizacionSolicitada");
     String sectorSolicitado = request.queryParams("sectorSolicitado");
@@ -72,14 +67,10 @@ public class MiembroController {
   }
 
   public ModelAndView getRegistro(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
     return new ModelAndView(null,"registro.hbs");
   }
 
   public ModelAndView getRegistrarTrayecto(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     if (trayecto == null) {
       request.session().attribute("trayecto", new BuilderTrayecto());
@@ -88,8 +79,7 @@ public class MiembroController {
   }
 
   public ModelAndView getVinculacion(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
+
     List<Organizacion> organizaciones =  RepoOrganizacion.getInstance().getOrganizaciones();
     List<String> nombreSectores = new ArrayList<>(RepoOrganizacion.getInstance().nombreDeTodosLosSectores());
     HashMap<String, Object> hashMap = new HashMap<>();
@@ -99,8 +89,7 @@ public class MiembroController {
   }
 
   public ModelAndView getTrayectoNuevo(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
+
     Map<String, Object> map = mapearTransportePortipo();
     return new ModelAndView(map,"miembroTrayectoNuevo.hbs");
   }
@@ -188,8 +177,7 @@ public class MiembroController {
   }
 
   public ModelAndView eliminarTramo(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
+
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     if (!trayecto.getTramos().isEmpty()) {
       trayecto.eliminarUltimoTramo();
@@ -200,8 +188,7 @@ public class MiembroController {
   }
 
   public ModelAndView cancelarTrayecto(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
+
     BuilderTrayecto trayecto = new BuilderTrayecto();
     request.session().attribute("trayecto", trayecto);
     response.redirect("/home/trayectos/registro");
@@ -210,15 +197,14 @@ public class MiembroController {
 
   @Transactional
   public ModelAndView crearTrayecto(Request request, Response response) {
-    /*comprobarSession(request, response);
-    comprobarTipoCuenta(request, response, "miembro");*/
+
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     Trayecto trayectoNuevo = trayecto.build();
 
     Map<String, Object> model = new HashMap<>();
 
     if (trayectoNuevo.getTramos().isEmpty()) {
-      //response.redirect("/home/trayectos/registro");
+
       model.put("trayectoVacio",true);
       return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
     } else {
@@ -230,7 +216,7 @@ public class MiembroController {
 
       model.put("trayectoCargadoConExito",true);
       return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
-      //response.redirect("/home/trayectos/registro");
+
     }
   }
 }

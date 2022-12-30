@@ -89,13 +89,7 @@ public class MiembroTest {
                                        String apellido,
                                        int documento,
                                        TipoDocumento unTipo) {
-    MiembroBuilder nuevoMiembro = new MiembroBuilder();
-    nuevoMiembro.especificarNombre(nombre);
-    nuevoMiembro.especificarApellido(apellido);
-    nuevoMiembro.especificarNumeroDocumento(documento);
-    nuevoMiembro.especificarTipoDocumento(unTipo);
-    nuevoMiembro.especificarTrayectos(new ArrayList<>());
-    return nuevoMiembro.construir();
+    return new Miembro(nombre, apellido, unTipo, documento, new ArrayList<>());
   }
 
   @Test

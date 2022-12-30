@@ -1,4 +1,4 @@
-package server;
+package server.bootstraps;
 
 import cuenta.*;
 import linea.PuntoUbicacion;

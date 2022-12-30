@@ -1,4 +1,4 @@
-package server;
+package server.bootstraps;
 
 import linea.PuntoUbicacion;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;

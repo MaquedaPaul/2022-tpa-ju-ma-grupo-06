@@ -1,11 +1,10 @@
-package server;
+package server.bootstraps;
 
 import cuenta.AgenteCuenta;
 import cuenta.MiembroCuenta;
 import cuenta.OrganizacionCuenta;
 import global.Unidad;
 import linea.PuntoUbicacion;
-import mediciones.Medicion;
 
 import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -13,6 +12,7 @@ import organizacion.Organizacion;
 import organizacion.Sector;
 import organizacion.TipoDocumento;
 import organizacion.TipoOrganizacion;
+import server.bootstraps.Bootstraps;
 import territorio.AgenteTerritorial;
 import territorio.SectorTerritorial;
 import territorio.TipoSectorTerritorial;
@@ -21,7 +21,6 @@ import tipoconsumo.TipoAlcance;
 import tipoconsumo.TipoConsumo;
 import transporte.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 public class BootstrapsMedicion implements WithGlobalEntityManager {

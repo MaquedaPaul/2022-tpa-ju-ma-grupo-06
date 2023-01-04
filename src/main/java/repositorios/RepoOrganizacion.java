@@ -61,9 +61,8 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
     entityManager().getTransaction().commit();
   }
 
-  public Set<Sector> obtenerTodosLosSectores() {
-    return getOrganizaciones().stream().flatMap(organizacion -> organizacion.generarSectoresVacios().stream())
-        .collect(Collectors.toSet()).stream().map(nombre -> new Sector(nombre, new ArrayList<>())).collect(Collectors.toSet());
+  public Set<String> nombreDeTodosLosSectores() {
+    return getOrganizaciones().stream().flatMap(organizacion -> organizacion.getSectores().stream()).map(sector -> sector.getNombre()).collect(Collectors.toSet());
   }
 
   public Organizacion getOrganizacionPor(String razonSocial) {

@@ -4,11 +4,13 @@ import com.google.common.collect.Iterables;
 import exceptions.NoConcuerdaInicioYFin;
 import linea.PuntoUbicacion;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 
 public class BuilderTrayecto {
-  HashSet<Tramo> tramos = new HashSet<>();
+  List<Tramo> tramos = new ArrayList<>();
   Tramo ultimoTramo = new Tramo();
 
   public BuilderTrayecto setPuntoOrigen(PuntoUbicacion puntoUbicacion) throws NoConcuerdaInicioYFin {
@@ -41,11 +43,18 @@ public class BuilderTrayecto {
     ultimoTramo = new Tramo();
   }
 
-  public Trayecto build() {
-    return new Trayecto(tramos);
+  public void agregarTramo(Tramo tramo) {
+    Objects.requireNonNull(tramo.getPuntoOrigen());
+    Objects.requireNonNull(tramo.getPuntoDestino());
+    Objects.requireNonNull(tramo.getTransporteUtilizado());
+    tramos.add(tramo);
   }
 
-  public HashSet<Tramo> getTramos() {
+  public Trayecto build() {
+    return new Trayecto(new HashSet<>(tramos));
+  }
+
+  public List<Tramo> getTramos() {
     return tramos;
   }
 

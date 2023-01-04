@@ -1,10 +1,14 @@
 package notificaciones;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Getter@Setter
 public class Contacto {
 
   @Id
@@ -15,8 +19,7 @@ public class Contacto {
   private String mail;
   private String nroCelular;
 
-  public Contacto() {
-  }
+  public Contacto() {}
 
   public Long getId() {
     return id;
@@ -29,26 +32,6 @@ public class Contacto {
     this.mail = mail;
     this.nroCelular = nroCelular;
     this.nombreContacto = nombreContacto;
-  }
-
-  public String getNroCelular() {
-    return nroCelular;
-  }
-
-  public void setNroCelular(String nroCelular) {
-    this.nroCelular = nroCelular;
-  }
-
-  public String getMail() {
-    return mail;
-  }
-
-  public void setMail(String mail) {
-    this.mail = mail;
-  }
-
-  public String getNombreContacto() {
-    return nombreContacto;
   }
 
 }

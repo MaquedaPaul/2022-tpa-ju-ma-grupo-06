@@ -2,6 +2,7 @@ package lectorcsv;
 
 import exceptions.*;
 import global.Unidad;
+import linea.PuntoUbicacion;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -56,7 +57,7 @@ public class LectorCSVTest implements WithGlobalEntityManager {
 
   @BeforeAll
   static void inicializar() {
-    mockOrg = new Organizacion("", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
+    mockOrg = new Organizacion("", TipoOrganizacion.EMPRESA,new PuntoUbicacion(1,"San Juan",333),"",new ArrayList<>());
 
     HashMap<TipoPerioricidad, DateTimeFormatter> formatos = new HashMap<>();
     formatos.put(TipoPerioricidad.ANUAL, formatoAnual);

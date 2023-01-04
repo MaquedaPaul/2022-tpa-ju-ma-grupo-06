@@ -27,14 +27,6 @@ public class FactorEmision {
     this.unidadDivisible = unidadDivisible;
   }
 
-  public double getValor() {
-    return valor;
-  }
-
-  public Unidad getUnidadDivisible() {
-    return unidadDivisible;
-  }
-
   public void setValor(double valor) {
     this.valor = valor;
   }

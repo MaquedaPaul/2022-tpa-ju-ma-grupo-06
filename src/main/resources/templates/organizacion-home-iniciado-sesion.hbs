@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tp Anual</title>
+    <link rel="stylesheet" href="/styles.css">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+      <link rel="icon" type="image/png" href="/user.svg"/>
+    {{#block "script"}}
+    {{/block}}
+  </head>
+
+  <body>
+    <header class="flex-between">
+        <a href="/" class="flex-between">
+          <img src="/logo.svg" alt="Logo de la Pagina">
+          <h1>Impacto Ambiental</h1>
+        </a>
+        <nav>
+            <a class="seccion" href="/home/vinculaciones">Gestionar Vinculaciones</a>
+                <a class="seccion" href="/home/calculadora-hc">Calculadora Hc</a>
+                <a class="seccion" href="/home/mediciones">Registrar Mediciones</a>
+        </nav>
+        <div class="white-button">
+            <img src="/user.png" alt="Icono de Persona"></img>
+            <form action="/signout" method="POST">
+                <button type="submit">Salir</button>
+            </form>
+        </div>
+    </header>
+        <div id="main-section">
+            {{#block "content"}}
+            {{/block}}
+        </div>
+    <footer class="flex-center">
+        <div class="container">
+            <ul class="social-icons">
+                <li><a href="#"><i style="color: darkgray" class="fab fa-whatsapp"></i></a></li>
+                <li><a href="#"><i style="color: darkgray" class="fab fa-instagram"></i></a></li>
+                <li><a href="#"><i style="color: darkgray" class="fab fa-twitter"></i></a></li>
+            </ul>
+            <p class="pFooter">Nuestra empresa se compromete a proteger el medio ambiente y a promover prácticas sostenibles en todas nuestras actividades.</p>
+            <p class="copyright">Copyright 2022 Impacto Ambiental S.A. Todos los derechos reservados | <a class="aFooter" href="#">Política de privacidad</a> | <a class="aFooter" href="#">Términos y condiciones de uso</a></p>
+        </div>
+    </footer>
+  </body>
+</html>

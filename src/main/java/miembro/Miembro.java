@@ -42,7 +42,7 @@ public class Miembro {
   @Column(name = "NRO_DOCUMENTO")
   int numeroDocumento;
 
-  @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+  @OneToOne(fetch = FetchType.EAGER)
   MiembroCuenta cuenta;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
@@ -107,16 +107,6 @@ public class Miembro {
     this.cuenta = cuenta;
   }
 
-  public String getNombre() {
-      return nombre;
-  }
   public String getNombreYApellido() { return getNombre() + " " + getApellido();}
 
-  public Long getId() {
-    return id;
-  }
-
-  public String getApellido() {
-    return apellido;
-  }
 }

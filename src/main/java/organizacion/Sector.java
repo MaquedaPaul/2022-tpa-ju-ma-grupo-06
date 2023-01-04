@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 @Getter@Setter
 public class Sector {
 
-
   @Id
   @GeneratedValue
   Long id;
@@ -39,14 +38,6 @@ public class Sector {
     miembros.add(unMiembro);
   }
 
-  public List<Miembro> getMiembros() {
-    return miembros;
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
   public double calcularPromedioHCPorMiembroPorMes() {
     double resultado =this.calcularHCTotalDeMiembrosPorMes() / this.getCantidadMiembros();
     if(Double.isNaN(resultado)){
@@ -67,6 +58,11 @@ public class Sector {
         .map(Miembro::getTrayectos)
         .flatMap(Collection::stream)
         .distinct();
+  }
+
+  // Se usa en la vista
+  private double getPromedioHc() {
+    return this.calcularHCTotalDeMiembrosPorMes();
   }
 
   public int getCantidadMiembros() {

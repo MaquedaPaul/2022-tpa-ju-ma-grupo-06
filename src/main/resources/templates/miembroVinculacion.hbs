@@ -1,9 +1,3 @@
-{{#partial "navbar-options"}}
-    <a class="seccion" href="/recomendaciones">Recomendaciones</a>
-    <a class="seccion" href="/home/vinculacion">Solicitar vinculacion</a>
-    <a class="seccion" href="/home/trayectos">Trayectos</a>
-{{/partial}}
-
 {{#partial "usuario"}}
     {{usuario}}
 {{/partial}}
@@ -14,28 +8,25 @@
         <div>
             Seleccione organización
             <label for="selector-organizacion"></label>
-            <input class="white-button" name="organizacionSolicitada" list="organizaciones" type="search" id="selector-organizacion">
-            <datalist id="organizaciones">
+            <select id="selector-organizacion" name="organizacionSolicitada" class="white-button">
                 {{#each organizaciones}}
-                    <option value="{{razonSocial}}"/>
+                    <option value="{{razonSocial}}">{{razonSocial}}</option>
                 {{/each}}
-            </datalist>
+            </select>
         </div>
         <div>
             Seleccione sector
-            <label for="selector-sector"></label>
-            <input class="white-button" list="sectores" name="sectorSolicitado" value="" type="search" id="selector-sector">
-            <datalist id="sectores">
-                {{#each sectores}}
-                    <option value="{{nombre}}"/>
+            <label for="sectores"></label>
+            <select id="sectores" name="sectorSolicitado" class="white-button">
+                {{#each nombreSectores}}
+                    <option value="{{this}}">{{this}}</option>
                 {{/each}}
-            </datalist>
+            </select>
         </div>
         <div class="below-buttons">
-            <a class="btn-2 first" href="/home">Atrás</a>
             <button type="submit" class="btn-2 first">Solicitar</button>
         </div>
     </form>
 {{/partial}}
 
-{{>home-iniciado-sesion.hbs}}
+{{>miembro-home-iniciado-sesion.hbs}}

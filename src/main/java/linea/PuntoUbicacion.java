@@ -1,9 +1,11 @@
 package linea;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Entity @Getter
 public class PuntoUbicacion {
 
   @Id
@@ -41,17 +43,4 @@ public class PuntoUbicacion {
     this.calle = calle;
     this.altura = altura;
   }
-
-  public int getLocalidadId() {
-    return localidadId;
-  }
-
-  public String getCalle() {
-    return calle;
-  }
-
-  public int getAltura() {
-    return altura;
-  }
-
 }

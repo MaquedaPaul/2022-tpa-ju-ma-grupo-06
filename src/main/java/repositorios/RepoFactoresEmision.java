@@ -20,9 +20,8 @@ public class RepoFactoresEmision implements WithGlobalEntityManager {
   }
 
   public void incorporarFactor(FactorEmision nuevoFactor) {
-    entityManager().getTransaction().begin();
     entityManager().persist(nuevoFactor);
-    entityManager().getTransaction().commit();
+
   }
 
   public void modificarFactorEmision(FactorEmision unFactor, double nuevoValor) {

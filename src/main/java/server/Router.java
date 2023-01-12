@@ -23,7 +23,9 @@ public class Router {
 
 
     Spark.before(((request, response) -> {
-      PerThreadEntityManagers.getEntityManager().getTransaction().begin();
+      if (!PerThreadEntityManagers.getEntityManager().getTransaction().isActive()) {
+        PerThreadEntityManagers.getEntityManager().getTransaction().begin();
+      }
       PerThreadEntityManagers.getEntityManager().flush();
       PerThreadEntityManagers.getEntityManager().close();
     }));

@@ -1,12 +1,13 @@
 package admin;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import repositorios.RepoFactoresEmision;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Administrador")
-public class Administrador {
+public class Administrador implements WithGlobalEntityManager {
 
   @Id
   @GeneratedValue

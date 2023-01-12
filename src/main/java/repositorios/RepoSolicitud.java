@@ -28,9 +28,7 @@ public class RepoSolicitud implements WithGlobalEntityManager{
     }
 
     public void addSolicitud(Solicitud solicitud) {
-        entityManager().getTransaction().begin();
         entityManager().persist(solicitud);
-        entityManager().getTransaction().commit();
     }
 
     private List<Solicitud> getSolicitudes() {

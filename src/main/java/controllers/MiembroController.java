@@ -4,6 +4,7 @@ import cuenta.MiembroCuenta;
 import cuenta.OrganizacionCuenta;
 import linea.BuilderPuntoUbicacion;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import repositorios.RepoCuentas;
 import exceptions.NoConcuerdaInicioYFin;
 import linea.PuntoUbicacion;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MiembroController extends AccountController {
+public class MiembroController extends AccountController implements WithGlobalEntityManager {
 
   private Miembro obtenerMiembro(Request request){
     MiembroCuenta usuario = request.session().attribute("cuenta");
@@ -65,8 +66,12 @@ public class MiembroController extends AccountController {
       return null;
     }
     Miembro miembro =  obtenerMiembro(request);
+
     miembro.solicitarVinculacion(organizacionObjetivo, new Solicitud(miembro, sectorObjetivo));
+    entityManager().getTransaction().begin();
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacionObjetivo);
+    entityManager().getTransaction().commit();
+    entityManager().close();
     response.redirect("/home");
     return null;
   }
@@ -226,7 +231,10 @@ public class MiembroController extends AccountController {
 
       Miembro miembro = obtenerMiembro(request);
       miembro.registrarTrayecto(trayectoNuevo);
+      entityManager().getTransaction().begin();
       RepoMiembros.getInstance().agregarMiembro(miembro);
+      entityManager().getTransaction().commit();
+      entityManager().close();
 
       model.put("trayectoCargadoConExito",true);
       return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");

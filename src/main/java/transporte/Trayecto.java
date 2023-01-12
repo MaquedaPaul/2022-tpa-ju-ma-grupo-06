@@ -17,10 +17,8 @@ public class Trayecto {
   @Column(name = "ID_TRAYECTO")
   Long id;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "TRAMO_POR_TRAYECTO",
-      joinColumns = @JoinColumn(name = "ID_TRAYECTO"),
-      inverseJoinColumns = @JoinColumn(name = "ID_TRAMO"))
+  @ElementCollection
+  @CollectionTable(name = "tramo_por_trayecto")
   private Set<Tramo> tramos = new HashSet<>();
 
   public Trayecto() {

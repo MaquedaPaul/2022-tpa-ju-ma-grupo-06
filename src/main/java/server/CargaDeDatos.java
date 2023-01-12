@@ -33,25 +33,23 @@ public class CargaDeDatos implements WithGlobalEntityManager {
   private static final CargaDeDatos dbConnection = new CargaDeDatos();
 
   public static void main(String[] args) {
-
-    persistirFactoresEmision();
-    persistirTiposConsumo();
-    persistirCombustibles();
-    persistirLineaTransporte();
-    persistirTransportes();
-    persistirCuentas();
-    persistirMiembrosConTrayectos();
-    persistirOrganizacionesConSectores();
-    persistirMediciones();
-    persistirSectorTerritorial();
-    persistirAgente();
-    persistirSolicitudes();
+    dbConnection.persistirFactoresEmision();
+    dbConnection.persistirTiposConsumo();
+    dbConnection.persistirCombustibles();
+    dbConnection.persistirLineaTransporte();
+    dbConnection.persistirTransportes();
+    dbConnection.persistirCuentas();
+    dbConnection.persistirMiembrosConTrayectos();
+    dbConnection.persistirOrganizacionesConSectores();
+    dbConnection.persistirMediciones();
+    dbConnection.persistirSectorTerritorial();
+    dbConnection.persistirAgente();
+    dbConnection.persistirSolicitudes();
     System.out.println("Terminé de persistir todo :D");
 
   }
 
-  public static void persistirFactoresEmision() {
-
+  public void persistirFactoresEmision() {
     FactorEmision kwh = new FactorEmision(0.2, Unidad.KWH);
     FactorEmision lts = new FactorEmision(0.1, Unidad.LTS);
     FactorEmision kg = new FactorEmision(0.3, Unidad.KG);
@@ -59,15 +57,19 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     FactorEmision m3 = new FactorEmision(0.5, Unidad.M3);
     FactorEmision lt = new FactorEmision(0.1,Unidad.LT);
 
+
+    entityManager().getTransaction().begin();
     dbConnection.persistir(kwh);
     dbConnection.persistir(lts);
     dbConnection.persistir(kg);
     dbConnection.persistir(km);
     dbConnection.persistir(m3);
     dbConnection.persistir(lt);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirTiposConsumo() {
+  public void persistirTiposConsumo() {
 
     TipoConsumo nafta = new TipoConsumo("NAFTA",Unidad.LTS, TipoActividad.COMBUSTION_FIJA, TipoAlcance.EMISION_DIRECTA);
     TipoConsumo electricidad = new TipoConsumo("ELECTRICIDAD",Unidad.KWH,TipoActividad.ELECTRICIDAD_ADQUIRIDA_CONSUMIDA,TipoAlcance.EMISION_INDIRECTA_ASOC_ELECTRICIDAD);
@@ -93,6 +95,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     distanciaMediaRecorrida.setFactorEmision(km);
     tipoConsumoGasNatural.setFactorEmision(m3);
 
+    entityManager().getTransaction().begin();
     dbConnection.persistir(nafta);
     dbConnection.persistir(electricidad);
     dbConnection.persistir(carbon);
@@ -101,21 +104,24 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     dbConnection.persistir(tipoConsumoNaftaConsumida);
     dbConnection.persistir(distanciaMediaRecorrida);
     dbConnection.persistir(tipoConsumoGasNatural);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirCombustibles() {
-
+  public void persistirCombustibles() {
     TipoConsumo nafta = RepoTipoDeConsumo.getInstance().getTipoConsumoById(1);
     Combustible naftaC = new Combustible(nafta);
-
     TipoConsumo electricidad = RepoTipoDeConsumo.getInstance().getTipoConsumoById(2);
     Combustible electricidadC = new Combustible(electricidad);
 
+    entityManager().getTransaction().begin();
     dbConnection.persistir(naftaC);
     dbConnection.persistir(electricidadC);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirLineaTransporte() {
+  public void persistirLineaTransporte() {
     List<Parada> recorridoIda = new ArrayList<>();
 
     PuntoUbicacion pu1 = new PuntoUbicacion(1,"San Lorenzo",6153);
@@ -146,11 +152,17 @@ public class CargaDeDatos implements WithGlobalEntityManager {
 
     LineaTransporte linea144 = new LineaTransporte(TipoTransporte.COLECTIVO,"144",recorridoIda,recorridoVuelta);
     LineaTransporte linea98 = new LineaTransporte(TipoTransporte.COLECTIVO,"98",recorridoIda,recorridoVuelta);
+
+    entityManager().getTransaction().begin();
     dbConnection.persistir(linea144);
     dbConnection.persistir(linea98);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirTransportes() {
+  public void persistirTransportes() {
+    entityManager().getTransaction().begin();
+
     LineaTransporte linea = dbConnection.getById(1,LineaTransporte.class);
     Transporte colectivo = new TransportePublico(linea,40);
 
@@ -185,10 +197,11 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Transporte moto = new VehiculoParticular(TipoVehiculo.MOTO,19,"Zanella");
     moto.setCombustible(dbConnection.getById(1,Combustible.class));
     dbConnection.persistir(moto);
-
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirCuentas() {
+  public void persistirCuentas() {
 
     Cuenta cuentaJuan = new MiembroCuenta("JUANCARLOS800","GTAVDESCARGAR");
     Cuenta cuentaPedro = new MiembroCuenta("PEDROLOPEZ","PIRULOYASOCIADOS");
@@ -202,7 +215,7 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Cuenta cuentaGabriel = new MiembroCuenta("Gabriel","1");
     Cuenta cuentaJulieta = new MiembroCuenta("Julieta","2");
 
-
+    entityManager().getTransaction().begin();
     dbConnection.persistir(cuentaJuan);
     dbConnection.persistir(cuentaPedro);
     dbConnection.persistir(cuentaPepsi);
@@ -211,13 +224,13 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     dbConnection.persistir(cuentaAlmagro);
     dbConnection.persistir(cuentaDaniel);
     dbConnection.persistir(cuentaMarcos);
-
     dbConnection.persistir(cuentaGabriel);
     dbConnection.persistir(cuentaJulieta);
-
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirMiembrosConTrayectos() {
+  public void persistirMiembrosConTrayectos() {
 
     List<Trayecto> trayectosJuan = new ArrayList<>();
     List<Trayecto> trayectosPedro = new ArrayList<>();
@@ -304,15 +317,18 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Miembro Julieta = new Miembro("JULIETA","PERETTI", TipoDocumento.DNI,45000003,trayectosJulieta);
     Julieta.setCuenta(cuentaJulieta);
 
+    entityManager().getTransaction().begin();
     dbConnection.persistir(juan);
     dbConnection.persistir(pedro);
     dbConnection.persistir(daniel);
     dbConnection.persistir(marcos);
     dbConnection.persistir(Gabriel);
     dbConnection.persistir(Julieta);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirOrganizacionesConSectores() {
+  public void persistirOrganizacionesConSectores() {
 
     Organizacion pepsiCo = new Organizacion(
         "PepsiCo S.A",
@@ -348,24 +364,30 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     movistar.incorporarSector(ventas2);
     movistar.incorporarSector(servicioTecnico);
 
+    entityManager().getTransaction().begin();
     dbConnection.persistir(pepsiCo);
     dbConnection.persistir(movistar);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirMediciones() {
+  public void persistirMediciones() {
     Organizacion pepsiCo = RepoOrganizacion.getInstance().getOrganizacionById(1L);
     Organizacion movistar = RepoOrganizacion.getInstance().getOrganizacionById(2L);
 
     LectorMediciones medicionesPepsiCo = new LectorMediciones("src/main/resources/medicionesCorrectas.csv",pepsiCo);
     LectorMediciones medicionesMovistar = new LectorMediciones("src/main/resources/medicionesCorrectas.csv",movistar);
 
+    entityManager().getTransaction().begin();
     medicionesMovistar.leerMediciones();
     medicionesMovistar.cargarMediciones();
     medicionesPepsiCo.leerMediciones();
     medicionesPepsiCo.cargarMediciones();
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirSectorTerritorial() {
+  public void persistirSectorTerritorial() {
     Organizacion org1 = RepoOrganizacion.getInstance().getOrganizacionById(1L);
     Organizacion org2 = RepoOrganizacion.getInstance().getOrganizacionById(2L);
 
@@ -373,18 +395,24 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     orgs.add(org1);
     orgs.add(org2);
     SectorTerritorial bsas = new SectorTerritorial(orgs, TipoSectorTerritorial.PROVINCIA,"BUENOS AIRES");
+    entityManager().getTransaction().begin();
     dbConnection.persistir(bsas);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirAgente() {
+  public void persistirAgente() {
     SectorTerritorial sector = RepoSectorTerritorial.getInstance().getSectorById(1);
     AgenteCuenta cuenta = dbConnection.getById(5,AgenteCuenta.class);
     AgenteTerritorial daniel = new AgenteTerritorial(sector,"DANIEL");
     daniel.setCuenta(cuenta);
+    entityManager().getTransaction().begin();
     dbConnection.persistir(daniel);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
-  public static void persistirSolicitudes() {
+  public void persistirSolicitudes() {
     Miembro m1 = dbConnection.getById(1,Miembro.class);
     Sector s1 = dbConnection.getById(1,Sector.class);
     Miembro m2 = dbConnection.getById(2,Miembro.class);
@@ -394,15 +422,16 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Solicitud solicitud2 = new Solicitud(m1,s2);
     Solicitud solicitud3 = new Solicitud(m2,s3);
 
+    entityManager().getTransaction().begin();
     dbConnection.persistir(solicitud1);
     dbConnection.persistir(solicitud2);
     dbConnection.persistir(solicitud3);
+    entityManager().getTransaction().commit();
+    entityManager().close();
   }
 
   public void persistir(Object o) {
-    entityManager().getTransaction().begin();
     entityManager().persist(o);
-    entityManager().getTransaction().commit();
   }
 
   public <T> T getById(long id, Class<T> clase ) {

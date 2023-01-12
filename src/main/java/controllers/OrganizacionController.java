@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvValidationException;
 import cuenta.OrganizacionCuenta;
 import lectorcsv.*;
 import mediciones.Medicion;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.periodo.PeriodoAnual;
 import repositorios.*;
 import miembro.Miembro;
@@ -31,7 +32,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.util.*;
 
-public class OrganizacionController extends AccountController {
+public class OrganizacionController extends AccountController implements WithGlobalEntityManager {
 
   private Organizacion obtenerOrganizacion(Request request){
     OrganizacionCuenta usuario = request.session().attribute("cuenta");
@@ -174,7 +175,10 @@ public class OrganizacionController extends AccountController {
     //Solicitud solicitud = organizacion.getSolicitudPorId(idVinculacion);
     Solicitud solicitud = RepoSolicitud.getInstance().getSolicitudById(idVinculacion);
     organizacion.procesarVinculacion(solicitud,aceptar);
+    entityManager().getTransaction().begin();
     RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
+    entityManager().getTransaction().commit();
+    entityManager().close();
     return solicitud;
   }
 

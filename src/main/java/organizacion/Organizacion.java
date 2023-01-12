@@ -215,6 +215,7 @@ public class Organizacion {
         .stream().filter(solicitud -> !solicitud.estaProcesada())
         .collect(Collectors.toSet());
   }
+  
 
   public boolean existeElSector(Sector sector) {
     return this.getSectores().contains(sector);

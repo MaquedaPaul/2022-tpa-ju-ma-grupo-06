@@ -1,6 +1,8 @@
 package transporte;
 
 import linea.PuntoUbicacion;
+import lombok.Getter;
+import lombok.Setter;
 import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.io.IOException;
 
 
 @Entity
+@Getter@Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TRANSPORTE_UTILIZADO")
 public abstract class Transporte {
@@ -33,14 +36,6 @@ public abstract class Transporte {
 
   public double calcularHc() {
     return combustible.obtenerValorEmision() * this.consumoPorKilometro;
-  }
-
-  public Combustible getCombustible() {
-    return this.combustible;
-  }
-
-  public void setCombustible(Combustible combustible) {
-    this.combustible = combustible;
   }
 
   public TipoConsumo getTipoConsumo() {

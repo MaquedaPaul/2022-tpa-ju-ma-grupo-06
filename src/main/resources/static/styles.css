@@ -80,13 +80,6 @@ h3 {
   margin: 0;
 }
 
-footer {
-  font-weight: bold;
-  background-color: var(--main-green);
-  height: 50px;
-  margin-top: auto;
-}
-
 img {
   width: 40px;
   height: 40px;
@@ -214,7 +207,6 @@ form div label {
   padding: 0 20px;
 }
 
-/*Thomas*/
 .impactoMiembro {
   text-align: center;
   margin-left: auto;
@@ -397,8 +389,8 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55px;
-  width: 150px;
+  height: 37px;
+  width: 130px;
   color: var(--color-texto);
   border-radius: 10px;
   margin: 10px;
@@ -486,12 +478,18 @@ button:hover {
 }
 
 .destacar {
-  font-size: 1.2rem;
+  font-size: 1.06rem;
   font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .box-shadow {
   box-shadow: 2px 2px 1px black;
+}
+
+.input-spacing {
+  margin-bottom: 15px;
 }
 
 .contenedor-tramo {
@@ -553,3 +551,130 @@ button:hover {
 .cross-icon:active {
   transform: scale(0.9);
 }
+
+/*
+CSS para el Footer
+ */
+
+footer {
+  background-color: var(--main-green);
+  margin-top: auto;
+  padding: 15px;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.social-icons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons li {
+  margin: 0 10px;
+}
+
+.social-icons li a {
+  color: #fff;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.social-icons li a:hover {
+  color: #eee;
+}
+
+.pFooter{
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 20px 0 0 0;
+  text-align: center;
+  color: #1F2421;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.copyright {
+  font-size: 14px;
+  text-align: center;
+  color: darkgray;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.copyright a {
+  color: darkgray;
+}
+
+.copyright a:hover {
+  color: #333;
+}
+
+.aFooter{
+  color: darkgray;
+  font-family: sans-serif;
+  display: inline-block;
+}
+
+/*
+CSS para la página de error
+ */
+
+.bodyError {
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #eee;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.h1Error {
+  color: #c00;
+  font-size: 2em;
+  font-family: sans-serif;
+  margin-top: 5px;
+}
+
+.pError {
+  margin: 1em 0;
+  font-family: sans-serif;
+}
+
+.imgError {
+  width: 45%;
+  height: 45%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.aError {
+  text-decoration: none;
+}
+
+.buttonError {
+  background-color: #006600;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.buttonError:hover {
+  background-color: #009900;
+}
+
+.buttonError a {
+  color: #fff;
+  text-decoration: none;
+}
+

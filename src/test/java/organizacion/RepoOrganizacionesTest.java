@@ -43,10 +43,10 @@ public class RepoOrganizacionesTest {
     Sector unSector = new Sector("Ventas",miembros);
 
     // ORGANIZACIONES
-    Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA,"Argentina","unaClasificacion",contactos);
-    Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL,"Argentina","unaClasificacion",contactos);
-    Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL,"Argentina","unaClasificacion",contactos);
-    Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA,"Argentina","unaClasificacion",contactos);
+    Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"unaClasificacion",contactos);
+    Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL, new PuntoUbicacion(2,"San Miguel",304),"unaClasificacion",contactos);
+    Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL, new PuntoUbicacion(2,"San Miguel",304),"unaClasificacion",contactos);
+    Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"unaClasificacion",contactos);
 
     // LISTA DE ORGANIZACIONES
 
@@ -109,10 +109,10 @@ public class RepoOrganizacionesTest {
     @Test
     public void sePuedeFiltrarPorTipoDeOrganizacionGubernamental() {
 
-        Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA, "Argentina", "unaClasificacion", contactos);
-        Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL, "Argentina", "unaClasificacion", contactos);
-        Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL, "Argentina", "unaClasificacion", contactos);
-        Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA, "Argentina", "unaClasificacion", contactos);
+        Organizacion unaOrganizacion = new Organizacion("Pedrito SRL", TipoOrganizacion.EMPRESA,  new PuntoUbicacion(2,"San Miguel",304), "unaClasificacion", contactos);
+        Organizacion OrgGubernamental = new Organizacion("Pedrito SRL2", TipoOrganizacion.GUBERNAMENTAL,  new PuntoUbicacion(2,"San Miguel",304), "unaClasificacion", contactos);
+        Organizacion OrgGubernamental2 = new Organizacion("Pedrito SRL3", TipoOrganizacion.GUBERNAMENTAL, new PuntoUbicacion(2,"San Miguel",304), "unaClasificacion", contactos);
+        Organizacion unaOrganizacionAgregada = new Organizacion("AGREGADO", TipoOrganizacion.EMPRESA,  new PuntoUbicacion(2,"San Miguel",304), "unaClasificacion", contactos);
         List<Organizacion> listadoOrganizacionesGubernamentales = new ArrayList<>();
         listadoOrganizacionesGubernamentales.add(OrgGubernamental);
         listadoOrganizacionesGubernamentales.add(OrgGubernamental2);

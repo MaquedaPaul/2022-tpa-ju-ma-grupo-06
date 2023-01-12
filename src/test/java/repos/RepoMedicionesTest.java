@@ -3,6 +3,7 @@ package repos;
 import admin.FactorEmision;
 import cuenta.OrganizacionCuenta;
 import global.Unidad;
+import linea.PuntoUbicacion;
 import mediciones.Medicion;
 import mediciones.MedicionAnual;
 import mediciones.MedicionMensual;
@@ -23,13 +24,13 @@ import java.util.ArrayList;
 public class RepoMedicionesTest extends AbstractPersistenceTest implements WithGlobalEntityManager {
 
     RepoMediciones repo = RepoMediciones.getInstance();
-    Organizacion organizacion = new Organizacion("dd", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
+    Organizacion organizacion = new Organizacion("dd", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"",new ArrayList<>());
     TipoConsumo tipoConsumo = new TipoConsumo("consumo", Unidad.LTS, TipoActividad.COMBUSTION_FIJA, TipoAlcance.EMISION_DIRECTA);
 
     LocalDate fecha = LocalDate.now();
     OrganizacionCuenta orgCuenta = new OrganizacionCuenta("aaa","aaa");
     OrganizacionCuenta orgCuenta2 = new OrganizacionCuenta("bbb","bbb");
-    Organizacion org1 = new Organizacion("otra", TipoOrganizacion.EMPRESA,"","",new ArrayList<>());
+    Organizacion org1 = new Organizacion("otra", TipoOrganizacion.EMPRESA, new PuntoUbicacion(2,"San Miguel",304),"",new ArrayList<>());
     FactorEmision factor = new FactorEmision(20,Unidad.LTS);
 
   LocalDate dic2020  = LocalDate.of(2020,12,15);

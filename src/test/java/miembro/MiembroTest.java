@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 
 public class MiembroTest {
 
-  Organizacion org1 = new Organizacion("", TipoOrganizacion.INSTITUCION, "", "", new ArrayList<>());
-  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA, "", "", new ArrayList<>());
+  Organizacion org1 = new Organizacion("", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
+  Organizacion org2 = new Organizacion("", TipoOrganizacion.EMPRESA, new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
   List<Trayecto> trayectos = mock(ArrayList.class);
   Miembro miembro1 = new Miembro("", "", TipoDocumento.DNI, 1, trayectos);
 
@@ -89,13 +89,7 @@ public class MiembroTest {
                                        String apellido,
                                        int documento,
                                        TipoDocumento unTipo) {
-    MiembroBuilder nuevoMiembro = new MiembroBuilder();
-    nuevoMiembro.especificarNombre(nombre);
-    nuevoMiembro.especificarApellido(apellido);
-    nuevoMiembro.especificarNumeroDocumento(documento);
-    nuevoMiembro.especificarTipoDocumento(unTipo);
-    nuevoMiembro.especificarTrayectos(new ArrayList<>());
-    return nuevoMiembro.construir();
+    return new Miembro(nombre, apellido, unTipo, documento, new ArrayList<>());
   }
 
   @Test

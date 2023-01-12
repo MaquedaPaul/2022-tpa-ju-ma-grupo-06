@@ -43,6 +43,13 @@ public class BuilderTrayecto {
     ultimoTramo = new Tramo();
   }
 
+  public void agregarTramo(Tramo tramo) {
+    Objects.requireNonNull(tramo.getPuntoOrigen());
+    Objects.requireNonNull(tramo.getPuntoDestino());
+    Objects.requireNonNull(tramo.getTransporteUtilizado());
+    tramos.add(tramo);
+  }
+
   public Trayecto build() {
     return new Trayecto(new HashSet<>(tramos));
   }

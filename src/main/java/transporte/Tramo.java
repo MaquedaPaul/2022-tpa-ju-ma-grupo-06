@@ -3,13 +3,15 @@ package transporte;
 import exceptions.NoSePudoCalcularElTramo;
 import linea.PuntoUbicacion;
 import lombok.Getter;
+import lombok.Setter;
 import tipoconsumo.TipoConsumo;
 
 import javax.persistence.*;
 import java.io.IOException;
 
-@Getter
 @Embeddable
+@Getter
+@Setter
 public class Tramo {
   @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "ID_PUNTO_ORIGEN")
@@ -34,18 +36,6 @@ public class Tramo {
     this.transporteUtilizado = transporteUtilizado;
   }
 
-  public PuntoUbicacion getPuntoOrigen() {
-    return puntoOrigen;
-  }
-
-  public PuntoUbicacion getPuntoDestino() {
-    return puntoDestino;
-  }
-
-  public Transporte getTransporteUtilizado() {
-    return transporteUtilizado;
-  }
-
   public double distanciaTramo() {
     try {
       return this.transporteUtilizado.distanciaEntre(puntoOrigen, puntoDestino);
@@ -67,15 +57,4 @@ public class Tramo {
     return this.transporteUtilizado.getTipoConsumo();
   }
 
-  public void setPuntoDestino(PuntoUbicacion puntoDestino) {
-    this.puntoDestino = puntoDestino;
-  }
-
-  public void setPuntoOrigen(PuntoUbicacion puntoOrigen) {
-    this.puntoOrigen = puntoOrigen;
-  }
-
-  public void setTransporteUtilizado(Transporte transporteUtilizado) {
-    this.transporteUtilizado = transporteUtilizado;
-  }
 }

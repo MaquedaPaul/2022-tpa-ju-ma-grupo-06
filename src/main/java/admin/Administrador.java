@@ -1,13 +1,15 @@
 package admin;
 
-import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import lombok.Getter;
+import lombok.Setter;
 import repositorios.RepoFactoresEmision;
 
 import javax.persistence.*;
 
 @Entity
+@Getter@Setter
 @Table(name = "Administrador")
-public class Administrador implements WithGlobalEntityManager {
+public class Administrador {
 
   @Id
   @GeneratedValue
@@ -25,22 +27,6 @@ public class Administrador implements WithGlobalEntityManager {
   public Administrador(String unUsuario, String unPassword) {
     this.usuario = unUsuario;
     this.password = unPassword;
-  }
-
-  public String getUsuario() {
-    return usuario;
-  }
-
-  public void setUsuario(String usuario) {
-    this.usuario = usuario;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   void crearFactorEmision(FactorEmision unFactor) {

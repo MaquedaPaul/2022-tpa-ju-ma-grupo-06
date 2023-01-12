@@ -31,14 +31,6 @@ public abstract class Cuenta {
     this.password = password;
   }
 
-  public String getUsuario() {
-    return usuario;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
   public abstract String home();
 
   public abstract void guardarEnSesion(Request request);

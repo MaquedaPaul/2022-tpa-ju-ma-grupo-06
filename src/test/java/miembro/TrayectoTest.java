@@ -22,11 +22,14 @@ public class TrayectoTest {
 
   @Test
   void unTramoAgregadoDeberiaAparecerEnLaListaTramos() {
-    Set<Tramo> unosTramos = new HashSet<>();
-    Trayecto unTrayecto = new Trayecto(unosTramos);
-    assertFalse(unosTramos.contains(unTramo));
-    unTrayecto.agregarTramo(unTramo);
-    assertTrue(unosTramos.contains(unTramo));
+
+    BuilderTrayecto builder = new BuilderTrayecto();
+    builder.agregarTramo(unTramo);
+
+    Trayecto trayecto = builder.build();
+
+    assertTrue(trayecto.getTramos().contains(unTramo));
+
   }
 
   @Test
@@ -37,14 +40,18 @@ public class TrayectoTest {
 
     when(unTramoMock.distanciaTramo()).thenReturn(100.0);
     when(otroTramoMock.distanciaTramo()).thenReturn(50.0);
-    Trayecto unTrayecto = new Trayecto(new HashSet<>());
-    unTrayecto.agregarTramo(unTramoMock);
-    unTrayecto.agregarTramo(otroTramoMock);
+
+    BuilderTrayecto builder = new BuilderTrayecto();
+    builder.agregarTramo(unTramoMock);
+    builder.agregarTramo(otroTramoMock);
+    Trayecto unTrayecto = builder.build();
+
     unTramoMock.distanciaTramo();
     otroTramoMock.distanciaTramo();
     assertEquals(unTrayecto.distanciaTotal(), 150);
 
   }
+
 
   @Test
   public void unTrayectoPuedeSerCompartidoSoloSiEsCompletamenteEnServicioContratadoOVehiculoParticular() {

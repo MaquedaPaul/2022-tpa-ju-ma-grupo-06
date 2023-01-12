@@ -1,8 +1,10 @@
 package linea;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
-@Entity
+@Entity @Getter
 public class Parada {
 
   @Id
@@ -25,9 +27,6 @@ public class Parada {
     this.puntoUbicacion = puntoUbicacion;
   }
 
-  public int getKmActual() {
-    return kmActual;
-  }
 
   public PuntoUbicacion getPuntoUbicacion(){
     return this.puntoUbicacion;

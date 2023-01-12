@@ -28,14 +28,6 @@ public class Trayecto {
     this.tramos = tramos;
   }
 
-  public void setTramos(Set<Tramo> tramos) {
-    this.tramos = tramos;
-  }
-
-  public void agregarTramo(Tramo unTramo) {
-    this.tramos.add(unTramo);
-  }
-
   public boolean sePuedeCompartir() {
     return tramos.stream().allMatch(Tramo::sePuedeCompartir);
   }
@@ -69,7 +61,4 @@ public class Trayecto {
     return getTramos().stream().map(Tramo::getTipoConsumo);
   }
 
-  public Set<Tramo> getTramos() {
-    return tramos;
-  }
 }

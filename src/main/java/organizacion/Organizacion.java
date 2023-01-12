@@ -51,7 +51,7 @@ public class Organizacion {
   @JoinColumn(name = "organizacion_id")
   List<Contacto> contactos;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @OneToOne
   OrganizacionCuenta cuenta;
 
   public Organizacion(String razonSocial, TipoOrganizacion tipo, PuntoUbicacion ubicacionGeografica,
@@ -194,16 +194,8 @@ public class Organizacion {
     contactos.add(unContacto);
   }
 
-  public List<Contacto> getContactos() {
-    return this.contactos;
-  }
-
   public void notificarContactos(List<MedioNotificador> medios) {
     medios.forEach(medioNotificador -> medioNotificador.enviarATodos(contactos, this));
-  }
-
-  public void setCuenta(OrganizacionCuenta cuenta) {
-    this.cuenta = cuenta;
   }
 
   public Sector obtenerSectorPor(String nombre) {

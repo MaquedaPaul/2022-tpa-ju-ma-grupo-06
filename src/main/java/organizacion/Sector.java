@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 @Getter@Setter
 public class Sector {
 
-
   @Id
   @GeneratedValue
   Long id;
@@ -37,14 +36,6 @@ public class Sector {
 
   public void admitirMiembro(Miembro unMiembro) {
     miembros.add(unMiembro);
-  }
-
-  public List<Miembro> getMiembros() {
-    return miembros;
-  }
-
-  public String getNombre() {
-    return nombre;
   }
 
   public double calcularPromedioHCPorMiembroPorMes() {

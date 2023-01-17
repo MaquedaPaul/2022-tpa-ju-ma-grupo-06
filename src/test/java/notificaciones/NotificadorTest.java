@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.jupiter.api.Test;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
+import repositorios.RepoOrganizacion;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -72,13 +73,9 @@ public class NotificadorTest {
     }
     assertEquals(15, contactos.size());
     Organizacion nueva = new Organizacion("text",TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333),"text",contactos);
-    //TODO Rompe por DB, transaccción ya activa
-    /*
     RepoOrganizacion.getInstance().agregarOrganizacion(nueva);
     noti.organizacionesNotifiquen();
     verify(noti, times(1)).organizacionesNotifiquen();
-    */
-
     // TODO esta linea rompe
     //verify(medio1, times(15)).enviarA(any(), any());
   }

@@ -10,6 +10,7 @@ import miembro.Miembro;
 import notificaciones.Contacto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.periodo.Periodo;
 import organizacion.periodo.PeriodoAnual;
 import organizacion.periodo.PeriodoMensual;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class OrganizacionTest {
+public class OrganizacionTest implements WithGlobalEntityManager {
 
   Organizacion onu = new Organizacion("texto1", TipoOrganizacion.INSTITUCION, new PuntoUbicacion(1,"San Juan",333), "texto3", new ArrayList<>());
   Miembro jorgito = generarMiembro("jorge", "Nitales", 42222222, TipoDocumento.DNI);
@@ -91,17 +92,19 @@ public class OrganizacionTest {
   }
 
   @Test
-  public void laOrganizacionNoAceptaVinculacion() {
+  public void laOrganizacionNoAceptaVinculacion(){
 
     Organizacion org = new Organizacion("", TipoOrganizacion.INSTITUCION,new PuntoUbicacion(1,"San Juan",333), "", new ArrayList<>());
     Sector sector = mock(Sector.class);
     Miembro miembro1 = mock(Miembro.class);
     Solicitud solicitud = new Solicitud(miembro1, sector);
     when(sector.getNombre()).thenReturn("ssss");
-
+    entityManager().getTransaction().begin();
     org.incorporarSector(sector);
     org.recibirSolicitud(solicitud);
     org.procesarVinculacion(solicitud, false);
+    entityManager().getTransaction().commit();
+    entityManager().close();
     verify(sector, times(0)).admitirMiembro(miembro1);
 
   }

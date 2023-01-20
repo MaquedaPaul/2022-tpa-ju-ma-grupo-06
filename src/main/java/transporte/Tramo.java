@@ -9,15 +9,10 @@ import tipoconsumo.TipoConsumo;
 import javax.persistence.*;
 import java.io.IOException;
 
-@Getter@Setter
-@Entity
+@Embeddable
+@Getter
+@Setter
 public class Tramo {
-
-  @Id
-  @GeneratedValue
-  @Column(name = "ID_TRAMO")
-  Long id;
-
   @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "ID_PUNTO_ORIGEN")
   private PuntoUbicacion puntoOrigen;

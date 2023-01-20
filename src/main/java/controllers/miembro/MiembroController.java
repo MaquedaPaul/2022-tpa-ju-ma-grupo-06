@@ -2,7 +2,6 @@ package controllers.miembro;
 
 import cuenta.MiembroCuenta;
 import cuenta.OrganizacionCuenta;
-import linea.BuilderPuntoUbicacion;
 import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import repositorios.RepoCuentas;
 import exceptions.NoConcuerdaInicioYFin;

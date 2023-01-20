@@ -3,8 +3,10 @@ package miembro;
 import linea.LineaTransporte;
 import linea.PuntoUbicacion;
 import org.junit.jupiter.api.Test;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import transporte.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TrayectoTest {
+public class TrayectoTest implements WithGlobalEntityManager {
 
   PuntoUbicacion origen = new PuntoUbicacion(0, "mercedes", 23);
   PuntoUbicacion destino = new PuntoUbicacion(35, "libertador", 232);
@@ -34,22 +36,14 @@ public class TrayectoTest {
 
   @Test
   void laDistanciaTotalDeUnTrayectoEsLaSumaDeSusTramos() {
-
     Tramo unTramoMock = mock(Tramo.class);
     Tramo otroTramoMock = mock(Tramo.class);
-
+    BuilderTrayecto builder = mock(BuilderTrayecto.class);
     when(unTramoMock.distanciaTramo()).thenReturn(100.0);
     when(otroTramoMock.distanciaTramo()).thenReturn(50.0);
-
-    BuilderTrayecto builder = new BuilderTrayecto();
-    builder.agregarTramo(unTramoMock);
-    builder.agregarTramo(otroTramoMock);
+    when(builder.build()).thenReturn(new Trayecto(new HashSet<>(Arrays.asList(unTramoMock, otroTramoMock))));
     Trayecto unTrayecto = builder.build();
-
-    unTramoMock.distanciaTramo();
-    otroTramoMock.distanciaTramo();
     assertEquals(unTrayecto.distanciaTotal(), 150);
-
   }
 
 

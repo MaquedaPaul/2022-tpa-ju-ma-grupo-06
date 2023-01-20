@@ -24,12 +24,6 @@ public class RepoCuentas implements WithGlobalEntityManager {
     return instance;
   }
 
-  public void agregarCuenta(Cuenta cuenta) {
-    entityManager().getTransaction().begin();
-    entityManager().persist(cuenta);
-    entityManager().getTransaction().commit();
-  }
-
   public List<Cuenta> getCuentas() {
     return entityManager().createQuery("From Cuenta").getResultList();
   }

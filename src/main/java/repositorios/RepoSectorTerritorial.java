@@ -21,11 +21,6 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         return instance;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<SectorTerritorial> getSectoresTerritoriales() {
-        return entityManager().createQuery("FROM SectorTerritorial").getResultList();
-    }
-
     public void registrarSectorTerritorial(SectorTerritorial sector) {
         entityManager().getTransaction().begin();
         entityManager().persist(sector);
@@ -36,16 +31,6 @@ public class RepoSectorTerritorial implements WithGlobalEntityManager {
         entityManager().getTransaction().begin();
         entityManager().persist(agente);
         entityManager().getTransaction().commit();
-    }
-
-    public AgenteTerritorial getAgenteByAccount(AgenteCuenta cuenta) {
-        return (AgenteTerritorial) entityManager()
-            .createQuery("From AgenteTerritorial " +
-                "JOIN Cuenta " +
-                "ON Cuenta.usuario = AgenteTerritorial.cuenta.usuario " +
-                "WHERE Cuenta.usuario = :usuario ")
-            .setParameter("usuario",cuenta.getUsuario())
-            .getResultList().get(0);
     }
 
     public SectorTerritorial getSectorById(long id) {

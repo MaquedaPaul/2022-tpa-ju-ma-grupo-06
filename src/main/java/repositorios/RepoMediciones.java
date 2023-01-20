@@ -22,9 +22,7 @@ public class RepoMediciones implements WithGlobalEntityManager {
   }
 
   public void cargarMedicion(Medicion medicion) {
-    entityManager().getTransaction().begin();
     entityManager().persist(medicion);
-    entityManager().getTransaction().commit();
   }
 
   public Medicion getMedicionById(long id) {

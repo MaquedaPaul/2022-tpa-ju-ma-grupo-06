@@ -10,8 +10,8 @@ import java.util.Locale;
 
 public class RepoMiembros implements WithGlobalEntityManager {
     private static RepoMiembros RepoMiembros = null;
-    private RepoMiembros() {
 
+    private RepoMiembros() {
     }
 
 
@@ -23,9 +23,7 @@ public class RepoMiembros implements WithGlobalEntityManager {
         return RepoMiembros;
     }
     public void agregarMiembro(Miembro miembro) {
-        entityManager().getTransaction().begin();
         entityManager().persist(miembro);
-        entityManager().getTransaction().commit();
     }
 
 

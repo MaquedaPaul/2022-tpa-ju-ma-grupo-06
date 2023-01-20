@@ -29,13 +29,10 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
   }
 
   public void agregarOrganizacion(Organizacion nuevaOrganizacion) {
-
     if (entityManager() == null) {
       System.out.println("ES NULL ESTO AHHHH");
     }
-    entityManager().getTransaction().begin();
     entityManager().persist(nuevaOrganizacion);
-    entityManager().getTransaction().commit();
   }
 
   public boolean estaPersistido(Organizacion org) {
@@ -53,12 +50,6 @@ public class RepoOrganizacion implements WithGlobalEntityManager {
         .createQuery("from Organizacion where tipo = :t")
         .setParameter("t", tipoOrganizacion)
         .getResultList();
-  }
-
-  public void eliminarOrganizacion(Organizacion organizacion) {
-    entityManager().getTransaction().begin();
-    entityManager().remove(organizacion);
-    entityManager().getTransaction().commit();
   }
 
   public Set<String> nombreDeTodosLosSectores() {

@@ -21,7 +21,7 @@ public class Trayecto {
   @CollectionTable(name = "tramo_por_trayecto")
   private Set<Tramo> tramos = new HashSet<>();
 
-  public Trayecto() {
+  protected Trayecto() {
   }
 
   public Trayecto(Set<Tramo> tramos) {

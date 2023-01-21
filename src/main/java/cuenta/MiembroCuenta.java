@@ -10,7 +10,7 @@ import java.util.Map;
 @Entity
 public class MiembroCuenta extends Cuenta {
 
-  public MiembroCuenta() {
+  protected MiembroCuenta() {
   }
 
   public MiembroCuenta(String usuario, String password) {

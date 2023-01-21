@@ -28,7 +28,7 @@ public class AgenteTerritorial {
     this.nombre = unNombre;
   }
 
-  public AgenteTerritorial() {
+  protected AgenteTerritorial() {
 
   }
 

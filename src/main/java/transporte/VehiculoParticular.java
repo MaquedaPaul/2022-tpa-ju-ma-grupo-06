@@ -17,7 +17,7 @@ public class VehiculoParticular extends TransportePrivado {
   private TipoVehiculo tipoVehiculo;
   private String nombre;
 
-  public VehiculoParticular() {
+  protected VehiculoParticular() {
   }
 
   public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro, String nombre) {

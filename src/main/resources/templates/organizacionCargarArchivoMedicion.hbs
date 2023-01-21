@@ -20,7 +20,8 @@
             Archivo CSV subido correctamente
         {{/if}}
         {{#if formatoNoValido}}
-            El formato del Archivo CSV es inválido
+            <div class="btn-error firstError">{{error}} </div>
+
         {{/if}}
         {{#if sinArchivo}}
             No se subió ningún archivo

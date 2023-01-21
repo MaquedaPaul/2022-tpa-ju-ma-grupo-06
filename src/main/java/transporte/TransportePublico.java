@@ -21,7 +21,7 @@ public class TransportePublico extends Transporte {
   @JoinColumn(name = "ID_LINEA")
   private LineaTransporte lineaUtilizada;
 
-  public TransportePublico() {
+  protected TransportePublico() {
   }
 
   public TransportePublico(LineaTransporte lineaUtilizada, double consumoPorKilometro) {

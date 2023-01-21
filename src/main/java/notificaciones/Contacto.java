@@ -19,7 +19,7 @@ public class Contacto {
   private String mail;
   private String nroCelular;
 
-  public Contacto() {}
+  protected Contacto() {}
 
   public Long getId() {
     return id;

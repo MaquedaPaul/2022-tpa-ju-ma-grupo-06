@@ -25,7 +25,7 @@ public class Tramo {
   @JoinColumn(name = "ID_TRANSPORTE")
   private Transporte transporteUtilizado;
 
-  public Tramo() {
+  protected Tramo() {
   }
 
   public Tramo(PuntoUbicacion puntoOrigen,

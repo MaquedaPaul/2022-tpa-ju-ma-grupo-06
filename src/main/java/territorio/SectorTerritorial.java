@@ -34,7 +34,7 @@ public class SectorTerritorial {
     this.nombre = nombre;
   }
 
-  public SectorTerritorial() {
+  protected SectorTerritorial() {
 
   }
 

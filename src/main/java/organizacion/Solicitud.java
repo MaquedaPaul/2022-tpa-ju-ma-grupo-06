@@ -25,7 +25,7 @@ public class Solicitud {
 
   private boolean procesada;
 
-  public Solicitud() {
+  protected Solicitud() {
   }
 
   public boolean estaProcesada() {

@@ -31,7 +31,7 @@ public class Sector {
     this.miembros = unosMiembros;
   }
 
-  public Sector() {
+  protected Sector() {
   }
 
   public void admitirMiembro(Miembro unMiembro) {

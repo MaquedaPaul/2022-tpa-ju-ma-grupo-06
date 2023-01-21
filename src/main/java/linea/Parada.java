@@ -19,7 +19,7 @@ public class Parada {
   @JoinColumn(name = "ID_PUNTO_UBICACION")
   private PuntoUbicacion puntoUbicacion;
 
-  public Parada() {
+  protected Parada() {
   }
 
   public Parada(int kmActual,PuntoUbicacion puntoUbicacion) {

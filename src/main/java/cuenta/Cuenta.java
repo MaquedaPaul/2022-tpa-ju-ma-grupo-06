@@ -23,7 +23,7 @@ public abstract class Cuenta {
 
   private String password;
 
-  public Cuenta(){
+  protected Cuenta(){
   }
 
   public Cuenta(String usuario, String password) {

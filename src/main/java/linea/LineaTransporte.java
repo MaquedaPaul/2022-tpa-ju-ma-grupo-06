@@ -32,7 +32,7 @@ public class LineaTransporte {
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoVuelta;
 
-  public LineaTransporte() {
+  protected LineaTransporte() {
 
   }
 

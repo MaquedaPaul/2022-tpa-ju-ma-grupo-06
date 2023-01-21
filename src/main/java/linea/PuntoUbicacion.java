@@ -22,7 +22,7 @@ public class PuntoUbicacion {
   @Column(name = "ALTURA")
   private int altura;
 
-  public PuntoUbicacion() {
+  protected PuntoUbicacion() {
   }
 
   @Override

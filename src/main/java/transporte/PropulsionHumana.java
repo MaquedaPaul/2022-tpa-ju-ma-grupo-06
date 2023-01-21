@@ -12,7 +12,7 @@ public class PropulsionHumana extends TransportePrivado {
   @Column(name = "TIPO_TRANSPORTE")
   private String herramientaUtilizada;
 
-  public PropulsionHumana() {
+  protected PropulsionHumana() {
   }
 
   public PropulsionHumana(String herramientaUtilizada) {

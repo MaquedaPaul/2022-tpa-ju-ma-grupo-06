@@ -15,7 +15,7 @@ import java.util.Map;
 @Entity
 public class AgenteCuenta extends Cuenta {
 
-  public AgenteCuenta() {
+  protected AgenteCuenta() {
   }
 
   public AgenteCuenta(String usuario, String password) {

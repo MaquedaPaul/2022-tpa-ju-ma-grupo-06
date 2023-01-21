@@ -1,5 +1,6 @@
 package controllers.organizacion;
 
+import exceptions.*;
 import lectorcsv.LectorMediciones;
 import lectorcsv.TipoPerioricidad;
 import mediciones.Medicion;
@@ -81,8 +82,6 @@ public class MedicionController {
         Map<String, Object> model = new HashMap<>();
 
 
-
-
         File uploadDir = new File("upload");
 
         uploadDir.mkdir();
@@ -97,21 +96,71 @@ public class MedicionController {
             Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             // Use the input stream to create a file
         }
-        if(tempFile.toFile().length() == 0){
-            model.put("sinArchivo",true);
+        if (tempFile.toFile().length() == 0) {
+            model.put("sinArchivo", true);
             return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
         }
 
-        LectorMediciones lector = new LectorMediciones(tempFile.toString(),organizacion);
+        LectorMediciones lector = new LectorMediciones(tempFile.toString(), organizacion);
         try {
             lector.leerMediciones();
             lector.cargarMediciones();
-            model.put("ingresoValido",true);
+            model.put("ingresoValido", true);
             return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
         }
-        //TODO PONER MAS CATCHS y no atrapar ni lanzar excepciones genéricas
-        catch (Exception e){
+        catch(LaCabeceraNoTieneUnFormatoValido e){
             model.put("formatoNoValido",true);
+            model.put("error","La cabecera no tiene un formato válido");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+
+        catch (NoSeLeyeronLosCamposEsperados e){
+            model.put("formatoNoValido",true);
+            model.put("error","El archivo tiene campos que no se esperaban");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+        catch(ElPeriodoNoConcuerdaConLaPerioricidad e){
+            model.put("formatoNoValido",true);
+            model.put("error","El período no concuerda con la perioricidad");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+
+        catch(ElPeriodoDeImputacionNoEsValido e){
+            model.put("formatoNoValido",true);
+            model.put("error","El período de imputación no es válido");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+        catch(LaPerioricidadLeidaNoEsValida e){
+            model.put("formatoNoValido",true);
+            model.put("error","La periodicidad leida no es válida");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+        catch(ElTipoDeConsumoLeidoNoEsValido e){
+            model.put("formatoNoValido",true);
+            model.put("error","El tipo de consumo no es válido, no existe o es desconocido");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+        catch(LaMedicionEsNegativa e){
+            model.put("formatoNoValido",true);
+            model.put("error","La medición tiene valor negativo");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+
+        catch(NoSeReconoceLaPeriodicidad e){
+            model.put("formatoNoValido",true);
+            model.put("error","No se reconoce la periodicidad");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+
+
+        catch (ElPeriodoIngresadoNoEsValido e){
+            model.put("formatoNoValido",true);
+            model.put("error","El período ingresado no es válido");
+            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+        }
+        catch (IllegalArgumentException e){
+            model.put("formatoNoValido",true);
+            model.put("error","Alguno de los campos es erróneo o no existe en el sistema");
             return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
         }
 

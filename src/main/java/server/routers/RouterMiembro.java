@@ -21,7 +21,7 @@ public class RouterMiembro {
     Spark.post("/home/trayectos/compartir", miembroController::getRegistro, engine);
     Spark.post("/home/trayectos/registro/eliminar", trayectosController::eliminarTramo, engine);
     Spark.post("/home/trayectos/registro/cancelar", trayectosController::cancelarTrayecto, engine);
-    Spark.post("/home/trayectos/registro/crear", trayectosController::crearTrayecto, engine);
+    Spark.post("/home/trayectos/registro/crear", trayectosController::crearTrayecto);
     Spark.get("/home/vinculacion", solicitudVinculacionController::getVinculacion, engine);
     Spark.post("/home/vinculacion", solicitudVinculacionController::pedirVinculacion, engine);
   }

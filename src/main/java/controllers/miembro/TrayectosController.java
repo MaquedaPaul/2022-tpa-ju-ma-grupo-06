@@ -8,8 +8,10 @@ import repositorios.RepoTransporte;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 import transporte.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
@@ -137,7 +139,7 @@ public class TrayectosController {
   }
 
   @Transactional
-  public ModelAndView crearTrayecto(Request request, Response response) {
+  public Response crearTrayecto(Request request, Response response) {
 
     BuilderTrayecto trayecto = request.session().attribute("trayecto");
     Trayecto trayectoNuevo = trayecto.build();
@@ -147,7 +149,11 @@ public class TrayectosController {
     if (trayectoNuevo.getTramos().isEmpty()) {
 
       model.put("trayectoVacio",true);
-      return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
+      response.redirect("/home/trayectos/registro");
+      return response;
+
+      //return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
+
     } else {
       request.session().attribute("trayecto", null);
 
@@ -156,7 +162,10 @@ public class TrayectosController {
       RepoMiembros.getInstance().agregarMiembro(miembro);
 
       model.put("trayectoCargadoConExito",true);
-      return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
+      response.redirect("/home/trayectos/registro");
+      return response;
+
+      //return new ModelAndView(model,"miembroRegistrarTrayecto.hbs");
 
     }
   }

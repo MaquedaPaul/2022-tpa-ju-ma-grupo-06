@@ -47,7 +47,7 @@ public class MedicionController {
 
         return new ModelAndView(model, "organizacionCargarMedicion.hbs");
     }
-    public ModelAndView crearMedicion(Request request, Response response) {
+    public Response crearMedicion(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         Map<String, Object> model = new HashMap<>();
         String tipoDeConsumo = request.queryParams("tipo-de-consumo");
@@ -67,14 +67,15 @@ public class MedicionController {
 
             TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
 
-
             Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
             RepoMediciones.getInstance().cargarMedicion(medicion);
             model.put("exito", true);
-            return new ModelAndView(model,"organizacionCargarMedicion.hbs");
-        }
-        return new ModelAndView(model,"organizacionCargarMedicion.hbs");
 
+            response.redirect("/home/mediciones/perse");
+            return response;
+        }
+        response.redirect("/home/mediciones/perse");
+        return response;
     }
 
     public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {

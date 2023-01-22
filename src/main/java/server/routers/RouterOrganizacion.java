@@ -20,7 +20,7 @@ public class RouterOrganizacion {
     Spark.post("/home/vinculaciones", solicitudVinculacionController::pedirVinculacion, engine);
     Spark.get("/home/mediciones", medicionController::getMediciones, engine);
     Spark.get("/home/mediciones/perse", medicionController::getMedicionesPerse, engine);
-    Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion,engine);
+    Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion);
     Spark.get("/home/mediciones/archivo", medicionController::getMedicionesArchivo, engine);
     Spark.post("/home/mediciones/archivo", medicionController::subirCSVs, engine);
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);

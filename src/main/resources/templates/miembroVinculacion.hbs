@@ -6,25 +6,25 @@
     <h2>Solicitar Vinculacion</h2>
     <form action="/home/vinculacion" method="POST">
         <div>
-            Seleccione organización
+            <label for="tipo-consumo"><h3>Organización</h3></label>
             <label for="selector-organizacion"></label>
-            <select id="selector-organizacion" name="organizacionSolicitada" class="white-button">
+            <select id="selector-organizacion" name="organizacionSolicitada" class="flex-clm form form-evo-hc">
                 {{#each organizaciones}}
                     <option value="{{razonSocial}}">{{razonSocial}}</option>
                 {{/each}}
             </select>
         </div>
         <div>
-            Seleccione sector
+            <label for="tipo-consumo"><h3>Sector</h3></label>
             <label for="sectores"></label>
-            <select id="sectores" name="sectorSolicitado" class="white-button">
+            <select id="sectores" name="sectorSolicitado" class="flex-clm form form-evo-hc">
                 {{#each nombreSectores}}
                     <option value="{{this}}">{{this}}</option>
                 {{/each}}
             </select>
         </div>
         <div class="below-buttons">
-            <button type="submit" class="btn-2 first">Solicitar</button>
+            <button type="submit" class="btn-consulta destacar">Solicitar</button>
         </div>
     </form>
 {{/partial}}

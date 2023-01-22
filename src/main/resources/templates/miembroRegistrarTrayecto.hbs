@@ -1,10 +1,10 @@
 {{#partial "content"}}
     <h2 class="titulo">Agregar trayecto</h2>
     {{#if trayectoVacio}}
-        <p style="color: red">Error: ¡El trayecto no tiene tramos!</p>
+        <div class="btn-error firstError">Error: ¡El trayecto no tiene tramos!</div>
     {{/if}}
     {{#if trayectoCargadoConExito}}
-        <p style="color: green">Felicidades: ¡El trayecto fue agregado con éxito!</p>
+        <div class="btn-success firstSuccess">Felicidades: ¡El trayecto fue agregado con éxito!</div>
     {{/if}}
 
     <h3>Tramos</h3>
@@ -47,7 +47,7 @@
             </a>
 
             <form action="/home/trayectos/registro/crear" method="POST">
-                <button class="btn-2 first">Agregar trayecto</button>
+                <button class="btn-consulta destacar">Agregar trayecto</button>
             </form>
         </div>
 {{/partial}}

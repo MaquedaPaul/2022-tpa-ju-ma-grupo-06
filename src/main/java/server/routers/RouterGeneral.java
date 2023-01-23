@@ -23,7 +23,7 @@ public class RouterGeneral {
     Spark.get("/recomendaciones", recomendacionController::getRecomendaciones, engine);
     Spark.get("/home",homeController::getHome, engine);
     Spark.get("/signin",signInController::getSignIn, engine);
-    Spark.post("/signin", signInController::logIn, engine);
-    Spark.post("/signout", signOutController::logOut, engine);
+    Spark.post("/signin", signInController::logIn);
+    Spark.post("/signout", signOutController::logOut);
   }
 }

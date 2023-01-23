@@ -5,6 +5,7 @@ import repositorios.RepoCuentas;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
+import spark.Spark;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,29 +17,34 @@ public class SignInController {
   }
 
   public ModelAndView getSignIn(Request request, Response response) {
+    Map<String, Object> model = new HashMap<>();
     if(comprobarSesionActiva(request)){
       response.redirect("/home");
       return null;
     }
-    return new ModelAndView(null, "signin.hbs");
+
+    if (request.cookie("UsuarioInexistente") != null) {
+      model.put("usuarioInexistente", true);
+    }
+
+    return new ModelAndView(model, "signin.hbs");
   }
 
-  public ModelAndView logIn(Request request, Response response) {
+  public Response logIn(Request request, Response response) {
     String userQuery = request.queryParams("user");
     String userQueryPassword = request.queryParams("password");
     System.out.println("ingreso: " + userQuery + userQueryPassword);
-
     Cuenta cuenta = RepoCuentas.getInstance().accountByUsername(userQuery);
 
     if (cuenta == null || !Objects.equals(userQueryPassword, cuenta.getPassword())) {
       System.out.println("ingreso: " + userQuery + userQueryPassword);
-      Map<String, Object> model = new HashMap<>();
-      model.put("usuarioInexistente",true);
-      return new ModelAndView(model,"signin.hbs");
+      response.cookie("UsuarioInexistente", "something");
+      response.redirect("/signin");
+      return response;
     }
 
     cuenta.guardarEnSesion(request);
     response.redirect("/home");
-    return null;
+    return response;
   }
 }

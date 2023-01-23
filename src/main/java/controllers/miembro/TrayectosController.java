@@ -140,7 +140,6 @@ public class TrayectosController {
   }
 
   public Response postPuntosUbicacion(Request request, Response response) {
-
     if (request.queryParams("origen") == null
         || request.queryParams("destino") == null
         || !request.queryParams("origen").matches("\\d+")

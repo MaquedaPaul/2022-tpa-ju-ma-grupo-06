@@ -15,15 +15,15 @@
                 <ul>
                     {{#each tramos}}
                         <li>
-                            Origen: {{this.puntoOrigen.calle this.puntoOrigen.altura}}
-                            Destino: {{this.puntoDestino.calle this.puntoDestino.altura}}
+                            Origen: {{this.puntoOrigen.calle}} {{this.puntoOrigen.altura}}
+                            Destino: {{this.puntoDestino.calle}} {{this.puntoDestino.altura}}
                             Transporte: {{this.transporte.nombre}}
                         </li>
                     {{/each}}
                     {{#if hayAlgunTramo}}
                         <li>
-                            Origen: {{ultimoTramo.puntoOrigen.calle ultimoTramo.puntoOrigen.altura}}
-                            Destino: {{ultimoTramo.puntoDestino.calle ultimoTramo.puntoDestino.altura}}
+                            Origen: {{ultimoTramo.puntoOrigen.calle}} {{ultimoTramo.puntoOrigen.altura}}
+                            Destino: {{ultimoTramo.puntoDestino.calle}} {{ultimoTramo.puntoDestino.altura}}
                             Transporte: {{ultimoTramo.transporte.nombre}}
                         </li>
                     {{/if}}

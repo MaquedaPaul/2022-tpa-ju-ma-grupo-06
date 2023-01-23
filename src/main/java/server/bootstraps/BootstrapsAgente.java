@@ -76,7 +76,7 @@ public class BootstrapsAgente implements WithGlobalEntityManager {
     colectivo.setCombustible(gasolina);
     Transporte autito = new VehiculoParticular(TipoVehiculo.AUTO,40,"Fiat 1");
     autito.setCombustible(gasolina);
-    Transporte remis = new ServicioContratado(TipoVehiculo.AUTO,30);
+    Transporte remis = new ServicioContratado(TipoVehiculo.AUTO,30, "Este es Otro Auto");
     remis.setCombustible(gasolina);
 
     //TRAMOS

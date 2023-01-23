@@ -12,9 +12,13 @@ public class Router {
   public static void init() {
     HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
 
+    /*
     String projectDir = System.getProperty("user.dir");
     String staticDir = "/src/main/resources/templates";
     staticFiles.externalLocation(projectDir + staticDir);
+    */
+
+    staticFiles.location("static");
 
     RouterGeneral.init(engine);
     RouterMiembro.init(engine);

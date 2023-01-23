@@ -28,9 +28,6 @@ public class RouterMiembro {
     Spark.post("/home/trayectos/nuevo-trayecto", trayectosController::postNuevoTrayecto);
 
     Spark.get("/home/vinculacion", solicitudVinculacionController::getVinculacion, engine);
-    Spark.post("/home/vinculacion", solicitudVinculacionController::pedirVinculacion, engine);
-
-    Spark.get("/home/trayectos/compartir", miembroController::getRegistro, engine);
-    Spark.post("/home/trayectos/compartir", miembroController::getRegistro, engine);
+    Spark.post("/home/vinculacion", solicitudVinculacionController::pedirVinculacion);
   }
 }

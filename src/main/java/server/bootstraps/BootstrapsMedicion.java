@@ -75,7 +75,7 @@ public class BootstrapsMedicion implements WithGlobalEntityManager {
 
     Transporte auto = new VehiculoParticular(TipoVehiculo.AUTO,25,"Fiat 500");
     auto.setCombustible(gasolina);
-    Transporte uber = new ServicioContratado(TipoVehiculo.AUTO,13);
+    Transporte uber = new ServicioContratado(TipoVehiculo.AUTO,13, "Random 321");
     uber.setCombustible(gasolina);
     Transporte moto = new VehiculoParticular(TipoVehiculo.MOTO,19,"Zanella");
 

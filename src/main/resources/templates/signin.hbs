@@ -3,15 +3,15 @@
     <form style="display: flex; flex-direction: column;" action="/signin" method="POST" id="login">
         <div>
             <label for="primer-input">Usuario</label>
-            <input id="primer-input" type="text" name="user">
+            <input class="flex-clm form form-evo-hc" id="primer-input" type="text" name="user">
         </div>
         <div>
             <label for="segundo-input">Contraseña</label>
-            <input id="segundo-input" type="password" name="password">
+            <input class="flex-clm form form-evo-hc" id="segundo-input" type="password" name="password">
         </div>
         <button type="submit" form="login" class="btn-2 first">Iniciar sesión</button>
         {{#if usuarioInexistente}}
-                <p style="color: red">Error: usuario inexistente</p>
+                <div class="btn-error firstError">Error: usuario inexistente</div>
             {{/if}}
     </form>
 

@@ -30,7 +30,7 @@ public class TipoConsumo {
   @ManyToOne(fetch = FetchType.EAGER)
   private FactorEmision factorEmision;
 
-  public TipoConsumo() {
+  protected TipoConsumo() {
   }
 
   public TipoConsumo(String nombre, Unidad unidad, TipoActividad actividad, TipoAlcance alcance) {

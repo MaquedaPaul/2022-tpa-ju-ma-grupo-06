@@ -35,10 +35,11 @@
         </div>
 
         {{#if tipoConsumoNull}}
-            Error: el tipo de consumo ingresado no existe
+            <div class="btn-error firstError">El tipo de consumo ingresado no existe</div>
         {{/if}}
         {{#if exito}}
-            La medicion fue cargada con exito
+            <div class="btn-success firstSuccess">La medicion fue cargada con exito</div>
+
         {{/if}}
     </form>
 

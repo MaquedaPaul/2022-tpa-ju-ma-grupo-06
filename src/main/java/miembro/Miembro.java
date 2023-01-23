@@ -51,7 +51,7 @@ public class Miembro {
       inverseJoinColumns = @JoinColumn(name="ID_TRAYECTO"))
   List<Trayecto> trayectos;
 
-  public Miembro() {
+  protected Miembro() {
   }
 
   public Miembro(

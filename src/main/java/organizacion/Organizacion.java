@@ -64,7 +64,7 @@ public class Organizacion {
     this.contactos = contactos;
   }
 
-  public Organizacion() {
+  protected Organizacion() {
   }
 
   public void procesarVinculacion(Solicitud solicitud, boolean aceptado) {

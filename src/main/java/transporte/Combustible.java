@@ -19,7 +19,7 @@ public class Combustible {
   @OneToOne
   private TipoConsumo tipoConsumo;
 
-  public Combustible() {
+  protected Combustible() {
   }
 
   public Combustible(TipoConsumo tipoConsumo) {

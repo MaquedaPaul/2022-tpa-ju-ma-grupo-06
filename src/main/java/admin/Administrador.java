@@ -21,7 +21,7 @@ public class Administrador {
   @Column(name = "password")
   private String password;
 
-  public Administrador() {
+  protected Administrador() {
   }
 
   public Administrador(String unUsuario, String unPassword) {

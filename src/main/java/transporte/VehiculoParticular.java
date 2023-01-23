@@ -16,7 +16,7 @@ public class VehiculoParticular extends TransportePrivado {
   @Column(name = "TIPO_TRANSPORTE")
   private TipoVehiculo tipoVehiculo;
 
-  public VehiculoParticular() {
+  protected VehiculoParticular() {
   }
 
   public VehiculoParticular(TipoVehiculo tipoVehiculo, double consumoPorKilometro, String nombre) {

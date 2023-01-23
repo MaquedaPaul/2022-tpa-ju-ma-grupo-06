@@ -20,7 +20,7 @@ public class ServicioContratado extends TransportePrivado {
   @Column(name = "TIPO_TRANSPORTE")
   private TipoVehiculo vehiculoContratado;
 
-  public ServicioContratado() {
+  protected ServicioContratado() {
   }
 
   public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro, String detalle) {

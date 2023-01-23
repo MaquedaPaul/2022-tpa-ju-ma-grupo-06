@@ -18,17 +18,11 @@ public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
 
-  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinTable(name = "PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name = "ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @ElementCollection
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoDeIda;
 
-  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinTable(name = "PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name = "ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @ElementCollection
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoVuelta;
 
@@ -89,7 +83,11 @@ public class LineaTransporte {
     return recorridoDeIda.get(recorridoDeIda.size() - 1);
   }
 
-  public String diplay() {
-    return this.transporte().toString() + " " + this.nombre;
+  public boolean existeParadaEnElKm(int km, String sentido) {
+    switch (sentido) {
+      case "IDA": return this.recorridoDeIda.stream().anyMatch(p -> p.getKmActual() == km);
+      case "VUELTA": return this.recorridoVuelta.stream().anyMatch(p -> p.getKmActual() == km);
+      default: return false;
+    }
   }
 }

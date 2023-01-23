@@ -32,16 +32,4 @@ public class MiembroController {
     Miembro miembro = RepoCuentas.getInstance().obtenerMiembro(usuario);
     return miembro;
   }
-
-  static String obtenerUsuario (Request request){
-    MiembroCuenta cuenta = request.session().attribute("cuenta");
-    return cuenta.getUsuario();
-  }
-
-
-
-  public ModelAndView getRegistro(Request request, Response response) {
-    return new ModelAndView(null,"registro.hbs");
-  }
-
 }

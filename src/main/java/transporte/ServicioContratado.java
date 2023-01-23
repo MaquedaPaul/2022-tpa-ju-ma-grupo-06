@@ -7,13 +7,12 @@ package transporte;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
 @Getter
+@DiscriminatorValue("SERVICIO CONTRATADO")
+
 public class ServicioContratado extends TransportePrivado {
 
   @Enumerated(EnumType.STRING)
@@ -23,18 +22,10 @@ public class ServicioContratado extends TransportePrivado {
   protected ServicioContratado() {
   }
 
-  public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro) {
+  public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro, String detalle) {
     this.vehiculoContratado = vehiculoContratado;
-    this.consumoPorKilometro = consumoPorKilometro;
+    setConsumoPorKilometro(consumoPorKilometro);
+    setNombre(detalle);
   }
 
-  @Override
-  public TipoTransporte getTipoTransporte() {
-    return TipoTransporte.SERCICIO_CONTRATADO;
-  }
-
-  @Override
-  public String getDisplay() {
-    return this.vehiculoContratado.toString();
-  }
 }

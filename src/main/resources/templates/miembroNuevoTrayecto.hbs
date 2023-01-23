@@ -1,0 +1,47 @@
+{{#partial "usuario"}}
+    {{usuario}}
+{{/partial}}
+
+{{#partial "content"}}
+    <h2>NUEVO TRAYECTO</h2>
+    <div>
+        {{#if noHayTramos}}
+            <p>
+                ¡Error! el trayecto debe tener al menos <strong>un tramo</strong> para poder ser creado
+            </p>
+        {{/if}}
+        <form id="trayecto-nuevo" method="post">
+            <div class="tramos">
+                <ul>
+                    {{#each tramos}}
+                        <li>
+                            Origen: {{this.puntoOrigen.calle}} {{this.puntoOrigen.altura}}
+                            Destino: {{this.puntoDestino.calle}} {{this.puntoDestino.altura}}
+                            Transporte: {{this.transporte.nombre}}
+                        </li>
+                    {{/each}}
+                    {{#if hayAlgunTramo}}
+                        <li>
+                            Origen: {{ultimoTramo.puntoOrigen.calle}} {{ultimoTramo.puntoOrigen.altura}}
+                            Destino: {{ultimoTramo.puntoDestino.calle}} {{ultimoTramo.puntoDestino.altura}}
+                            Transporte: {{ultimoTramo.transporte.nombre}}
+                        </li>
+                    {{/if}}
+                    <li class="btn">
+                        <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo">
+                            Agregar Tramo
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto">
+                Borrar todos
+            </button>
+            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto/borrar-todo">
+                Crear
+            </button>
+        </form>
+    </div>
+{{/partial}}
+
+{{>miembro-home-iniciado-sesion.hbs}}

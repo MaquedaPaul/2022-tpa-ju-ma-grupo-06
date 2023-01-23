@@ -1,0 +1,24 @@
+{{#partial "content"}}
+    <h2>NUEVO TRAMO - TRANSPORTE</h2>
+    <form id="form-transporte" action="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte" method="post">
+
+        <label for="transportes">
+            <select name="transportes" id="transportes">
+                {{#each categorias}}
+                    <optgroup label="{{this.categoria}}">
+                        {{#each transportes}}
+                            <option value="{{this.nombre}}">
+                                {{this.nombre}}
+                            </option>
+                        {{/each}}
+                    </optgroup>
+                {{/each}}
+            </select>
+        </label>
+        <button form="form-transporte">
+            Continuar
+        </button>
+    </form>
+{{/partial}}
+
+{{>miembro-home-iniciado-sesion.hbs}}

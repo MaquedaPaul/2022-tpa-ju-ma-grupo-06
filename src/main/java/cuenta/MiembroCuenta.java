@@ -52,9 +52,4 @@ public class MiembroCuenta extends Cuenta {
     return new HashMap<>();
   }
 
-  @Override
-  public String getRecomendaciones() {
-    return " <a class=\"seccion\" href=\"/home/vinculacion\">Solicitar vinculacion</a>\n" +
-           " <a class=\"seccion\" href=\"/home/trayectos\">Trayectos</a>";
-  }
 }

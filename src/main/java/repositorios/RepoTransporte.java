@@ -12,4 +12,23 @@ public enum RepoTransporte implements WithGlobalEntityManager {
     return entityManager().createQuery("from Transporte where TRANSPORTE_UTILIZADO = :d")
         .setParameter("d", tipoTransporte).getResultList();
   }
+
+  public List<String> getTiposTransportes() {
+    return entityManager().createNativeQuery("SELECT DISTINCT TRANSPORTE_UTILIZADO FROM transporte").getResultList();
+  }
+
+  public Transporte getTransporteByName(String nombre) {
+    return (Transporte) entityManager()
+        .createQuery("FROM Transporte WHERE Transporte.nombre = :t")
+        .setParameter("t",nombre)
+        .getResultList()
+        .get(0);
+  }
+
+  public boolean existeTransporte(String nombre) {
+        return !entityManager()
+        .createQuery("FROM Transporte WHERE Transporte.nombre = :t")
+        .setParameter("t",nombre)
+        .getResultList().isEmpty();
+  }
 }

@@ -32,6 +32,17 @@ public class MedicionAnual extends Medicion {
     return this.valor * (periodo.perioricidad() / 12D);
   }
 
+
+  /**
+   * Retorna el hc correspondiente a la medicion entre dos periodos
+   * <ul>
+   *   <li>Si el <strong>inicio</strong> es despues del <strong>fin</strong> rompe</li>
+   *   <li>Si la medicion fue no registrada entre <strong>inicio</strong> y <strong>fin</strong> retorna 0</li>
+   * </ul>
+   * @param inicio PeriodoMensual
+   * @param fin PeriodoMensual
+   * @throws LaFechaDeInicioDebeSerAnteriorALaFechaDeFin si el <strong>inicio</strong> es despues del <strong>fin</strong>
+   */
   @Override
   public double calcularHCEntre(PeriodoMensual inicio, PeriodoMensual fin) {
     if (inicio.esDespuesDe(fin.getFecha())) {
@@ -43,14 +54,14 @@ public class MedicionAnual extends Medicion {
     }
 
     if (inicio.esDelMismoAnioQue(fin)) {
-      return this.getValor() * inicio.mesesDeDiferenciaCon(fin);
+      return this.getValorMensual() * inicio.mesesDeDiferenciaCon(fin);
     }
 
     if (inicio.esDelAnio(this.getFecha().getYear())) {
-      return this.getValor() * Math.abs(inicio.getMonth() - 13);
+      return this.getValorMensual() * Math.abs(inicio.getMonth() - 13);
     }
 
-    return this.getValor() * fin.getMonth();
+    return this.getValorMensual() * fin.getMonth();
   }
 
   @Override
@@ -63,6 +74,10 @@ public class MedicionAnual extends Medicion {
     return (inicio.esDelAnio(this.getYear())
         || fin.esDelAnio(this.getYear()))
         && fin.esDespuesDe(inicio.getFecha());
+  }
+
+  private double getValorMensual() {
+    return this.getValor() / 12;
   }
 
 }

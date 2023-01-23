@@ -25,7 +25,7 @@ public class SolicitudVinculacionController {
         hashMap.put("organizaciones", organizacionesQueNoPertenece);
         return new ModelAndView(hashMap,"miembroVinculacion.hbs");
     }
-    public ModelAndView pedirVinculacion(Request request, Response response) {
+    public Response pedirVinculacion(Request request, Response response) {
 
         String organizacionSolicitada = request.queryParams("organizacionSolicitada");
         String sectorSolicitado = request.queryParams("sectorSolicitado");
@@ -33,17 +33,17 @@ public class SolicitudVinculacionController {
 
         if (organizacionObjetivo == null) {
             response.redirect("/home/vinculacion");
-            return null;
+            return response;
         }
         Sector sectorObjetivo = organizacionObjetivo.obtenerSectorPor(sectorSolicitado);
         if (sectorObjetivo == null) {
             response.redirect("/home/vinculacion");
-            return null;
+            return response;
         }
         Miembro miembro =  MiembroController.obtenerMiembro(request);
         miembro.solicitarVinculacion(organizacionObjetivo, new Solicitud(miembro, sectorObjetivo));
         RepoOrganizacion.getInstance().agregarOrganizacion(organizacionObjetivo);
         response.redirect("/home");
-        return null;
+        return response;
     }
 }

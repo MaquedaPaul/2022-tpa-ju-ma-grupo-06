@@ -2,22 +2,21 @@ package transporte;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @Getter
+@DiscriminatorValue("PROPULSIÓN HUMANA")
+
 public class PropulsionHumana extends TransportePrivado {
 
-  @Column(name = "TIPO_TRANSPORTE")
-  private String herramientaUtilizada;
-
-  protected PropulsionHumana() {
+  public PropulsionHumana() {
   }
 
   public PropulsionHumana(String herramientaUtilizada) {
-    this.herramientaUtilizada = herramientaUtilizada;
-    this.consumoPorKilometro = 0;
+    setNombre(herramientaUtilizada);
+    setConsumoPorKilometro(0);
   }
 
   @Override
@@ -25,13 +24,4 @@ public class PropulsionHumana extends TransportePrivado {
     return false;
   }
 
-  @Override
-  public TipoTransporte getTipoTransporte() {
-    return TipoTransporte.PROPULSION_HUMANA;
-  }
-
-  @Override
-  public String getDisplay() {
-    return this.herramientaUtilizada;
-  }
 }

@@ -3,9 +3,7 @@ package lectorcsv;
 import exceptions.*;
 import global.Unidad;
 import linea.PuntoUbicacion;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.TipoOrganizacion;
@@ -38,10 +36,10 @@ public class LectorCSVTest implements WithGlobalEntityManager {
 
   List<String> campos = mock(ArrayList.class);
 
-  static TipoConsumo gas = new TipoConsumo("Gas Natural",
+  static TipoConsumo gas = new TipoConsumo("GAS NATURAL",
       Unidad.CM3, TipoActividad.COMBUSTION_MOVIL,
       TipoAlcance.EMISION_DIRECTA);
-  static TipoConsumo nafta = new TipoConsumo("Nafta",
+  static TipoConsumo nafta = new TipoConsumo("NAFTA",
       Unidad.LTS, TipoActividad.COMBUSTION_MOVIL,
       TipoAlcance.EMISION_DIRECTA);
 
@@ -82,6 +80,16 @@ public class LectorCSVTest implements WithGlobalEntityManager {
     RepoOrganizacion.getInstance().agregarOrganizacion(mockOrg);
   }
 
+  @BeforeEach
+  public void openTransaction() {
+    entityManager().getTransaction().begin();
+  }
+
+  @AfterEach
+  public void closeTransaction() {
+    entityManager().getTransaction().commit();
+  }
+
   @Test
   public void elLectorFallaSiLaRutaDelArchivoNoExiste() {
     assertThrows(NoSuchFileException.class,
@@ -120,6 +128,7 @@ public class LectorCSVTest implements WithGlobalEntityManager {
   @Test
   public void puedoGuardarLasMedicionesQueEstenCorrectas() {
     Assertions.assertEquals(lector.getCantidadDeMediciones(), 0);
+    Assertions.assertFalse(RepoTipoDeConsumo.getInstance().getTiposConsumo().isEmpty());
     assertDoesNotThrow(lector::leerMediciones);
     Assertions.assertEquals(10, lector.getCantidadDeMediciones());
   }

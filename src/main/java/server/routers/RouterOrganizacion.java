@@ -17,10 +17,10 @@ public class RouterOrganizacion {
     Spark.get("/home/vinculaciones", vinculacionController::getVinculaciones, engine);
     Spark.post("/home/vinculaciones/:id/aceptar", vinculacionController::aceptarVinculacion,engine);
     Spark.post("/home/vinculaciones/:id/rechazar", vinculacionController::rechazarVinculacion,engine);
-    Spark.post("/home/vinculaciones", solicitudVinculacionController::pedirVinculacion, engine);
+    Spark.post("/home/vinculaciones", solicitudVinculacionController::pedirVinculacion);
     Spark.get("/home/mediciones", medicionController::getMediciones, engine);
     Spark.get("/home/mediciones/perse", medicionController::getMedicionesPerse, engine);
-    Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion,engine);
+    Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion);
     Spark.get("/home/mediciones/archivo", medicionController::getMedicionesArchivo, engine);
     Spark.post("/home/mediciones/archivo", medicionController::subirCSVs, engine);
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);

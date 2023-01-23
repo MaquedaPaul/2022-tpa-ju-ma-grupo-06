@@ -41,5 +41,4 @@ public abstract class Cuenta {
 
   public abstract void limpiarSession(Request request);
 
-  public abstract String getRecomendaciones();
 }

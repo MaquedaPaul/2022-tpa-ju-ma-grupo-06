@@ -43,8 +43,6 @@ public abstract class Transporte {
     return combustible.getTipoConsumo();
   }
 
-  public abstract TipoTransporte getTipoTransporte();
-
 }
 
 

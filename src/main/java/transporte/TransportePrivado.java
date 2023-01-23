@@ -6,6 +6,7 @@ import services.geodds.ServicioGeodds;
 import services.geodds.entities.Distancia;
 import utils.ServiceLocator;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import java.io.IOException;

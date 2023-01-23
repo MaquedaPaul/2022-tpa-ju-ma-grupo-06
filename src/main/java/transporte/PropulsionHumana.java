@@ -2,11 +2,13 @@ package transporte;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @Getter
+@DiscriminatorValue("PROPULSIÓN HUMANA")
+
 public class PropulsionHumana extends TransportePrivado {
 
   public PropulsionHumana() {
@@ -20,11 +22,6 @@ public class PropulsionHumana extends TransportePrivado {
   @Override
   public boolean sePuedeCompartir() {
     return false;
-  }
-
-  @Override
-  public TipoTransporte getTipoTransporte() {
-    return TipoTransporte.PROPULSION_HUMANA;
   }
 
 }

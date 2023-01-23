@@ -1,65 +1,43 @@
 package transporte;
 
-import com.google.common.collect.Iterables;
-import exceptions.NoConcuerdaInicioYFin;
-import linea.PuntoUbicacion;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
+@Getter
 public class BuilderTrayecto {
-  List<Tramo> tramos = new ArrayList<>();
-  Tramo ultimoTramo = new Tramo();
-
-  public BuilderTrayecto setPuntoOrigen(PuntoUbicacion puntoUbicacion) throws NoConcuerdaInicioYFin {
-    ultimoTramo.setPuntoOrigen(puntoUbicacion);
-    checkearInicioYFin();
-    return this;
-  }
-
-  public BuilderTrayecto setPuntoDestino(PuntoUbicacion puntoUbicacion) {
-    ultimoTramo.setPuntoDestino(puntoUbicacion);
-    return this;
-  }
-
-  public BuilderTrayecto setTransporte(Transporte transporte) {
-    ultimoTramo.setTransporteUtilizado(transporte);
-    return this;
-  }
-
-  public void checkearInicioYFin() throws NoConcuerdaInicioYFin {
-    if (!tramos.isEmpty() && !ultimoTramo.getPuntoOrigen().equals(Iterables.getLast(tramos).getPuntoDestino())) {
-      throw new NoConcuerdaInicioYFin("Inicio y fin no concuerdan");
-    }
-  }
-
-  public void agregarTramo() {
-    Objects.requireNonNull(ultimoTramo.getPuntoOrigen());
-    Objects.requireNonNull(ultimoTramo.getPuntoDestino());
-    Objects.requireNonNull(ultimoTramo.getTransporteUtilizado());
-    tramos.add(ultimoTramo);
-    ultimoTramo = new Tramo();
-  }
+  private final List<Tramo> tramos = new ArrayList<>();
+  private Tramo ultimoTramo;
 
   public void agregarTramo(Tramo tramo) {
-    Objects.requireNonNull(tramo.getPuntoOrigen());
-    Objects.requireNonNull(tramo.getPuntoDestino());
-    Objects.requireNonNull(tramo.getTransporteUtilizado());
-    tramos.add(tramo);
-  }
-
-  public Trayecto build() {
-    return new Trayecto(new HashSet<>(tramos));
-  }
-
-  public List<Tramo> getTramos() {
-    return tramos;
+    if (ultimoTramo != null) {
+      tramos.add(ultimoTramo);
+    }
+    ultimoTramo = tramo;
   }
 
   public void eliminarUltimoTramo() {
-    Tramo tramo = Iterables.getLast(tramos);
-    tramos.remove(tramo);
+    this.ultimoTramo = null;
   }
+
+  public Trayecto build() {
+    if (!this.sePuedeConstruir()) {
+      throw new RuntimeException("No se puede construir el trayecto, debe tener al menos 1 tramo");
+    }
+    return new Trayecto(this.getSetTramos());
+  }
+
+  private Set<Tramo> getSetTramos() {
+    Set<Tramo> setTramos = new HashSet<>(this.getTramos());
+    setTramos.add(this.ultimoTramo);
+    return setTramos;
+  }
+
+  public boolean sePuedeConstruir() {
+    return this.getSetTramos().size() > 0;
+  }
+
 }

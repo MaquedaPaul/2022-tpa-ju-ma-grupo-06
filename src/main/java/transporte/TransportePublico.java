@@ -6,15 +6,14 @@ import linea.PuntoUbicacion;
 import linea.TipoTransporte;
 import lombok.Getter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
 @Entity
 @Getter
+@DiscriminatorValue("TRANSPORTE PUBLICO")
+
 public class TransportePublico extends Transporte {
 
   @ManyToOne(cascade = CascadeType.PERSIST)
@@ -63,11 +62,6 @@ public class TransportePublico extends Transporte {
         .filter(unaParada -> ubicacion.equals(unaParada.getPuntoUbicacion()))
         .collect(Collectors.toList())
         .get(0);
-  }
-
-  @Override
-  public transporte.TipoTransporte getTipoTransporte() {
-    return transporte.TipoTransporte.TRANSPORTE_PUBLICO;
   }
 
 }

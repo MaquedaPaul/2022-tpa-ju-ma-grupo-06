@@ -1,0 +1,65 @@
+{{#partial "content"}}
+    <h2>
+        NUEVO TRAMO - RECORRIDO
+    </h2>
+    {{#if esPublico}}
+        <div>
+            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/recorrido-ida">
+                Desde: {{primerParadaIda.calle primerParadaIda.altura}}
+                Hasta: {{ultimaParadaIda.calle ultimaParadaIda.altura}}
+            </a>
+            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/recorrido-vuelta">
+                Desde: {{primerParadaRegreso.calle primerParadaRegreso.altura}}
+                Hasta: {{ultimaParadaRegreso.nombre ultimaParadaRegreso.altura}}
+            </a>
+        </div>
+    {{else}}
+        <form id="puntos-ubicacion" method="post" action="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/puntos-ubicacion">
+            <div>
+                <h3>ORIGEN</h3>
+                <label for="localidad_id">
+                    <input type="number" name="localidad_id" min="1" required
+                        {{#if hayTramos}}
+                            value="{{ultimoTramo.puntoDestino.localidadId}}"
+                            readonly
+                        {{/if}}
+                    />
+                </label>
+                <label for="calle">
+                    <input type="text" name="calle" required
+                        {{#if hayTramos}}
+                           value="{{ultimoTramo.puntoDestino.calle}}"
+                           readonly
+                        {{/if}}
+                    />
+                </label>
+                <label for="altura">
+                    <input type="number" name="altura" min="1" required
+                        {{#if hayTramos}}
+                           value="{{ultimoTramo.puntoDestino.altura}}"
+                           readonly
+                        {{/if}}
+                    />
+                </label>
+            </div>
+            <div>
+                <h3>DESTINO</h3>
+                <label for="localidad_id">
+                    <input type="number" name="localidad_id" min="1" required/>
+                </label>
+                <label for="calle">
+                    <input type="text" name="calle" required/>
+                </label>
+                <label for="altura">
+                    <input type="number" name="altura" min="1" required/>
+                </label>
+            </div>
+            <button form="puntos-ubicacion">
+                Continuar
+            </button>
+        </form>
+    {{/if}}
+
+{{/partial}}
+
+{{>miembro-home-iniciado-sesion.hbs}}

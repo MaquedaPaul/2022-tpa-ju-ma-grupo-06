@@ -1,5 +1,6 @@
 package cuenta;
 
+import controllers.organizacion.OrganizacionController;
 import repositorios.RepoCuentas;
 import spark.Request;
 
@@ -18,7 +19,7 @@ public class OrganizacionCuenta extends Cuenta {
   }
 
   public String home() {
-    return "organizacionCalculadoraHc.hbs";
+    return "organizacionHcTotalNew.hbs";
   }
 
   public TipoCuenta nivelDeAcceso() {
@@ -38,7 +39,7 @@ public class OrganizacionCuenta extends Cuenta {
 
   @Override
   public Map<String, Object> datosDelHome(Request request) {
-    return null;
+    return OrganizacionController.datosDelHome(request);
   }
 
   @Override

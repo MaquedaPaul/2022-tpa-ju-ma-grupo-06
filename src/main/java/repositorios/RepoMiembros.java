@@ -47,7 +47,7 @@ public class RepoMiembros implements WithGlobalEntityManager {
 
     public Miembro getMiembrosPorNombreYApellido(String nombreApellido){
         return getMiembros().stream()
-                .filter(miembro -> miembro.getNombreYApellido().toUpperCase().equals(nombreApellido.toUpperCase()))
+                .filter(miembro -> miembro.getNombreYApellido().equalsIgnoreCase(nombreApellido))
                 .findAny().orElse(null);
     }
     public Miembro getMiembrosPor(long id) {

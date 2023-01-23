@@ -24,8 +24,6 @@ public class RouterOrganizacion {
     Spark.get("/home/mediciones/archivo", medicionController::getMedicionesArchivo, engine);
     Spark.post("/home/mediciones/archivo", medicionController::subirCSVs, engine);
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);
-    Spark.get("/home/calculadora-hc/hc-total", organizacionController::getHcTotal, engine);
-    Spark.get("/home/calculadora-hc/impacto-de-miembro/buscador", impactoController::getImpactoMiembroBuscar, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro", impactoController::getImpactoMiembro, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", impactoController::getImpactoMiembroConNombreYApellido, engine);
     Spark.get("/home/calculadora-hc/indicador-hc-sector/buscador", indicadorController::getIndicadorHcSectorBuscar, engine);

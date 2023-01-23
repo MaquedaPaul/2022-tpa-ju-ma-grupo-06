@@ -83,7 +83,11 @@ public class LineaTransporte {
     return recorridoDeIda.get(recorridoDeIda.size() - 1);
   }
 
-  public String diplay() {
-    return this.transporte().toString() + " " + this.nombre;
+  public boolean existeParadaEnElKm(int km, String sentido) {
+    switch (sentido) {
+      case "IDA": return this.recorridoDeIda.stream().anyMatch(p -> p.getKmActual() == km);
+      case "VUELTA": return this.recorridoVuelta.stream().anyMatch(p -> p.getKmActual() == km);
+      default: return false;
+    }
   }
 }

@@ -4,11 +4,11 @@
     </h2>
     {{#if esPublico}}
         <div>
-            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/recorrido-ida">
+            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=ida">
                 Desde: {{primerParadaIda.calle primerParadaIda.altura}}
                 Hasta: {{ultimaParadaIda.calle ultimaParadaIda.altura}}
             </a>
-            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/recorrido-vuelta">
+            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=vuelta">
                 Desde: {{primerParadaRegreso.calle primerParadaRegreso.altura}}
                 Hasta: {{ultimaParadaRegreso.nombre ultimaParadaRegreso.altura}}
             </a>

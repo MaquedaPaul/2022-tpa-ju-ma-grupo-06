@@ -1,0 +1,50 @@
+{{<partial}}
+
+    <h2>RECORRIDO DE {{transporte.nombre}} - {{sentido}}</h2>
+
+    <form method="post" action="/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-ubicacion" id="paradas">
+        <div>
+            <h3>ORIGEN</h3>
+            <label for="origen">
+                <select id="origen" name="origen">
+                    {{#each paradas}}
+                        <option value="{{this.kmActual}}">
+                            DIR: {{this.puntoUbicacion.calle}} {{this.puntoUbicacion.altura}}
+                        </option>
+                    {{/each}}
+                </select>
+            </label>
+            {{#if origen-incorrecto}}
+                <p>
+                    El origen ingresado no existe
+                </p>
+            {{/if}}
+        </div>
+        <div>
+            <h3>ORIGEN</h3>
+            <label for="destino">
+                <select id="destino" name="destino">
+                    {{#each paradas}}
+                        <option value="{{this.kmActual}}">
+                            DIR: {{this.puntoUbicacion.calle}} {{this.puntoUbicacion.altura}}
+                        </option>
+                    {{/each}}
+                </select>
+            </label>
+            {{#if destino-incorrecto}}
+                <p>
+                    El origen ingresado no existe
+                </p>
+            {{/if}}
+            {{#if destino-antes-de-origen}}
+                <p>La parada de origen debe ser antes de la parada de destino</p>
+            {{/if}}
+        </div>
+
+        <button form="paradas">
+            CONTINUAR
+        </button>
+    </form>
+{{/partial}}
+
+{{>miembro-home-iniciado-sesion.hbs}}

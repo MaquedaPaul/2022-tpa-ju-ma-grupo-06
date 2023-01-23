@@ -17,15 +17,15 @@ public class RouterMiembro {
     Spark.get("/home/trayectos/nuevo-trayecto", trayectosController::getNuevoTrayecto, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte", trayectosController::getTransporte, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido", trayectosController::getRecorrido, engine);
+    Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas", trayectosController::getParadas, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/datos-tramo", trayectosController::getDatosTramo, engine);
-    Spark.get("/home/trayectos/nuevo-trayecto", trayectosController::postNuevoTrayecto);
 
     Spark.post("/home/trayectos/nuevo-trayecto/nuevo-tramo", trayectosController::postNuevoTramo);
     Spark.post("/home/trayectos/nuevo-trayecto/nuevo-tramo/eliminar", trayectosController::postBorrarNuevoTramo);
     Spark.post("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte", trayectosController::postTransporte);
     Spark.post("/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-ubicacion", trayectosController::postPuntosUbicacion);
     Spark.post("/home/trayectos/nuevo-trayecto/borrar-todo", trayectosController::postPuntosUbicacion);
-
+    Spark.post("/home/trayectos/nuevo-trayecto", trayectosController::postNuevoTrayecto);
 
     Spark.get("/home/vinculacion", solicitudVinculacionController::getVinculacion, engine);
     Spark.post("/home/vinculacion", solicitudVinculacionController::pedirVinculacion, engine);

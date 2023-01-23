@@ -18,15 +18,16 @@ public abstract class Transporte {
   @Id
   @GeneratedValue
   @Column(name = "ID_TRANSPORTE")
-  Long id;
+  private Long id;
 
   @Column(name = "CONSUMO_POR_KM")
-  double consumoPorKilometro;
+  private double consumoPorKilometro;
 
   @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "ID_COMBUSTIBLE")
-  Combustible combustible;
+  private Combustible combustible;
 
+  private String nombre;
   public boolean sePuedeCompartir() {
     return false;
   }
@@ -44,7 +45,6 @@ public abstract class Transporte {
 
   public abstract TipoTransporte getTipoTransporte();
 
-  public abstract String getDisplay();
 }
 
 

@@ -11,13 +11,17 @@ public enum TipoCuenta {
           ".*/home",
           ".*/recomendaciones",
           ".*/home/trayectos",
-          ".*/home/trayectos/registro",
-          ".*/home/trayectos/registro/tramo-nuevo",
+          ".*/home/trayectos/nuevo-trayecto",
+          ".*/home/trayectos/nuevo-trayecto/nuevo-tramo",
           ".*/home/trayectos/compartir",
-          ".*/home/trayectos/registro/eliminar",
-          ".*/home/trayectos/registro/cancelar",
-          ".*/home/trayectos/registro/crear",
+          ".*/home/trayectos/nuevo-trayecto/nuevo-tramo",
+          ".*/home/trayectos/nuevo-trayecto/cancelar",
+          ".*/home/trayectos/nuevo-trayecto",
           ".*/home/vinculacion",
+          ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-tramo",
+          ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte",
+          ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/datos",
+          ".*/home/trayectos/nuevo-trayecto/quitar-ultimo-tramo",
           ".*/not-found"
       };
       return Arrays.stream(pathsValidos).anyMatch(path::matches);

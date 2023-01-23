@@ -38,7 +38,7 @@ public class Organizacion {
   @Enumerated(EnumType.STRING)
   private TipoOrganizacion tipo;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
+  @Embedded
   private PuntoUbicacion ubicacionGeografica;
 
   private String clasificacion;

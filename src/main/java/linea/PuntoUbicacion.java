@@ -1,17 +1,13 @@
 package linea;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity @Getter
+@Embeddable @Getter @Setter
 public class PuntoUbicacion {
-
-  @Id
-  @GeneratedValue
-  @Column(name = "ID_PUNTO_UBICACION")
-  Long id;
 
   @Column(name = "ID_LOCALIDAD")
   private int localidadId;
@@ -22,7 +18,7 @@ public class PuntoUbicacion {
   @Column(name = "ALTURA")
   private int altura;
 
-  public PuntoUbicacion() {
+  protected PuntoUbicacion() {
   }
 
   @Override

@@ -9,15 +9,12 @@ import javax.persistence.Entity;
 @Getter
 public class PropulsionHumana extends TransportePrivado {
 
-  @Column(name = "TIPO_TRANSPORTE")
-  private String herramientaUtilizada;
-
   public PropulsionHumana() {
   }
 
   public PropulsionHumana(String herramientaUtilizada) {
-    this.herramientaUtilizada = herramientaUtilizada;
-    this.consumoPorKilometro = 0;
+    setNombre(herramientaUtilizada);
+    setConsumoPorKilometro(0);
   }
 
   @Override
@@ -30,8 +27,4 @@ public class PropulsionHumana extends TransportePrivado {
     return TipoTransporte.PROPULSION_HUMANA;
   }
 
-  @Override
-  public String getDisplay() {
-    return this.herramientaUtilizada;
-  }
 }

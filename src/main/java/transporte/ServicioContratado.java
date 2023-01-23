@@ -23,9 +23,10 @@ public class ServicioContratado extends TransportePrivado {
   public ServicioContratado() {
   }
 
-  public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro) {
+  public ServicioContratado(TipoVehiculo vehiculoContratado, double consumoPorKilometro, String detalle) {
     this.vehiculoContratado = vehiculoContratado;
-    this.consumoPorKilometro = consumoPorKilometro;
+    setConsumoPorKilometro(consumoPorKilometro);
+    setNombre(detalle);
   }
 
   @Override
@@ -33,8 +34,4 @@ public class ServicioContratado extends TransportePrivado {
     return TipoTransporte.SERCICIO_CONTRATADO;
   }
 
-  @Override
-  public String getDisplay() {
-    return this.vehiculoContratado.toString();
-  }
 }

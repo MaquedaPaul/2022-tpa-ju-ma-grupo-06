@@ -18,17 +18,11 @@ public class LineaTransporte {
   private TipoTransporte tipoTransporte;
   private String nombre;
 
-  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinTable(name = "PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name = "ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @ElementCollection
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoDeIda;
 
-  @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-  @JoinTable(name = "PARADAS_POR_LINEA",
-      joinColumns = @JoinColumn(name = "ID_LINEA"),
-      inverseJoinColumns = @JoinColumn(name = "ID_PARADA"))
+  @ElementCollection
   @OrderBy(value = "kmActual")
   private List<Parada> recorridoVuelta;
 

@@ -26,7 +26,8 @@ public class TransportePublico extends Transporte {
 
   public TransportePublico(LineaTransporte lineaUtilizada, double consumoPorKilometro) {
     this.lineaUtilizada = lineaUtilizada;
-    this.consumoPorKilometro = consumoPorKilometro;
+    setConsumoPorKilometro(consumoPorKilometro);
+    setNombre("COLECTIVO " + getLineaUtilizada().getNombre());
   }
 
   public TipoTransporte getTransporteInvolucrado() {
@@ -69,10 +70,6 @@ public class TransportePublico extends Transporte {
     return transporte.TipoTransporte.TRANSPORTE_PUBLICO;
   }
 
-  @Override
-  public String getDisplay() {
-    return this.lineaUtilizada.diplay();
-  }
 }
 
 

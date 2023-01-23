@@ -13,19 +13,28 @@ import java.io.IOException;
 @Getter
 @Setter
 public class Tramo {
-  @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "ID_PUNTO_ORIGEN")
+
+  @Embedded
+  @AttributeOverrides( {
+      @AttributeOverride(name="localidadId", column = @Column(name="origen_localidadId") ),
+      @AttributeOverride(name="calle", column = @Column(name="origen_calle") ),
+      @AttributeOverride(name="altura", column = @Column(name="origen_altura") )
+  } )
   private PuntoUbicacion puntoOrigen;
 
-  @OneToOne(cascade = CascadeType.PERSIST)
-  @JoinColumn(name = "ID_PUNTO_DESTINO")
+  @Embedded
+  @AttributeOverrides( {
+      @AttributeOverride(name="localidadId", column = @Column(name="destino_localidadId") ),
+      @AttributeOverride(name="calle", column = @Column(name="destino_calle") ),
+      @AttributeOverride(name="altura", column = @Column(name="destino_altura") )
+  } )
   private PuntoUbicacion puntoDestino;
 
   @ManyToOne
   @JoinColumn(name = "ID_TRANSPORTE")
   private Transporte transporteUtilizado;
 
-  public Tramo() {
+  protected Tramo() {
   }
 
   public Tramo(PuntoUbicacion puntoOrigen,

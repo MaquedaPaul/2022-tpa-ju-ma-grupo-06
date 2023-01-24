@@ -22,7 +22,7 @@ public class RouterOrganizacion {
     Spark.get("/home/mediciones/perse", medicionController::getMedicionesPerse, engine);
     Spark.post("/home/mediciones/perse/creado",medicionController::crearMedicion);
     Spark.get("/home/mediciones/archivo", medicionController::getMedicionesArchivo, engine);
-    Spark.post("/home/mediciones/archivo", medicionController::subirCSVs, engine);
+    Spark.post("/home/mediciones/archivo", medicionController::subirCSVs);
     Spark.get("/home/calculadora-hc", organizacionController::getCalculadoraHc, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro", impactoController::getImpactoMiembro, engine);
     Spark.get("/home/calculadora-hc/impacto-de-miembro/:nombreApellido", impactoController::getImpactoMiembroConNombreYApellido, engine);

@@ -39,8 +39,45 @@ public class MedicionController implements WithGlobalEntityManager {
 
     public ModelAndView getMedicionesArchivo(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        return new ModelAndView(organizacion, "organizacionCargarArchivoMedicion.hbs");
+        HashMap<String, Object> model = new HashMap<>();
+        camposAttributeEnModel(request, model);
+        limpiarAttributesSessionMedicionesArchivo(request);
+
+        return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
     }
+
+    private void camposAttributeEnModel(Request request, HashMap<String, Object> model) {
+        Object attributeIngresoValido = request.session().attribute("ingresoValido");
+        Object attributeFormatoNoValido = request.session().attribute("formatoNoValido");
+        Object attributeError = request.session().attribute("error");
+        Object attributeSinArchivo = request.session().attribute("sinArchivo");
+
+        boolean ingresoValidoNotNull = attributeIngresoValido != null;
+        boolean formatoNoValidoNotNull = attributeFormatoNoValido != null;
+        boolean errorNotNull = attributeError != null;
+        boolean sinArchivoNotNull = attributeSinArchivo != null;
+
+        if(ingresoValidoNotNull){
+            model.put("ingresoValido", attributeIngresoValido);
+        }
+        if(formatoNoValidoNotNull){
+            model.put("formatoNoValido", attributeFormatoNoValido);
+        }
+        if(errorNotNull){
+            model.put("error", attributeError);
+        }
+        if(sinArchivoNotNull){
+            model.put("sinArchivo", attributeSinArchivo);
+        }
+    }
+
+    private void limpiarAttributesSessionMedicionesArchivo(Request request){
+        request.session().removeAttribute("ingresoValido");
+        request.session().removeAttribute("formatoNoValido");
+        request.session().removeAttribute("error");
+        request.session().removeAttribute("sinArchivo");
+    }
+
 
     public ModelAndView getMedicionesPerse(Request request, Response response) {
 
@@ -84,9 +121,9 @@ public class MedicionController implements WithGlobalEntityManager {
         return response;
     }
 
-    public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {
+    public Response subirCSVs(Request request, Response response) throws IOException, ServletException {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        Map<String, Object> model = new HashMap<>();
+
 
 
         File uploadDir = new File("upload");
@@ -104,75 +141,81 @@ public class MedicionController implements WithGlobalEntityManager {
             // Use the input stream to create a file
         }
         if (tempFile.toFile().length() == 0) {
-            model.put("sinArchivo", true);
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("sinArchivo", true);
+            response.redirect("/home/mediciones/archivo");
+            return response;
         }
 
         LectorMediciones lector = new LectorMediciones(tempFile.toString(), organizacion);
+
+
         try {
+
             lector.leerMediciones();
             entityManager().getTransaction().begin();
             lector.cargarMediciones();
             entityManager().getTransaction().commit();
-            model.put("ingresoValido", true);
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("ingresoValido", true);
+
         }
+
         catch(LaCabeceraNoTieneUnFormatoValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","La cabecera no tiene un formato válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "La cabecera no tiene un formato válido");
+
         }
 
         catch (NoSeLeyeronLosCamposEsperados e){
-            model.put("formatoNoValido",true);
-            model.put("error","El archivo tiene campos que no se esperaban");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El archivo tiene campos que no se esperaban");
+
+
         }
         catch(ElPeriodoNoConcuerdaConLaPerioricidad e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período no concuerda con la perioricidad");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período no concuerda con la perioricidad");
+
         }
 
         catch(ElPeriodoDeImputacionNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período de imputación no es válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período de imputación no es válido");
+
         }
         catch(LaPerioricidadLeidaNoEsValida e){
-            model.put("formatoNoValido",true);
-            model.put("error","La periodicidad leida no es válida");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "La periodicidad leida no es válida");
+
         }
         catch(ElTipoDeConsumoLeidoNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El tipo de consumo no es válido, no existe o es desconocido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El tipo de consumo no es válido, no existe o es desconocido");
+
         }
         catch(LaMedicionEsNegativa e){
-            model.put("formatoNoValido",true);
-            model.put("error","La medición tiene valor negativo");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
-        }
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "Una/s de las mediciones tiene valor negativo");
 
+        }
         catch(NoSeReconoceLaPeriodicidad e){
-            model.put("formatoNoValido",true);
-            model.put("error","No se reconoce la periodicidad");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
-        }
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "No se reconoce la periodicidad");
 
+        }
 
         catch (ElPeriodoIngresadoNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período ingresado no es válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período ingresado no es válido");
+
         }
         catch (IllegalArgumentException e){
-            model.put("formatoNoValido",true);
-            model.put("error","Alguno de los campos es erróneo o no existe en el sistema");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "Alguno de los campos es erróneo o no existe en el sistema");
         }
-
+        finally {
+            response.redirect("/home/mediciones/archivo");
+        }
+        return response;
 
     }
 }

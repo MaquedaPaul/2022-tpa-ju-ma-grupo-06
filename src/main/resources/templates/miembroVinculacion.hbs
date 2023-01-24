@@ -26,6 +26,12 @@
         <div class="below-buttons">
             <button type="submit" class="btn-consulta destacar">Solicitar</button>
         </div>
+        {{#if errorSector}}
+            <div class="btn-error firstError">El sector seleccionado no existe en la organización</div>
+        {{/if}}
+        {{#if errorOrganizacion}}
+            <div class="btn-error firstError">Hubo un error en el campo organización</div>
+        {{/if}}
     </form>
 {{/partial}}
 

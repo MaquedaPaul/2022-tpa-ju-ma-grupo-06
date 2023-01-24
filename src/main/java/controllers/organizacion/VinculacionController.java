@@ -1,5 +1,6 @@
 package controllers.organizacion;
 
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import organizacion.Solicitud;
 import repositorios.RepoOrganizacion;
@@ -11,7 +12,7 @@ import spark.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-public class VinculacionController {
+public class VinculacionController implements WithGlobalEntityManager {
     public ModelAndView getVinculaciones(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         Map<String, Object> model = new HashMap<>();
@@ -25,8 +26,10 @@ public class VinculacionController {
         System.out.println(idVinculacion);
         //Solicitud solicitud = organizacion.getSolicitudPorId(idVinculacion);
         Solicitud solicitud = RepoSolicitud.getInstance().getSolicitudById(idVinculacion);
+        entityManager().getTransaction().begin();
         organizacion.procesarVinculacion(solicitud,aceptar);
         RepoOrganizacion.getInstance().agregarOrganizacion(organizacion);
+        entityManager().getTransaction().commit();
         return solicitud;
     }
 

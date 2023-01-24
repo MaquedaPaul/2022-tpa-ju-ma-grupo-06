@@ -4,6 +4,7 @@ import exceptions.*;
 import lectorcsv.LectorMediciones;
 import lectorcsv.TipoPerioricidad;
 import mediciones.Medicion;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import repositorios.RepoMediciones;
 import repositorios.RepoTipoDeConsumo;
@@ -12,8 +13,10 @@ import spark.Request;
 import spark.Response;
 import tipoconsumo.TipoConsumo;
 
+import javax.persistence.EntityManager;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +30,7 @@ import java.time.temporal.ChronoField;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MedicionController {
+public class MedicionController implements WithGlobalEntityManager {
 
     public ModelAndView getMediciones(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
@@ -50,7 +53,7 @@ public class MedicionController {
     public Response crearMedicion(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         Map<String, Object> model = new HashMap<>();
-        String tipoDeConsumo = request.queryParams("tipo-de-consumo");
+        String tipoDeConsumo = request.queryParams("tipo-consumo");
         TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
         boolean tipoConsumoNull = unTipoConsumo == null;
         model.put("tipoConsumoNull",tipoConsumoNull);
@@ -68,8 +71,11 @@ public class MedicionController {
             TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
 
             Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
+            entityManager().getTransaction().begin();
             RepoMediciones.getInstance().cargarMedicion(medicion);
+            entityManager().getTransaction().commit();
             model.put("exito", true);
+
 
             response.redirect("/home/mediciones/perse");
             return response;
@@ -105,7 +111,9 @@ public class MedicionController {
         LectorMediciones lector = new LectorMediciones(tempFile.toString(), organizacion);
         try {
             lector.leerMediciones();
+            entityManager().getTransaction().begin();
             lector.cargarMediciones();
+            entityManager().getTransaction().commit();
             model.put("ingresoValido", true);
             return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
         }

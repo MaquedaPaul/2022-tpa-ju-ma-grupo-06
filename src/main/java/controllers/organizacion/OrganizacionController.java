@@ -25,28 +25,24 @@ public class OrganizacionController {
   }
 
   public static Map<String, Object> datosDelHome(Request request) {
+    Map<String, Object> model = calcularHc(request);
+    return model;
+
+  }
+
+  public static Map<String, Object> calcularHc(Request request){
     Map<String, Object> model = new HashMap<>();
     Organizacion organizacion = obtenerOrganizacion(request);
     int anioActual = LocalDate.now().getYear();
-    //TODO
     double valor = organizacion.calcularHCTotal(new PeriodoAnual(LocalDate.of(anioActual,1, 15)));
     model.put("valorhc",valor);
     ImpactoController.getMiembrosImpactoOrg(request,model);
     request.session().attribute("valorHc", valor);
     return model;
-
   }
 
   public ModelAndView getCalculadoraHc(Request request, Response response) {
-    Organizacion organizacion = obtenerOrganizacion(request);
-    Map<String, Object> model = new HashMap<>();
-    if(request.attribute("valorHc") == null){
-      int anioActual = LocalDate.now().getYear();
-      double valor = organizacion.calcularHCTotal(new PeriodoAnual(LocalDate.of(anioActual,1, 15)));
-      model.put("valorhc",valor);
-    }
-    ImpactoController.getMiembrosImpactoOrg(request,model);
-    return new ModelAndView(model, "organizacionHcTotalNew.hbs");
+    return new ModelAndView(calcularHc(request), "organizacionHcTotalNew.hbs");
   }
 
 

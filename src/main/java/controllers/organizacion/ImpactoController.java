@@ -46,7 +46,9 @@ public class ImpactoController {
         model.put("nombre",miembro.getNombre());
         model.put("apellido",miembro.getApellido());
         double impacto = organizacion.impactoDeMiembro(miembro,new PeriodoMensual(LocalDate.now()));
-        model.put("impacto",impacto);
+        double impacto2Decimales = (double) Math.round(impacto * 100) / 100;
+
+        model.put("impacto",impacto2Decimales);
         double valor = request.session().attribute("valorHc");
         model.put("valorhc",valor);
 

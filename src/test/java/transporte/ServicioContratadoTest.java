@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 public class ServicioContratadoTest {
   Factory unFactory = new Factory();
   TipoVehiculo tipoVehiculo = TipoVehiculo.AUTO;
-  ServicioContratado unRemis = new ServicioContratado(tipoVehiculo,20);
+  ServicioContratado unRemis = new ServicioContratado(tipoVehiculo,20,"remis");
 
   @Test
   public void huboInteraccionConLaAPIAlCalcularDistancia() throws IOException {

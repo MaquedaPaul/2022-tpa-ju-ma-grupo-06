@@ -34,15 +34,18 @@ public class MedicionController implements WithGlobalEntityManager {
 
     public ModelAndView getMediciones(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        return new ModelAndView(organizacion, "organizacionRegistrarMediciones.hbs");
+        HashMap<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
+        model.put("organizacion", organizacion);
+        return new ModelAndView(model, "organizacionRegistrarMediciones.hbs");
     }
 
     public ModelAndView getMedicionesArchivo(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         HashMap<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
         camposAttributeEnModel(request, model);
         limpiarAttributesSessionMedicionesArchivo(request);
-
         return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
     }
 
@@ -80,8 +83,8 @@ public class MedicionController implements WithGlobalEntityManager {
 
 
     public ModelAndView getMedicionesPerse(Request request, Response response) {
-
         Map<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
         model.put("tipoconsumos", RepoTipoDeConsumo.getInstance().getTiposConsumo());
 
 
@@ -123,18 +126,10 @@ public class MedicionController implements WithGlobalEntityManager {
 
     public Response subirCSVs(Request request, Response response) throws IOException, ServletException {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-
-
-
         File uploadDir = new File("upload");
-
         uploadDir.mkdir();
-
-
         //staticFiles.externalLocation("upload");
         Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".csv");
-
-
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         try (InputStream input = request.raw().getPart("uploaded_file").getInputStream()) {
             Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
@@ -145,77 +140,63 @@ public class MedicionController implements WithGlobalEntityManager {
             response.redirect("/home/mediciones/archivo");
             return response;
         }
-
         LectorMediciones lector = new LectorMediciones(tempFile.toString(), organizacion);
+        leerYCargarMediciones(request, lector);
+        response.redirect("/home/mediciones/archivo");
+        return response;
 
+    }
 
+    private void leerYCargarMediciones(Request request, LectorMediciones lector) {
         try {
-
             lector.leerMediciones();
             entityManager().getTransaction().begin();
             lector.cargarMediciones();
             entityManager().getTransaction().commit();
             request.session().attribute("ingresoValido", true);
-
         }
-
         catch(LaCabeceraNoTieneUnFormatoValido e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "La cabecera no tiene un formato válido");
-
         }
-
         catch (NoSeLeyeronLosCamposEsperados e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "El archivo tiene campos que no se esperaban");
-
-
         }
         catch(ElPeriodoNoConcuerdaConLaPerioricidad e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "El período no concuerda con la perioricidad");
-
         }
-
         catch(ElPeriodoDeImputacionNoEsValido e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "El período de imputación no es válido");
-
         }
         catch(LaPerioricidadLeidaNoEsValida e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "La periodicidad leida no es válida");
-
         }
         catch(ElTipoDeConsumoLeidoNoEsValido e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "El tipo de consumo no es válido, no existe o es desconocido");
-
         }
         catch(LaMedicionEsNegativa e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "Una/s de las mediciones tiene valor negativo");
-
         }
         catch(NoSeReconoceLaPeriodicidad e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "No se reconoce la periodicidad");
-
         }
 
         catch (ElPeriodoIngresadoNoEsValido e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "El período ingresado no es válido");
-
         }
         catch (IllegalArgumentException e){
             request.session().attribute("formatoNoValido", true);
             request.session().attribute("error", "Alguno de los campos es erróneo o no existe en el sistema");
         }
-        finally {
-            response.redirect("/home/mediciones/archivo");
-        }
-        return response;
+
 
     }
 }

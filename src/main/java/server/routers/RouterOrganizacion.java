@@ -15,8 +15,8 @@ public class RouterOrganizacion {
     SolicitudVinculacionController solicitudVinculacionController = new SolicitudVinculacionController();
 
     Spark.get("/home/vinculaciones", vinculacionController::getVinculaciones, engine);
-    Spark.post("/home/vinculaciones/:id/aceptar", vinculacionController::aceptarVinculacion,engine);
-    Spark.post("/home/vinculaciones/:id/rechazar", vinculacionController::rechazarVinculacion,engine);
+    Spark.post("/home/vinculaciones/:id/aceptar", vinculacionController::aceptarVinculacion);
+    Spark.post("/home/vinculaciones/:id/rechazar", vinculacionController::rechazarVinculacion);
     Spark.post("/home/vinculaciones", solicitudVinculacionController::pedirVinculacion);
     Spark.get("/home/mediciones", medicionController::getMediciones, engine);
     Spark.get("/home/mediciones/perse", medicionController::getMedicionesPerse, engine);

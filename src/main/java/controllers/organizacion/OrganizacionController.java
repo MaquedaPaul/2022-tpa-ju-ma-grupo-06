@@ -23,6 +23,9 @@ public class OrganizacionController {
     OrganizacionCuenta cuenta = request.session().attribute("cuenta");
     return cuenta.getUsuario();
   }
+  static void usuarioEnModel(Map<String, Object> model, Request request){
+    model.put("usuario", obtenerUsuario(request));
+  }
 
   public static Map<String, Object> datosDelHome(Request request) {
     Map<String, Object> model = calcularHc(request);
@@ -38,6 +41,7 @@ public class OrganizacionController {
     model.put("valorhc",valor);
     ImpactoController.getMiembrosImpactoOrg(request,model);
     request.session().attribute("valorHc", valor);
+    OrganizacionController.usuarioEnModel(model, request);
     return model;
   }
 

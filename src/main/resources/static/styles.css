@@ -80,7 +80,14 @@ h3 {
   margin: 0;
 }
 
+h6{
+  margin-top: 0;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
 img {
+  margin-left: 10%;
   width: 40px;
   height: 40px;
 }

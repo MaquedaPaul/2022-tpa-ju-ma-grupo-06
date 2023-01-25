@@ -28,7 +28,6 @@ public class ImpactoController {
 
     public ModelAndView getImpactoMiembro(Request request, Response response) {
 
-
         String nombreApellido = request.queryParams("miembro");
         response.redirect("/home/calculadora-hc/impacto-de-miembro/"+nombreApellido);
         return null;
@@ -37,7 +36,7 @@ public class ImpactoController {
     public ModelAndView getImpactoMiembroConNombreYApellido(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         Map<String, Object> model = new HashMap<>();
-
+        OrganizacionController.usuarioEnModel(model, request);
         String nombreApellido = request.params("nombreApellido");
         Miembro miembro = RepoMiembros.getInstance().getMiembrosPorNombreYApellido(nombreApellido);
 

@@ -41,6 +41,9 @@
         {{#if tipoConsumoNull}}
             <div class="btn-error firstError">El tipo de consumo ingresado no existe</div>
         {{/if}}
+        {{#if camposIncompletos}}
+            <div class="btn-error firstError">Alguno de los campos está incompleto</div>
+        {{/if}}
         {{#if exito}}
             <div class="btn-success firstSuccess">La medicion fue cargada con exito</div>
         {{/if}}

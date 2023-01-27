@@ -46,14 +46,11 @@ public class RepoSolicitud implements WithGlobalEntityManager{
     }
 
     public boolean miembroTieneSolicitudConOrg(Miembro miembro, Organizacion organizacionObjetivo) {
-        Solicitud solicitudCumpleParametros = this.getSolicitudes().stream()
-                .filter(solicitud -> this.miembroYOrgInvolucradosEn(solicitud, miembro, organizacionObjetivo))
-                .findAny().orElse(null);
-        return solicitudCumpleParametros != null && noEsProcesadaYPerteneceALaOrg(solicitudCumpleParametros, organizacionObjetivo);
+        List<Solicitud> solicitudesCumplenParametros = this.getSolicitudes().stream()
+                .filter(solicitud -> this.miembroYOrgInvolucradosEn(solicitud, miembro, organizacionObjetivo) && !solicitud.estaProcesada()).collect(Collectors.toList());
+        return solicitudesCumplenParametros.size() >= 1;
     }
-    private boolean noEsProcesadaYPerteneceALaOrg(Solicitud solicitud, Organizacion organizacion){
-        return !solicitud.isProcesada() && solicitud.perteneceA(organizacion);
-    }
+
     private boolean miembroYOrgInvolucradosEn(Solicitud solicitud, Miembro miembro, Organizacion organizacion){
         return solicitud.getMiembroSolicitante().equals(miembro) && solicitud.perteneceA(organizacion);
     }

@@ -37,7 +37,7 @@ public class BuilderTrayecto {
   }
 
   public boolean sePuedeConstruir() {
-    return this.getSetTramos().size() > 0;
+    return this.ultimoTramo != null && this.getSetTramos().size() > 0;
   }
 
 }

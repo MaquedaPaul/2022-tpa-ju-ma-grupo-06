@@ -1,6 +1,7 @@
 package controllers.miembro;
 
 import linea.LineaTransporte;
+import linea.PuntoUbicacion;
 import repositorios.RepoTransporte;
 import spark.ModelAndView;
 import spark.Request;
@@ -41,18 +42,13 @@ public class TrayectosController {
 
   public ModelAndView getRecorrido(Request request, Response response) {
 
-    if (request.session().attribute("nuevo-trayecto") == null) {
+    if (request.session().attribute("nuevo-trayecto") == null
+        || request.session().attribute("transporte-seleccionado") == null) {
       response.redirect("/not-found");
-      response.status(404);
       return null;
     }
 
     Map<String, Object> model = new HashMap<>();
-    if (request.session().attribute("transporte-seleccionado") == null) {
-      response.redirect("/not-found");
-      response.status(404);
-      return null;
-    }
 
     Transporte transporte = request.session().attribute("transporte-seleccionado");
     model.put("esPublico", transporte.getNombre().startsWith("COLECTIVO"));
@@ -68,7 +64,7 @@ public class TrayectosController {
       model.put("hayTramos",bTrayecto.sePuedeConstruir());
       model.put("ultimoTramo",bTrayecto.getUltimoTramo());
     }
-    return new ModelAndView(model,"miembroTrayectos.hbs");
+    return new ModelAndView(model,"miembroRecorrido.hbs");
   }
 
   public ModelAndView getParadas(Request request, Response response) {
@@ -76,12 +72,10 @@ public class TrayectosController {
     if (request.queryParams("sentido") == null
         || request.session().attribute("transporte-seleccionado") == null) {
       response.redirect("/not-found");
-      response.status(404);
       return null;
     }
 
     String sentido = request.queryParams("sentido").toUpperCase();
-    request.session().attribute("sentido",sentido);
     TransportePublico transporte = request.session().attribute("transporte-seleccionado");
     Map<String,Object> model = new HashMap<>();
     model.put("transporte",transporte);
@@ -96,35 +90,71 @@ public class TrayectosController {
         break;
       default:
         response.redirect("/not-found");
-        response.status(404);
         return null;
     }
-
-    if (request.session().attribute("origen-incorrecto") == null) {
+    request.session().attribute("sentido",sentido);
+    if (request.session().attribute("origen-incorrecto")) {
       model.put("origen-incorrecto",true);
-      request.session().attribute("origen-incorrecto",null);
+      request.session().attribute("origen-incorrecto",false);
     }
 
-    if (request.session().attribute("destino-incorrecto") == null) {
+    if (request.session().attribute("destino-incorrecto")) {
       model.put("destino-incorrecto",true);
-      request.session().attribute("destino-incorrecto",null);
+      request.session().attribute("destino-incorrecto",false);
     }
 
-    if (request.session().attribute("destino-antes-de-origen") == null) {
+    if (request.session().attribute("destino-antes-de-origen")) {
       model.put("destino-antes-de-origen",true);
-      request.session().attribute("destino-antes-de-origen",null);
+      request.session().attribute("destino-antes-de-origen",false);
     }
 
     return new ModelAndView(model,"miembroRecorridoTransportePublico.hbs");
   }
 
   public ModelAndView getDatosTramo(Request request, Response response) {
-    return new ModelAndView(null,"miembroDatosTramo.hbs");
+
+    if (request.session().attribute("punto-origen") == null
+      || request.session().attribute("punto-destino") == null
+      || request.session().attribute("transporte-seleccionado") == null) {
+      response.redirect("/not-found");
+      return null;
+    }
+
+    Transporte transporte = request.session().attribute("transporte-seleccionado");
+    PuntoUbicacion origen = request.session().attribute("punto-origen");
+    PuntoUbicacion destino = request.session().attribute("punto-destino");
+    Map<String,Object> model = new HashMap<>();
+    model.put("transporte",transporte);
+    model.put("origen",origen);
+    model.put("destino",destino);
+
+    return new ModelAndView(model,"miembroDatosTramo.hbs");
   }
 
-
   public Response postNuevoTramo(Request request, Response response) {
+    //EXISTE TRANSPORTE Y PUNTOS
+    if ( request.session().attribute("transporte-seleccionado") == null
+            || request.session().attribute("punto-origen") == null
+            || request.session().attribute("punto-origen") == null) {
+      response.redirect("/not-found");
+      return response;
+    }
+
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
+    //OBTENER DATOS DE LA SESSION
+    Transporte transporte = request.session().attribute("transporte-seleccionado");
+    PuntoUbicacion origen = request.session().attribute("punto-origen");
+    PuntoUbicacion destino = request.session().attribute("punto-origen");
+    bTrayecto.agregarTramo(new Tramo(origen,destino,transporte));
+    //LIMPIAR DATOS DE LA SESSION
+    this.limpiarDatosDelTramoDeLaSesion(request);
     return response;
+  }
+
+  private void limpiarDatosDelTramoDeLaSesion(Request request) {
+    request.session().attribute("transporte-seleccionado",null);
+    request.session().attribute("punto-origen",null);
+    request.session().attribute("punto-origen",null);
   }
 
   public Response postTransporte(Request request, Response response) {
@@ -139,6 +169,7 @@ public class TrayectosController {
     return response;
   }
 
+  //TODO ACEPTAR PUNTOS UBICACION Y PARADAS
   public Response postPuntosUbicacion(Request request, Response response) {
     if (request.queryParams("origen") == null
         || request.queryParams("destino") == null
@@ -182,10 +213,37 @@ public class TrayectosController {
   }
 
   public Response postBorrarNuevoTramo(Request request, Response response) {
+    //EXISTE NUEVO TRAMO
+    if (request.session().attribute("nuevo-trayecto") == null) {
+      response.redirect("/not-found");
+      return response;
+    }
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
+    bTrayecto.eliminarUltimoTramo();
     return response;
   }
 
+  //TODO POST NUEVO TRAYECTO
   public Response postNuevoTrayecto(Request request, Response response) {
+    if (request.session().attribute("nuevo-trayecto") == null) {
+      response.redirect("/not-found");
+      return response;
+    }
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
+
+    if (!bTrayecto.sePuedeConstruir()) {
+      response.redirect("/home/trayectos/nuevo-trayecto/tramos");
+    }
+    return response;
+  }
+
+  //TODO POST BORRAR TODO
+  public Response postBorrarTodo(Request request, Response response) {
+    return response;
+  }
+
+  //TODO POST ELIMINAR DATOS BORRADOR TRAMO
+  public Response postEliminarDatosBorradorTramo(Request request, Response response) {
     return response;
   }
 

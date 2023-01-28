@@ -1,30 +1,11 @@
 package controllers.miembro;
 
 import cuenta.MiembroCuenta;
-import cuenta.OrganizacionCuenta;
-import org.uqbarproject.jpa.java8.extras.PerThreadEntityManagers;
 import repositorios.RepoCuentas;
-import exceptions.NoConcuerdaInicioYFin;
-import linea.PuntoUbicacion;
 import miembro.Miembro;
-import organizacion.Organizacion;
-import organizacion.Sector;
-import organizacion.Solicitud;
-import repositorios.RepoMiembros;
-import repositorios.RepoOrganizacion;
-import repositorios.RepoTransporte;
-import spark.ModelAndView;
 import spark.Request;
-import spark.Response;
-import transporte.*;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+//TODO ESTO NO ES UN CONTROLLER
 public class MiembroController {
 
   static Miembro obtenerMiembro(Request request){

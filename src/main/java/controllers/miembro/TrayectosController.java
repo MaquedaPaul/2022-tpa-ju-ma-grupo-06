@@ -2,6 +2,7 @@ package controllers.miembro;
 
 import linea.LineaTransporte;
 import linea.PuntoUbicacion;
+import miembro.Miembro;
 import repositorios.RepoTransporte;
 import spark.ModelAndView;
 import spark.Request;
@@ -9,6 +10,7 @@ import spark.Response;
 import transporte.*;
 import utils.GeneradorDeCategorias;
 
+import javax.activation.MimeType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,12 +153,6 @@ public class TrayectosController {
     return response;
   }
 
-  private void limpiarDatosDelTramoDeLaSesion(Request request) {
-    request.session().attribute("transporte-seleccionado",null);
-    request.session().attribute("punto-origen",null);
-    request.session().attribute("punto-origen",null);
-  }
-
   public Response postTransporte(Request request, Response response) {
     String nombreTransporte = request.queryParams("transportes");
     if (!RepoTransporte.Instance.existeTransporte(nombreTransporte)) {
@@ -212,18 +208,18 @@ public class TrayectosController {
     return response;
   }
 
-  public Response postBorrarNuevoTramo(Request request, Response response) {
-    //EXISTE NUEVO TRAMO
+  public Response postBorrarUltimoTramo(Request request, Response response) {
+    //EXISTE NUEVO TRAYECTO
     if (request.session().attribute("nuevo-trayecto") == null) {
       response.redirect("/not-found");
       return response;
     }
     BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
     bTrayecto.eliminarUltimoTramo();
+    response.redirect("/home/trayectos/nuevo-trayecto/tramos");
     return response;
   }
 
-  //TODO POST NUEVO TRAYECTO
   public Response postNuevoTrayecto(Request request, Response response) {
     if (request.session().attribute("nuevo-trayecto") == null) {
       response.redirect("/not-found");
@@ -233,18 +229,37 @@ public class TrayectosController {
 
     if (!bTrayecto.sePuedeConstruir()) {
       response.redirect("/home/trayectos/nuevo-trayecto/tramos");
+      return response;
     }
+    Miembro miembro = request.session().attribute("miembro");
+    miembro.registrarTrayecto(bTrayecto.build());
+    this.limpiarDatosDelTrayectoDeLaSession(request);
+    response.redirect("/home/trayectos");
     return response;
   }
 
-  //TODO POST BORRAR TODO
+  //TODO LIMPIAR DATOS TRAYECTO
+  private void limpiarDatosDelTrayectoDeLaSession(Request request) {
+
+  }
+
   public Response postBorrarTodo(Request request, Response response) {
+
+    this.limpiarDatosDelTrayectoDeLaSession(request);
+    response.redirect("/home/trayectos");
     return response;
   }
 
-  //TODO POST ELIMINAR DATOS BORRADOR TRAMO
   public Response postEliminarDatosBorradorTramo(Request request, Response response) {
+    this.limpiarDatosDelTramoDeLaSesion(request);
+    response.redirect("/home/trayecto/nuevo-trayecto/tramos");
     return response;
+  }
+
+  private void limpiarDatosDelTramoDeLaSesion(Request request) {
+    request.session().attribute("transporte-seleccionado",null);
+    request.session().attribute("punto-origen",null);
+    request.session().attribute("punto-origen",null);
   }
 
 }

@@ -92,11 +92,14 @@ public class MedicionController implements WithGlobalEntityManager {
     }
     public Response crearMedicion(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        Map<String, Object> model = new HashMap<>();
+
         String tipoDeConsumo = request.queryParams("tipo-consumo");
         TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
         boolean tipoConsumoNull = unTipoConsumo == null;
-        model.put("tipoConsumoNull",tipoConsumoNull);
+
+        request.session().attribute("tipoConsumoNull",tipoConsumoNull);
+
+
         if(!tipoConsumoNull){
             String periodicidad = request.queryParams("periodicidad").toUpperCase();
 
@@ -114,9 +117,8 @@ public class MedicionController implements WithGlobalEntityManager {
             entityManager().getTransaction().begin();
             RepoMediciones.getInstance().cargarMedicion(medicion);
             entityManager().getTransaction().commit();
-            model.put("exito", true);
 
-
+            request.session().attribute("exito", true);
             response.redirect("/home/mediciones/perse");
             return response;
         }

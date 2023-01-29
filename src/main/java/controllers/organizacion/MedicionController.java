@@ -13,10 +13,8 @@ import spark.Request;
 import spark.Response;
 import tipoconsumo.TipoConsumo;
 
-import javax.persistence.EntityManager;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
-import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,16 +38,34 @@ public class MedicionController implements WithGlobalEntityManager {
         return new ModelAndView(model, "organizacionRegistrarMediciones.hbs");
     }
 
+    private void limpiarAttributesSessionMediciones(Request request) {
+        request.session().removeAttribute("exito");
+        request.session().removeAttribute("camposIncompletos");
+    }
+
+    private void camposAttributeEnModelMedicion(Request request, HashMap<String, Object> model) {
+        Object attributeExito = request.session().attribute("exito");
+        Object attributeCamposIncompletos = request.session().attribute("camposIncompletos");
+        boolean exitoNotNull = attributeExito != null;
+        boolean camposIncompletosNotNull = attributeCamposIncompletos != null;
+        if(exitoNotNull){
+            model.put("exito", attributeExito);
+        }
+        if(camposIncompletosNotNull){
+            model.put("camposIncompletos", attributeCamposIncompletos);
+        }
+    }
+
     public ModelAndView getMedicionesArchivo(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         HashMap<String, Object> model = new HashMap<>();
         OrganizacionController.usuarioEnModel(model, request);
-        camposAttributeEnModel(request, model);
+        camposAttributeEnModelMedicionArchivo(request, model);
         limpiarAttributesSessionMedicionesArchivo(request);
         return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
     }
 
-    private void camposAttributeEnModel(Request request, HashMap<String, Object> model) {
+    private void camposAttributeEnModelMedicionArchivo(Request request, HashMap<String, Object> model) {
         Object attributeIngresoValido = request.session().attribute("ingresoValido");
         Object attributeFormatoNoValido = request.session().attribute("formatoNoValido");
         Object attributeError = request.session().attribute("error");
@@ -83,11 +99,11 @@ public class MedicionController implements WithGlobalEntityManager {
 
 
     public ModelAndView getMedicionesPerse(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
+        HashMap<String, Object> model = new HashMap<>();
         OrganizacionController.usuarioEnModel(model, request);
         model.put("tipoconsumos", RepoTipoDeConsumo.getInstance().getTiposConsumo());
-
-
+        camposAttributeEnModelMedicion(request, model);
+        limpiarAttributesSessionMediciones(request);
         return new ModelAndView(model, "organizacionCargarMedicion.hbs");
     }
     public Response crearMedicion(Request request, Response response) {
@@ -99,9 +115,19 @@ public class MedicionController implements WithGlobalEntityManager {
         model.put("tipoConsumoNull",tipoConsumoNull);
         if(!tipoConsumoNull){
             String periodicidad = request.queryParams("periodicidad").toUpperCase();
-
+            if(request.queryParams("valor").isEmpty()){
+            request.session().attribute("camposIncompletos", true);
+            response.redirect("/home/mediciones/perse");
+            return response;
+            }
             double valor = Double.parseDouble(request.queryParams("valor"));
+            if(request.queryParams("fecha-medicion").isEmpty()){
+                request.session().attribute("camposIncompletos", true);
+                response.redirect("/home/mediciones/perse");
+                return response;
+            }
             String fecha = request.queryParams("fecha-medicion");
+
             DateTimeFormatter formatoFecha = new DateTimeFormatterBuilder()
                     .appendPattern("yyyy-MM")
                     .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
@@ -114,9 +140,7 @@ public class MedicionController implements WithGlobalEntityManager {
             entityManager().getTransaction().begin();
             RepoMediciones.getInstance().cargarMedicion(medicion);
             entityManager().getTransaction().commit();
-            model.put("exito", true);
-
-
+            request.session().attribute("exito", true);
             response.redirect("/home/mediciones/perse");
             return response;
         }

@@ -1,0 +1,27 @@
+{{#partial "content"}}
+
+    <h2>NUEVO TRAMO - DATOS</h2>
+    <form id="datos" method="post">
+        <p>
+            <strong>TRANSPORTE</strong> {{transporte.nombre}}
+        </p>
+        <p>
+            <strong>ORIGEN</strong> {{origen.calle}} {{origen.altura}}
+        </p>
+        <p>
+            <strong>DESTINO</strong> {{destino.calle}} {{destino.altura}}
+        </p>
+    </form>
+    <div>
+        <button form="datos" formaction="/home/trayectos/nuevo-trayecto/nuevo-tramo/eliminar">
+            BORRAR
+        </button>
+        <button form="datos" formaction="/home/trayectos/nuevo-trayecto/nuevo-tramo">
+            CREAR
+        </button>
+    </div>
+
+{{/partial}}
+
+
+{{>miembro-home-iniciado-sesion.hbs}}

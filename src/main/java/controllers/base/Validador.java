@@ -4,8 +4,6 @@ import cuenta.Cuenta;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.halt;
-
 public class Validador {
 
   public static void validarAcceso(Request request, Response response) {
@@ -37,7 +35,6 @@ public class Validador {
       System.out.println("NO PUEDO ACCEDER");
       System.out.println("REDIRECCIONO AL NOT FOUND");
       response.type("text/html");
-      response.status(404);
       response.redirect("/not-found");
       return;
     }

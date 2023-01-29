@@ -29,6 +29,9 @@ public class MiembroCuenta extends Cuenta {
   public void guardarEnSesion(Request request) {
     request.session().attribute("cuenta",this);
     request.session().attribute("miembro", RepoCuentas.getInstance().obtenerMiembro(this));
+    request.session().attribute("origen-incorrecto",false);
+    request.session().attribute("destino-incorrecto",false);
+    request.session().attribute("destino-antes-de-origen",false);
   }
 
   @Override

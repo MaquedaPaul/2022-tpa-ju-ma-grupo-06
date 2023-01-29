@@ -21,18 +21,21 @@ public class TrayectosController {
   }
 
   public ModelAndView getNuevoTrayecto(Request request, Response response) {
-    boolean esLaPrimeraCarga = false;
     if (request.session().attribute("nuevo-trayecto") == null) {
       request.session().attribute("nuevo-trayecto",new BuilderTrayecto());
-      esLaPrimeraCarga = true;
     }
+
+    boolean seIntentoCrear = request.session().attribute("se-intento-crear");
 
     BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
     Map<String, Object> model = new HashMap<>();
     model.put("tramos",bTrayecto.getTramos());
     model.put("ultimoTramo",bTrayecto.getUltimoTramo());
     model.put("hayAlgunTramo",bTrayecto.sePuedeConstruir());
-    model.put("noHayTramos",!bTrayecto.sePuedeConstruir() && !esLaPrimeraCarga);
+    model.put("noHayTramos",!bTrayecto.sePuedeConstruir() && seIntentoCrear);
+    model.put("puntoOrigenNoConcuerda",request.session().attribute("punto-origen-no-concuerda"));
+    request.session().attribute("punto-origen-no-concuerda",false);
+    request.session().attribute("se-intento-crear",false);
     return new ModelAndView(model,"miembroNuevoTrayecto.hbs");
   }
 
@@ -79,10 +82,22 @@ public class TrayectosController {
 
     String sentido = request.queryParams("sentido").toUpperCase();
     TransportePublico transporte = request.session().attribute("transporte-seleccionado");
+
     Map<String,Object> model = new HashMap<>();
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
     model.put("transporte",transporte);
     model.put("sentido",sentido);
+    if (bTrayecto.sePuedeConstruir()) {
+      model.put("ultimoPunto",bTrayecto.getUltimoTramo().getPuntoDestino());
+      model.put("kmUltimoPunto",transporte.getKmEnPunto((PuntoUbicacion) model.get("ultimoPunto"),sentido));
+    }
 
+    if (bTrayecto.sePuedeConstruir()
+        && !transporte.tieneUnaParadaElPunto((PuntoUbicacion) model.get("ultimoPunto"), sentido)) {
+      request.session().attribute("punto-origen-no-concuerda",true);
+      response.redirect("/home/trayectos/nuevo-trayecto/tramos");
+      return null;
+    }
     switch (sentido) {
       case "IDA":
         model.put("paradas",transporte.getLineaUtilizada().getRecorridoDeIda());
@@ -146,10 +161,11 @@ public class TrayectosController {
     //OBTENER DATOS DE LA SESSION
     Transporte transporte = request.session().attribute("transporte-seleccionado");
     PuntoUbicacion origen = request.session().attribute("punto-origen");
-    PuntoUbicacion destino = request.session().attribute("punto-origen");
+    PuntoUbicacion destino = request.session().attribute("punto-destino");
     bTrayecto.agregarTramo(new Tramo(origen,destino,transporte));
     //LIMPIAR DATOS DE LA SESSION
     this.limpiarDatosDelTramoDeLaSesion(request);
+    response.redirect("/home/trayectos/nuevo-trayecto/tramos");
     return response;
   }
 
@@ -168,8 +184,11 @@ public class TrayectosController {
   //TODO ACEPTAR PUNTOS UBICACION Y PARADAS
   public Response postPuntosUbicacion(Request request, Response response) {
     if (request.queryParams("origen") == null
-        || request.queryParams("destino") == null
-        || !request.queryParams("origen").matches("\\d+")
+        || request.queryParams("destino") == null) {
+      response.redirect("/home/trayectos");
+      return response;
+    }
+    if ( !request.queryParams("origen").matches("\\d+")
         || !request.queryParams("destino").matches("\\d+")) {
       response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas");
       return response;
@@ -202,8 +221,8 @@ public class TrayectosController {
       return response;
     }
 
-    request.session().attribute("kmOrigen",kmOrigen);
-    request.session().attribute("kmDestino",kmDestino);
+    request.session().attribute("punto-origen",transporte.getPuntoEnKm(kmOrigen, sentido));
+    request.session().attribute("punto-destino",transporte.getPuntoEnKm(kmDestino, sentido));
     response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/datos-tramo");
     return response;
   }
@@ -228,6 +247,7 @@ public class TrayectosController {
     BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
 
     if (!bTrayecto.sePuedeConstruir()) {
+      request.session().attribute("se-intento-crear",true);
       response.redirect("/home/trayectos/nuevo-trayecto/tramos");
       return response;
     }
@@ -240,7 +260,8 @@ public class TrayectosController {
 
   //TODO LIMPIAR DATOS TRAYECTO
   private void limpiarDatosDelTrayectoDeLaSession(Request request) {
-
+    this.limpiarDatosDelTramoDeLaSesion(request);
+    request.session().removeAttribute("nuevo-trayecto");
   }
 
   public Response postBorrarTodo(Request request, Response response) {
@@ -252,14 +273,14 @@ public class TrayectosController {
 
   public Response postEliminarDatosBorradorTramo(Request request, Response response) {
     this.limpiarDatosDelTramoDeLaSesion(request);
-    response.redirect("/home/trayecto/nuevo-trayecto/tramos");
+    response.redirect("/home/trayectos/nuevo-trayecto/tramos");
     return response;
   }
 
   private void limpiarDatosDelTramoDeLaSesion(Request request) {
-    request.session().attribute("transporte-seleccionado",null);
-    request.session().attribute("punto-origen",null);
-    request.session().attribute("punto-origen",null);
+    request.session().removeAttribute("transporte-seleccionado");
+    request.session().removeAttribute("punto-origen");
+    request.session().removeAttribute("punto-origen");
   }
 
 }

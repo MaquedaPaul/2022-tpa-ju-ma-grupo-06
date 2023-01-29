@@ -5,12 +5,12 @@
     {{#if esPublico}}
         <div>
             <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=ida" target="_self">
-                Desde: {{primerParadaIda.calle}} {{primerParadaIda.altura}}
-                Hasta: {{ultimaParadaIda.calle}} {{ultimaParadaIda.altura}}
+                Desde: {{primerParadaIda.puntoUbicacion.calle}} {{primerParadaIda.puntoUbicacion.altura}}
+                Hasta: {{ultimaParadaIda.puntoUbicacion.calle}} {{ultimaParadaIda.puntoUbicacion.altura}}
             </a>
             <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=vuelta" target="_self">
-                Desde: {{primerParadaRegreso.calle}} {{primerParadaRegreso.altura}}
-                Hasta: {{ultimaParadaRegreso.nombre}} {{ultimaParadaRegreso.altura}}
+                Desde: {{primerParadaVuelta.puntoUbicacion.calle}} {{primerParadaVuelta.puntoUbicacion.altura}}
+                Hasta: {{ultimaParadaVuelta.puntoUbicacion.calle}} {{ultimaParadaVuelta.puntoUbicacion.altura}}
             </a>
         </div>
     {{else}}

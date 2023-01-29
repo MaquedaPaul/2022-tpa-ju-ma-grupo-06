@@ -12,6 +12,7 @@ public class RouterMiembro {
     SolicitudVinculacionController solicitudVinculacionController = new SolicitudVinculacionController();
 
     Spark.get("/home/trayectos", trayectosController::getTrayectos, engine);
+    Spark.get("/home/trayectos/nuevo-trayecto", trayectosController::getNuevoTrayecto, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/tramos", trayectosController::getNuevoTrayecto, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte", trayectosController::getTransporte, engine);
     Spark.get("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido", trayectosController::getRecorrido, engine);

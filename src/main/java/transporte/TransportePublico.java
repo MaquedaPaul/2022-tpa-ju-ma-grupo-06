@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -62,6 +63,45 @@ public class TransportePublico extends Transporte {
         .filter(unaParada -> ubicacion.equals(unaParada.getPuntoUbicacion()))
         .collect(Collectors.toList())
         .get(0);
+  }
+
+  /**
+   * Retorna el PuntoUbicacion de la parada del <strong>km</strong> en <strong>sentido</strong> del recorrido dado
+   * @param km
+   * @param sentido
+   * @return PuntoUbicacion pUbicacion
+   */
+  public PuntoUbicacion getPuntoEnKm(int km,String sentido) {
+
+    return this.getRecorridoSegun(sentido)
+            .stream()
+            .filter(p -> p.getKmActual() == km).collect(Collectors.toList())
+            .get(0)
+            .getPuntoUbicacion();
+  }
+
+  private List<Parada> getRecorridoSegun(String sentido) {
+
+    List<Parada> recorrido;
+    switch (sentido) {
+      case "IDA": return this.lineaUtilizada.getRecorridoDeIda();
+      case "VUELTA": return this.lineaUtilizada.getRecorridoVuelta();
+      default: throw new RuntimeException("EL SENTIDO NO EXISTE");
+    }
+  }
+  public boolean tieneUnaParadaElPunto(PuntoUbicacion punto, String sentido) {
+
+    return this.getRecorridoSegun(sentido)
+            .stream()
+            .anyMatch(p -> p.getPuntoUbicacion().equals(punto));
+  }
+
+  public int getKmEnPunto(PuntoUbicacion punto, String sentido) {
+    return this.getRecorridoSegun(sentido)
+            .stream()
+            .filter(parada -> parada.getPuntoUbicacion().equals(punto))
+            .collect(Collectors.toList())
+            .get(0).getKmActual();
   }
 
 }

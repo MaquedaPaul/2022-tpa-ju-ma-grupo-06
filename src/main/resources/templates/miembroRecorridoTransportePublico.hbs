@@ -6,13 +6,21 @@
         <div>
             <h3>ORIGEN</h3>
             <label for="origen">
-                <select id="origen" name="origen">
-                    {{#each paradas}}
-                        <option value="{{this.kmActual}}">
-                            DIR: {{this.puntoUbicacion.calle}} {{this.puntoUbicacion.altura}}
+                {{#if ultimoPunto}}
+                    <select id="origen" name="origen">
+                        <option value="{{kmUltimoPunto}}" selected>
+                            DIR: {{ultimoPunto.calle}} {{ultimoPunto.altura}}
                         </option>
-                    {{/each}}
-                </select>
+                    </select>
+                {{else}}
+                    <select id="origen" name="origen">
+                        {{#each paradas}}
+                            <option value="{{this.kmActual}}">
+                                DIR: {{this.puntoUbicacion.calle}} {{this.puntoUbicacion.altura}}
+                            </option>
+                        {{/each}}
+                    </select>
+                {{/if}}
             </label>
             {{#if origen-incorrecto}}
                 <p>
@@ -21,7 +29,7 @@
             {{/if}}
         </div>
         <div>
-            <h3>ORIGEN</h3>
+            <h3>DESTINO</h3>
             <label for="destino">
                 <select id="destino" name="destino">
                     {{#each paradas}}

@@ -22,8 +22,6 @@ public class Validador {
     if (request.session().attribute("cuenta") == null) {
       System.out.println("NO ESTABA LOGUEADO");
       System.out.println("REDIRECCIONO AL SIGNIN");
-      //TODO AGREGAR PANTALLA 404 NOT FOUND
-      //halt(402,"TOMATELAS QUE HACES");
       response.redirect("/signin");
       return;
     }

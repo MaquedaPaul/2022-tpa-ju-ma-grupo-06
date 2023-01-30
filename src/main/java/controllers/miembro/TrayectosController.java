@@ -183,25 +183,6 @@ public class TrayectosController {
 
   //TODO ACEPTAR PUNTOS UBICACION Y PARADAS
   public Response postPuntosUbicacion(Request request, Response response) {
-
-    int localidadIdOrigen = Integer.parseInt(request.queryParams("origen_localidad_id"));
-    int localidadIdDestino = Integer.parseInt(request.queryParams("destino_localidad_id"));
-
-    if (localidadIdOrigen <= 1 || localidadIdOrigen > 6326 && localidadIdDestino <= 1 || localidadIdDestino > 6326 ) {
-      response.redirect("/home/trayectos");
-      return response;
-    }
-
-    String calleOrigen = request.queryParams("origen_calle");
-    int alturaOrigen = Integer.parseInt(request.queryParams("origen_altura"));
-    String calleDestino = request.queryParams("destino_calle");
-    int alturaDestino = Integer.parseInt(request.queryParams("destino_altura"));
-
-    if (calleOrigen == null || calleDestino == null || !calleOrigen.matches("[a-zA-Z]+") || !calleDestino.matches("[a-zA-Z]+") || alturaOrigen < 1 || alturaDestino < 1) {
-      response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-ubicacion");
-      return response;
-    }
-
     if (request.queryParams("origen") == null
         || request.queryParams("destino") == null) {
       response.redirect("/home/trayectos");

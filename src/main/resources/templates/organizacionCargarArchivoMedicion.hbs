@@ -1,3 +1,6 @@
+{{#partial "usuario"}}
+    <h6>{{usuario}}</h6>
+{{/partial}}
 {{#partial "content"}}
     <h2>Cargar Archivo Mediciones</h2>
     <form enctype="multipart/form-data" method="post" id="id-form" class="flex-clm form form-evo-hc">
@@ -7,17 +10,17 @@
                name="uploaded_file"
                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
         <div>
-            <button type="submit" form="id-form" formaction="/home/mediciones"
+            <a href="/home/mediciones"
                     class="btn-2 first">
                 Atrás
-            </button>
+            </a>
             <button id="ingresar" type="submit" form="id-form" formmethod="post"
                     class="btn-consulta destacar">
                 Guardar
             </button>
         </div>
         {{#if ingresoValido}}
-            Archivo CSV subido correctamente
+            <div class="btn-success firstSuccess"> Archivo CSV subido correctamente</div>
         {{/if}}
         {{#if formatoNoValido}}
             <div class="btn-error firstError">{{error}} </div>

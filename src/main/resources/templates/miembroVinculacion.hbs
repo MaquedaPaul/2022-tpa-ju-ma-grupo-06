@@ -24,8 +24,28 @@
             </select>
         </div>
         <div class="below-buttons">
-            <button type="submit" class="btn-consulta destacar">Solicitar</button>
+            {{#if sinOrganizaciones}}
+                <button type="button" class="btn-consulta-disabled">Solicitar</button>
+            {{else}}
+                <button type="submit" class="btn-consulta destacar">Solicitar</button>
+            {{/if}}
+
+
+
         </div>
+        {{#if errorSector}}
+            <div class="btn-error firstError">El sector seleccionado no existe en la organización</div>
+        {{/if}}
+        {{#if errorOrganizacion}}
+            <div class="btn-error firstError">Hubo un error en el campo organización</div>
+        {{/if}}
+        {{#if exitoVinculacion}}
+            <div class="btn-success firstSuccess">Vinculación solicitada exitosamente</div>
+        {{/if}}
+
+        {{#if yaHayVinculacionPendiente}}
+            <div class="btn-error firstError">Ya existe una vinculación pendiente con esa organización</div>
+        {{/if}}
     </form>
 {{/partial}}
 

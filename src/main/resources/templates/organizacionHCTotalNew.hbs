@@ -1,0 +1,49 @@
+{{#partial "usuario"}}
+    <h6>{{usuario}}</h6>
+{{/partial}}
+
+{{#partial "content"}}
+    <div class="container-hc flex-clm">
+        <h3>HC TOTAL</h3>
+        <div class="hc-mensual flex-clm">
+            <h3>TOTAL <span class="green">{{valorhc}}</span></h3>
+        </div>
+    </div>
+
+    <div class="divArreglo" id="main-section">
+        <form id="claseForm"  class="claseForm" method="get">
+            <h3>Impacto de un miembro</h3>
+            {{#if estaActivadoBoton}}
+                <select id="selector-organizacion" form="claseForm"  name="miembro" class="flex-clm form form-evo-hc">
+                    {{#each miembros}}
+                        <option>{{nombre}} {{apellido}}</option>
+                    {{/each}}
+                </select>
+                <button type="submit"  id="claseForm" form="claseForm" formaction="/home/calculadora-hc/impacto-de-miembro" class="btn-consulta">
+                    Calcular
+                </button>
+            {{else}}
+                No hay miembros en la organización
+            {{/if}}
+
+        </form>
+
+        {{#if conSeleccion}}
+            <div class="container-hc flex-clm">
+                <div class="hc-mensual flex-clm">
+                    <h3>Nombre: <span class="green">{{nombre}}</span></h3>
+                    <h3>Apellido: <span class="green">{{apellido}}</span></h3>
+                    <h3>Impacto: <span class="green">{{impacto}}%</span></h3>
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+    <button type="submit" form="claseForm" formaction="/home/calculadora-hc/indicador-hc-sector/buscador"
+            class="btn-2 first flex">
+        Indicador de huella de carbono promedio por miembro en un sector
+    </button>
+
+{{/partial}}
+
+{{>organizacion-home-iniciado-sesion.hbs}}

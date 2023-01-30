@@ -1,5 +1,7 @@
 package repositorios;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+import miembro.Miembro;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.*;
 
@@ -41,6 +43,16 @@ public class RepoSolicitud implements WithGlobalEntityManager{
             .stream()
             .filter(s -> s.perteneceA(organizacion))
             .collect(Collectors.toSet());
+    }
+
+    public boolean miembroTieneSolicitudConOrg(Miembro miembro, Organizacion organizacionObjetivo) {
+        List<Solicitud> solicitudesCumplenParametros = this.getSolicitudes().stream()
+                .filter(solicitud -> this.miembroYOrgInvolucradosEn(solicitud, miembro, organizacionObjetivo) && !solicitud.estaProcesada()).collect(Collectors.toList());
+        return solicitudesCumplenParametros.size() >= 1;
+    }
+
+    private boolean miembroYOrgInvolucradosEn(Solicitud solicitud, Miembro miembro, Organizacion organizacion){
+        return solicitud.getMiembroSolicitante().equals(miembro) && solicitud.perteneceA(organizacion);
     }
 
 }

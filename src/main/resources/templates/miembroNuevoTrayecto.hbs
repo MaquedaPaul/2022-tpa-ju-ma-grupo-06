@@ -11,33 +11,38 @@
             </p>
         {{/if}}
         <form id="trayecto-nuevo" method="post">
+            {{#if puntoOrigenNoConcuerda}}
+                <p>
+                    ¡Error! el tramo debe <strong>iniciar</strong> donde termina el <strong>ultimo tramo</strong>
+                </p>
+            {{/if}}
             <div class="tramos">
                 <ul>
                     {{#each tramos}}
                         <li>
                             Origen: {{this.puntoOrigen.calle}} {{this.puntoOrigen.altura}}
                             Destino: {{this.puntoDestino.calle}} {{this.puntoDestino.altura}}
-                            Transporte: {{this.transporte.nombre}}
+                            Transporte: {{this.transporteUtilizado.nombre}}
                         </li>
                     {{/each}}
                     {{#if hayAlgunTramo}}
                         <li>
                             Origen: {{ultimoTramo.puntoOrigen.calle}} {{ultimoTramo.puntoOrigen.altura}}
                             Destino: {{ultimoTramo.puntoDestino.calle}} {{ultimoTramo.puntoDestino.altura}}
-                            Transporte: {{ultimoTramo.transporte.nombre}}
+                            Transporte: {{ultimoTramo.transporteUtilizado.nombre}}
                         </li>
                     {{/if}}
                     <li class="btn">
-                        <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo">
+                        <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte">
                             Agregar Tramo
                         </a>
                     </li>
                 </ul>
             </div>
-            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto">
+            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto/borrar-todo">
                 Borrar todos
             </button>
-            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto/borrar-todo">
+            <button form="trayecto-nuevo" formaction="/home/trayectos/nuevo-trayecto">
                 Crear
             </button>
         </form>

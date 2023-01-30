@@ -4,6 +4,7 @@ import exceptions.*;
 import lectorcsv.LectorMediciones;
 import lectorcsv.TipoPerioricidad;
 import mediciones.Medicion;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import organizacion.Organizacion;
 import repositorios.RepoMediciones;
 import repositorios.RepoTipoDeConsumo;
@@ -27,38 +28,111 @@ import java.time.temporal.ChronoField;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MedicionController {
+public class MedicionController implements WithGlobalEntityManager {
 
     public ModelAndView getMediciones(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        return new ModelAndView(organizacion, "organizacionRegistrarMediciones.hbs");
+        HashMap<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
+        model.put("organizacion", organizacion);
+        return new ModelAndView(model, "organizacionRegistrarMediciones.hbs");
     }
+
 
     public ModelAndView getMedicionesArchivo(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        return new ModelAndView(organizacion, "organizacionCargarArchivoMedicion.hbs");
+        HashMap<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
+        camposAttributeEnModelMedicionArchivo(request, model);
+        limpiarAttributesSessionMedicionesArchivo(request);
+        return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
     }
+
+    private void camposAttributeEnModelMedicionArchivo(Request request, HashMap<String, Object> model) {
+        Object attributeIngresoValido = request.session().attribute("ingresoValido");
+        Object attributeFormatoNoValido = request.session().attribute("formatoNoValido");
+        Object attributeError = request.session().attribute("error");
+        Object attributeSinArchivo = request.session().attribute("sinArchivo");
+
+        boolean ingresoValidoNotNull = attributeIngresoValido != null;
+        boolean formatoNoValidoNotNull = attributeFormatoNoValido != null;
+        boolean errorNotNull = attributeError != null;
+        boolean sinArchivoNotNull = attributeSinArchivo != null;
+
+        if(ingresoValidoNotNull){
+            model.put("ingresoValido", attributeIngresoValido);
+        }
+        if(formatoNoValidoNotNull){
+            model.put("formatoNoValido", attributeFormatoNoValido);
+        }
+        if(errorNotNull){
+            model.put("error", attributeError);
+        }
+        if(sinArchivoNotNull){
+            model.put("sinArchivo", attributeSinArchivo);
+        }
+    }
+
+    private void limpiarAttributesSessionMedicionesArchivo(Request request){
+        request.session().removeAttribute("ingresoValido");
+        request.session().removeAttribute("formatoNoValido");
+        request.session().removeAttribute("error");
+        request.session().removeAttribute("sinArchivo");
+    }
+
 
     public ModelAndView getMedicionesPerse(Request request, Response response) {
-
-        Map<String, Object> model = new HashMap<>();
+        HashMap<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
         model.put("tipoconsumos", RepoTipoDeConsumo.getInstance().getTiposConsumo());
-
-
+        camposAttributeEnModelMedicion(request, model);
+        limpiarAttributesSessionMediciones(request);
         return new ModelAndView(model, "organizacionCargarMedicion.hbs");
     }
+
+    private void limpiarAttributesSessionMediciones(Request request) {
+        request.session().removeAttribute("exito");
+        request.session().removeAttribute("camposIncompletos");
+    }
+
+    private void camposAttributeEnModelMedicion(Request request, HashMap<String, Object> model) {
+        Object attributeExito = request.session().attribute("exito");
+        Object attributeCamposIncompletos = request.session().attribute("camposIncompletos");
+        boolean exitoNotNull = attributeExito != null;
+        boolean camposIncompletosNotNull = attributeCamposIncompletos != null;
+        if(exitoNotNull){
+            model.put("exito", attributeExito);
+        }
+        if(camposIncompletosNotNull){
+            model.put("camposIncompletos", attributeCamposIncompletos);
+        }
+    }
+
     public Response crearMedicion(Request request, Response response) {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        Map<String, Object> model = new HashMap<>();
-        String tipoDeConsumo = request.queryParams("tipo-de-consumo");
+        HashMap<String, Object> model = new HashMap<>();
+        String tipoDeConsumo = request.queryParams("tipo-consumo");
         TipoConsumo unTipoConsumo = RepoTipoDeConsumo.getInstance().getTipoConsumo(tipoDeConsumo);
         boolean tipoConsumoNull = unTipoConsumo == null;
-        model.put("tipoConsumoNull",tipoConsumoNull);
+
+        request.session().attribute("tipoConsumoNull",tipoConsumoNull);
+
+
         if(!tipoConsumoNull){
             String periodicidad = request.queryParams("periodicidad").toUpperCase();
-
+            if(request.queryParams("valor").isEmpty()){
+            request.session().attribute("camposIncompletos", true);
+            response.redirect("/home/mediciones/perse");
+            return response;
+            }
             double valor = Double.parseDouble(request.queryParams("valor"));
+            if(request.queryParams("fecha-medicion").isEmpty()){
+                request.session().attribute("camposIncompletos", true);
+                response.redirect("/home/mediciones/perse");
+                return response;
+            }
             String fecha = request.queryParams("fecha-medicion");
+
             DateTimeFormatter formatoFecha = new DateTimeFormatterBuilder()
                     .appendPattern("yyyy-MM")
                     .parseDefaulting(ChronoField.DAY_OF_MONTH, 15)
@@ -68,9 +142,10 @@ public class MedicionController {
             TipoPerioricidad tipoPerioricidad = TipoPerioricidad.valueOf(periodicidad);
 
             Medicion medicion= tipoPerioricidad.buildMedicion(organizacion,unTipoConsumo,fechaParseada,valor);
+            entityManager().getTransaction().begin();
             RepoMediciones.getInstance().cargarMedicion(medicion);
-            model.put("exito", true);
-
+            entityManager().getTransaction().commit();
+            request.session().attribute("exito", true);
             response.redirect("/home/mediciones/perse");
             return response;
         }
@@ -78,91 +153,77 @@ public class MedicionController {
         return response;
     }
 
-    public ModelAndView subirCSVs(Request request, Response response) throws IOException, ServletException {
+    public Response subirCSVs(Request request, Response response) throws IOException, ServletException {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
-        Map<String, Object> model = new HashMap<>();
-
-
         File uploadDir = new File("upload");
-
         uploadDir.mkdir();
-
-
         //staticFiles.externalLocation("upload");
         Path tempFile = Files.createTempFile(uploadDir.toPath(), "", ".csv");
-
-
         request.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
         try (InputStream input = request.raw().getPart("uploaded_file").getInputStream()) {
             Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             // Use the input stream to create a file
         }
         if (tempFile.toFile().length() == 0) {
-            model.put("sinArchivo", true);
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("sinArchivo", true);
+            response.redirect("/home/mediciones/archivo");
+            return response;
         }
-
         LectorMediciones lector = new LectorMediciones(tempFile.toString(), organizacion);
+        leerYCargarMediciones(request, lector);
+        response.redirect("/home/mediciones/archivo");
+        return response;
+
+    }
+
+    private void leerYCargarMediciones(Request request, LectorMediciones lector) {
         try {
             lector.leerMediciones();
+            entityManager().getTransaction().begin();
             lector.cargarMediciones();
-            model.put("ingresoValido", true);
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            entityManager().getTransaction().commit();
+            request.session().attribute("ingresoValido", true);
         }
         catch(LaCabeceraNoTieneUnFormatoValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","La cabecera no tiene un formato válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "La cabecera no tiene un formato válido");
         }
-
         catch (NoSeLeyeronLosCamposEsperados e){
-            model.put("formatoNoValido",true);
-            model.put("error","El archivo tiene campos que no se esperaban");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El archivo tiene campos que no se esperaban");
         }
         catch(ElPeriodoNoConcuerdaConLaPerioricidad e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período no concuerda con la perioricidad");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período no concuerda con la perioricidad");
         }
-
         catch(ElPeriodoDeImputacionNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período de imputación no es válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período de imputación no es válido");
         }
         catch(LaPerioricidadLeidaNoEsValida e){
-            model.put("formatoNoValido",true);
-            model.put("error","La periodicidad leida no es válida");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "La periodicidad leida no es válida");
         }
         catch(ElTipoDeConsumoLeidoNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El tipo de consumo no es válido, no existe o es desconocido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El tipo de consumo no es válido, no existe o es desconocido");
         }
         catch(LaMedicionEsNegativa e){
-            model.put("formatoNoValido",true);
-            model.put("error","La medición tiene valor negativo");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "Una/s de las mediciones tiene valor negativo");
         }
-
         catch(NoSeReconoceLaPeriodicidad e){
-            model.put("formatoNoValido",true);
-            model.put("error","No se reconoce la periodicidad");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "No se reconoce la periodicidad");
         }
-
 
         catch (ElPeriodoIngresadoNoEsValido e){
-            model.put("formatoNoValido",true);
-            model.put("error","El período ingresado no es válido");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "El período ingresado no es válido");
         }
         catch (IllegalArgumentException e){
-            model.put("formatoNoValido",true);
-            model.put("error","Alguno de los campos es erróneo o no existe en el sistema");
-            return new ModelAndView(model, "organizacionCargarArchivoMedicion.hbs");
+            request.session().attribute("formatoNoValido", true);
+            request.session().attribute("error", "Alguno de los campos es erróneo o no existe en el sistema");
         }
 
 

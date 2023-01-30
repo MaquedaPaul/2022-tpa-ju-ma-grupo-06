@@ -38,6 +38,9 @@ public abstract class Transporte {
   public double calcularHc() {
     return combustible.obtenerValorEmision() * this.consumoPorKilometro;
   }
+  public String getHerramientaUtilizada(){
+    return this.nombre;
+  }
 
   public TipoConsumo getTipoConsumo() {
     return combustible.getTipoConsumo();

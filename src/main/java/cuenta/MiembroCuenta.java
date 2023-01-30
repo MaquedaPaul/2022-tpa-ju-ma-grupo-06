@@ -29,6 +29,11 @@ public class MiembroCuenta extends Cuenta {
   public void guardarEnSesion(Request request) {
     request.session().attribute("cuenta",this);
     request.session().attribute("miembro", RepoCuentas.getInstance().obtenerMiembro(this));
+    request.session().attribute("origen-incorrecto",false);
+    request.session().attribute("destino-incorrecto",false);
+    request.session().attribute("destino-antes-de-origen",false);
+    request.session().attribute("se-intento-crear",false);
+    request.session().attribute("punto-origen-no-concuerda",false);
   }
 
   @Override
@@ -45,7 +50,7 @@ public class MiembroCuenta extends Cuenta {
   public void limpiarSession(Request request) {
     request.session().attribute("cuenta",null);
     request.session().attribute("miembro", null);
-    request.session().attribute("trayecto", null);
+    request.session().attribute("nuevo-trayecto", null);
   }
 
   public Map<String, Object> datosDelHome() {

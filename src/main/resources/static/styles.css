@@ -80,7 +80,14 @@ h3 {
   margin: 0;
 }
 
+h6{
+  margin-top: 0;
+  margin-bottom: 5%;
+  width: 100%;
+}
+
 img {
+  margin-left: 10%;
   width: 40px;
   height: 40px;
 }
@@ -396,6 +403,21 @@ button:hover {
   margin: 10px;
 }
 
+.btn-consulta-disabled {
+  background-color: #ACB5B2;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 37px;
+  width: 130px;
+  cursor: default;
+  pointer-events: none;
+  color: #707A77;
+  border-radius: 10px;
+  margin: 10px;
+}
+
 .btn:hover, .btn-consulta:hover {
   background-color: var(--light-green);
 }
@@ -464,6 +486,10 @@ button:hover {
   color: #fff;
   outline: 0;
 }
+
+
+
+
 
 .btn-error{
   box-sizing: border-box;

@@ -22,6 +22,7 @@ public class IndicadorController {
         Organizacion organizacion = OrganizacionController.obtenerOrganizacion(request);
         List<Sector> sectoresOrganizacion = organizacion.getSectores();
         Map<String, Object> model = new HashMap<>();
+        OrganizacionController.usuarioEnModel(model, request);
         model.put("sectores", sectoresOrganizacion);
         return new ModelAndView(model, "organizacionIndicadorHcSector.hbs");
     }

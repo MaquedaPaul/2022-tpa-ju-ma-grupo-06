@@ -12,6 +12,7 @@ public enum TipoCuenta {
           ".*/recomendaciones",
           ".*/home/trayectos",
           ".*/home/trayectos/nuevo-trayecto",
+          ".*/home/trayectos/nuevo-trayecto/tramos",
           ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte",
           ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido",
           ".*/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas",

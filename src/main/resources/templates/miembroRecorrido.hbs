@@ -5,12 +5,12 @@
     {{#if esPublico}}
         <div>
             <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=ida" target="_self">
-                Desde: {{primerParadaIda.calle}} {{primerParadaIda.altura}}
-                Hasta: {{ultimaParadaIda.calle}} {{ultimaParadaIda.altura}}
+                Desde: {{primerParadaIda.puntoUbicacion.calle}} {{primerParadaIda.puntoUbicacion.altura}}
+                Hasta: {{ultimaParadaIda.puntoUbicacion.calle}} {{ultimaParadaIda.puntoUbicacion.altura}}
             </a>
             <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=vuelta" target="_self">
-                Desde: {{primerParadaRegreso.calle}} {{primerParadaRegreso.altura}}
-                Hasta: {{ultimaParadaRegreso.nombre}} {{ultimaParadaRegreso.altura}}
+                Desde: {{primerParadaVuelta.puntoUbicacion.calle}} {{primerParadaVuelta.puntoUbicacion.altura}}
+                Hasta: {{ultimaParadaVuelta.puntoUbicacion.calle}} {{ultimaParadaVuelta.puntoUbicacion.altura}}
             </a>
         </div>
     {{else}}
@@ -18,7 +18,7 @@
             <div>
                 <h3>ORIGEN</h3>
                 <label for="localidad_id">
-                    <input type="number" name="localidad_id" min="1" required
+                    <input type="number" name="origen_localidad_id" min="1" required
                         {{#if hayTramos}}
                             value="{{ultimoTramo.puntoDestino.localidadId}}"
                             readonly
@@ -26,7 +26,7 @@
                     />
                 </label>
                 <label for="calle">
-                    <input type="text" name="calle" required
+                    <input type="text" name="origen_calle" required
                         {{#if hayTramos}}
                            value="{{ultimoTramo.puntoDestino.calle}}"
                            readonly
@@ -34,7 +34,7 @@
                     />
                 </label>
                 <label for="altura">
-                    <input type="number" name="altura" min="1" required
+                    <input type="number" name="origen_altura" min="1" required
                         {{#if hayTramos}}
                            value="{{ultimoTramo.puntoDestino.altura}}"
                            readonly
@@ -45,13 +45,13 @@
             <div>
                 <h3>DESTINO</h3>
                 <label for="localidad_id">
-                    <input type="number" name="localidad_id" min="1" required/>
+                    <input type="number" name="destino_localidad_id" min="1" required/>
                 </label>
                 <label for="calle">
-                    <input type="text" name="calle" required/>
+                    <input type="text" name="destino_calle" required/>
                 </label>
                 <label for="altura">
-                    <input type="number" name="altura" min="1" required/>
+                    <input type="number" name="destino_altura" min="1" required/>
                 </label>
             </div>
             <button form="puntos-ubicacion">

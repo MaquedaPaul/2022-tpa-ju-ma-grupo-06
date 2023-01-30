@@ -50,7 +50,7 @@ public class TrayectoTest implements WithGlobalEntityManager {
   @Test
   public void unTrayectoPuedeSerCompartidoSoloSiEsCompletamenteEnServicioContratadoOVehiculoParticular() {
 
-    TransportePrivado servicioContratado = new ServicioContratado(TipoVehiculo.AUTO, 111);
+    TransportePrivado servicioContratado = new ServicioContratado(TipoVehiculo.AUTO, 111, "test");
     TransportePrivado vehiculoParticular = new VehiculoParticular(TipoVehiculo.AUTO, 3232,"Lamborghini");
     TransportePublico colectivo = new TransportePublico(mock(LineaTransporte.class), 100);
     PropulsionHumana aPie = new PropulsionHumana("");

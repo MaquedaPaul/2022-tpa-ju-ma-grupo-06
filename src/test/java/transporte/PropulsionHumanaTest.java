@@ -15,10 +15,11 @@ public class PropulsionHumanaTest {
   String herramientaUtilizada = "Monopatin";
   PropulsionHumana humanoConMonopatin = new PropulsionHumana(herramientaUtilizada);
 
+
   @Test
   public void creacionDeUnaPropulsionHumana() {
     PropulsionHumana unaPropulsionHumana = new PropulsionHumana("UnaHerramienta");
-    assertTrue(unaPropulsionHumana.getHerramientaUtilizada().equals("UnaHerramienta"));
+    assertTrue(unaPropulsionHumana.getNombre().equals("UnaHerramienta"));
   }
 
   @Test

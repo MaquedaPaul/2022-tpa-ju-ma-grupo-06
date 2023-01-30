@@ -9,7 +9,7 @@ public class Validador {
   public static void validarAcceso(Request request, Response response) {
     String url1 = request.url();
     System.out.println("RUTA ACCEDIDA: " + url1);
-    if (request.url().endsWith("/signin")|| request.url().endsWith("/signout")) {
+    if (request.url().endsWith("/signin") || request.url().endsWith("/signout")) {
       System.out.println("ACCEDI AL SIGNIN");
       return;
     }
@@ -39,5 +39,4 @@ public class Validador {
     System.out.println("PUEDO ACCEDER");
 
   }
-
 }

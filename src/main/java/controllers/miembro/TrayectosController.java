@@ -181,15 +181,29 @@ public class TrayectosController {
     return response;
   }
 
-  //TODO ACEPTAR PUNTOS UBICACION Y PARADAS
   public Response postPuntosUbicacion(Request request, Response response) {
-    if (request.queryParams("origen") == null
-        || request.queryParams("destino") == null) {
+
+    if ((request.queryParams("localidad_id_origen") == null
+            || request.queryParams("calle_origen") == null
+            || request.queryParams("altura_origen") == null
+            || request.queryParams("localidad_id_destino") == null
+            || request.queryParams("calle_destino") == null
+            || request.queryParams("altura_destino") == null) &&
+    (request.queryParams("origen") == null
+        || request.queryParams("destino") == null)) {
       response.redirect("/home/trayectos");
       return response;
     }
+
+    if (request.queryParams("localidad_id_origen") == null) {
+      return this.postParadas(request,response);
+    }
+    return this.postPuntos(request,response);
+  }
+
+  private Response postParadas(Request request, Response response) {
     if ( !request.queryParams("origen").matches("\\d+")
-        || !request.queryParams("destino").matches("\\d+")) {
+            || !request.queryParams("destino").matches("\\d+")) {
       response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas");
       return response;
     }
@@ -227,6 +241,40 @@ public class TrayectosController {
     return response;
   }
 
+  private Response postPuntos(Request request, Response response) {
+
+    String localidad_id_origen = request.session().attribute("localidad_id_origen");
+    String localidad_id_destino = request.session().attribute("localidad_id_destino");
+    String altura_origen = request.session().attribute("altura_origen");
+    String altura_destino = request.session().attribute("altura_destino");
+    String calle_origen = request.session().attribute("calle_origen");
+    String calle_destino = request.session().attribute("calle_destino");
+
+    if (localidad_id_origen.matches("\\d+")
+            && localidad_id_destino.matches("\\d+")
+            && altura_destino.matches("\\d+")
+            && altura_origen.matches("\\d+")
+            && calle_origen.matches("\\d+")
+            && calle_destino.matches("\\d+")) {
+      response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido");
+      return response;
+    }
+    PuntoUbicacion origen = new PuntoUbicacion(Integer.parseInt(localidad_id_origen), calle_origen,Integer.parseInt(altura_origen));
+    PuntoUbicacion destino = new PuntoUbicacion(Integer.parseInt(localidad_id_destino), calle_destino,Integer.parseInt(altura_destino));
+
+    if (!this.esValido(origen) || !this.esValido(destino)) {
+      response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido");
+      return response;
+    }
+    request.session().attribute("punto-origen", origen);
+    request.session().attribute("punto-destino", destino);
+    response.redirect("/home/trayectos/nuevo-trayecto/tramos");
+    return response;
+  }
+
+  private boolean esValido(PuntoUbicacion punto) {
+    return true;
+  }
   public Response postBorrarUltimoTramo(Request request, Response response) {
     //EXISTE NUEVO TRAYECTO
     if (request.session().attribute("nuevo-trayecto") == null) {

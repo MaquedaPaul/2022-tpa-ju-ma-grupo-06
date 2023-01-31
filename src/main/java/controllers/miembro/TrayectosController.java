@@ -60,15 +60,22 @@ public class TrayectosController implements WithGlobalEntityManager {
 
     Transporte transporte = request.session().attribute("transporte-seleccionado");
     model.put("esPublico", transporte.getNombre().startsWith("COLECTIVO"));
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
 
     if ((boolean) model.get("esPublico")) {
       TransportePublico transportePublico = (TransportePublico) transporte;
-      model.put("primerParadaIda",transportePublico.getUbicacionInicioPrimerRecorrido());
-      model.put("ultimaParadaIda",transportePublico.getUltimaUbicacionPrimerRecorrido());
-      model.put("primerParadaVuelta",transportePublico.getPrimeraUbicacionRecorridoVuelta());
-      model.put("ultimaParadaVuelta",transportePublico.getUltimaUbicacionRecorridoVuelta());
+      if (bTrayecto.getUltimoTramo() != null && (!transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino() , "IDA")
+              && !transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino(), "VUELTA"))) {
+        model.put("noExisteParada",true);
+      } else {
+        model.put("primerParadaIda", transportePublico.getUbicacionInicioPrimerRecorrido());
+        model.put("ultimaParadaIda", transportePublico.getUltimaUbicacionPrimerRecorrido());
+        model.put("primerParadaVuelta", transportePublico.getPrimeraUbicacionRecorridoVuelta());
+        model.put("ultimaParadaVuelta", transportePublico.getUltimaUbicacionRecorridoVuelta());
+        model.put("noExisteParada",false);
+      }
     } else {
-      BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
+
       model.put("hayTramos",bTrayecto.sePuedeConstruir());
       model.put("ultimoTramo",bTrayecto.getUltimoTramo());
       model.put("origenNoConcuerda",request.session().attribute("punto-origen-no-concuerda"));
@@ -93,8 +100,8 @@ public class TrayectosController implements WithGlobalEntityManager {
     model.put("transporte",transporte);
     model.put("sentido",sentido);
     if (bTrayecto.sePuedeConstruir()) {
-      model.put("ultimoPunto",bTrayecto.getUltimoTramo().getPuntoDestino());
-      model.put("kmUltimoPunto",transporte.getKmEnPunto((PuntoUbicacion) model.get("ultimoPunto"),sentido));
+        model.put("ultimoPunto",bTrayecto.getUltimoTramo().getPuntoDestino());
+        model.put("kmUltimoPunto",transporte.getKmEnPunto((PuntoUbicacion) model.get("ultimoPunto"),sentido));
     }
 
     if (bTrayecto.sePuedeConstruir()

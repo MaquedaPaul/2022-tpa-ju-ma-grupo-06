@@ -39,4 +39,8 @@ public class PuntoUbicacion {
     this.calle = calle;
     this.altura = altura;
   }
+
+  public boolean esEnLaDireccionDe(PuntoUbicacion puntoUbicacion) {
+    return this.getCalle().equals(puntoUbicacion.getCalle()) && this.getAltura() == puntoUbicacion.getAltura();
+  }
 }

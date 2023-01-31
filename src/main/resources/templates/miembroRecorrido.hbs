@@ -3,16 +3,21 @@
         NUEVO TRAMO - RECORRIDO
     </h2>
     {{#if esPublico}}
-        <div>
-            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=ida" target="_self">
-                Desde: {{primerParadaIda.puntoUbicacion.calle}} {{primerParadaIda.puntoUbicacion.altura}}
-                Hasta: {{ultimaParadaIda.puntoUbicacion.calle}} {{ultimaParadaIda.puntoUbicacion.altura}}
-            </a>
-            <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=vuelta" target="_self">
-                Desde: {{primerParadaVuelta.puntoUbicacion.calle}} {{primerParadaVuelta.puntoUbicacion.altura}}
-                Hasta: {{ultimaParadaVuelta.puntoUbicacion.calle}} {{ultimaParadaVuelta.puntoUbicacion.altura}}
-            </a>
-        </div>
+        {{#if noExisteParada}}
+            <p>No existe ninguna parada en el recorrido de este transporte que concuerde con la última parada del tramo anterior</p>
+        {{else}}
+            <div>
+                <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=ida" target="_self">
+                    Desde: {{primerParadaIda.puntoUbicacion.calle}} {{primerParadaIda.puntoUbicacion.altura}}
+                    Hasta: {{ultimaParadaIda.puntoUbicacion.calle}} {{ultimaParadaIda.puntoUbicacion.altura}}
+                </a>
+                <a href="/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas?sentido=vuelta" target="_self">
+                    Desde: {{primerParadaVuelta.puntoUbicacion.calle}} {{primerParadaVuelta.puntoUbicacion.altura}}
+                    Hasta: {{ultimaParadaVuelta.puntoUbicacion.calle}} {{ultimaParadaVuelta.puntoUbicacion.altura}}
+                </a>
+            </div>
+        {{/if}}
+
     {{else}}
         <form id="puntos-ubicacion" method="post" action="/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-ubicacion">
             <div>

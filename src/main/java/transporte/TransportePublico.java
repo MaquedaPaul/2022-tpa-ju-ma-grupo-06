@@ -104,6 +104,9 @@ public class TransportePublico extends Transporte {
             .get(0).getKmActual();
   }
 
+  public boolean existeUnaParadaEnRecorridoDe(PuntoUbicacion puntoUbicacion,String sentido) {
+    return this.getRecorridoSegun(sentido.toUpperCase()).stream().anyMatch(p -> p.getPuntoUbicacion().esEnLaDireccionDe(puntoUbicacion));
+  }
 }
 
 

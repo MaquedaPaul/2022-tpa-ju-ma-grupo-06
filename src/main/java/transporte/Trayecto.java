@@ -18,7 +18,7 @@ public class Trayecto {
   Long id;
 
   @ElementCollection
-  private Set<Tramo> tramos = new HashSet<>();
+  private Set<Tramo> tramos;
 
   protected Trayecto() {
   }

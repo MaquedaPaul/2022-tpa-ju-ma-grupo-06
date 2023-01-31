@@ -23,10 +23,7 @@ import tipoconsumo.TipoActividad;
 import tipoconsumo.TipoAlcance;
 import tipoconsumo.TipoConsumo;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CargaDeDatos implements WithGlobalEntityManager {
 
@@ -306,6 +303,16 @@ public class CargaDeDatos implements WithGlobalEntityManager {
     Miembro Julieta = new Miembro("JULIETA","PERETTI", TipoDocumento.DNI,45000003,trayectosJulieta);
     Julieta.setCuenta(cuentaJulieta);
 
+    dbConnection.persistirListas(trayectosPedro);
+    dbConnection.persistirListas(trayectosJuan);
+    dbConnection.persistirListas(trayectosJulieta);
+    dbConnection.persistirListas(trayectosGabriel);
+    /*
+    dbConnection.persistir(trayectosPedro);
+    dbConnection.persistir(trayectosJuan);
+    dbConnection.persistir(trayectosJulieta);
+    dbConnection.persistir(trayectosGabriel);
+    */
     dbConnection.persistir(juan);
     dbConnection.persistir(pedro);
     dbConnection.persistir(daniel);
@@ -315,6 +322,14 @@ public class CargaDeDatos implements WithGlobalEntityManager {
 
   }
 
+  private <T> void persistirListas(List<T> lista) {
+    if (lista.isEmpty()) {
+      return;
+    }
+    for (T t : lista) {
+      this.persistir(t);
+    }
+  }
   public void persistirOrganizacionesConSectores() {
 
     Organizacion pepsiCo = new Organizacion(
@@ -410,7 +425,11 @@ public class CargaDeDatos implements WithGlobalEntityManager {
 
   public void persistir(Object o) {
     entityManager().getTransaction().begin();
-    entityManager().persist(o);
+    if (entityManager().contains(o)) {
+      entityManager().merge(o);
+    } else {
+      entityManager().persist(o);
+    }
     entityManager().getTransaction().commit();
   }
 

@@ -5,6 +5,9 @@
 {{#partial "content"}}
     <h2>Gestion de Trayectos</h2>
     <div class="below-buttons " >
+        {{#if seCreoUnTrayecto}}
+            <p>¡El trayecto fue creado con exito!</p>
+        {{/if}}
         <a class="btn-2 first" href="/home/trayectos/nuevo-trayecto">
             Agregar trayecto
         </a>

@@ -34,6 +34,7 @@ public class MiembroCuenta extends Cuenta {
     request.session().attribute("destino-antes-de-origen",false);
     request.session().attribute("se-intento-crear",false);
     request.session().attribute("punto-origen-no-concuerda",false);
+    request.session().attribute("trayecto-creado",false);
   }
 
   @Override

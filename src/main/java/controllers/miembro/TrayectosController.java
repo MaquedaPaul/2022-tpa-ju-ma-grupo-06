@@ -3,6 +3,8 @@ package controllers.miembro;
 import linea.LineaTransporte;
 import linea.PuntoUbicacion;
 import miembro.Miembro;
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import repositorios.RepoMiembros;
 import repositorios.RepoTransporte;
 import spark.ModelAndView;
 import spark.Request;
@@ -10,14 +12,16 @@ import spark.Response;
 import transporte.*;
 import utils.GeneradorDeCategorias;
 
-import javax.activation.MimeType;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class TrayectosController {
+public class TrayectosController implements WithGlobalEntityManager {
 
   public ModelAndView getTrayectos(Request request, Response response) {
-    return new ModelAndView(null,"miembroTrayectos.hbs");
+    Map<String, Object> model = new HashMap<>();
+    model.put("seCreoUnTrayecto",request.session().attribute("trayecto-creado"));
+    return new ModelAndView(model,"miembroTrayectos.hbs");
   }
 
   public ModelAndView getNuevoTrayecto(Request request, Response response) {
@@ -33,7 +37,6 @@ public class TrayectosController {
     model.put("ultimoTramo",bTrayecto.getUltimoTramo());
     model.put("hayAlgunTramo",bTrayecto.sePuedeConstruir());
     model.put("noHayTramos",!bTrayecto.sePuedeConstruir() && seIntentoCrear);
-    model.put("puntoOrigenNoConcuerda",request.session().attribute("punto-origen-no-concuerda"));
     request.session().attribute("punto-origen-no-concuerda",false);
     request.session().attribute("se-intento-crear",false);
     return new ModelAndView(model,"miembroNuevoTrayecto.hbs");
@@ -68,6 +71,8 @@ public class TrayectosController {
       BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
       model.put("hayTramos",bTrayecto.sePuedeConstruir());
       model.put("ultimoTramo",bTrayecto.getUltimoTramo());
+      model.put("origenNoConcuerda",request.session().attribute("punto-origen-no-concuerda"));
+      request.session().attribute("punto-origen-no-concuerda",false);
     }
     return new ModelAndView(model,"miembroRecorrido.hbs");
   }
@@ -181,15 +186,29 @@ public class TrayectosController {
     return response;
   }
 
-  //TODO ACEPTAR PUNTOS UBICACION Y PARADAS
   public Response postPuntosUbicacion(Request request, Response response) {
-    if (request.queryParams("origen") == null
-        || request.queryParams("destino") == null) {
+
+    if ((request.queryParams("localidad_id_origen") == null
+            || request.queryParams("calle_origen") == null
+            || request.queryParams("altura_origen") == null
+            || request.queryParams("localidad_id_destino") == null
+            || request.queryParams("calle_destino") == null
+            || request.queryParams("altura_destino") == null) &&
+    (request.queryParams("origen") == null
+        || request.queryParams("destino") == null)) {
       response.redirect("/home/trayectos");
       return response;
     }
+
+    if (request.queryParams("localidad_id_origen") == null) {
+      return this.postParadas(request,response);
+    }
+    return this.postPuntos(request,response);
+  }
+
+  private Response postParadas(Request request, Response response) {
     if ( !request.queryParams("origen").matches("\\d+")
-        || !request.queryParams("destino").matches("\\d+")) {
+            || !request.queryParams("destino").matches("\\d+")) {
       response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/transporte/paradas");
       return response;
     }
@@ -227,6 +246,42 @@ public class TrayectosController {
     return response;
   }
 
+  private Response postPuntos(Request request, Response response) {
+
+    String localidad_id_origen = request.queryParams("localidad_id_origen");
+    String localidad_id_destino = request.queryParams("localidad_id_destino");
+    String altura_origen = request.queryParams("altura_origen");
+    String altura_destino = request.queryParams("altura_destino");
+    String calle_origen = request.queryParams("calle_origen");
+    String calle_destino = request.queryParams("calle_destino");
+
+    if (!localidad_id_origen.matches("\\d+")
+            || !localidad_id_destino.matches("\\d+")
+            || !altura_destino.matches("\\d+")
+            || !altura_origen.matches("\\d+")) {
+      response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido");
+      return response;
+    }
+
+    PuntoUbicacion origen = new PuntoUbicacion(Integer.parseInt(localidad_id_origen), calle_origen,Integer.parseInt(altura_origen));
+    PuntoUbicacion destino = new PuntoUbicacion(Integer.parseInt(localidad_id_destino), calle_destino,Integer.parseInt(altura_destino));
+
+    if (!this.concuerdaOrigenConElUltimoTram(origen, request)) {
+      request.session().attribute("punto-origen-no-concuerda",true);
+      response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/recorrido");
+      return response;
+    }
+    request.session().attribute("punto-origen", origen);
+    request.session().attribute("punto-destino", destino);
+    response.redirect("/home/trayectos/nuevo-trayecto/nuevo-tramo/datos-tramo");
+    return response;
+  }
+
+  private boolean concuerdaOrigenConElUltimoTram(PuntoUbicacion punto, Request request) {
+    BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
+    Tramo ultimo = bTrayecto.getUltimoTramo();
+    return ultimo == null || ultimo.getPuntoDestino().equals(punto);
+  }
   public Response postBorrarUltimoTramo(Request request, Response response) {
     //EXISTE NUEVO TRAYECTO
     if (request.session().attribute("nuevo-trayecto") == null) {
@@ -252,8 +307,19 @@ public class TrayectosController {
       return response;
     }
     Miembro miembro = request.session().attribute("miembro");
-    miembro.registrarTrayecto(bTrayecto.build());
+    Trayecto t = bTrayecto.build();
+    entityManager().getTransaction().begin();
+    entityManager().persist(t);
+    entityManager().getTransaction().commit();
+    System.out.println(miembro.getTrayectos().size());
+    miembro = RepoMiembros.getInstance().getMiembrosPor(miembro.getId());
+    miembro.registrarTrayecto(t);
+    entityManager().getTransaction().begin();
+    entityManager().persist(miembro);
+    entityManager().getTransaction().commit();
     this.limpiarDatosDelTrayectoDeLaSession(request);
+    System.out.println(miembro.getTrayectos().size());
+    request.session().attribute("trayecto-creado",true);
     response.redirect("/home/trayectos");
     return response;
   }

@@ -11,11 +11,6 @@
             </p>
         {{/if}}
         <form id="trayecto-nuevo" method="post">
-            {{#if puntoOrigenNoConcuerda}}
-                <p>
-                    ¡Error! el tramo debe <strong>iniciar</strong> donde termina el <strong>ultimo tramo</strong>
-                </p>
-            {{/if}}
             <div class="tramos">
                 <ul>
                     {{#each tramos}}

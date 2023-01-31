@@ -17,8 +17,13 @@
         <form id="puntos-ubicacion" method="post" action="/home/trayectos/nuevo-trayecto/nuevo-tramo/puntos-ubicacion">
             <div>
                 <h3>ORIGEN</h3>
+                {{#if origenNoConcuerda}}
+                    <p>
+                        El punto de <strong>origen</strong> de un tramo debe ser el punto <strong>destino</strong> del tramo anterior
+                    </p>
+                {{/if}}
                 <label for="localidad_id">
-                    <input type="number" name="origen_localidad_id" min="1" required
+                    <input type="number" name="localidad_id_origen" min="1" required
                         {{#if hayTramos}}
                             value="{{ultimoTramo.puntoDestino.localidadId}}"
                             readonly
@@ -26,7 +31,7 @@
                     />
                 </label>
                 <label for="calle">
-                    <input type="text" name="origen_calle" required
+                    <input type="text" name="calle_origen" required
                         {{#if hayTramos}}
                            value="{{ultimoTramo.puntoDestino.calle}}"
                            readonly
@@ -34,7 +39,7 @@
                     />
                 </label>
                 <label for="altura">
-                    <input type="number" name="origen_altura" min="1" required
+                    <input type="number" name="altura_origen" min="1" required
                         {{#if hayTramos}}
                            value="{{ultimoTramo.puntoDestino.altura}}"
                            readonly
@@ -45,13 +50,13 @@
             <div>
                 <h3>DESTINO</h3>
                 <label for="localidad_id">
-                    <input type="number" name="destino_localidad_id" min="1" required/>
+                    <input type="number" name="localidad_id_destino" min="1" required/>
                 </label>
                 <label for="calle">
-                    <input type="text" name="destino_calle" required/>
+                    <input type="text" name="calle_destino" required/>
                 </label>
                 <label for="altura">
-                    <input type="number" name="destino_altura" min="1" required/>
+                    <input type="number" name="altura_destino" min="1" required/>
                 </label>
             </div>
             <button form="puntos-ubicacion">

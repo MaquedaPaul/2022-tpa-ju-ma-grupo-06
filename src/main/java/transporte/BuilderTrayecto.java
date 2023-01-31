@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 public class BuilderTrayecto {
   private final List<Tramo> tramos = new ArrayList<>();
+
   private Tramo ultimoTramo;
 
   public void agregarTramo(Tramo tramo) {
@@ -30,8 +31,8 @@ public class BuilderTrayecto {
     return new Trayecto(this.getSetTramos());
   }
 
-  private Set<Tramo> getSetTramos() {
-    Set<Tramo> setTramos = new HashSet<>(this.getTramos());
+  public Set<Tramo> getSetTramos() {
+    Set<Tramo> setTramos = new HashSet<>(this.tramos);
     setTramos.add(this.ultimoTramo);
     return setTramos;
   }

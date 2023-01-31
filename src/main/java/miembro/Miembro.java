@@ -19,7 +19,8 @@ import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
-@Getter@Setter
+@Getter
+@Setter
 @Entity
 @Table(name = "MIEMBRO")
 public class Miembro {
@@ -45,7 +46,7 @@ public class Miembro {
   @OneToOne(fetch = FetchType.EAGER)
   MiembroCuenta cuenta;
 
-  @ManyToMany(cascade = CascadeType.PERSIST)
+  @ManyToMany(cascade = CascadeType.MERGE)
   @JoinTable(name="MIEMBRO_POR_TRAYECTO",
       joinColumns = @JoinColumn(name="ID_MIEMBRO"),
       inverseJoinColumns = @JoinColumn(name="ID_TRAYECTO"))

@@ -36,7 +36,7 @@ public class PuntoUbicacion {
 
   public PuntoUbicacion(int localidadId, String calle, int altura) {
     this.localidadId = localidadId;
-    this.calle = calle;
+    this.calle = calle.toUpperCase();
     this.altura = altura;
   }
 

@@ -93,19 +93,29 @@ public class TransportePublico extends Transporte {
 
     return this.getRecorridoSegun(sentido)
             .stream()
-            .anyMatch(p -> p.getPuntoUbicacion().equals(punto));
+            .anyMatch(p -> p.getPuntoUbicacion().esEnLaDireccionDe(punto));
   }
 
   public int getKmEnPunto(PuntoUbicacion punto, String sentido) {
+    List<Parada> p = this.getRecorridoSegun(sentido);
+    List<Parada> p2 = p.stream()
+            .filter(parada -> parada.getPuntoUbicacion().esEnLaDireccionDe(punto))
+            .collect(Collectors.toList());
+
     return this.getRecorridoSegun(sentido)
             .stream()
-            .filter(parada -> parada.getPuntoUbicacion().equals(punto))
+            .filter(parada -> parada.getPuntoUbicacion().esEnLaDireccionDe(punto))
             .collect(Collectors.toList())
             .get(0).getKmActual();
   }
 
   public boolean existeUnaParadaEnRecorridoDe(PuntoUbicacion puntoUbicacion,String sentido) {
     return this.getRecorridoSegun(sentido.toUpperCase()).stream().anyMatch(p -> p.getPuntoUbicacion().esEnLaDireccionDe(puntoUbicacion));
+  }
+
+  public boolean terminaEnLaParada(PuntoUbicacion punto, String sentido) {
+    return this.getRecorridoSegun(sentido.toUpperCase())
+            .get(this.getRecorridoSegun(sentido.toUpperCase()).size() -1).getPuntoUbicacion().esEnLaDireccionDe(punto);
   }
 }
 

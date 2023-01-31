@@ -76,11 +76,11 @@ public class LineaTransporte {
   }
 
   public Parada inicioDelRecorridoDeRegreso() {
-    return recorridoDeIda.get(0);
+    return recorridoVuelta.get(0);
   }
 
   public Parada finalDelRecorridoDeRegreso() {
-    return recorridoDeIda.get(recorridoDeIda.size() - 1);
+    return recorridoVuelta.get(recorridoVuelta.size() - 1);
   }
 
   public boolean existeParadaEnElKm(int km, String sentido) {

@@ -60,19 +60,32 @@ public class TrayectosController implements WithGlobalEntityManager {
 
     Transporte transporte = request.session().attribute("transporte-seleccionado");
     model.put("esPublico", transporte.getNombre().startsWith("COLECTIVO"));
+    model.put("sePuedeDeIda",true);
+    model.put("sePuedeDeVuelta",true);
     BuilderTrayecto bTrayecto = request.session().attribute("nuevo-trayecto");
 
     if ((boolean) model.get("esPublico")) {
       TransportePublico transportePublico = (TransportePublico) transporte;
-      if (bTrayecto.getUltimoTramo() != null && (!transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino() , "IDA")
-              && !transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino(), "VUELTA"))) {
+      model.put("primerParadaIda", transportePublico.getUbicacionInicioPrimerRecorrido());
+      model.put("ultimaParadaIda", transportePublico.getUltimaUbicacionPrimerRecorrido());
+      model.put("primerParadaVuelta", transportePublico.getPrimeraUbicacionRecorridoVuelta());
+      model.put("ultimaParadaVuelta", transportePublico.getUltimaUbicacionRecorridoVuelta());
+      if (bTrayecto.getUltimoTramo() != null
+              && (!transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino() , "IDA")
+              && !transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino(), "VUELTA"))
+      && (!transportePublico.terminaEnLaParada(bTrayecto.getUltimoTramo().getPuntoDestino(),"IDA")
+              && !transportePublico.terminaEnLaParada(bTrayecto.getUltimoTramo().getPuntoDestino(),"VUELTA"))) {
         model.put("noExisteParada",true);
-      } else {
-        model.put("primerParadaIda", transportePublico.getUbicacionInicioPrimerRecorrido());
-        model.put("ultimaParadaIda", transportePublico.getUltimaUbicacionPrimerRecorrido());
-        model.put("primerParadaVuelta", transportePublico.getPrimeraUbicacionRecorridoVuelta());
-        model.put("ultimaParadaVuelta", transportePublico.getUltimaUbicacionRecorridoVuelta());
-        model.put("noExisteParada",false);
+      } else if (bTrayecto.getUltimoTramo() != null) {
+        if (!transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino() , "IDA")
+        || transportePublico.terminaEnLaParada(bTrayecto.getUltimoTramo().getPuntoDestino(),"IDA")) {
+          model.put("sePuedeDeIda",false);
+        }
+        if (!transportePublico.existeUnaParadaEnRecorridoDe(bTrayecto.getUltimoTramo().getPuntoDestino() , "VUELTA")
+         || transportePublico.terminaEnLaParada(bTrayecto.getUltimoTramo().getPuntoDestino(),"VUELTA")) {
+          model.put("sePuedeDeVuelta",false);
+        }
+        model.put("noExisteParada",!(boolean) model.get("sePuedeDeIda") && !(boolean) model.get("sePuedeDeVuelta"));
       }
     } else {
 

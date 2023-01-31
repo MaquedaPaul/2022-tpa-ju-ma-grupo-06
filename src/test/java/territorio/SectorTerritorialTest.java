@@ -35,6 +35,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SectorTerritorialTest implements WithGlobalEntityManager {
 
 //  SectorTerritorial sector = RepoSectorTerritorial.getInstance().getSectorById(1);
+List<Trayecto> unosTrayectos = new ArrayList<>();
+  Set<Tramo> unosTramos = new HashSet<>();
+  List<Trayecto> otrosTrayectos = new ArrayList<>();
+  Set<Tramo> otrosTramos = new HashSet<>();
 @BeforeEach
 public void cargarEnDB(){
   entityManager().getTransaction().begin();
@@ -50,6 +54,33 @@ public void cargarEnDB(){
   RepoFactoresEmision.getInstance().incorporarFactor(unFactorEmision);
   RepoFactoresEmision.getInstance().incorporarFactor(otroFactorEmision);
   entityManager().getTransaction().commit();
+  entityManager().getTransaction().begin();
+  entityManager().persist(vehiculo1);
+  entityManager().persist(vehiculo2);
+  entityManager().getTransaction().commit();
+
+  Tramo unTramo = new Tramo(unPunto, otroPunto, vehiculo1);
+  {
+    unosTramos.add(unTramo);
+  }
+  Trayecto unTrayecto = new Trayecto(unosTramos);
+  {
+    unosTrayectos.add(unTrayecto);
+  }
+
+  Tramo otroTramo = new Tramo(unPunto, otroPunto, vehiculo2);
+  {
+    unosTramos.add(otroTramo);
+  }
+  Trayecto otroTrayecto = new Trayecto(otrosTramos);
+  {
+    otrosTrayectos.add(otroTrayecto);
+  }
+  entityManager().getTransaction().begin();
+  entityManager().persist(unTrayecto);
+  entityManager().persist(otroTrayecto);
+  entityManager().getTransaction().commit();
+
 }
 
 
@@ -72,16 +103,7 @@ public void cargarEnDB(){
   }
   LineaTransporte unaLinea = new LineaTransporte(TipoTransporte.COLECTIVO, "A30", unasParadas, otrasParadas);
   TransportePublico vehiculo1 = new TransportePublico(unaLinea,50);
-  List<Trayecto> unosTrayectos = new ArrayList<>();
-  Set<Tramo> unosTramos = new HashSet<>();
-  Tramo unTramo = new Tramo(unPunto, otroPunto, vehiculo1);
-  {
-    unosTramos.add(unTramo);
-  }
-  Trayecto unTrayecto = new Trayecto(unosTramos);
-  {
-    unosTrayectos.add(unTrayecto);
-  }
+
   Miembro unMiembro = new Miembro("Pedro", "Lopez", TipoDocumento.DNI, 3242356, unosTrayectos);
 
 
@@ -97,16 +119,7 @@ public void cargarEnDB(){
   LocalDate fecha = LocalDate.now().plusMonths(1);
 
   TransportePublico vehiculo2 = new TransportePublico(unaLinea,43);
-  List<Trayecto> otrosTrayectos = new ArrayList<>();
-  Set<Tramo> otrosTramos = new HashSet<>();
-  Tramo otroTramo = new Tramo(unPunto, otroPunto, vehiculo2);
-  {
-    unosTramos.add(otroTramo);
-  }
-  Trayecto otroTrayecto = new Trayecto(otrosTramos);
-  {
-    otrosTrayectos.add(otroTrayecto);
-  }
+
   Miembro otroMiembro = new Miembro("Mia", "Lopez", TipoDocumento.DNI, 3242353, otrosTrayectos);
   List<Miembro> miembros = new ArrayList<>();
   List<Miembro> otrosMiembros = new ArrayList<>();

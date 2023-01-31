@@ -30,7 +30,7 @@ public class Tramo {
   } )
   private PuntoUbicacion puntoDestino;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "ID_TRANSPORTE")
   private Transporte transporteUtilizado;
 

@@ -79,13 +79,13 @@ public class TrayectosController implements WithGlobalEntityManager {
 
   public ModelAndView getParadas(Request request, Response response) {
 
-    if (request.queryParams("sentido") == null
+    if ((request.queryParams("sentido") == null && request.session().attribute("sentido") == null)
         || request.session().attribute("transporte-seleccionado") == null) {
       response.redirect("/not-found");
       return null;
     }
 
-    String sentido = request.queryParams("sentido").toUpperCase();
+    String sentido = request.queryParams("sentido") == null ? request.session().attribute("sentido") : request.queryParams("sentido").toUpperCase();
     TransportePublico transporte = request.session().attribute("transporte-seleccionado");
 
     Map<String,Object> model = new HashMap<>();
